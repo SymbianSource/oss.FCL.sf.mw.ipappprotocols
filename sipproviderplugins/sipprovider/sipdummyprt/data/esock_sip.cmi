@@ -1,0 +1,22 @@
+[Loader]
+Name=ESock_SIP
+FileName=esocksvr.dll
+ThreadFunctionOrdinal=1
+IsSticky=0
+IsServer=1
+Priority=EPriorityMore
+StackSize=16384
+StartSequence=7
+HeapOption=ENewHeap
+MinHeapSize=16384
+MaxHeapSize=524288
+SystemCritical=0
+SystemCriticalAfterInit=1
+Binding0=ESock_SIP:8,ESock_Main:0,ECustom,42,42 
+# Dont check heap if shutting down with EImmediate (KCF_ModuleImmediateNoCheck)
+ControlFlags=4
+[IniData]
+Role=Player
+WorkerId=8
+EskMask=SIP.*.ESK
+

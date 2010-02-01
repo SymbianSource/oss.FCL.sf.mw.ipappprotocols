@@ -1,0 +1,95 @@
+// Copyright (c) 2006-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name        : digestplugin.mmp
+// Part of     : SIP / SIPSec
+// Version     : SIP/5.0
+//
+
+
+
+TARGET        sipdigest.dll
+TARGETTYPE    PLUGIN
+UID           0x10009d8d 0x1020334D
+
+
+SOURCEPATH    ../SIPSec/DigestPlugin/src
+SOURCE	      CSIPSecChallenge.cpp
+SOURCE	      CSIPSecChallengeAKA.cpp
+SOURCE	      CSIPSecChallengeMD5.cpp
+SOURCE	      CSIPSecCredentials.cpp
+SOURCE	      CSIPSecDigest.cpp
+SOURCE	      CSIPSecDigestCacheEntry.cpp
+SOURCE	      CSIPSecDigestPlugin.cpp
+SOURCE	      CSIPSecUserRecord.cpp
+SOURCE	      CSIPSecSIMRecord.cpp
+SOURCE	      RSIPSecChallengeResolver.cpp
+SOURCE	      CSIPSecDigestObserver.cpp
+SOURCE	      CSIPSecSIMCredentialsObserver.cpp
+SOURCE	      CSIPSecUserCredentialsProvider.cpp
+SOURCE	      CSIPSecSIMCredentialsProvider.cpp
+SOURCE	      sipsecdigestcache.cpp
+SOURCE	      sipsecplugincontext.cpp
+SOURCE	      sipsecdigestcontext.cpp
+SOURCE	      sipsecrequestdata.cpp
+SOURCE        RecordCleanup.cpp
+SOURCE	      StaticDllEntry.cpp
+
+SOURCEPATH    ../SIPSec/Framework/src
+SOURCE	      TSipSecUtils.cpp
+
+USERINCLUDE     ../SIPSec/DigestPlugin/inc
+USERINCLUDE     ../SIPSec/Framework/inc
+USERINCLUDE   	../Common/inc
+USERINCLUDE     ../Codec/inc
+USERINCLUDE     ../Codec/api
+USERINCLUDE     ../LightWeightTimer/inc
+USERINCLUDE     ../sipapi/api
+USERINCLUDE     ../sipapi/inc
+USERINCLUDE     ../Logging/inc	
+
+
+SOURCEPATH      ../SIPSec/DigestPlugin/resource
+START RESOURCE 1020334D.rss 
+TARGET sipdigest.rsc                                          
+END       
+
+// MW_LAYER_SYSTEMINCLUDE_SYMBIAN Illigal dependency on imcvcodc.h. Needs to be fixed
+APP_LAYER_SYSTEMINCLUDE_SYMBIAN
+
+
+LIBRARY       euser.lib
+LIBRARY	      bafl.lib 
+LIBRARY	      hash.lib
+LIBRARY       ecom.lib
+LIBRARY	      sipcodec.lib
+
+LIBRARY       commdb.lib
+LIBRARY       esock.lib 
+LIBRARY       insock.lib
+LIBRARY	      inetprotutil.lib
+LIBRARY       etel.lib
+LIBRARY       etelmm.lib
+LIBRARY       commsdat.lib
+LIBRARY       flogger.lib
+LIBRARY       charconv.lib
+LIBRARY       imut.lib
+LIBRARY       centralrepository.lib
+LIBRARY       efsrv.lib
+
+VENDORID 0x70000001
+
+CAPABILITY ProtServ NetworkControl NetworkServices Location \
+ReadDeviceData WriteDeviceData ReadUserData
+
+SMPSAFE

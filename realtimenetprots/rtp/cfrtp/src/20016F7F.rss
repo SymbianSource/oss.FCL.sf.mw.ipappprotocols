@@ -1,0 +1,76 @@
+// Copyright (c) 2006-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Registry info for the CF RTP Plugins
+// 
+//
+
+/**
+ @file 
+*/
+
+#include <ecom/registryinfo.rh>
+
+RESOURCE REGISTRY_INFO theInfo
+{
+dll_uid =  0x20016F7F;
+interfaces = 
+    {
+    INTERFACE_INFO
+        {
+        interface_uid =  0x102822F4;
+        implementations =
+            {
+           IMPLEMENTATION_INFO
+                {
+                implementation_uid = 0x20016F80;
+                version_no = 1;
+                display_name = "RTP Sub-Connection Provider Factory";
+                default_data = "RTPScprFactory";
+                opaque_data = "";
+                }
+            };
+        },
+    INTERFACE_INFO
+        {
+        interface_uid = 0x10204303;
+        implementations = 
+            {
+           IMPLEMENTATION_INFO
+                {
+                implementation_uid = 0x20016F81;
+                version_no = 1;
+                display_name = "RTP SubConnection Parameter Factory";
+                default_data = "rtpScprParams";
+                opaque_data = "";
+                }
+            };
+        },
+    INTERFACE_INFO
+        {
+        interface_uid = 0x102070EE;
+        implementations = 
+            {
+           IMPLEMENTATION_INFO
+                {
+                implementation_uid = 0x20016F82;
+                version_no = 1;
+                display_name = "RTP Flow Factory";
+                default_data = "cfrtp";
+                opaque_data = "";
+                }
+            };
+        }
+    };
+}
+

@@ -1,0 +1,112 @@
+EXPORTS
+	??0TRtpEvent@@QAE@W4TRtpEventType@@HPAX@Z @ 1 NONAME ; TRtpEvent::TRtpEvent(enum TRtpEventType, int, void *)
+	??ARRtpCSRCs@@QBEII@Z @ 2 NONAME ; unsigned int RRtpCSRCs::operator[](unsigned int) const
+	?Alignment@RRtpSendSource@@QBEHXZ @ 3 NONAME ; int RRtpSendSource::Alignment(void) const
+	?CSRCs@RRtpPacket@@QBE?AVRRtpCSRCs@@XZ @ 4 NONAME ; class RRtpCSRCs RRtpPacket::CSRCs(void) const
+	?Close@RRtpPacket@@QAEXXZ @ 5 NONAME ; void RRtpPacket::Close(void)
+	?Close@RRtpReceiveSource@@QAEXXZ @ 6 NONAME ; void RRtpReceiveSource::Close(void)
+	?Close@RRtpSendSource@@QAEXXZ @ 7 NONAME ; void RRtpSendSource::Close(void)
+	?Close@RRtpSession@@QAEXXZ @ 8 NONAME ; void RRtpSession::Close(void)
+	?Count@RRtpCSRCs@@QBEHXZ @ 9 NONAME ; int RRtpCSRCs::Count(void) const
+	?Data@RRtpHeaderExtension@@QAE?AVTPtrC8@@XZ @ 10 NONAME ; class TPtrC8 RRtpHeaderExtension::Data(void)
+	?Extension@RRtpPacket@@QBE?AVRRtpHeaderExtension@@XZ @ 11 NONAME ; class RRtpHeaderExtension RRtpPacket::Extension(void) const
+	?ExtensionPresent@RRtpPacket@@QBEHXZ @ 12 NONAME ; int RRtpPacket::ExtensionPresent(void) const
+	?Flags@RRtpPacket@@QBEIXZ @ 13 NONAME ; unsigned int RRtpPacket::Flags(void) const
+	?IsReceiveSourceEvent@TRtpEvent@@QBEHXZ @ 14 NONAME ; int TRtpEvent::IsReceiveSourceEvent(void) const
+	?IsSendSourceEvent@TRtpEvent@@QBEHXZ @ 15 NONAME ; int TRtpEvent::IsSendSourceEvent(void) const
+	?IsSending@RRtpSendSource@@QAEHXZ @ 16 NONAME ; int RRtpSendSource::IsSending(void)
+	?IsSessionEvent@TRtpEvent@@QBEHXZ @ 17 NONAME ; int TRtpEvent::IsSessionEvent(void) const
+	?Marker@RRtpPacket@@QBEHXZ @ 18 NONAME ; int RRtpPacket::Marker(void) const
+	?MaxRXSize@RRtpSession@@QAEHXZ @ 19 NONAME ; int RRtpSession::MaxRXSize(void)
+	?NewReceiveSourceL@RRtpSession@@QAE?AVRRtpReceiveSource@@XZ @ 20 NONAME ; class RRtpReceiveSource RRtpSession::NewReceiveSourceL(void)
+	?NewReceiveSourceLC@RRtpSession@@QAE?AVRRtpReceiveSource@@XZ @ 21 NONAME ; class RRtpReceiveSource RRtpSession::NewReceiveSourceLC(void)
+	?NewSendPacketL@RRtpSendSource@@QAE?AVRRtpSendPacket@@HH@Z @ 22 NONAME ; class RRtpSendPacket RRtpSendSource::NewSendPacketL(int, int)
+	?NewSendPacketLC@RRtpSendSource@@QAE?AVRRtpSendPacket@@HH@Z @ 23 NONAME ; class RRtpSendPacket RRtpSendSource::NewSendPacketLC(int, int)
+	?NewSendSourceL@RRtpSession@@QAE?AVRRtpSendSource@@XZ @ 24 NONAME ; class RRtpSendSource RRtpSession::NewSendSourceL(void)
+	?OpenL@RRtpSession@@QAEXAAVRSocket@@HH@Z @ 25 NONAME ; void RRtpSession::OpenL(class RSocket &, int, int)
+	?OpenL@RRtpSession@@QAEXAAVRSocketServ@@AAVTSockAddr@@1HAAVRConnection@@HABVTDesC8@@@Z @ 26 NONAME ; void RRtpSession::OpenL(class RSocketServ &, class TSockAddr &, class TSockAddr &, int, class RConnection &, int, class TDesC8 const &)
+	?OpenL@RRtpSession@@QAEXAAVRSocketServ@@AAVTSockAddr@@1HHABVTDesC8@@@Z @ 27 NONAME ; void RRtpSession::OpenL(class RSocketServ &, class TSockAddr &, class TSockAddr &, int, int, class TDesC8 const &)
+	?Packet@RRtpReceiveSource@@QAE?AVRRtpReceivePacket@@XZ @ 28 NONAME ; class RRtpReceivePacket RRtpReceiveSource::Packet(void)
+	?Payload@RRtpPacket@@QBE?AVTPtrC8@@XZ @ 29 NONAME ; class TPtrC8 RRtpPacket::Payload(void) const
+	?PayloadType@RRtpPacket@@QBEIXZ @ 30 NONAME ; unsigned int RRtpPacket::PayloadType(void) const
+	?PrivRegisterEventCallbackL@RRtpReceiveSource@@QAEXIP6AXPAXABVTRtpEvent@@@Z0@Z @ 31 NONAME ; void RRtpReceiveSource::PrivRegisterEventCallbackL(unsigned int, void (*)(void *, class TRtpEvent const &), void *)
+	?PrivRegisterEventCallbackL@RRtpReceiveSource@@QAEXIP6AXPAXABVTRtpEvent@@@Z0H@Z @ 32 NONAME ; void RRtpReceiveSource::PrivRegisterEventCallbackL(unsigned int, void (*)(void *, class TRtpEvent const &), void *, int)
+	?PrivRegisterEventCallbackL@RRtpSendSource@@QAEXIP6AXPAXABVTRtpEvent@@@Z0@Z @ 33 NONAME ; void RRtpSendSource::PrivRegisterEventCallbackL(unsigned int, void (*)(void *, class TRtpEvent const &), void *)
+	?PrivRegisterEventCallbackL@RRtpSendSource@@QAEXIP6AXPAXABVTRtpEvent@@@Z0H@Z @ 34 NONAME ; void RRtpSendSource::PrivRegisterEventCallbackL(unsigned int, void (*)(void *, class TRtpEvent const &), void *, int)
+	?PrivRegisterEventCallbackL@RRtpSession@@QAEXIP6AXPAXABVTRtpEvent@@@Z0@Z @ 35 NONAME ; void RRtpSession::PrivRegisterEventCallbackL(unsigned int, void (*)(void *, class TRtpEvent const &), void *)
+	?PrivRegisterEventCallbackL@RRtpSession@@QAEXIP6AXPAXABVTRtpEvent@@@Z0H@Z @ 36 NONAME ; void RRtpSession::PrivRegisterEventCallbackL(unsigned int, void (*)(void *, class TRtpEvent const &), void *, int)
+	?ReceiveSource@TRtpEvent@@QBE?AVRRtpReceiveSource@@XZ @ 37 NONAME ; class RRtpReceiveSource TRtpEvent::ReceiveSource(void) const
+	?SSRC@RRtpPacket@@QBEIXZ @ 38 NONAME ; unsigned int RRtpPacket::SSRC(void) const
+	?SSRC@RRtpReceiveSource@@QBEIXZ @ 39 NONAME ; unsigned int RRtpReceiveSource::SSRC(void) const
+	?Send@RRtpSendPacket@@QAEXXZ @ 40 NONAME ; void RRtpSendPacket::Send(void)
+	?SendSource@TRtpEvent@@QBE?AVRRtpSendSource@@XZ @ 41 NONAME ; class RRtpSendSource TRtpEvent::SendSource(void) const
+	?SequenceNumber@RRtpPacket@@QBEIXZ @ 42 NONAME ; unsigned int RRtpPacket::SequenceNumber(void) const
+	?Session@TRtpEvent@@QBE?AVRRtpSession@@XZ @ 43 NONAME ; class RRtpSession TRtpEvent::Session(void) const
+	?SetAlignment@RRtpSendSource@@QAEXH@Z @ 44 NONAME ; void RRtpSendSource::SetAlignment(int)
+	?SetDefaultPayloadSize@RRtpSendSource@@QAEXH@Z @ 45 NONAME ; void RRtpSendSource::SetDefaultPayloadSize(int)
+	?SetFlags@RRtpSendPacket@@QAEXI@Z @ 46 NONAME ; void RRtpSendPacket::SetFlags(unsigned int)
+	?SetMarker@RRtpSendPacket@@QAEXH@Z @ 47 NONAME ; void RRtpSendPacket::SetMarker(int)
+	?SetMaxRXSize@RRtpSession@@QAEXH@Z @ 48 NONAME ; void RRtpSession::SetMaxRXSize(int)
+	?SetPayloadType@RRtpSendPacket@@QAEXI@Z @ 49 NONAME ; void RRtpSendPacket::SetPayloadType(unsigned int)
+	?SetPayloadType@RRtpSendSource@@QAEXI@Z @ 50 NONAME ; void RRtpSendSource::SetPayloadType(unsigned int)
+	?SetTimestamp@RRtpSendPacket@@QAEXI@Z @ 51 NONAME ; void RRtpSendPacket::SetTimestamp(unsigned int)
+	?SetType@RRtpHeaderExtension@@QAEXG@Z @ 52 NONAME ; void RRtpHeaderExtension::SetType(unsigned short)
+	?Timestamp@RRtpPacket@@QBEIXZ @ 53 NONAME ; unsigned int RRtpPacket::Timestamp(void) const
+	?Type@RRtpHeaderExtension@@QBEGXZ @ 54 NONAME ; unsigned short RRtpHeaderExtension::Type(void) const
+	?WritePayload@RRtpSendPacket@@QAEAAVTDes8@@XZ @ 55 NONAME ; class TDes8 & RRtpSendPacket::WritePayload(void)
+	??0RRtcpRRItem@@QAE@XZ @ 56 NONAME ; public: __thiscall RRtcpRRItem::RRtcpRRItem(void)
+	??0RRtcpRRPart@@QAE@AAVTRtcpRRPart@@@Z @ 57 NONAME ; public: __thiscall RRtcpRRPart::RRtcpRRPart(class TRtcpRRPart &)
+	??0RRtcpSRPart@@QAE@AAVTRtcpSRPart@@@Z @ 58 NONAME ; public: __thiscall RRtcpSRPart::RRtcpSRPart(class TRtcpSRPart &)
+	??ARRtcpRRPart@@QBE?AVRRtcpRRItem@@H@Z @ 59 NONAME ; public: class RRtcpRRItem  __thiscall RRtcpRRPart::operator[](int)const 
+	?AboutSSRC@RRtcpRRItem@@QBEIXZ @ 60 NONAME ; public: unsigned int __thiscall RRtcpRRItem::AboutSSRC(void)const 
+	?ByeL@RRtpSendSource@@QAEXAAVTDesC8@@@Z @ 61 NONAME ; public: void __thiscall RRtpSendSource::ByeL(class TDesC8 &)
+	?ByteCount@RRtcpSRPart@@QBEIXZ @ 62 NONAME ; public: unsigned int __thiscall RRtcpSRPart::ByteCount(void)const 
+	?Cancel@RRtpSendSource@@QAEXXZ @ 63 NONAME ; public: void __thiscall RRtpSendSource::Cancel(void)
+	?Count@RRtcpRRPart@@QBEHXZ @ 64 NONAME ; public: int __thiscall RRtcpRRPart::Count(void)const 
+	?DelaySinceLastSR@RRtcpRRItem@@QBEIXZ @ 65 NONAME ; public: unsigned int __thiscall RRtcpRRItem::DelaySinceLastSR(void)const 
+	?DontReceive@RRtpSession@@QAEXH@Z @ 66 NONAME ; public: void __thiscall RRtpSession::DontReceive(int)
+	?ExtendedHighestSequenceNumber@RRtcpRRItem@@QBEIXZ @ 67 NONAME ; public: unsigned int __thiscall RRtcpRRItem::ExtendedHighestSequenceNumber(void)const 
+	?FractionLost@RRtcpRRItem@@QBEIXZ @ 68 NONAME ; public: unsigned int __thiscall RRtcpRRItem::FractionLost(void)const 
+	?GetByeReason@RRtpReceiveSource@@QAEAAVTDesC8@@XZ @ 69 NONAME ; public: class TDesC8 & __thiscall RRtpReceiveSource::GetByeReason(void)
+	?GetLastApp@RRtpReceiveSource@@QAEXAAVTPtrC8@@0AAI@Z @ 70 NONAME ; public: void __thiscall RRtpReceiveSource::GetLastApp(class TPtrC8 &,class TPtrC8 &,unsigned int &)
+	?GetLocalSSRC@RRtpSendSource@@QAEKXZ @ 71 NONAME ; public: unsigned long __thiscall RRtpSendSource::GetLocalSSRC(void)
+	?GetRRs@RRtpSession@@QAE?AVRRtcpRRPart@@XZ @ 72 NONAME ; public: class RRtcpRRPart  __thiscall RRtpSession::GetRRs(void)
+	?GetSDES@RRtpReceiveSource@@QAEHHAAVTDes8@@@Z @ 73 NONAME ; public: int __thiscall RRtpReceiveSource::GetSDES(int,class TDes8 &)
+	?GetSDES@RRtpSession@@QAEHHAAVTDes8@@@Z @ 74 NONAME ; public: int __thiscall RRtpSession::GetSDES(int,class TDes8 &)
+	?GetSR@RRtpReceiveSource@@QAE?AVRRtcpSRPart@@XZ @ 75 NONAME ; public: class RRtcpSRPart  __thiscall RRtpReceiveSource::GetSR(void)
+	?InterarrivalJitter@RRtcpRRItem@@QBEIXZ @ 76 NONAME ; public: unsigned int __thiscall RRtcpRRItem::InterarrivalJitter(void)const 
+	?LastSRTimestamp@RRtcpRRItem@@QBEIXZ @ 77 NONAME ; public: unsigned int __thiscall RRtcpRRItem::LastSRTimestamp(void)const 
+	?NTPTimestamp@RRtcpSRPart@@QBEXAAVTTime@@@Z @ 78 NONAME ; public: void __thiscall RRtcpSRPart::NTPTimestamp(class TTime &)const 
+	?OpenL@RRtpSession@@QAEXAAVRSocket@@H0HABVTDesC8@@@Z @ 79 NONAME ; public: void __thiscall RRtpSession::OpenL(class RSocket &,int,class RSocket &,int,class TDesC8 const &)
+	?PacketCount@RRtcpSRPart@@QBEIXZ @ 80 NONAME ; public: unsigned int __thiscall RRtcpSRPart::PacketCount(void)const 
+	?PacketsLost@RRtcpRRItem@@QBEIXZ @ 81 NONAME ; public: unsigned int __thiscall RRtcpRRItem::PacketsLost(void)const 
+	?RTCPAutoSend@RRtpSession@@QBEHXZ @ 82 NONAME ; public: int __thiscall RRtpSession::RTCPAutoSend(void)const 
+	?RTPTimestamp@RRtcpSRPart@@QBEIXZ @ 83 NONAME ; public: unsigned int __thiscall RRtcpSRPart::RTPTimestamp(void)const 
+	?SendAPPL@RRtpSession@@QAEXABVTDesC8@@0E@Z @ 84 NONAME ; public: void __thiscall RRtpSession::SendAPPL(class TDesC8 const &,class TDesC8 const &,unsigned char)
+	?SendRTCPPacketL@RRtpSession@@QAEXAAVTDesC8@@@Z @ 85 NONAME ; public: void __thiscall RRtpSession::SendRTCPPacketL(class TDesC8 &)
+	?SendSource@RRtpSession@@QAE?AVRRtpSendSource@@XZ @ 86 NONAME ; public: class RRtpSendSource  __thiscall RRtpSession::SendSource(void)
+	?SenderSSRC@RRtcpRRPart@@QBEIXZ @ 87 NONAME ; public: unsigned int __thiscall RRtcpRRPart::SenderSSRC(void)const 
+	?SetBandwidth@RRtpSession@@QAEXI@Z @ 88 NONAME ; public: void __thiscall RRtpSession::SetBandwidth(unsigned int)
+	?SetPRIVL@RRtpSession@@QAEHABVTDesC8@@0@Z @ 89 NONAME ; public: int __thiscall RRtpSession::SetPRIVL(class TDesC8 const &,class TDesC8 const &)
+	?SetRTCPAutoSend@RRtpSession@@QAEXH@Z @ 90 NONAME ; public: void __thiscall RRtpSession::SetRTCPAutoSend(int)
+	?SetRTPTimeConversion@RRtpSession@@QAEXII@Z @ 91 NONAME ; public: void __thiscall RRtpSession::SetRTPTimeConversion(unsigned int,unsigned int)
+	?SetRtcpInterval@RRtpSession@@QAEXAAVTTimeIntervalMicroSeconds32@@@Z @ 92 NONAME ; public: void __thiscall RRtpSession::SetRtcpInterval(class TTimeIntervalMicroSeconds32 &)
+	?SetRtpStreamParameters@RRtpSession@@QAEXHHH@Z @ 93 NONAME ; public: void __thiscall RRtpSession::SetRtpStreamParameters(int,int,int)
+	?SetSDESL@RRtpSession@@QAEHHABVTDesC8@@@Z @ 94 NONAME ; public: int __thiscall RRtpSession::SetSDESL(int,class TDesC8 const &)
+	?NTPTimestamp@RRtcpSRPart@@QBEXAAK0@Z @ 95 NONAME ; void RRtcpSRPart::NTPTimestamp(unsigned long &, unsigned long &) const
+	?OpenL@RRtpSession@@QAEXAAVRSocketServ@@AAVTSockAddr@@1HAAVRSubConnection@@HABVTDesC8@@@Z @ 96 NONAME ; void RRtpSession::OpenL(class RSocketServ &, class TSockAddr &, class TSockAddr &, int, class RSubConnection &, int, class TDesC8 const &)
+	?DisableNonRtpData@RRtpSession@@QAEXXZ @ 97 NONAME ; void RRtpSession::DisableNonRtpData(void)
+	?RtcpStatistics@RRtpSession@@QAEHKAAVTRtcpStatistics@@@Z @ 98 NONAME ; int RRtpSession::RtcpStatistics(unsigned long, class TRtcpStatistics &)
+	?PayLoadTypeL@RRtpReceiveSource@@QAEIXZ @ 99 NONAME ; unsigned int RRtpReceiveSource::PayLoadTypeL(void)
+	?SetSamplingRate@RRtpSession@@QAEHHI@Z @ 100 NONAME ; int RRtpSession::SetSamplingRate(int, unsigned int)
+	?NonRtpDataL@RRtpSession@@QAEABVTDesC8@@XZ @ 101 NONAME ; class TDesC8 const & RRtpSession::NonRtpDataL(void)
+	?NonRtcpDataL@RRtpSession@@QAE?AVTPtr8@@XZ @ 102 NONAME ; class TPtr8 RRtpSession::NonRtcpDataL(void)
+	?SendDataL@RRtpSession@@QAEXHABVTDesC8@@AAVTRequestStatus@@@Z @ 103 NONAME ; void RRtpSession::SendDataL(int, class TDesC8 const &, class TRequestStatus &)
+	?SetRemoteRtcpPort@RRtpSession@@QAEXI@Z @ 104 NONAME ; void RRtpSession::SetRemoteRtcpPort(unsigned int)
+	?RtcpSocket@RRtpSession@@QAEPAVRSocket@@XZ @ 105 NONAME ; class RSocket * RRtpSession::RtcpSocket(void)
+	?RtpSocket@RRtpSession@@QAEPAVRSocket@@XZ @ 106 NONAME ; class RSocket * RRtpSession::RtpSocket(void)
+	?SetRemoteAddress@RRtpSession@@QAEXABVTSockAddr@@@Z @ 107 NONAME ; void RRtpSession::SetRemoteAddress(class TSockAddr const &)
+	?SendSync@RRtpSendPacket@@QAEHXZ @ 108 NONAME ; int RRtpSendPacket::SendSync(void)
+	?SetPrePostProcessingRegisterCallback@RRtpSession@@QAEXPAVMPrePostProcessingCallback@@@Z @ 109 NONAME ; void RRtpSession::SetPrePostProcessingRegisterCallback(class MPrePostProcessingCallback *)
+	?Close@RRtpSendPacket@@QAEXXZ @ 110 NONAME ; void RRtpSendPacket::Close(void)
+

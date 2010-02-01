@@ -1,0 +1,346 @@
+// Copyright (c) 2007-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Script file for RTCP Suite2
+// 
+//
+
+// Description:
+// TESTEXECUTE,logs\\testexecute\\te_rtcpsuite2.htm
+//
+
+//! @file 
+//! @internalComponent
+//! @SYMTestSuiteName te_rctpsuite2.script
+//! @SYMScriptInfo Test cases for RTCP Packet Sending and Receiving Capability (CF Part)
+//! @SYMScriptTestEnvironment This test runs using the TestExecute framework (TEF) using the following test list entry
+
+PRINT Run all te_rtcp suite Tests
+LOAD_SUITE te_rtcpsuite -SharedData
+ced -i z:\testdata\configs\rtp\rtptest.xml ced.log
+
+
+START_TESTCASE					HLIP-MMP-RTCP-FUNC2-01
+//! @SYMTestCaseID              hlip-mmp-rtcp-func2-01
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+PRINT Open using subconnection mode
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite  OpenSession2 z:\testdata\configs\rtp\te_rtcpsuite.ini RTCPOpen2
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite CloseSession2
+END_TESTCASE					HLIP-MMP-RTCP-FUNC2-01
+
+
+START_TESTCASE					HLIP-MMP-RTCP-FUNC2-02
+//! @SYMTestCaseID              hlip-mmp-rtcp-func2-02
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+PRINT Open using subconnection mode
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite  OpenSession2 z:\testdata\configs\rtp\te_rtcpsuite.ini RTCPOpen3
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite CloseSession2
+END_TESTCASE					HLIP-MMP-RTCP-FUNC2-02
+
+
+START_TESTCASE					HLIP-MMP-RTCP-FUNC2-03
+//! @SYMTestCaseID              hlip-mmp-rtcp-func2-03
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+PRINT SR generation test
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite OpenSession2 z:\testdata\configs\rtp\te_rtcpsuite.ini RTCPOpen3
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini ERtpNewSource
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini OnSendSuccess
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite MakeRTPPacket z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetPayloadType z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetTimestamp z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetPayload z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetMarker z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite StartSendingPackets z:\testdata\configs\rtp\te_rtcpsuite.ini OnCallback1
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite CloseSession2
+END_TESTCASE					HLIP-MMP-RTCP-FUNC2-03
+
+START_TESTCASE					HLIP-MMP-RTCP-FUNC2-04
+//! @SYMTestCaseID              hlip-mmp-rtcp-func2-04
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+PRINT rtcp transmission interval test
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite OpenSession2 z:\testdata\configs\rtp\te_rtcpsuite.ini RTCPOpen3
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini ERtpNewSource
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini OnSendSuccess
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite MakeRTPPacket z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetPayloadType z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetTimestamp z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetPayload z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetMarker z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite StartSendingPackets z:\testdata\configs\rtp\te_rtcpsuite.ini OnCallback2
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite CheckRTCPInterval
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite CloseSession2
+END_TESTCASE					HLIP-MMP-RTCP-FUNC2-04
+
+
+START_TESTCASE					HLIP-MMP-RTCP-FUNC2-05
+//! @SYMTestCaseID              hlip-mmp-rtcp-func2-05
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+PRINT check for APP packet sending capability
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite OpenSession2 z:\testdata\configs\rtp\te_rtcpsuite.ini RTCPOpen3
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini ERtpNewSource
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini OnSendSuccess
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite MakeRTPPacket z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetPayloadType z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetTimestamp z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetPayload z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetMarker z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite StartSendingPackets z:\testdata\configs\rtp\te_rtcpsuite.ini OnCallback3
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SendAPPPacket z:\testdata\configs\rtp\te_rtcpsuite.ini OnAPPCallback
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite CloseSession2
+END_TESTCASE					HLIP-MMP-RTCP-FUNC2-05
+
+
+START_TESTCASE					HLIP-MMP-RTCP-FUNC2-06
+//! @SYMTestCaseID              hlip-mmp-rtcp-func2-06
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+PRINT check for SDES packet sending capability
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite OpenSession2 z:\testdata\configs\rtp\te_rtcpsuite.ini RTCPOpen3
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini ERtpNewSource
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini OnSendSuccess
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini ERtpSDES
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite MakeRTPPacket z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetPayloadType z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetTimestamp z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetPayload z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetMarker z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetSDESPacket z:\testdata\configs\rtp\te_rtcpsuite.ini OnSDESCallback
+//RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite StartSendingPackets z:\testdata\configs\rtp\te_rtcpsuite.ini OnSDESCallback
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite CloseSession2
+END_TESTCASE					HLIP-MMP-RTCP-FUNC2-06
+
+START_TESTCASE					HLIP-MMP-RTCP-FUNC2-07
+//! @SYMTestCaseID              hlip-mmp-rtcp-func2-07
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+PRINT check for RTCP packet sending capability
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite OpenSession2 z:\testdata\configs\rtp\te_rtcpsuite.ini RTCPOpen9
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini ERtpNewSource
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini OnSendSuccess
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite MakeRTPPacket z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetPayloadType z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetTimestamp z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetPayload z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetMarker z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite StartSendingPackets z:\testdata\configs\rtp\te_rtcpsuite.ini OnCallback3
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SendRTCPPacket z:\testdata\configs\rtp\te_rtcpsuite.ini OnRTCPCallback
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite CloseSession2
+END_TESTCASE					HLIP-MMP-RTCP-FUNC2-07
+
+
+START_TESTCASE					HLIP-MMP-RTCP-FUNC2-08
+//! @SYMTestCaseID              hlip-mmp-rtcp-func2-08
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+PRINT check for BYE packet sending capability - RTCP Auto send - OFF
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite OpenSession2 z:\testdata\configs\rtp\te_rtcpsuite.ini RTCPOpen9
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini ERtpNewSource
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini OnSendSuccess
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite MakeRTPPacket z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetPayloadType z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetTimestamp z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetPayload z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetMarker z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite StartSendingPackets z:\testdata\configs\rtp\te_rtcpsuite.ini OnCallback3
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SendBYEPacket z:\testdata\configs\rtp\te_rtcpsuite.ini OnBYECallback
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite CloseSession2
+END_TESTCASE					HLIP-MMP-RTCP-FUNC2-08
+
+START_TESTCASE					HLIP-MMP-RTCP-FUNC2-09
+//! @SYMTestCaseID              hlip-mmp-rtcp-func2-09
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+PRINT check for BYE packet sending capability - RTCP Auto send - ON
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite OpenSession2 z:\testdata\configs\rtp\te_rtcpsuite.ini RTCPOpen3
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini ERtpNewSource
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini OnSendSuccess
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite MakeRTPPacket z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetPayloadType z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetTimestamp z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetPayload z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetMarker z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite StartSendingPackets z:\testdata\configs\rtp\te_rtcpsuite.ini OnCallback3
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SendBYEPacket z:\testdata\configs\rtp\te_rtcpsuite.ini OnBYECallback
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite CloseSession2
+END_TESTCASE					HLIP-MMP-RTCP-FUNC2-09
+
+START_TESTCASE					HLIP-MMP-RTCP-FUNC2-10
+//! @SYMTestCaseID              hlip-mmp-rtcp-func2-10
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+PRINT check for RR packet Receiving capability
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite OpenSession2 z:\testdata\configs\rtp\te_rtcpsuite.ini RTCPOpenforRR
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini ERtpNewSource
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini OnSendSuccess
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini ERtpNewRR
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite MakeRTPPacket z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetPayloadType z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetTimestamp z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetPayload z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetMarker z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite StartSendingPackets z:\testdata\configs\rtp\te_rtcpsuite.ini OnCallback4
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite CloseSession2
+END_TESTCASE					HLIP-MMP-RTCP-FUNC2-10
+
+START_TESTCASE					HLIP-MMP-RTCP-FUNC2-11
+//! @SYMTestCaseID              hlip-mmp-rtcp-func2-11
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+PRINT Collision test
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite OpenSession2 z:\testdata\configs\rtp\te_rtcpsuite.ini RTCPOpenforCollision
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini ERtpNewSource
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini OnSendSuccess
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite MakeRTPPacket z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetPayloadType z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetTimestamp z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetPayload z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetMarker z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite StartSendingPackets z:\testdata\configs\rtp\te_rtcpsuite.ini OnBYECallback
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite CloseSession2
+END_TESTCASE					HLIP-MMP-RTCP-FUNC2-11
+
+START_TESTCASE					HLIP-MMP-RTCP-FUNC2-12
+//! @SYMTestCaseID              hlip-mmp-rtcp-func2-12
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+PRINT RTCP usage optional test
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite OpenSession2 z:\testdata\configs\rtp\te_rtcpsuite.ini RTCPOpen3
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini ERtpNewSource
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini OnSendSuccess
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite MakeRTPPacket z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetPayloadType z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetTimestamp z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetPayload z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetMarker z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite StartSendingPackets z:\testdata\configs\rtp\te_rtcpsuite.ini OnCallback1
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite CheckForSRPacket
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite CloseSession2
+END_TESTCASE					HLIP-MMP-RTCP-FUNC2-12
+
+START_TESTCASE					HLIP-MMP-RTCP-FUNC2-13
+//! @SYMTestCaseID              hlip-mmp-rtcp-func2-13
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+PRINT RR-SSRC consistency test
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite OpenSession2 z:\testdata\configs\rtp\te_rtcpsuite.ini RTCPOpen3
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini ERtpNewSource
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini OnSendSuccess
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini ERtpNewRR
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite MakeRTPPacket z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetPayloadType z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetTimestamp z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetPayload z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetMarker z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite StartSendingPackets z:\testdata\configs\rtp\te_rtcpsuite.ini OnCallback4
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite CheckForSSRCConsistencyRR
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite CloseSession2
+END_TESTCASE					HLIP-MMP-RTCP-FUNC2-13
+
+
+
+START_TESTCASE					HLIP-MMP-RTCP-FUNC2-14
+//! @SYMTestCaseID              hlip-mmp-rtcp-func2-14
+//! @SYMPREQ				    PREQ2429
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+PRINT RTCPSatistics validity checking.
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite OpenSession2 z:\testdata\configs\rtp\te_rtcpsuite.ini RTCPOpen9
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini ERtpNewSource
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite Event  z:\testdata\configs\rtp\te_rtcpsuite.ini OnSendSuccess
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite MakeRTPPacket z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetPayloadType z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetTimestamp z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetPayload z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite SetMarker z:\testdata\configs\rtp\te_rtcpsuite.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite StartSendingPackets z:\testdata\configs\rtp\te_rtcpsuite.ini OnCallback3
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite RtcpStatisticsStep 
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite CloseSession2
+END_TESTCASE					HLIP-MMP-RTCP-FUNC2-14
+
+
+START_TESTCASE					HLIP-MMP-RTCP-FUNC2-15
+//! @SYMTestCaseID              hlip-mmp-rtcp-func2-15
+//! @SYMPREQ				    PREQ2429
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+PRINT RTCP Remote Address Change Step
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite  OpenSession2 z:\testdata\configs\rtp\te_rtcpsuite.ini RTCPOpen9
+RUN_TEST_STEP_RESULT 0 100  te_rtcpsuite ChangeRemoteAddrToLoopStep z:\testdata\configs\rtp\te_rtcpsuite.ini LoopAddrSettings
+RUN_TEST_STEP_RESULT 0 100  te_rtcpsuite SetupLocalRecvSockStep     z:\testdata\configs\rtp\te_rtcpsuite.ini LoopAddrSettings
+RUN_TEST_STEP_RESULT 0 100  te_rtcpsuite RecvOnLocalSockStep        z:\testdata\configs\rtp\te_rtcpsuite.ini 
+RUN_TEST_STEP_RESULT 0 100  te_rtcpsuite CloseSession2
+END_TESTCASE					HLIP-MMP-RTCP-FUNC2-15
+
+
+START_TESTCASE					HLIP-MMP-RTCP-FUNC2-16
+//! @SYMTestCaseID              hlip-mmp-rtcp-func2-16
+//! @SYMPREQ				    PREQ2429
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+PRINT RTCP Socket Set and Get Opt Test
+RUN_TEST_STEP_RESULT 0 100  te_rtcpsuite OpenSession2 z:\testdata\configs\rtp\te_rtcpsuite.ini RTCPOpen9
+RUN_TEST_STEP_RESULT 0 100  te_rtcpsuite SetAndGetOptStep
+RUN_TEST_STEP_RESULT 0 100  te_rtcpsuite CloseSession2
+END_TESTCASE					HLIP-MMP-RTCP-FUNC2-16
+
+
+START_TESTCASE					HLIP-MMP-RTCP-FUNC2-17
+//! @SYMTestCaseID              hlip-mmp-rtcp-func2-17
+//! @SYMPREQ				    PREQ2429
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+PRINT NON RTCP Send and Receive Test
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite OpenSession2 z:\testdata\configs\rtp\te_rtcpsuite.ini RTCPOpenforCollision
+RUN_TEST_STEP_RESULT 0 10  te_rtcpsuite RegisterNonRtcpDataStep
+RUN_TEST_STEP_RESULT 0 10  te_rtcpsuite SendNonRtcpDataStep
+RUN_TEST_STEP_RESULT 0 10  te_rtcpsuite ReceiveNonRtcpDataStep
+RUN_TEST_STEP_RESULT 0 10  te_rtcpsuite CloseSession2
+END_TESTCASE					HLIP-MMP-RTCP-FUNC2-17
+
+
+START_TESTCASE					HLIP-MMP-RTCP-FUNC2-18
+//! @SYMTestCaseID              hlip-mmp-rtcp-func2-18
+//! @SYMPREQ				    PREQ2429
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+PRINT Setting RTP session parameters
+RUN_TEST_STEP_RESULT 0 100 te_rtcpsuite OpenSession2 z:\testdata\configs\rtp\te_rtcpsuite.ini RTCPOpen3
+RUN_TEST_STEP_RESULT 0 10  te_rtcpsuite SetRtcpIntervalStep z:\testdata\configs\rtp\te_rtcpsuite.ini RTCPOpen3
+RUN_TEST_STEP_RESULT 0 10  te_rtcpsuite SetRtpStreamParamsStep z:\testdata\configs\rtp\te_rtcpsuite.ini RTCPOpen3
+RUN_TEST_STEP_RESULT 0 10  te_rtcpsuite SetandGetAutoSendOptionStep z:\testdata\configs\rtp\te_rtcpsuite.ini RTCPOpen3
+RUN_TEST_STEP_RESULT 0 10  te_rtcpsuite SetSessionBandwidthStep z:\testdata\configs\rtp\te_rtcpsuite.ini RTCPOpen3
+RUN_TEST_STEP_RESULT 0 10  te_rtcpsuite CloseSession2
+END_TESTCASE					HLIP-MMP-RTCP-FUNC2-18
+
+
+PRINT Complate_te_RTCP_Tests
+
+

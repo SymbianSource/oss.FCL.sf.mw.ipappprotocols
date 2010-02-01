@@ -1,0 +1,55 @@
+// Copyright (c) 2005-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// trtp.exe Application for testing RTP APIs, unit tests using loopback
+// 
+//
+
+/**
+ @file
+*/
+
+#if (defined WINS && !defined EKA2)
+TARGET      trtp.dll
+TARGETTYPE  dll
+UID         0x1000008d 0x101FACF7
+VENDORID 0x10202901
+#else
+TARGET      trtp.exe
+TARGETTYPE  exe
+UID         0x1000008d 0x101FACF7
+VENDORID 0x10202901
+#endif
+
+SOURCEPATH  ../src
+SOURCE		trtpserver.cpp
+SOURCE		trtpstep.cpp	
+
+
+SYSTEMINCLUDE /epoc32/include/comms-infras
+SYSTEMINCLUDE /epoc32/include
+SYSTEMINCLUDE /epoc32/include/test
+SYSTEMINCLUDE /epoc32/include/libc
+
+
+LIBRARY     euser.lib estlib.lib
+LIBRARY		testexecuteutils.lib testexecutelogclient.lib
+LIBRARY		efsrv.lib 
+LIBRARY		rtp.lib netmeta.lib
+LIBRARY		esock.lib insock.lib
+LIBRARY		commdb.lib
+LIBRARY 	nodemessages.lib
+
+CAPABILITY CommDD PowerMgmt ReadDeviceData WriteDeviceData TrustedUI ProtServ NetworkControl NetworkServices LocalServices ReadUserData WriteUserData
+
+SMPSAFE

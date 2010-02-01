@@ -1,0 +1,32 @@
+/*
+* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description:
+*
+*/
+#ifndef SIPDUMMYPRT_IBY
+#define SIPDUMMYPRT_IBY
+
+// SIP Dummy PRT IBY
+#ifdef SYMBIAN_EXCLUDE_SIP
+REM Feature SIP is not included in this ROM
+#else
+file=ABI_DIR\DEBUG_DIR\SIPDummyPRT.PRT                                system\libs\SIPDummyPRT.PRT
+data=EPOCROOT##epoc32\data\z\private\101F7989\Esock\sip.providers.esk private\101F7989\Esock\sip.providers.esk
+
+#ifndef SYMBIAN_NON_SEAMLESS_NETWORK_BEARER_MOBILITY
+data=EPOCROOT##epoc32\data\z\private\101F7988\esock_sip.cmi           private\101F7988\esock_sip.cmi
+#endif // SYMBIAN_NON_SEAMLESS_NETWORK_BEARER_MOBILITY
+
+#endif 
+#endif //SIPDUMMYPRT_IBY

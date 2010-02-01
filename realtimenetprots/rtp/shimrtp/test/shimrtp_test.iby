@@ -1,0 +1,28 @@
+// Copyright (c) 2007-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name     : shimrtp_test.iby
+// Part of  : test Component for shimrtp
+// Main IBY for SHIM RTP Test Suites
+// 
+//
+
+#ifndef __SHIMRTP_MAIN_TEST_IBY__
+#define __SHIMRTP_MAIN_TEST_IBY__
+
+#include <trtp.iby>
+#include <te_rtpsuite.iby>
+#include <te_rtcpsuite.iby>
+#include <rtpfilestreamer.iby>
+
+#endif

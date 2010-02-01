@@ -1,0 +1,44 @@
+//
+// Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+//
+// --------------------
+// Use Setcap to change capabilities of harness (MASK = 00000000)
+RUN_PROGRAM -1 setcap Cap_Te_Cap_SipServer.exe 00000000 C:\sys\bin\Cap_Te_Cap_SipServer_sc.exe
+//Please don't ammend the following PRINT Line as it is used by CapToolSumm to generate its report
+PRINT ---- capabilities now set to [None] (MASK = 00000000) ----
+
+RUN_SCRIPT  Z:\TestData\Scripts\Cap_00000000_Te_Cap_SipServerSub.script
+// --------------------
+// Use Setcap to change capabilities of harness (MASK = 00000020)
+RUN_PROGRAM -1 setcap Cap_Te_Cap_SipServer.exe 00000020 C:\sys\bin\Cap_Te_Cap_SipServer_sc.exe
+//Please don't ammend the following PRINT Line as it is used by CapToolSumm to generate its report
+PRINT ---- capabilities now set to [WriteDeviceData] (MASK = 00000020) ----
+
+RUN_SCRIPT  Z:\TestData\Scripts\Cap_00000020_Te_Cap_SipServerSub.script
+// --------------------
+// Use Setcap to change capabilities of harness (MASK = 00002000)
+RUN_PROGRAM -1 setcap Cap_Te_Cap_SipServer.exe 00002000 C:\sys\bin\Cap_Te_Cap_SipServer_sc.exe
+//Please don't ammend the following PRINT Line as it is used by CapToolSumm to generate its report
+PRINT ---- capabilities now set to [NetworkServices] (MASK = 00002000) ----
+
+RUN_SCRIPT  Z:\TestData\Scripts\Cap_00002000_Te_Cap_SipServerSub.script
+// --------------------
+// Use Setcap to change capabilities of harness (MASK = 80000000)
+RUN_PROGRAM -1 setcap Cap_Te_Cap_SipServer.exe 80000000 C:\sys\bin\Cap_Te_Cap_SipServer_sc.exe
+//Please don't ammend the following PRINT Line as it is used by CapToolSumm to generate its report
+PRINT ---- capabilities now set to [_HardLimit _None] (MASK = 80000000) ----
+
+RUN_SCRIPT  Z:\TestData\Scripts\Cap_80000000_Te_Cap_SipServerSub.script
+// --------------------

@@ -1,0 +1,175 @@
+/*
+* Copyright (c) 2004 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description:  
+*
+*/
+
+
+
+
+#ifndef __UT_CSRTPAUTHENTICATION_RCC_H__
+#define __UT_CSRTPAUTHENTICATION_RCC_H__
+
+//  EXTERNAL INCLUDES
+#include <digia/eunit/ceunittestsuiteclass.h>
+
+//  INTERNAL INCLUDES
+
+
+//  FORWARD DECLARATIONS
+class CSrtpAuthentication_RCC;
+
+#include <e32def.h>
+#ifndef NONSHARABLE_CLASS
+    #define NONSHARABLE_CLASS(x) class x
+#endif
+
+//  CLASS DEFINITION
+/**
+ *
+ * EUnitWizard generated test class. 
+ *
+ */
+NONSHARABLE_CLASS( UT_CSrtpAuthentication_RCC )
+     : public CEUnitTestSuiteClass
+    {
+    public:     // Constructors and destructors
+
+        /**
+         * Two phase construction
+         */
+        static UT_CSrtpAuthentication_RCC* NewL();
+        static UT_CSrtpAuthentication_RCC* NewLC();
+        /**
+         * Destructor
+         */
+        ~UT_CSrtpAuthentication_RCC();
+
+    private:    // Constructors and destructors
+
+        UT_CSrtpAuthentication_RCC();
+        void ConstructL();
+
+    public:     // From observer interface
+
+        
+
+    private:    // New methods
+
+         void SetupL();
+        
+         void Teardown();
+        
+         void UT_CSrtpAuthentication_RCC_NewLL();
+        
+        
+         void UT_CSrtpAuthentication_RCC_NewLCL();
+        
+        
+         void UT_CSrtpAuthentication_RCC_AuthenticateLL();
+         void Hex(HBufC8& aString);
+         void UT_AuthenticateL_RFC2202_Test1_80L();
+         void UT_AuthenticateL_RFC2202_Test1_32L();
+         void UT_AuthenticateL_RFC2202_Test2_80L();
+         void UT_AuthenticateL_RFC2202_Test2_32L();
+         void UT_AuthenticateL_RFC2202_Test3_80L();
+         void UT_AuthenticateL_RFC2202_Test3_32L();
+         void UT_AuthenticateL_RFC2202_Test4_80L();
+         void UT_AuthenticateL_RFC2202_Test4_32L();
+         void UT_AuthenticateL_RFC2202_Test5_80L();
+         void UT_AuthenticateL_RFC2202_Test5_32L();
+         void UT_AuthenticateL_RFC2202_Test6_80L();
+         void UT_AuthenticateL_RFC2202_Test6_32L();
+         void UT_AuthenticateL_RFC2202_Test7_80L();
+         void UT_AuthenticateL_RFC2202_Test7_32L();
+         void UT_AuthenticateL_Test8_32L(  );
+    private:    // Data
+
+        CSrtpAuthentication_RCC* iAuthenticator;    
+
+        // RFC 2202 test 1 128 bit key
+        HBufC8* iRFC2202_Test1_Key_160bits;
+        // RFC 2202 test 1 128 bit data
+        HBufC8* iRFC2202_Test1_Data_16bits;
+        // RFC 2202 test 1 80 bit digest/tag
+        HBufC8* iRFC2202_Test1_Tag_80bits;
+        // RFC 2202 test 1 32 bit digest/tag
+        HBufC8* iRFC2202_Test1_Tag_32bits;
+        
+        // RFC 2202 test 2 key
+        HBufC8* iRFC2202_Test2_Key;
+        // RFC 2202 test 2 28 bit data
+        HBufC8* iRFC2202_Test2_Data_28bits;
+        // RFC 2202 test 2 80 bit digest/tag
+        HBufC8* iRFC2202_Test2_Tag_80bits;
+        // RFC 2202 test 2 32 bit digest/tag
+        HBufC8* iRFC2202_Test2_Tag_32bits;
+                
+        // RFC 2202 test 3 160 bit key
+        HBufC8* iRFC2202_Test3_Key_160bits;
+        // RFC 2202 test 3 400 bit data
+        HBufC8* iRFC2202_Test3_Data_400bits;
+        // RFC 2202 test 3 80 bit digest/tag
+        HBufC8* iRFC2202_Test3_Tag_80bits;        
+        // RFC 2202 test 3 32 bit digest/tag
+        HBufC8* iRFC2202_Test3_Tag_32bits;        
+
+        // RFC 2202 test 4 200 bit key
+        HBufC8* iRFC2202_Test4_Key_200bits;
+        // RFC 2202 test 4 400 bit data
+        HBufC8* iRFC2202_Test4_Data_400bits;
+        // RFC 2202 test 4 80 bit digest/tag
+        HBufC8* iRFC2202_Test4_Tag_80bits;
+        // RFC 2202 test 4 32 bit digest/tag
+        HBufC8* iRFC2202_Test4_Tag_32bits;
+
+        // RFC 2202 test 5 200 bit key
+        HBufC8* iRFC2202_Test5_Key_160bits;
+        // RFC 2202 test 5 data
+        HBufC8* iRFC2202_Test5_Data;
+        // RFC 2202 test 5 80 bit digest/tag
+        HBufC8* iRFC2202_Test5_Tag_80bits;
+        // RFC 2202 test 5 32 bit digest/tag
+        HBufC8* iRFC2202_Test5_Tag_32bits;
+        
+        // RFC 2202 test 6 640 bit key
+        HBufC8* iRFC2202_Test6_Key_640bits;
+        // RFC 2202 test 6 54 bit data
+        HBufC8* iRFC2202_Test6_Data_54bits;
+        // RFC 2202 test 6 80 bit digest/tag
+        HBufC8* iRFC2202_Test6_Tag_80bits;
+        // RFC 2202 test 6 32 bit digest/tag
+        HBufC8* iRFC2202_Test6_Tag_32bits;
+
+        // RFC 2202 test 7 640 bit key
+        HBufC8* iRFC2202_Test7_Key_640bits;
+        // RFC 2202 test 7 73 bit data
+        HBufC8* iRFC2202_Test7_Data_73bits;
+        // RFC 2202 test 7 80 bit digest/tag
+        HBufC8* iRFC2202_Test7_Tag_80bits;
+        // RFC 2202 test 7 32 bit digest/tag
+        HBufC8* iRFC2202_Test7_Tag_32bits;
+
+		// TestCase from SRTP open Src
+        HBufC8* iTest8_Key_160bits;
+        HBufC8* iTest8_Data_168bits;
+        HBufC8*	iTest8_Data2_32bits;
+        HBufC8* iTest8_Tag_80bits;
+		EUNIT_DECLARE_TEST_TABLE; 		 
+
+    };
+
+#endif      //  __UT_CSRTPAUTHENTICATION_RCC_H__
+
+// End of file

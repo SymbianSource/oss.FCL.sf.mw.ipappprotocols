@@ -1,0 +1,28 @@
+/*
+* Copyright (c) 2002-2003 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description:   
+*
+*/
+
+
+
+#include <platform_paths.hrh>
+
+PRJ_EXPORTS
+../rom/rtpservice.iby CORE_MW_LAYER_IBY_EXPORT_PATH(rtpservice.iby)
+../rom/rtpstack_stub.SIS /epoc32/data/z/system/install/rtpstack_stub.sis
+
+PRJ_MMPFILES
+rtpservice.mmp
+rtpstppacket.mmp

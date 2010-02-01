@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<relnotes name="RTP">
+  <purpose>
+    Real Time Transport Protocol. 2 dll's implied.
+  </purpose>
+  
+  <defect number="DEF138644" title="RTCP SR packet reports wrong NTP Timestamp value" revision="061">
+    Fix for:
+    DEF138644 RTCP SR packet reports wrong NTP Timestamp value
+  </defect>
+
+  <defect number="DEF138151 " title="[FST]Verification of RTCPRRJitter fails for moderate sized (audio/video) data" revision="060">
+    Fix for:
+    DEF138151[FST]Verification of RTCPRRJitter fails for moderate sized (audio/video) data
+  </defect>
+
+  <defect number="DEF131783 " title="Functionality moved from SCPRStates to PRStates namespace" revision="059">
+    Fix for:
+    DEF131783  Functionality moved from SCPRStates to PRStates namespace
+  </defect>
+
+  <defect number="DEF128260" title="Fix RTP published API to match the original design sketch" revision="058">
+    Fix for:
+    DEF128260 Fix RTP published API to match the original design sketch
+  </defect>
+
+  <defect number="PDEF130573" title="CF-RTP should remove unnecessary memcopies." revision="057">
+    Fix for:
+    PDEF130573 CF-RTP  should remove unnecessary memcopies. 
+  </defect>
+
+  <defect number="PDEF129033" title="CSubConRTPGenericParamSet::AddRtpExtension( ) might be used to load malware DLLs" revision="056">
+    Fix for:
+    PDEF129033 CSubConRTPGenericParamSet::AddRtpExtension( ) might be used to load malware DLLs    
+  </defect>
+  
+  <defect number="DEF129424" title="GT errors due to Converged-comms in M04729 v9.5,Future" revision="055">
+    Fix for:
+    DEF129424 GT errors due to Converged-comms in M04729 v9.5,Future
+  </defect>
+
+  <defect number="DEF128627" title="[Coverity]-FORWARD_NULL-mm-protocols/rtp" revision="054">
+    Fix for:
+    DEF128627 [Coverity]-FORWARD_NULL-mm-protocols/rtp    
+  </defect>
+
+  <defect number="PDEF128596" title="rtpremoved.dll is exporting incorrect ordinal sequence for AMRv5" revision="053">
+    Fix for:
+    PDEF128596 rtpremoved.dll is exporting incorrect ordinal sequence for AMRv5    
+  </defect>
+  
+  <defect number="DEF127519" title="CSubConRTPGenericParamSet  parameter name RTP incorrect" revision="052">
+    Fix for:
+    DEF127519 CSubConRTPGenericParamSet  parameter name RTP incorrect    
+  </defect>
+  
+  <defect number="DEF127581" title="Some dirs in 'mm-protocols_rtp' do not exist" revision="051">
+    Fix for:
+    DEF127581 Some dirs in "mm-protocols_rtp" do not exist   
+  </defect> 
+
+  <ec number="120" title="Mesh Machine Productisation" revision="050">
+   Mesh Machine Productisation
+  </ec>
+  
+  <defect number="DEF127153" title="ICC Codenomicon :omapoc-rtcp-app-tbcp-tb-queue-status-request-underflow" revision="049">
+    Fix for:
+    DEF127153 ICC Codenomicon :omapoc-rtcp-app-tbcp-tb-queue-status-request-underflow   
+  </defect>
+  
+  <defect number="DEF127152" title="ICC Codenomicon :omapoc-rtcp-app-tbcp-tb-acknowledgement-underflow" revision="048">
+    Fix for:
+    DEF127152 ICC Codenomicon :omapoc-rtcp-app-tbcp-tb-acknowledgement-underflow   
+  </defect>
+  
+  <defect number="DEF127151" title="ICC Codenomicon :omapoc-rtcp-app-tbcp-tb-release-underflow" revision="047">
+    Fix for:
+    DEF127151 ICC Codenomicon :omapoc-rtcp-app-tbcp-tb-release-underflow   
+  </defect>
+  
+  <defect number="DEF127150" title="ICC Codenomicon : omapoc-rtcp-app-tbcp-tb-request-underflow" revision="046">
+    Fix for:
+    DEF127150 ICC Codenomicon : omapoc-rtcp-app-tbcp-tb-request-underflow   
+  </defect>
+  
+  <defect number="DEF127148" title="ICC Codenomicon :omapoc-rtcp-app-tbcp-tb-queue-status-response-underflow" revision="045">
+    Fix for:
+    DEF127148 ICC Codenomicon :omapoc-rtcp-app-tbcp-tb-queue-status-response-underflow   
+  </defect>
+  
+  <defect number="DEF127145" title="ICC Codenomicon :omapoc-rtcp-app-tbcp-tb-deny-underflow" revision="044">
+    Fix for:
+    DEF127145 ICC Codenomicon :omapoc-rtcp-app-tbcp-tb-deny-underflow   
+  </defect>
+  
+  <defect number="DEF127144" title="ICC Codenomicon :omapoc-rtcp-app-tbcp-tb-granted-underflow" revision="043">
+    Fix for:
+    DEF127144 ICC Codenomicon :omapoc-rtcp-app-tbcp-tb-granted-underflow   
+  </defect>
+  
+  <defect number="DEF127143" title="ICC Codenomicon :omapoc-rtcp-app-tbcp-tb-revoke-underflow" revision="042">
+    Fix for:
+    DEF127143 ICC Codenomicon :omapoc-rtcp-app-tbcp-tb-revoke-underflow   
+  </defect>
+  
+  <defect number="DEF127142" title="ICC Codenomicon :omapoc-rtcp-app-tbcp-tb-taken-underflow" revision="041">
+    Fix for:
+    DEF127142 ICC Codenomicon :omapoc-rtcp-app-tbcp-tb-taken-underflow   
+  </defect>
+  
+  <defect number="DEF127141" title="ICC Codenomicon :omapoc-rtcp-app-tbcp-tb-idle-underflow" revision="040">
+    Fix for:
+    DEF127141 ICC Codenomicon :omapoc-rtcp-app-tbcp-tb-idle-underflow   
+  </defect>
+  
+  <defect number="DEF127140" title="ICC Codenomicon :omapoc-rtcp-app-tbcp-disconnect-underflow" revision="039">
+    Fix for:
+    DEF127140 ICC Codenomicon :omapoc-rtcp-app-tbcp-disconnect-underflow   
+  </defect>
+  
+  <defect number="DEF127066" title="ICC Codenomicon :omapoc-rtcp-app-tbcp-connect-underflow" revision="038">
+    Fix for:
+    DEF127066 ICC Codenomicon :omapoc-rtcp-app-tbcp-connect-underflow   
+  </defect>
+  
+  <defect number="DEF127065" title="ICC Codenomicon : rfc3611-rtcp-xr-voip-sdes-underflow" revision="037">
+    Fix for:
+    DEF127065 ICC Codenomicon : rfc3611-rtcp-xr-voip-sdes-underflow   
+  </defect>
+  
+  <defect number="DEF127064" title="ICC Codenomicon : rfc3611-rtcp-xr-stats-sdes-underflow" revision="036">
+    Fix for:
+    DEF127064 ICC Codenomicon : rfc3611-rtcp-xr-stats-sdes-underflow   
+  </defect>
+  
+  <defect number="DEF127063" title="ICC Codenomicon :rfc3611-rtcp-xr-dlrr-sdes-underflow" revision="035">
+    Fix for:
+    DEF127063 ICC Codenomicon :rfc3611-rtcp-xr-dlrr-sdes-underflow   
+  </defect>
+  
+  <defect number="DEF127061" title="ICC Codenomicon :rfc3611-rtcp-xr-rrt-sdes-underflow" revision="034">
+    Fix for:
+    DEF127061 ICC Codenomicon :rfc3611-rtcp-xr-rrt-sdes-underflow   
+  </defect>
+  
+  <defect number="DEF127059" title="ICC Codenomicon : rfc3611-rtcp-xr-prt-sdes-underflow" revision="033">
+    Fix for:
+    DEF127059 ICC Codenomicon : rfc3611-rtcp-xr-prt-sdes-underflow   
+  </defect>
+  
+  <defect number="DEF127058" title="ICC Codenomicon : rfc3611-rtcp-xr-dup-rle-sdes-underflow" revision="032">
+    Fix for:
+    DEF127058 ICC Codenomicon : rfc3611-rtcp-xr-dup-rle-sdes-underflow   
+  </defect>
+  
+  <defect number="DEF127057" title="ICC Codenomicon : rfc3611-rtcp-xr-loss-rle-sdes-underflow" revision="031">
+    Fix for:
+    DEF127057 ICC Codenomicon : rfc3611-rtcp-xr-loss-rle-sdes-underflow   
+  </defect>
+  
+  <defect number="DEF126969" title="ICC Codenomicon : rfc3550-rtcp-rr-sdes-rr-underflow" revision="030">
+    Fix for:
+    DEF126969 ICC Codenomicon : rfc3550-rtcp-rr-sdes-rr-underflow   
+  </defect>
+  
+  <defect number="DEF126967" title="ICC Codenomicon : rfc3550-rtcp-rr-sdes-rr-report-block-repeat" revision="029">
+    Fix for:
+    DEF126967 ICC Codenomicon : rfc3550-rtcp-rr-sdes-rr-report-block-repeat   
+  </defect>
+  
+  <defect number="DEF126965" title="ICC Codenomicon : rfc3550-rtcp-rr-sdes-rr-header-rc" revision="028">
+    Fix for:
+    DEF126965 ICC Codenomicon : rfc3550-rtcp-rr-sdes-rr-header-rc   
+  </defect>
+  
+  <defect number="DEF126899" title="SMP: RTP does not compile on x86gcc platform" revision="027">
+    Fix for:
+    DEF126899 SMP: RTP does not compile on x86gcc platform   
+  </defect>
+  
+  <defect number="DEF126835" title="mmp-rtp: WINSCW UDEB call set CName twice with SetSDESL does not leave -11" revision="026">
+    Fix for:
+    DEF126835 mmp-rtp: WINSCW UDEB call set CName twice with SetSDESL does not leave -11   
+  </defect>
+  
+  <defect number="DEF126833" title="mmp-rtp: newsource event callback did not always be called in emulator" revision="025">
+    Fix for:
+    DEF126833 mmp-rtp: newsource event callback did not always be called in emulator   
+  </defect>
+  
+  <defect number="DEF126446" title="SDL-RTP:RRtpsession::SendRTCPPacketL no parameter explanation" revision="024">
+    Fix for:
+    DEF126446 SDL-RTP:RRtpsession::SendRTCPPacketL no parameter explanation   
+  </defect>
+  
+  <defect number="DEF126448" title="SDL-RTP: see also link of RRtpSession::DontReceive() is itsself" revision="023">
+    Fix for:
+    DEF126448 SDL-RTP: see also link of RRtpSession::DontReceive() is itsself   
+  </defect>
+  
+  <defect number="DEF126659" title="[Coverity] [UNUSED_VALUE][UNINIT]  mm-protocols/rtp " revision="022">
+    Fix for:
+    DEF126659 [Coverity] [UNUSED_VALUE][UNINIT]  mm-protocols/rtp   
+  </defect>
+  
+  <defect number="DEF126366" title="rtcp packet send to rtp port while remote rtcp port is not available" revision="021">
+    Fix for:
+    DEF126366 rtcp packet send to rtp port while remote rtcp port is not available  
+  </defect>
+  
+  <defect number="DEF126028" title="RRtpSendPacket::SetPayloadType doesn't panic specifying PT of 128 under ARMv5" revision="020">
+    Fix for:
+    DEF126028 RRtpSendPacket::SetPayloadType doesn't panic specifying PT of 128 under ARMv5  
+  </defect>
+  
+  <defect number="DEF125436" title="RRtpSendSource::ByeL panic with RTP-SOCKET 400 when aReason.Length%4 != 0" revision="019">
+    Fix for:
+    DEF125436 RRtpSendSource::ByeL panic with RTP-SOCKET 400 when aReason.Length%4 != 0  
+  </defect>
+  
+  <defect number="DEF125953" title="mmp-rtp: rrtpsession::openL should use rtp port in destination address" revision="018">
+    Fix for:
+    DEF125953 mmp-rtp: rrtpsession::openL should use rtp port in destination address  
+  </defect>
+  
+  <defect number="DEF125880" title="ESock Panic when invalid Bandwidth session parameter is given." revision="017">
+    Fix for:
+    DEF125880 ESock Panic when invalid Bandwidth session parameter is given.  
+  </defect>
+  
+  <defect number="DEF125710" title="Panic codes description for RRtpSendPacket::SetPayloadType in SDL is incorrect " revision="016">
+    Fix for:
+    DEF125710 Panic codes description for RRtpSendPacket::SetPayloadType in SDL is incorrect  
+  </defect>
+  
+  <defect number="DEF125425" title="The default value of RRtpSendSource::iAlignment is not the correct value of 1" revision="015">
+    Fix for:
+    DEF125425 The default value of RRtpSendSource::iAlignment is not the correct value of 1 
+  </defect>
+  
+  <defect number="DEF125376" title="CRtcpSessionData::iAverageRtcpSize is always 0 once SendRtcpL is called once." revision="014">
+    Fix for:
+    DEF125376 CRtcpSessionData::iAverageRtcpSize is always 0 once SendRtcpL is called once. 
+  </defect>
+  
+  <preq number="1903" title="Real-time and best effort data flows for RTP" revision="013">
+   Real-time and best effort data flows for RTP
+  </preq>
+  
+  <minor_change title="After OOM enabled,RTP testcases which are using GetBoolFromConfig() function in TEF are failed, cause this function calls a base api which is trying to allocate memory on heap which will fails in OOM on condition." revision="012"> 
+  </minor_change>
+  
+  <defect number=" PDEF119270" title=" SR packets not generated, on receiving RTP packets " revision="011">
+    Fix for:
+    PDEF119270 SR packets not generated, on receiving RTP packets 
+  </defect>
+  
+  <defect number=" PDEF117965" title=" Klocwork issues, NULL pointer can be used in release build mm-protocols_rtp " revision="010">
+    Fix for:
+    PDEF117965 Klocwork issues, NULL pointer can be used in release build mm-protocols_rtp 
+  </defect>
+
+  <defect number="DEF111868" title="Filiename policy warnings in SIP HL APIs and RTP components" revision="009">
+    Fix for:
+    DEF111868 Filiename policy warnings in SIP HL APIs and RTP components
+  </defect>
+  
+  <defect number="DEF107516" title="RTP Tests are failing for 9.5 Winscw Emulator" revision="008">
+    Fix for:
+    DEF107516 RTP Tests are failing for 9.5 Winscw Emulator
+  </defect>
+  
+  <defect number="PDEF106768" title="Symbian rtp stack crashes after a long pause in rtp packet flow" revision="007">
+    Fix for:
+    PDEF108220 If the timeout is short and there is a timeout then your rtp stack will crash.
+    PDEF108221 RTP packets just disappear inside RTP stack and client application doesnt recv
+    PDEF106768 Symbian rtp stack crashes after a long pause in rtp packet flow
+  </defect>
+
+  <defect number="PDEF108220" title="If the timeout is short and there is a timeout then your rtp stack will crash." revision="006">
+    Fix for:
+    PDEF108220 If the timeout is short and there is a timeout then your rtp stack will crash.
+    PDEF108221 RTP packets just disappear inside RTP stack and client application doesnt recv
+    PDEF106768 Symbian rtp stack crashes after a long pause in rtp packet flow
+  </defect>
+
+  <defect number="PDEF108221" title="RTP packets just disappear inside RTP stack and client application doesnt recv" revision="005">
+    Fix for:
+    PDEF108220 If the timeout is short and there is a timeout then your rtp stack will crash.
+    PDEF108221 RTP packets just disappear inside RTP stack and client application doesnt recv
+    PDEF106768 Symbian rtp stack crashes after a long pause in rtp packet flow
+  </defect>
+
+  <defect number="PDEF104584" title="Memory leak in CRtpSession::RunL" revision="004">
+    PDEF104584 - Memory leak in CRtpSession::RunL
+  </defect>
+
+  <preq number="1182" title="GNU Make-based build system" revision="003">
+    GNU Make-based build system
+  </preq>
+
+  <defect number="PDEF103856" title="Check the functionality of RtpUtils::GetNtpTime()." revision="002">
+    Fix for PDEF103856 Check the functionality of RtpUtils::GetNtpTime().
+  </defect>
+
+  <defect number="PDEF101761" title="RRtcpSRPart::NTPTimestamp(TTime&amp; aTime) const severely broken" revision="001">
+    RRtcpSRPart::NTPTimestamp(TTime&amp; aTime) const severely broken.
+  </defect>
+</relnotes>

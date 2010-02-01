@@ -1,0 +1,59 @@
+// Copyright (c) 2005-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// te_ut_rtpcollisionmgrsuite.exe Test component for cfrtp- collision manager tests
+// 
+//
+
+/**
+ @file
+*/
+
+TARGET      te_ut_rtpcollisionmgrsuite.exe
+TARGETTYPE  exe
+UID             0x1000007A 0xA000CB2A
+
+MACRO __RTPCORE_UNITTEST_CASES_
+
+
+SOURCEPATH  ../src
+SOURCE	            te_ut_rtpcollisionmgrsuiteserver.cpp
+SOURCE	            te_ut_rtpcollisionmgrsuitestepbase.cpp
+SOURCE              changessrcstep.cpp
+SOURCE              createnewsourcelstep.cpp
+SOURCE              deleteentrystep.cpp
+SOURCE              findentrystep.cpp
+SOURCE              getlocalentrystep.cpp
+SOURCE              getvalidentriesstep.cpp
+SOURCE              iscollisionorloopbackstep.cpp
+SOURCE              newlstep.cpp
+SOURCE              resolvertpcollisionorlooplstep.cpp
+SOURCE 				ut_stubclasses.cpp
+SOURCEPATH  ../../../src
+SOURCE              rtpcollisionmng.cpp
+
+	
+
+USERINCLUDE   ../src
+USERINCLUDE   ../../../inc
+
+SYSTEMINCLUDE /epoc32/include
+SYSTEMINCLUDE /epoc32/include/test
+SYSTEMINCLUDE /epoc32/include/libc
+
+
+LIBRARY     euser.lib esock.lib insock.lib random.lib bluetooth.lib hal.lib charconv.lib
+DEBUGLIBRARY  flogger.lib
+LIBRARY		testexecuteutils.lib 
+LIBRARY		testexecutelogclient.lib 
+SMPSAFE

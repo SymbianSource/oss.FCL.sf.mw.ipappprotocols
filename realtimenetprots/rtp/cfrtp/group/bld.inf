@@ -1,0 +1,37 @@
+// Copyright (c) 2005-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// build the CFRTP implementation
+// 
+//
+
+/**
+ @file
+*/
+#ifdef SYMBIAN_NON_SEAMLESS_NETWORK_BEARER_MOBILITY
+#include "../data/bld.inf"
+#endif
+
+PRJ_EXPORTS
+../inc/rtp_uid.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(rtp_uid.h)
+../inc/rtp_proto_id.h		SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(rtp_proto_id.h)
+#ifdef SYMBIAN_NON_SEAMLESS_NETWORK_BEARER_MOBILITY
+../inc/rtp_subconparams.h	SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(rtp_subconparams.h)
+./cfrtp.iby          /epoc32/rom/include/cfrtp.iby
+
+PRJ_MMPFILES
+cfrtp.mmp
+
+PRJ_TESTMMPFILES
+#include "../test/bld.inf"
+#endif

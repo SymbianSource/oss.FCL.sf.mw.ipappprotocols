@@ -1,0 +1,1079 @@
+
+(object Petal
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
+    charSet    	0)
+
+(object Class_Category "Sample Application Socket Engine"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"4073D0D3030F"
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "MSIPExSocketEngine"
+	    quid       	"4073D6A902E4"
+	    stereotype 	"interface"
+	    operations 	(list Operations
+		(object Operation "ConnectL"
+		    quid       	"4083810001AA"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "DisconnectL"
+		    quid       	"40838107036F"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "SendMoveL"
+		    quid       	"4083810E012D"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "CreateListeningSocketL"
+		    quid       	"4088B23902E5"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "~"
+		    quid       	"4088E77301BF"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    language   	"VC++")
+	(object Class "CSIPExSocketEngine"
+	    quid       	"4073D6BC0390"
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"4073D6CE0380"
+		    supplier   	"Logical View::Sample Application Socket Engine::MSIPExSocketEngine"
+		    quidu      	"4073D6A902E4"))
+	    language   	"VC++")
+	(object Class "SIPExSocketEngineFactory"
+	    quid       	"4088ADAD0111"
+	    used_nodes 	(list uses_relationship_list
+		(object Uses_Relationship
+		    quid       	"4088AE740143"
+		    label      	"instantiates"
+		    supplier   	"Logical View::Sample Application Socket Engine::CSIPExSocketEngine"
+		    quidu      	"4073D6BC0390"))
+	    language   	"VC++")
+	(object Association "informs"
+	    quid       	"4088B305024C"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$0"
+		    quid       	"4088B30601BF"
+		    supplier   	"Logical View::Sample Application Engine::MSIPExSocketEngineObserver"
+		    quidu      	"4088B2EE00E4"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$1"
+		    quid       	"4088B30601C1"
+		    supplier   	"Logical View::Sample Application Socket Engine::CSIPExSocketEngine"
+		    quidu      	"4073D6BC0390"))))
+    statemachine 	(object State_Machine "State/Activity Model"
+	quid       	"407CCAB9005A"
+	states     	(list States
+	    (object State "ENotConnected"
+		quid       	"407CCAEC005A"
+		transitions 	(list transition_list
+		    (object State_Transition
+			quid       	"407CCB9D0202"
+			label      	""
+			supplier   	"EConnecting"
+			quidu      	"407CCB4A033A"
+			Event      	(object Event "Already has an IP"
+			    quid       	"407CCB9D0203")
+			sendEvent  	(object sendEvent
+			    quid       	"407CCB9D0205"))
+		    (object State_Transition
+			quid       	"407CCC450188"
+			label      	""
+			supplier   	"ELookingUp"
+			quidu      	"407CCB5F02CD"
+			Event      	(object Event "If need for host resolving"
+			    quid       	"407CCC450189")
+			sendEvent  	(object sendEvent
+			    quid       	"407CCC45018B"))
+		    (object State_Transition
+			quid       	"407CCD1B0321"
+			supplier   	"ETimedOut"
+			quidu      	"407CCB59009A"
+			sendEvent  	(object sendEvent
+			    quid       	"407CCD1B0324")))
+		type       	"Normal")
+	    (object State "EConnecting"
+		quid       	"407CCB4A033A"
+		transitions 	(list transition_list
+		    (object State_Transition
+			quid       	"407CCBA60118"
+			label      	""
+			supplier   	"EConnected"
+			quidu      	"407CCB5400F8"
+			Event      	(object Event "Connection established"
+			    quid       	"407CCBA60119")
+			sendEvent  	(object sendEvent
+			    quid       	"407CCBA6011B"))
+		    (object State_Transition
+			quid       	"407CCBB601C4"
+			label      	""
+			supplier   	"EConnectFailed"
+			quidu      	"407CCB68028E"
+			Event      	(object Event "Connection attempt failed"
+			    quid       	"407CCBB601C5")
+			sendEvent  	(object sendEvent
+			    quid       	"407CCBB601C7"))
+		    (object State_Transition
+			quid       	"407CCCC2032F"
+			label      	""
+			supplier   	"ETimedOut"
+			quidu      	"407CCB59009A"
+			Event      	(object Event "Timeout"
+			    quid       	"407CCCC20330")
+			sendEvent  	(object sendEvent
+			    quid       	"407CCCC20332")))
+		type       	"Normal")
+	    (object State "EConnected"
+		quid       	"407CCB5400F8"
+		transitions 	(list transition_list
+		    (object State_Transition
+			quid       	"407CCC90006F"
+			supplier   	"EDisconnecting"
+			quidu      	"407CCB6C0231"
+			sendEvent  	(object sendEvent
+			    quid       	"407CCC900072")))
+		type       	"Normal")
+	    (object State "ETimedOut"
+		quid       	"407CCB59009A"
+		transitions 	(list transition_list
+		    (object State_Transition
+			quid       	"407CCCCB036E"
+			supplier   	"EConnectFailed"
+			quidu      	"407CCB68028E"
+			sendEvent  	(object sendEvent
+			    quid       	"407CCCCB0371")))
+		type       	"Normal")
+	    (object State "ELookingUp"
+		quid       	"407CCB5F02CD"
+		transitions 	(list transition_list
+		    (object State_Transition
+			quid       	"407CCC5A01F5"
+			label      	""
+			supplier   	"ELookUpFailed"
+			quidu      	"407CCB64008B"
+			Event      	(object Event "No host IP found"
+			    quid       	"407CCC5A01F6")
+			sendEvent  	(object sendEvent
+			    quid       	"407CCC5A01F8"))
+		    (object State_Transition
+			quid       	"407CCC6602A1"
+			label      	""
+			supplier   	"EConnecting"
+			quidu      	"407CCB4A033A"
+			Event      	(object Event "If host IP found"
+			    quid       	"407CCC6602A2")
+			sendEvent  	(object sendEvent
+			    quid       	"407CCC6602A4")))
+		type       	"Normal")
+	    (object State "ELookUpFailed"
+		quid       	"407CCB64008B"
+		transitions 	(list transition_list
+		    (object State_Transition
+			quid       	"407CCCF8019A"
+			supplier   	"ENotConnected"
+			quidu      	"407CCAEC005A"
+			sendEvent  	(object sendEvent
+			    quid       	"407CCCF8019D")))
+		type       	"Normal")
+	    (object State "EConnectFailed"
+		quid       	"407CCB68028E"
+		transitions 	(list transition_list
+		    (object State_Transition
+			quid       	"407CCBC6001F"
+			supplier   	"ENotConnected"
+			quidu      	"407CCAEC005A"
+			sendEvent  	(object sendEvent
+			    quid       	"407CCBC60022")))
+		type       	"Normal")
+	    (object State "EDisconnecting"
+		quid       	"407CCB6C0231"
+		transitions 	(list transition_list
+		    (object State_Transition
+			quid       	"407CCC9F01C7"
+			supplier   	"ENotConnected"
+			quidu      	"407CCAEC005A"
+			sendEvent  	(object sendEvent
+			    quid       	"407CCC9F01CA")))
+		type       	"Normal"))
+	partitions 	(list Partitions)
+	objects    	(list Objects)
+	statediagrams 	(list StateDiagrams
+	    (object State_Diagram "Mainstates"
+		quid       	"407CCAB90069"
+		title      	"Mainstates"
+		zoom       	100
+		max_height 	28350
+		max_width  	21600
+		origin_x   	0
+		origin_y   	0
+		items      	(list diagram_item_list
+		    (object StateView "Normal" "ENotConnected" @1
+			location   	(510, 320)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@1
+			    location   	(510, 304)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	340
+			    justify    	0
+			    label      	"ENotConnected")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"407CCAEC005A"
+			width      	437
+			height     	144
+			autoResize 	TRUE)
+		    (object StateView "Normal" "EConnecting" @2
+			location   	(1312, 704)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@2
+			    location   	(1312, 695)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	260
+			    justify    	0
+			    label      	"EConnecting")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"407CCB4A033A"
+			width      	357
+			height     	131
+			autoResize 	TRUE)
+		    (object StateView "Normal" "EConnected" @3
+			location   	(1312, 1232)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@3
+			    location   	(1312, 1223)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	260
+			    justify    	0
+			    label      	"EConnected")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"407CCB5400F8"
+			width      	356
+			height     	131
+			autoResize 	TRUE)
+		    (object StateView "Normal" "ETimedOut" @4
+			location   	(1312, 464)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@4
+			    location   	(1312, 453)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	204
+			    justify    	0
+			    label      	"ETimedOut")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"407CCB59009A"
+			autoResize 	TRUE)
+		    (object StateView "Normal" "ELookingUp" @5
+			location   	(510, 704)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@5
+			    location   	(510, 685)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	240
+			    justify    	0
+			    label      	"ELookingUp")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"407CCB5F02CD"
+			width      	337
+			height     	150
+			autoResize 	TRUE)
+		    (object StateView "Normal" "ELookUpFailed" @6
+			location   	(510, 1232)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@6
+			    location   	(510, 1216)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	324
+			    justify    	0
+			    label      	"ELookUpFailed")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"407CCB64008B"
+			width      	420
+			height     	144
+			autoResize 	TRUE)
+		    (object StateView "Normal" "EConnectFailed" @7
+			location   	(2064, 704)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@7
+			    location   	(2064, 688)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	292
+			    justify    	0
+			    label      	"EConnectFailed")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"407CCB68028E"
+			width      	388
+			height     	144
+			autoResize 	TRUE)
+		    (object StateView "Normal" "EDisconnecting" @8
+			location   	(2064, 1232)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@8
+			    location   	(2064, 1223)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	322
+			    justify    	0
+			    label      	"EDisconnecting")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"407CCB6C0231"
+			width      	419
+			height     	131
+			autoResize 	TRUE)
+		    (object TransView "" @9
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @10
+			    Parent_View 	@9
+			    location   	(1342, 924)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	474
+			    justify    	0
+			    label      	"Connection established"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	0)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"407CCBA60118"
+			client     	@2
+			supplier   	@3
+			line_style 	0
+			x_offset   	FALSE)
+		    (object TransView "" @11
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @12
+			    Parent_View 	@11
+			    location   	(1693, 807)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	470
+			    justify    	0
+			    label      	"Connection attempt failed"
+			    pctDist    	0.534211
+			    height     	103
+			    orientation 	1)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"407CCBB601C4"
+			client     	@2
+			supplier   	@7
+			line_style 	0
+			x_offset   	FALSE)
+		    (object TransView "" @13
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @14
+			    Parent_View 	@13
+			    location   	(555, 511)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	450
+			    justify    	0
+			    label      	"If need for host resolving"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	0)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"407CCC450188"
+			client     	@1
+			supplier   	@5
+			line_style 	0
+			x_offset   	FALSE)
+		    (object TransView "" @15
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @16
+			    Parent_View 	@15
+			    location   	(555, 969)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	337
+			    justify    	0
+			    label      	"No host IP found"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	0)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"407CCC5A01F5"
+			client     	@5
+			supplier   	@6
+			line_style 	0
+			x_offset   	FALSE)
+		    (object TransView "" @17
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @18
+			    Parent_View 	@17
+			    location   	(906, 660)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	305
+			    justify    	0
+			    label      	"If host IP found"
+			    pctDist    	0.500000
+			    height     	44
+			    orientation 	0)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"407CCC6602A1"
+			client     	@5
+			supplier   	@2
+			line_style 	0
+			x_offset   	FALSE)
+		    (object TransView "" @19
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"407CCBC6001F"
+			client     	@7
+			supplier   	@1
+			vertices   	(list Points
+			    (2063, 632)
+			    (2063, 319)
+			    (728, 319))
+			line_style 	0
+			x_offset   	FALSE)
+		    (object TransView "" @20
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"407CCC90006F"
+			client     	@3
+			supplier   	@8
+			line_style 	0
+			x_offset   	FALSE)
+		    (object TransView "" @21
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"407CCC9F01C7"
+			client     	@8
+			supplier   	@1
+			vertices   	(list Points
+			    (2273, 1231)
+			    (2556, 1231)
+			    (2559, 109)
+			    (509, 109)
+			    (509, 248))
+			line_style 	0
+			x_offset   	FALSE)
+		    (object TransView "" @22
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @23
+			    Parent_View 	@22
+			    location   	(1268, 585)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	450
+			    justify    	0
+			    label      	"Timeout"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	0)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"407CCCC2032F"
+			client     	@2
+			supplier   	@4
+			line_style 	0
+			x_offset   	FALSE)
+		    (object TransView "" @24
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"407CCCCB036E"
+			client     	@4
+			supplier   	@7
+			line_style 	0
+			x_offset   	FALSE)
+		    (object TransView "" @25
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"407CCCF8019A"
+			client     	@6
+			supplier   	@1
+			vertices   	(list Points
+			    (300, 1231)
+			    (144, 1231)
+			    (144, 319)
+			    (292, 319))
+			line_style 	0
+			x_offset   	FALSE)
+		    (object TransView "" @26
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @27
+			    Parent_View 	@26
+			    location   	(937, 475)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	450
+			    justify    	0
+			    label      	"Already has an IP"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	0)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"407CCB9D0202"
+			client     	@1
+			supplier   	@2
+			line_style 	0
+			x_offset   	FALSE)))
+	    (object ActivityDiagram "NewDiagram"
+		quid       	"408370500294"
+		title      	"NewDiagram"
+		zoom       	100
+		max_height 	28350
+		max_width  	21600
+		origin_x   	0
+		origin_y   	0
+		items      	(list diagram_item_list
+		    (object Swimlane "" @28
+			line_color 	3342489
+			width      	450)))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"4073D6A40296"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Sample Application Engine::CSIPExEngine" @29
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(448, 304)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@29
+			location   	(195, 255)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	506
+			justify    	0
+			label      	"CSIPExEngine")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4073D6830341"
+		    width      	524
+		    height     	122
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Sample Application Socket Engine::MSIPExSocketEngine" @30
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    IncludeAttribute 	TRUE
+		    location   	(1200, 304)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@30
+			location   	(1199, 412)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	670
+			justify    	0
+			label      	"MSIPExSocketEngine")
+		    icon       	"interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4073D6A902E4"
+		    width      	58
+		    height     	58
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "iSocketEngine" @31
+		    location   	(940, 304)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @32
+			Parent_View 	@31
+			location   	(940, 245)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"iSocketEngine"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4088AE420171"
+		    roleview_list 	(list RoleViews
+			(object RoleView "" @33
+			    Parent_View 	@31
+			    location   	(-260, -384)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @34
+				Parent_View 	@33
+				location   	(756, 346)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				hidden     	TRUE
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	450
+				justify    	0
+				label      	""
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4088AE4600E6"
+			    client     	@31
+			    supplier   	@29
+			    line_style 	0)
+			(object RoleView "" @35
+			    Parent_View 	@31
+			    location   	(-260, -384)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @36
+				Parent_View 	@35
+				location   	(1125, 346)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				hidden     	TRUE
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	450
+				justify    	0
+				label      	""
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4088AE4600E4"
+			    client     	@31
+			    supplier   	@30
+			    line_style 	0)))
+		(object ClassView "Class" "Logical View::Sample Application Engine::MSIPExSocketEngineObserver" @37
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(448, 656)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@37
+			location   	(447, 764)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	767
+			justify    	0
+			label      	"MSIPExSocketEngineObserver")
+		    icon       	"interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4088B2EE00E4"
+		    width      	58
+		    height     	58
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object RealizeView "" @38
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4088B2FF0086"
+		    client     	@29
+		    supplier   	@37
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Sample Application Socket Engine::CSIPExSocketEngine" @39
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1200, 656)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@39
+			location   	(1080, 590)
+			fill_color 	13434879
+			nlines     	2
+			max_width  	240
+			justify    	0
+			label      	"CSIPExSocketEngine")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4073D6BC0390"
+		    width      	258
+		    height     	157
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object RealizeView "" @40
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4073D6CE0380"
+		    client     	@39
+		    supplier   	@30
+		    line_style 	0)
+		(object AssociationViewNew "informs" @41
+		    location   	(772, 656)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @42
+			Parent_View 	@41
+			location   	(772, 614)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"informs"
+			pctDist    	0.500000
+			height     	43
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4088B305024C"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$0" @43
+			    Parent_View 	@41
+			    location   	(-428, -384)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4088B30601BF"
+			    client     	@41
+			    supplier   	@37
+			    line_style 	0)
+			(object RoleView "$UNNAMED$1" @44
+			    Parent_View 	@41
+			    location   	(-428, -384)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4088B30601C1"
+			    client     	@41
+			    supplier   	@39
+			    line_style 	0)))))))

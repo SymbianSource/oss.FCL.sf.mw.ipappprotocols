@@ -1,0 +1,33 @@
+// Copyright (c) 2007-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name     : te_rtp.iby
+// Part of  : test Component for RTP Logic in rtp.dll 
+// IBY file for the rtp testSuites
+// 
+//
+
+#ifndef __TE_RTP_IBY__
+#define __TE_RTP_IBY__
+
+#ifdef SYMBIAN_EXCLUDE_RTP_RTCP
+REM Feature RTP not included in this rom
+#else
+data=EPOCROOT##epoc32\data\z\testdata\configs\rtp\rtptest.xml	testdata\configs\rtp\rtptest.xml
+#include <cfrtp_test.iby>
+#include <shimrtp_test.iby>
+#include <rtpcore_test.iby>
+#endif 
+
+#endif
+

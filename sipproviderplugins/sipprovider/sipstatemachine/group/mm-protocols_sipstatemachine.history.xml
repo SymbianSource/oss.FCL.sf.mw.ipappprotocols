@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<relnotes name="SIP Connection Provider Plugins">
+  <purpose>
+    Provides connection provision at the network layer.
+  </purpose>
+  
+    <defect number="DEF126882" title="[Coverity]-SYMBIAN.CLEANUP_STACK -mm-protocols/sip2/" revision="008">
+    Defect fixes:
+	DEF126882 [Coverity]-SYMBIAN.CLEANUP_STACK -mm-protocols/sip2/ 
+  </defect>
+  
+  <defect number="DEF126880" title="[Coverity]-PASS_BY_VALUE -mm-protocols/sip2/ " revision="007">
+    Defect fixes:
+	DEF126880 [Coverity]-PASS_BY_VALUE -mm-protocols/sip2/ 
+  </defect>
+  
+  <defect number="DEF125315" title="[sip]RSubconnection::Start() doesn't return error when 400 or 404 is received." revision="006">
+    Defect fixes:
+	DEF125315 [sip]RSubconnection::Start() doesn't return error when 400 or 404 is received.
+  </defect>
+  
+  <defect number="DEF125120" title="[coverity] - REVERSE_INULL - mm-protocols/sipprovengine/sipstatemachine" revision="005">
+    Defect fixes:
+	DEF125120 [coverity] - REVERSE_INULL - mm-protocols/sipprovengine/sipstatemachine
+  </defect>
+  
+  <defect number="DEF125121" title="[coverity] - UNINIT - mm-protocols/sipprovengine/sipstatemachine" revision="004">
+    Defect fixes:
+	DEF125121 [coverity] - UNINIT - mm-protocols/sipprovengine/sipstatemachine
+  </defect>
+  
+  <defect number="DEF124879" title="Cannot send INVITE with SDP parameter using SIP high level API." revision="003">
+    Defect fixes:
+	DEF124879 Cannot send INVITE with SDP parameter using SIP high level API.
+  </defect>
+  
+  <defect number="DEF108003" title="Warnings generated with checksource build" revision="002">
+    Added Note for the following defects:
+	DEF108003 Warnings generated with checksource build
+  </defect>
+  
+  <preq number="1182" title="GNU Make-based build system" revision="001">
+    GNU Make-based build system
+  </preq>
+</relnotes>

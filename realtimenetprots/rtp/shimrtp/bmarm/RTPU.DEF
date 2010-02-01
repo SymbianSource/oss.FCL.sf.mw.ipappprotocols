@@ -1,0 +1,96 @@
+EXPORTS
+	__vc__C9RRtpCSRCsUi @ 1 NONAME R3UNUSED ; RRtpCSRCs::operator[](unsigned int) const
+	CSRCs__C10RRtpPacket @ 2 NONAME R3UNUSED ; RRtpPacket::CSRCs(void) const
+	Close__10RRtpPacket @ 3 NONAME R3UNUSED ; RRtpPacket::Close(void)
+	Close__11RRtpSession @ 4 NONAME R3UNUSED ; RRtpSession::Close(void)
+	Close__14RRtpSendSource @ 5 NONAME R3UNUSED ; RRtpSendSource::Close(void)
+	Close__17RRtpReceiveSource @ 6 NONAME R3UNUSED ; RRtpReceiveSource::Close(void)
+	Count__C9RRtpCSRCs @ 7 NONAME R3UNUSED ; RRtpCSRCs::Count(void) const
+	Data__19RRtpHeaderExtension @ 8 NONAME R3UNUSED ; RRtpHeaderExtension::Data(void)
+	ExtensionPresent__C10RRtpPacket @ 9 NONAME R3UNUSED ; RRtpPacket::ExtensionPresent(void) const
+	Extension__C10RRtpPacket @ 10 NONAME R3UNUSED ; RRtpPacket::Extension(void) const
+	Flags__C10RRtpPacket @ 11 NONAME R3UNUSED ; RRtpPacket::Flags(void) const
+	IsReceiveSourceEvent__C9TRtpEvent @ 12 NONAME R3UNUSED ; TRtpEvent::IsReceiveSourceEvent(void) const
+	IsSendSourceEvent__C9TRtpEvent @ 13 NONAME R3UNUSED ; TRtpEvent::IsSendSourceEvent(void) const
+	IsSending__14RRtpSendSource @ 14 NONAME R3UNUSED ; RRtpSendSource::IsSending(void)
+	IsSessionEvent__C9TRtpEvent @ 15 NONAME R3UNUSED ; TRtpEvent::IsSessionEvent(void) const
+	Marker__C10RRtpPacket @ 16 NONAME R3UNUSED ; RRtpPacket::Marker(void) const
+	MaxRXSize__11RRtpSession @ 17 NONAME R3UNUSED ; RRtpSession::MaxRXSize(void)
+	NewReceiveSourceLC__11RRtpSession @ 18 NONAME R3UNUSED ; RRtpSession::NewReceiveSourceLC(void)
+	NewReceiveSourceL__11RRtpSession @ 19 NONAME R3UNUSED ; RRtpSession::NewReceiveSourceL(void)
+	NewSendPacketLC__14RRtpSendSourceii @ 20 NONAME R3UNUSED ; RRtpSendSource::NewSendPacketLC(int, int)
+	NewSendPacketL__14RRtpSendSourceii @ 21 NONAME R3UNUSED ; RRtpSendSource::NewSendPacketL(int, int)
+	NewSendSourceL__11RRtpSession @ 22 NONAME R3UNUSED ; RRtpSession::NewSendSourceL(void)
+	OpenL__11RRtpSessionR11RSocketServR9TSockAddrT2iR11RConnectioniRC6TDesC8 @ 23 NONAME ; RRtpSession::OpenL(RSocketServ &, TSockAddr &, TSockAddr &, int, RConnection &, int, TDesC8 const &)
+	OpenL__11RRtpSessionR11RSocketServR9TSockAddrT2iiRC6TDesC8 @ 24 NONAME ; RRtpSession::OpenL(RSocketServ &, TSockAddr &, TSockAddr &, int, int, TDesC8 const &)
+	OpenL__11RRtpSessionR7RSocketii @ 25 NONAME ; RRtpSession::OpenL(RSocket &, int, int)
+	Packet__17RRtpReceiveSource @ 26 NONAME R3UNUSED ; RRtpReceiveSource::Packet(void)
+	PayloadType__C10RRtpPacket @ 27 NONAME R3UNUSED ; RRtpPacket::PayloadType(void) const
+	Payload__C10RRtpPacket @ 28 NONAME R3UNUSED ; RRtpPacket::Payload(void) const
+	PrivRegisterEventCallbackL__11RRtpSessionUiPFPvRC9TRtpEvent_vPv @ 29 NONAME ; RRtpSession::PrivRegisterEventCallbackL(unsigned int, void (*)(void *, TRtpEvent const &), void *)
+	PrivRegisterEventCallbackL__11RRtpSessionUiPFPvRC9TRtpEvent_vPvi @ 30 NONAME ; RRtpSession::PrivRegisterEventCallbackL(unsigned int, void (*)(void *, TRtpEvent const &), void *, int)
+	PrivRegisterEventCallbackL__14RRtpSendSourceUiPFPvRC9TRtpEvent_vPv @ 31 NONAME ; RRtpSendSource::PrivRegisterEventCallbackL(unsigned int, void (*)(void *, TRtpEvent const &), void *)
+	PrivRegisterEventCallbackL__14RRtpSendSourceUiPFPvRC9TRtpEvent_vPvi @ 32 NONAME ; RRtpSendSource::PrivRegisterEventCallbackL(unsigned int, void (*)(void *, TRtpEvent const &), void *, int)
+	PrivRegisterEventCallbackL__17RRtpReceiveSourceUiPFPvRC9TRtpEvent_vPv @ 33 NONAME ; RRtpReceiveSource::PrivRegisterEventCallbackL(unsigned int, void (*)(void *, TRtpEvent const &), void *)
+	PrivRegisterEventCallbackL__17RRtpReceiveSourceUiPFPvRC9TRtpEvent_vPvi @ 34 NONAME ; RRtpReceiveSource::PrivRegisterEventCallbackL(unsigned int, void (*)(void *, TRtpEvent const &), void *, int)
+	ReceiveSource__C9TRtpEvent @ 35 NONAME R3UNUSED ; TRtpEvent::ReceiveSource(void) const
+	SSRC__C10RRtpPacket @ 36 NONAME R3UNUSED ; RRtpPacket::SSRC(void) const
+	SSRC__C17RRtpReceiveSource @ 37 NONAME R3UNUSED ; RRtpReceiveSource::SSRC(void) const
+	SendSource__C9TRtpEvent @ 38 NONAME R3UNUSED ; TRtpEvent::SendSource(void) const
+	Send__14RRtpSendPacket @ 39 NONAME R3UNUSED ; RRtpSendPacket::Send(void)
+	SequenceNumber__C10RRtpPacket @ 40 NONAME R3UNUSED ; RRtpPacket::SequenceNumber(void) const
+	Session__C9TRtpEvent @ 41 NONAME R3UNUSED ; TRtpEvent::Session(void) const
+	SetAlignment__14RRtpSendSourcei @ 42 NONAME R3UNUSED ; RRtpSendSource::SetAlignment(int)
+	SetDefaultPayloadSize__14RRtpSendSourcei @ 43 NONAME R3UNUSED ; RRtpSendSource::SetDefaultPayloadSize(int)
+	SetFlags__14RRtpSendPacketUi @ 44 NONAME R3UNUSED ; RRtpSendPacket::SetFlags(unsigned int)
+	SetMarker__14RRtpSendPacketi @ 45 NONAME R3UNUSED ; RRtpSendPacket::SetMarker(int)
+	SetMaxRXSize__11RRtpSessioni @ 46 NONAME R3UNUSED ; RRtpSession::SetMaxRXSize(int)
+	SetPayloadType__14RRtpSendPacketUi @ 47 NONAME R3UNUSED ; RRtpSendPacket::SetPayloadType(unsigned int)
+	SetPayloadType__14RRtpSendSourceUi @ 48 NONAME R3UNUSED ; RRtpSendSource::SetPayloadType(unsigned int)
+	SetTimestamp__14RRtpSendPacketUi @ 49 NONAME R3UNUSED ; RRtpSendPacket::SetTimestamp(unsigned int)
+	SetType__19RRtpHeaderExtensionUs @ 50 NONAME R3UNUSED ; RRtpHeaderExtension::SetType(unsigned short)
+	Timestamp__C10RRtpPacket @ 51 NONAME R3UNUSED ; RRtpPacket::Timestamp(void) const
+	Type__C19RRtpHeaderExtension @ 52 NONAME R3UNUSED ; RRtpHeaderExtension::Type(void) const
+	WritePayload__14RRtpSendPacket @ 53 NONAME R3UNUSED ; RRtpSendPacket::WritePayload(void)
+	__9TRtpEvent13TRtpEventTypeiPv @ 54 NONAME ; TRtpEvent::TRtpEvent(TRtpEventType, int, void *)
+	Alignment__C14RRtpSendSource @ 55 NONAME R3UNUSED ; RRtpSendSource::Alignment(void) const
+	ByeL__14RRtpSendSourceR6TDesC8 @ 56 NONAME R3UNUSED ; RRtpSendSource::ByeL(TDesC8 &)
+	ByteCount__C11RRtcpSRPart @ 57 NONAME R3UNUSED ; RRtcpSRPart::ByteCount(void) const
+	Cancel__14RRtpSendSource @ 58 NONAME R3UNUSED ; RRtpSendSource::Cancel(void)
+	Count__C11RRtcpRRPart @ 59 NONAME R3UNUSED ; RRtcpRRPart::Count(void) const
+	DelaySinceLastSR__C11RRtcpRRItem @ 60 NONAME R3UNUSED ; RRtcpRRItem::DelaySinceLastSR(void) const
+	DontReceive__11RRtpSessioni @ 61 NONAME R3UNUSED ; RRtpSession::DontReceive(int)
+	ExtendedHighestSequenceNumber__C11RRtcpRRItem @ 62 NONAME R3UNUSED ; RRtcpRRItem::ExtendedHighestSequenceNumber(void) const
+	FractionLost__C11RRtcpRRItem @ 63 NONAME R3UNUSED ; RRtcpRRItem::FractionLost(void) const
+	GetByeReason__17RRtpReceiveSource @ 64 NONAME R3UNUSED ; RRtpReceiveSource::GetByeReason(void)
+	GetLastApp__17RRtpReceiveSourceR6TPtrC8T1RUi @ 65 NONAME ; RRtpReceiveSource::GetLastApp(TPtrC8 &, TPtrC8 &, unsigned int &)
+	GetLocalSSRC__14RRtpSendSource @ 66 NONAME R3UNUSED ; RRtpSendSource::GetLocalSSRC(void)
+	GetRRs__11RRtpSession @ 67 NONAME R3UNUSED ; RRtpSession::GetRRs(void)
+	GetSDES__11RRtpSessioniR5TDes8 @ 68 NONAME R3UNUSED ; RRtpSession::GetSDES(int, TDes8 &)
+	GetSDES__17RRtpReceiveSourceiR5TDes8 @ 69 NONAME R3UNUSED ; RRtpReceiveSource::GetSDES(int, TDes8 &)
+	GetSR__17RRtpReceiveSource @ 70 NONAME R3UNUSED ; RRtpReceiveSource::GetSR(void)
+	InterarrivalJitter__C11RRtcpRRItem @ 71 NONAME R3UNUSED ; RRtcpRRItem::InterarrivalJitter(void) const
+	LastSRTimestamp__C11RRtcpRRItem @ 72 NONAME R3UNUSED ; RRtcpRRItem::LastSRTimestamp(void) const
+	NTPTimestamp__C11RRtcpSRPartR5TTime @ 73 NONAME R3UNUSED ; RRtcpSRPart::NTPTimestamp(TTime &) const
+	OpenL__11RRtpSessionR7RSocketiT1iRC6TDesC8 @ 74 NONAME ; RRtpSession::OpenL(RSocket &, int, RSocket &, int, TDesC8 const &)
+	PacketCount__C11RRtcpSRPart @ 75 NONAME R3UNUSED ; RRtcpSRPart::PacketCount(void) const
+	PacketsLost__C11RRtcpRRItem @ 76 NONAME R3UNUSED ; RRtcpRRItem::PacketsLost(void) const
+	RTCPAutoSend__C11RRtpSession @ 77 NONAME R3UNUSED ; RRtpSession::RTCPAutoSend(void) const
+	RTPTimestamp__C11RRtcpSRPart @ 78 NONAME R3UNUSED ; RRtcpSRPart::RTPTimestamp(void) const
+	SendAPPL__11RRtpSessionRC6TDesC8T1Uc @ 79 NONAME ; RRtpSession::SendAPPL(TDesC8 const &, TDesC8 const &, unsigned char)
+	SendRTCPPacketL__11RRtpSessionR6TDesC8 @ 80 NONAME R3UNUSED ; RRtpSession::SendRTCPPacketL(TDesC8 &)
+	SendSource__11RRtpSession @ 81 NONAME R3UNUSED ; RRtpSession::SendSource(void)
+	SenderSSRC__C11RRtcpRRPart @ 82 NONAME R3UNUSED ; RRtcpRRPart::SenderSSRC(void) const
+	SetBandwidth__11RRtpSessionUi @ 83 NONAME R3UNUSED ; RRtpSession::SetBandwidth(unsigned int)
+	SetPRIVL__11RRtpSessionRC6TDesC8T1 @ 84 NONAME R3UNUSED ; RRtpSession::SetPRIVL(TDesC8 const &, TDesC8 const &)
+	SetRTCPAutoSend__11RRtpSessioni @ 85 NONAME R3UNUSED ; RRtpSession::SetRTCPAutoSend(int)
+	SetRTPTimeConversion__11RRtpSessionUiUi @ 86 NONAME R3UNUSED ; RRtpSession::SetRTPTimeConversion(unsigned int, unsigned int)
+	SetRtcpInterval__11RRtpSessionR27TTimeIntervalMicroSeconds32 @ 87 NONAME R3UNUSED ; RRtpSession::SetRtcpInterval(TTimeIntervalMicroSeconds32 &)
+	SetRtpStreamParameters__11RRtpSessioniii @ 88 NONAME ; RRtpSession::SetRtpStreamParameters(int, int, int)
+	SetSDESL__11RRtpSessioniRC6TDesC8 @ 89 NONAME R3UNUSED ; RRtpSession::SetSDESL(int, TDesC8 const &)
+	__11RRtcpRRItem @ 90 NONAME R3UNUSED ; RRtcpRRItem::RRtcpRRItem(void)
+	__11RRtcpRRPartR11TRtcpRRPart @ 91 NONAME R3UNUSED ; RRtcpRRPart::RRtcpRRPart(TRtcpRRPart &)
+	__11RRtcpSRPartR11TRtcpSRPart @ 92 NONAME R3UNUSED ; RRtcpSRPart::RRtcpSRPart(TRtcpSRPart &)
+	__vc__C11RRtcpRRParti @ 93 NONAME R3UNUSED ; RRtcpRRPart::operator[](int) const
+	AboutSSRC__C11RRtcpRRItem @ 94 NONAME R3UNUSED ; RRtcpRRItem::AboutSSRC(void) const
+

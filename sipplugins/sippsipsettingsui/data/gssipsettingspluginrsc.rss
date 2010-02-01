@@ -1,0 +1,1396 @@
+/*
+* Copyright (c) 2005 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+*        Resource file for SIPSettings plugin
+*
+*/
+
+
+
+//  RESOURCE IDENTIFIER
+NAME    SIPS // 4 letter ID
+
+//  INCLUDES
+#include    <data_caging_paths_strings.hrh>
+
+#include    <bldvariant.hrh>
+#include    <avkon.rh>
+#include    <avkon.rsg>
+#include    <avkon.mbg>
+#include    <EIKCORE.rsg>
+#include    <eikon.rh>
+#include    <eikon.rsg>
+#include    <avkon.loc>
+#include    <appinfo.rh>
+#include    "gssipsettingsplugin.hrh"
+
+#ifdef LANGUAGE_IDS
+#include    <gssipsettingsplugin.loc>
+#else
+#include    "../loc/gssipsettingsplugin.loc"
+#endif
+
+//  CONSTANTS  
+#define KGsSIPSettingsPluginIcons      "Z:"APP_RESOURCE_DIR"\\GSSIPSettingsplugin.mbm"
+
+//  RESOURCE DEFINITIONS 
+
+// -----------------------------------------------------------------------------
+//   
+// Resource file signature
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE RSS_SIGNATURE 
+	{ 
+	}
+	
+RESOURCE TBUF
+    {
+    buf="SIP";
+    }
+
+//----------------------------------------------------
+//   
+//    EIK_APP_INFO
+//    It contains application information.
+//
+//----------------------------------------------------
+//
+RESOURCE EIK_APP_INFO
+    {
+    }
+    
+ // **COMMON RESOURCES
+    
+// -----------------------------------------------------------------------------
+//   
+//    r_gs_sip_profile_list_view
+//    The definitions for the profile list view.
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE AVKON_VIEW r_gs_sip_profile_list_view
+    {
+    menubar = r_gs_sip_profile_list_view_menubar;
+    cba = r_gs_softkeys_options_back_empty;
+    }
+
+// -----------------------------------------------------------------------------
+//   
+//    r_gs_sip_profile_list_view_menubar
+//    The resources for profile list view menubar
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_BAR r_gs_sip_profile_list_view_menubar
+    {
+    titles =
+        {
+        MENU_TITLE 
+            { 
+            menu_pane = r_gs_sip_profile_list_view_menu; 
+            txt = " ";  // Won't be visible, "Options" is shown
+            }
+        };
+    }
+
+// -----------------------------------------------------------------------------
+//   
+//    r_gs_sip_profile_list_view_menu
+//    The resources for profile list view menubar
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_PANE r_gs_sip_profile_list_view_menu
+    {
+    items =
+        {
+        MENU_ITEM
+	        {
+            command = EGSCmdAppNew;
+            cascade = r_gs_sip_profile_list_add_new_menu;
+            txt = qtn_sip_add_new;
+            },
+        MENU_ITEM
+            {
+            command = EGSCmdAppEdit;
+            txt = qtn_sip_edit;
+            },
+		MENU_ITEM
+            {
+            command = EGSCmdAppDelete;
+            txt = qtn_sip_delete;
+            },
+        MENU_ITEM
+            {
+            command = EGSCmdAppDefault;
+            txt = qtn_sip_set_def_profile;
+            },
+#ifdef __SERIES60_HELP
+        MENU_ITEM
+            {
+            command = EAknCmdHelp;
+            txt = qtn_options_help;
+            },
+#endif  // __SERIES60_HELP
+        MENU_ITEM 
+            {
+            command = EEikCmdExit;
+            txt = qtn_options_exit;
+            }
+        };
+    }
+
+// -----------------------------------------------------------------------------
+//   
+//    r_gs_sip_profile_list_add_new_menu
+//    The submenu for profile list views "Add new" 
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_PANE r_gs_sip_profile_list_add_new_menu
+    {
+    items =
+        {
+        MENU_ITEM
+	        {
+            command = EGSCmdAppNewDefault;            
+            txt = qtn_sip_def_profile;
+            },
+        MENU_ITEM
+            {
+            command = EGSCmdAppNewExist;
+            txt = qtn_sip_exist_profile;
+            }
+        };
+    }
+
+// -----------------------------------------------------------------------------
+//   
+//    r_sip_profile_list_view_default_setting_page
+//    Pop-up page to change the default profile on profile list view
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE AVKON_SETTING_PAGE r_sip_profile_list_view_default_setting_page
+    {
+    number = EAknSettingPageNoOrdinalDisplayed; 
+    label = qtn_sip_head_def_profile;
+    softkey_resource = R_AVKON_SOFTKEYS_OK_CANCEL__OK;
+    type = EAknSetListBox;
+    editor_resource_id = r_sip_default_setting_page_control;
+    }
+
+// -----------------------------------------------------------------------------
+//   
+//    r_sip_default_setting_page_control
+//    The radio button list control for the the default profile pop-up page
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE LISTBOX r_sip_default_setting_page_control
+    {  
+    flags = EEikListBoxMultipleSelection;  
+    }
+
+// -----------------------------------------------------------------------------
+//   
+//    r_sip_delete_confirmation_dlg
+//    Confirmation dialog for deleting the profile
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE DIALOG r_sip_delete_confirmation_dlg
+    {
+    flags = EGeneralQueryFlags; 
+    buttons = R_AVKON_SOFTKEYS_YES_NO__YES;
+    items =
+        {
+        DLG_LINE
+            {
+            type = EAknCtQuery;
+            id = EGeneralQuery;
+            control = AVKON_CONFIRMATION_QUERY
+                {
+                layout = EConfirmationQueryLayout;     
+                };
+            }
+        };
+    }
+
+//------------------------------------------------------------------------------
+//   
+//    r_gs_sip_no_sip_settings
+//    SIP profile view's listbox empty text.
+//
+//------------------------------------------------------------------------------
+//
+RESOURCE TBUF r_gs_sip_no_sip_settings
+    {
+    buf = qtn_sip_no_sip_profile;        
+    }
+    
+// SIP PROFILE SETTINGS VIEW
+
+//----------------------------------------------------
+//   
+//    r_gs_sipsettings_view_title
+//    SIP Settings view's title.
+//
+//----------------------------------------------------
+//
+RESOURCE TITLE_PANE r_gs_sipsettings_view_title
+    {
+    txt = qtn_sip_title_sip;        
+    }
+
+//----------------------------------------------------
+//
+//    r_gs_sipsettings_plugin_caption
+//    SIP Settings Plugin caption.
+//
+//----------------------------------------------------
+//
+RESOURCE TBUF r_gs_sipsettings_plugin_caption
+    {
+    buf = qtn_set_folder_conn_sip;
+    }
+    
+// -----------------------------------------------------------------------------
+//   
+//    r_gs_sip_profile_setting_view
+//    The definitions for the profile setting view.
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE AVKON_VIEW r_gs_sip_profile_setting_view
+    {
+    menubar = r_gs_sip_profile_setting_view_menubar;
+    cba = r_gs_softkeys_options_back_change;
+    }
+
+// -----------------------------------------------------------------------------
+//   
+//    r_gs_sip_profile_setting_view_menubar
+//    Menubar for the profile setting view
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_BAR r_gs_sip_profile_setting_view_menubar
+    {
+    titles =
+        {
+        MENU_TITLE 
+            { 
+            menu_pane = r_gs_sip_profile_setting_view_menu; 
+            txt = " ";  // Won't be visible, "Options" is shown
+            }
+        };
+    }
+
+// -----------------------------------------------------------------------------
+//   
+//    r_gs_sip_profile_setting_view_menu
+//    The resources for profile setting menubar
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_PANE r_gs_sip_profile_setting_view_menu
+    {
+    items =
+        {
+        MENU_ITEM
+	        {
+            command = EGSCmdAppChange;
+            txt = qtn_set_options_change;
+            },
+#ifdef __SERIES60_HELP
+        MENU_ITEM
+            {
+            command = EAknCmdHelp;
+            txt = qtn_options_help;
+            },
+#endif  // __SERIES60_HELP
+        MENU_ITEM 
+            {
+            command = EEikCmdExit;
+            txt = qtn_options_exit;
+            }
+        };
+    }
+
+// -----------------------------------------------------------------------------
+//   
+//    r_sip_setting_view_item_list
+//    The item list for the setting items
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE AVKON_SETTING_ITEM_LIST r_sip_setting_view_item_list
+    {
+    items =
+        {
+        AVKON_SETTING_ITEM
+            {
+            name = qtn_sip_prov_name;
+            identifier = EGSItemProviderName;
+            setting_page_resource = r_sip_service_provider_page;
+            },
+        AVKON_SETTING_ITEM
+            {
+            name = qtn_sip_serv_profile;
+            identifier = EGSItemServiceProfile;
+            setting_page_resource = r_sip_service_profile_page;
+            associated_resource = r_sip_service_profile_popup_page;
+            },
+        AVKON_SETTING_ITEM
+            {
+            name = qtn_sip_def_destination;
+            identifier = EGSItemDefaultDest;
+            // These two don't matter; the item list is created dynamically
+            setting_page_resource = r_sip_service_profile_page;
+            associated_resource = r_sip_service_profile_popup_page;
+            empty_item_text = qtn_sip_def_destination_none;
+            },
+        AVKON_SETTING_ITEM
+            {
+            name = qtn_sip_def_ap;
+            identifier = EGSItemDefaultAP;
+            // These two don't matter; the item list is created dynamically
+            setting_page_resource = r_sip_service_profile_page;
+            associated_resource = r_sip_service_profile_popup_page;
+            empty_item_text = qtn_sip_def_ap_none;
+            },
+        AVKON_SETTING_ITEM
+            {
+            name = qtn_sip_public_uname;
+            identifier = EGSItemUsername;
+            setting_page_resource = r_sip_username_page;
+            empty_item_text = qtn_sip_public_username_none;
+            },
+        AVKON_SETTING_ITEM
+            {
+            name = qtn_sip_compression;
+            identifier = EGSItemCompression;
+            setting_page_resource = r_sip_compression_page;
+            associated_resource = r_sip_compression_popup_page;
+            },
+        AVKON_SETTING_ITEM
+            {
+            name = qtn_sip_reg_mode;
+            identifier = EGSItemRegistration;
+            setting_page_resource = r_sip_registration_page;
+            associated_resource = r_sip_registration_popup_page;
+            },
+        AVKON_SETTING_ITEM
+            {
+            name = qtn_sip_security_neg;
+            identifier = EGSItemSecurity;
+            setting_page_resource = r_sip_security_page;
+            associated_resource = r_sip_security_popup_page;
+            },
+        AVKON_SETTING_ITEM
+            {
+            name = qtn_sip_proxy_server;
+            identifier = EGSItemProxyServer;     
+            },
+        AVKON_SETTING_ITEM
+            {
+            name = qtn_sip_registrar_server;
+            identifier = EGSItemRegistrarServer;
+            }
+        };
+    }
+
+// -----------------------------------------------------------------------------
+//   
+//    r_sip_service_provider_page & r_sip_service_provider_editor
+//    The service provider setting page for item list
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE AVKON_SETTING_PAGE r_sip_service_provider_page
+    {
+    label = qtn_sip_prov_name;
+    softkey_resource = R_AVKON_SOFTKEYS_OK_CANCEL__OK;
+    type = EEikCtEdwin;
+    editor_resource_id = r_sip_service_provider_editor;
+    }
+
+RESOURCE EDWIN r_sip_service_provider_editor
+    {
+    lines = 6;
+    flags = EEikEdwinNoLineOrParaBreaks;    
+    maxlength =100;
+    }
+    
+RESOURCE DIALOG r_sip_service_provider_conf_query
+    {
+    flags = EGeneralQueryFlags;
+    buttons = R_AVKON_SOFTKEYS_OK_CANCEL__OK;
+    items =
+        {
+        DLG_LINE
+            {
+            type = EAknCtQuery;
+            id = EGeneralQuery;
+            control= AVKON_CONFIRMATION_QUERY 
+                { 
+                layout = EConfirmationLayout;
+                label = r_qtn_sip_items_with_same_name;
+                };
+            }
+        };
+    }
+    
+// -----------------------------------------------------------------------------
+//   
+// r_sip_service_profile_page & r_sip_service_profile_popup_page &
+// r_sip_service_profile_poup_page & r_sip_service_profile_array &
+// r_sip_service_profile_array_texts
+// The service profile setting page for item list
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE AVKON_SETTING_PAGE r_sip_service_profile_page
+    {
+    label = qtn_sip_serv_profile;
+    softkey_resource = R_AVKON_SOFTKEYS_OK_CANCEL__OK;
+    type = EAknCtPopupSettingList;
+    editor_resource_id = r_sip_empty_setting_list;
+    }
+
+RESOURCE POPUP_SETTING_LIST r_sip_empty_setting_list
+    {
+    }
+
+RESOURCE AVKON_POPUP_SETTING_TEXTS r_sip_service_profile_popup_page
+    {
+    flags = 0;
+    setting_texts_resource = r_sip_service_profile_array;
+    popped_up_texts_resource = r_sip_service_profile_array_texts;
+    }
+
+RESOURCE ARRAY r_sip_service_profile_array
+    {
+    items = 
+        {
+		AVKON_ENUMERATED_TEXT 
+            { 
+            value = 0; 
+            text = " "; 
+            }
+        };
+    }
+
+RESOURCE ARRAY r_sip_service_profile_array_texts
+    {
+    items =
+        {
+        LBUF 
+            { 
+            txt = " "; 
+            }
+        };
+    }
+
+// -----------------------------------------------------------------------------
+//   
+//    r_sip_username_page & r_sip_username_editor
+//    The username setting page for item list
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE AVKON_SETTING_PAGE r_sip_username_page
+    {
+    label = qtn_sip_public_uname;
+    softkey_resource = R_AVKON_SOFTKEYS_OK_CANCEL__OK;
+    type = EEikCtEdwin;
+    editor_resource_id = r_sip_username_editor;
+    }
+
+RESOURCE EDWIN r_sip_username_editor
+    {
+    lines = 5;
+    flags = EEikEdwinNoLineOrParaBreaks;
+    maxlength = 256;                
+    avkon_flags = EAknEditorFlagLatinInputModesOnly;
+    default_case = EAknEditorLowerCase;
+    }
+
+// -----------------------------------------------------------------------------
+//   
+//    r_sip_compression_page & r_sip_compression_popup_page &
+//    r_sip_compression_poup_page & r_sip_compression_array &
+//    r_sip_compression_array_texts
+//    The compression setting page for item list
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE AVKON_SETTING_PAGE r_sip_compression_page
+    {
+    label = qtn_sip_compression;
+    softkey_resource = R_AVKON_SOFTKEYS_OK_CANCEL__OK;
+    type = EAknCtPopupSettingList;
+    editor_resource_id = r_sip_empty_setting_list;
+    }
+
+RESOURCE AVKON_POPUP_SETTING_TEXTS r_sip_compression_popup_page
+    {
+    flags = 0;
+    setting_texts_resource = r_sip_compression_array;
+    popped_up_texts_resource = r_sip_compression_array_texts;
+    }
+
+RESOURCE ARRAY r_sip_compression_array
+    {
+    items = 
+        {
+		AVKON_ENUMERATED_TEXT 
+            { 
+            value = EGSComprYes; 
+            text = qtn_sip_comp_yes; 
+            },
+		AVKON_ENUMERATED_TEXT 
+            { 
+            value = EGSComprNo; 
+            text = qtn_sip_comp_no; 
+            }
+        };
+    }
+
+RESOURCE ARRAY r_sip_compression_array_texts
+    {
+    items =
+        {
+        LBUF 
+            { 
+            txt = qtn_sip_comp_yes; 
+            },
+        LBUF 
+            { 
+            txt = qtn_sip_comp_no; 
+            }
+        };
+    }
+
+// -----------------------------------------------------------------------------
+//   
+// r_sip_registration_page & r_sip_registration_popup_page &
+// r_sip_registration_poup_page & r_sip_registration_array &
+// r_sip_registration_array_texts
+// The registration mode setting page for item list
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE AVKON_SETTING_PAGE r_sip_registration_page
+    {
+    label = qtn_sip_reg_mode;
+    softkey_resource = R_AVKON_SOFTKEYS_OK_CANCEL__OK;
+    type = EAknCtPopupSettingList;
+    editor_resource_id = r_sip_empty_setting_list;
+    }
+
+RESOURCE AVKON_POPUP_SETTING_TEXTS r_sip_registration_popup_page
+    {
+    flags = 0;
+    setting_texts_resource = r_sip_registration_array;
+    popped_up_texts_resource = r_sip_registration_array_texts;
+    }
+
+RESOURCE ARRAY r_sip_registration_array
+    {
+    items = 
+        {
+		AVKON_ENUMERATED_TEXT 
+            { 
+            value = EGSWhenNeeded; 
+            text = qtn_sip_reg_needed;
+            },
+		AVKON_ENUMERATED_TEXT 
+            { 
+            value = EGSAlwaysOn; 
+            text = qtn_sip_reg_always; 
+            }
+        };
+    }
+
+RESOURCE ARRAY r_sip_registration_array_texts
+    {
+    items =
+        {
+        LBUF 
+            { 
+            txt = qtn_sip_reg_needed; 
+            },
+        LBUF 
+            { 
+            txt = qtn_sip_reg_always; 
+            },
+        LBUF 
+            { 
+            txt = qtn_sip_reg_always_home; 
+            }
+        };
+    }
+
+// -----------------------------------------------------------------------------
+//   
+//    r_sip_security_page & r_sip_security_popup_page &
+//    r_sip_security_poup_page & r_sip_security_array_sip &
+//    r_sip_security_array_texts
+//    The security negotiation setting page for item list
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE AVKON_SETTING_PAGE r_sip_security_page
+    {
+    label = qtn_sip_security_neg;
+    softkey_resource = R_AVKON_SOFTKEYS_OK_CANCEL__OK;
+    type = EAknCtPopupSettingList;
+    editor_resource_id = r_sip_empty_setting_list;
+    }
+
+RESOURCE AVKON_POPUP_SETTING_TEXTS r_sip_security_popup_page
+    {
+    flags = 0;
+    setting_texts_resource = r_sip_security_array_sip;
+    popped_up_texts_resource = r_sip_security_array_texts;
+    }
+
+RESOURCE ARRAY r_sip_security_array_sip
+    {
+    items = 
+        {
+		AVKON_ENUMERATED_TEXT 
+            { 
+            value = EGSSecurityOn; 
+            text = qtn_sip_security_active;
+            },
+		AVKON_ENUMERATED_TEXT 
+            { 
+            value = EGSSecurityOff; 
+            text = qtn_sip_security_inactive; 
+            }
+        };
+    }
+
+RESOURCE ARRAY r_sip_security_array_texts
+    {
+    items =
+        {
+        LBUF 
+            { 
+            txt = qtn_sip_security_active; 
+            },
+        LBUF 
+            { 
+            txt = qtn_sip_security_inactive; 
+            }
+        };
+    }
+    
+// -----------------------------------------------------------------------------
+//   
+//    r_sip_destination_confirmation_dlg
+//    Confirmation dialog for destination definition for the profile
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE DIALOG r_sip_destination_confirmation_dlg
+    {
+    flags = EGeneralQueryFlags; 
+    buttons = R_AVKON_SOFTKEYS_YES_NO__YES;
+    items =
+        {
+        DLG_LINE
+            {
+            type = EAknCtQuery;
+            id = EGeneralQuery;
+            control = AVKON_CONFIRMATION_QUERY
+                {
+                layout = EConfirmationQueryLayout;     
+                };
+            }
+        };
+    }
+
+// SIP SERVER VIEW
+
+// -----------------------------------------------------------------------------
+//   
+//    r_gs_sip_server_setting_view
+//    The definitions for the server setting views.
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE AVKON_VIEW r_gs_sip_server_setting_view
+    {
+    menubar = r_gs_sip_server_setting_view_menubar;
+    cba = r_gs_softkeys_options_back_change;
+    }
+
+// -----------------------------------------------------------------------------
+//   
+//    r_gs_sip_server_setting_view_menubar
+//    Menubar for the server setting view
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_BAR r_gs_sip_server_setting_view_menubar
+    {
+    titles =
+        {
+        MENU_TITLE 
+            { 
+            menu_pane = r_gs_sip_server_setting_view_menu; 
+            txt = " ";  // Won't be visible, "Options" is shown
+            }
+        };
+    }
+
+// -----------------------------------------------------------------------------
+//   
+//    r_gs_sip_server_setting_view_menu
+//    The resources for server setting menubar
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_PANE r_gs_sip_server_setting_view_menu
+    {
+    items =
+        {
+        MENU_ITEM
+	        {
+            command = EGSCmdAppChange;
+            txt = qtn_set_options_change;
+            },
+#ifdef __SERIES60_HELP
+        MENU_ITEM
+            {
+            command = EAknCmdHelp;
+            txt = qtn_options_help;
+            },
+#endif  // __SERIES60_HELP
+        MENU_ITEM 
+            {
+            command = EEikCmdExit;
+            txt = qtn_options_exit;
+            }
+        };
+    }
+
+// -----------------------------------------------------------------------------
+//   
+//    r_sip_proxy_setting_view_item_list
+//    The item list for the proxy setting items
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE AVKON_SETTING_ITEM_LIST r_sip_proxy_setting_view_item_list
+    {
+    items =
+        {
+        AVKON_SETTING_ITEM
+            {
+            name = qtn_sip_proxy_address;
+            identifier = EGSServerItemAddr;
+            setting_page_resource = r_sip_server_addr_page;
+            empty_item_text = qtn_sip_def_value_not_defined;
+            },        
+        AVKON_SETTING_ITEM
+            {
+            name = qtn_sip_proxy_realm;
+            identifier = EGSServerItemRealm;
+            setting_page_resource = r_sip_server_realm_page;
+            empty_item_text = qtn_sip_proxy_realm_none;
+            },
+        AVKON_SETTING_ITEM
+            {
+            name = qtn_sip_proxy_uname;
+            identifier = EGSServerItemUsername;
+            setting_page_resource = r_sip_server_username_page;   
+            empty_item_text = qtn_sip_proxy_uname_none;         
+            },
+        AVKON_SETTING_ITEM
+            {
+            name = qtn_sip_proxy_password;
+            identifier = EGSServerItemPassword;
+            setting_page_resource = r_sip_server_password_page;
+	        empty_item_text = "****";
+            },
+        AVKON_SETTING_ITEM
+            {
+            name = qtn_sip_proxy_lrouting;
+            identifier = EGSServerItemRouting;
+            setting_page_resource = r_sip_server_routing_page;
+            associated_resource = r_sip_server_routing_popup_page;
+            },
+        AVKON_SETTING_ITEM
+            {
+            name = qtn_sip_proxy_protocol;
+            identifier = EGSServerItemTransportProtocol;
+            setting_page_resource = r_sip_server_transport_page;
+            associated_resource = r_sip_server_transport_popup_page;
+            },
+        AVKON_SETTING_ITEM
+            {
+            name = qtn_sip_proxy_port;
+            identifier = EGSServerItemPort;
+            setting_page_resource = r_sip_server_port_page;            
+            }
+        };
+    }
+
+// -----------------------------------------------------------------------------
+//   
+//    r_sip_registrar_setting_view_item_list
+//    The item list for the registrar setting items
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE AVKON_SETTING_ITEM_LIST r_sip_registrar_setting_view_item_list
+    {
+    items =
+        {
+        AVKON_SETTING_ITEM
+            {
+            name = qtn_sip_reg_address;
+            identifier = EGSServerItemAddr;
+            setting_page_resource = r_sip_reg_server_addr_page;
+            empty_item_text = qtn_sip_def_value_not_defined;
+            },        
+        AVKON_SETTING_ITEM
+            {
+            name = qtn_sip_reg_realm;
+            identifier = EGSServerItemRealm;
+            setting_page_resource = r_sip_server_realm_page;
+            empty_item_text = qtn_sip_reg_realm_none;
+            },
+        AVKON_SETTING_ITEM
+            {
+            name = qtn_sip_reg_uname;
+            identifier = EGSServerItemUsername;
+            setting_page_resource = r_sip_server_username_page;
+            empty_item_text = qtn_sip_reg_uname_none;            
+            },
+        AVKON_SETTING_ITEM
+            {
+            name = qtn_sip_reg_password;
+            identifier = EGSServerItemPassword;
+            setting_page_resource = r_sip_server_password_page;
+	        empty_item_text = "****";
+            },
+        AVKON_SETTING_ITEM
+            {
+            name = qtn_sip_reg_protocol;
+            identifier = EGSServerItemTransportProtocol;
+            setting_page_resource = r_sip_server_transport_page;
+            associated_resource = r_sip_server_transport_popup_page;
+            },
+        AVKON_SETTING_ITEM
+            {
+            name = qtn_sip_reg_port;
+            identifier = EGSServerItemPort;
+            setting_page_resource = r_sip_server_port_page;            
+            }
+        };
+    }
+
+// -----------------------------------------------------------------------------
+//   
+//    r_sip_server_addr_page & r_sip_server_addr_editor
+//    The server address configuration page
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE EDWIN r_sip_server_addr_editor
+    {
+    lines = 5;
+    flags = EEikEdwinAutoSelection | EAknEditorLowerCase | EEikEdwinNoLineOrParaBreaks;
+    maxlength = 256;
+	allowed_case_modes = EAknEditorLowerCase | EAknEditorUpperCase;
+    numeric_keymap=EAknEditorCalculatorNumberModeKeymap;
+    allowed_input_modes = EAknEditorTextInputMode | EAknEditorNumericInputMode;
+    default_input_mode = EAknEditorTextInputMode;
+    special_character_table = R_AVKON_URL_SPECIAL_CHARACTER_TABLE_DIALOG;
+    default_case = EAknEditorLowerCase;
+	avkon_flags = EAknEditorFlagLatinInputModesOnly;
+    }
+
+RESOURCE AVKON_SETTING_PAGE r_sip_server_addr_page
+    {   
+    label= qtn_sip_proxy_address;
+    softkey_resource = R_AVKON_SOFTKEYS_OK_CANCEL__OK;
+    type = EEikCtEdwin;
+    editor_resource_id = r_sip_server_addr_editor;    
+    }
+
+RESOURCE AVKON_SETTING_PAGE r_sip_reg_server_addr_page
+    {   
+    label= qtn_sip_reg_address;
+    softkey_resource = R_AVKON_SOFTKEYS_OK_CANCEL__OK;
+    type = EEikCtEdwin;
+    editor_resource_id = r_sip_server_addr_editor;    
+    }
+
+// -----------------------------------------------------------------------------
+//   
+//    r_sip_server_realm_page & r_sip_server_realm_editor
+//    The server realm configuration page
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE AVKON_SETTING_PAGE r_sip_server_realm_page
+    {
+    label = qtn_sip_proxy_realm;
+    softkey_resource = R_AVKON_SOFTKEYS_OK_CANCEL__OK;
+    type = EEikCtEdwin;
+    editor_resource_id = r_sip_server_realm_editor;
+    }
+
+RESOURCE EDWIN r_sip_server_realm_editor
+    {
+    lines = 5;
+    flags = EEikEdwinNoLineOrParaBreaks;
+    maxlength = 256;
+    avkon_flags = EAknEditorFlagLatinInputModesOnly;
+    default_case = EAknEditorLowerCase;
+    }
+
+// -----------------------------------------------------------------------------
+//   
+//    r_sip_server_username_page & r_sip_server_username_editor
+//    The server username configuration page
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE AVKON_SETTING_PAGE r_sip_server_username_page
+    {
+    label = qtn_sip_proxy_uname;
+    softkey_resource = R_AVKON_SOFTKEYS_OK_CANCEL__OK;
+    type = EEikCtEdwin;
+    editor_resource_id = r_sip_server_username_editor;
+    }
+
+RESOURCE EDWIN r_sip_server_username_editor
+    {
+    lines = 5;
+    flags = EEikEdwinNoLineOrParaBreaks;
+    maxlength = 72;
+    avkon_flags = EAknEditorFlagLatinInputModesOnly;
+    default_case = EAknEditorLowerCase;
+    }
+
+// -----------------------------------------------------------------------------
+//   
+//    r_sip_server_password_page & r_sip_server_password_editor
+//    The server password configuration page
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE AVKON_SETTING_PAGE r_sip_server_password_page
+    {
+    label = qtn_sip_proxy_password;
+    softkey_resource = R_AVKON_SOFTKEYS_OK_CANCEL__OK;
+    type = EEikCtSecretEd;
+    editor_resource_id = r_sip_server_password_editor;
+    }
+
+RESOURCE SECRETED r_sip_server_password_editor
+    {
+    num_letters = 24;
+    }
+
+// -----------------------------------------------------------------------------
+//   
+//    r_sip_server_port_page
+//    The server port page
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE AVKON_SETTING_PAGE r_sip_server_port_page
+    {
+    label = qtn_sip_proxy_port;
+    softkey_resource = R_AVKON_SOFTKEYS_OK_CANCEL__OK;
+    type = EAknCtIntegerEdwin;
+    editor_resource_id = r_sip_server_port_editor;
+    }
+
+RESOURCE AVKON_INTEGER_EDWIN r_sip_server_port_editor
+    {
+    maxlength = 5;
+    min = 1;
+    max = 65535;
+    unset_value = -1;
+    }
+
+// -----------------------------------------------------------------------------
+//   
+//    r_sip_server_routing_page & r_sip_server_routing_popup_page &
+//    r_sip_server_routing_array_texts & r_sip_server_routing_array
+//    The server password configuration page
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE AVKON_SETTING_PAGE r_sip_server_routing_page
+    {
+    label = qtn_sip_proxy_lrouting;
+    softkey_resource = R_AVKON_SOFTKEYS_OK_CANCEL__OK;
+    type = EAknCtPopupSettingList;
+    editor_resource_id = r_sip_empty_setting_list;
+    }
+
+RESOURCE AVKON_POPUP_SETTING_TEXTS r_sip_server_routing_popup_page
+    {
+    flags = 0;
+    setting_texts_resource = r_sip_server_routing_array;
+    popped_up_texts_resource = r_sip_server_routing_array_texts;
+    }
+
+RESOURCE ARRAY r_sip_server_routing_array
+    {
+    items = 
+        {
+		AVKON_ENUMERATED_TEXT 
+            { 
+            value = EGSLooseRoutingOn; 
+            text = qtn_sip_loose_yes;
+            },
+		AVKON_ENUMERATED_TEXT 
+            { 
+            value = EGSLooseRoutingOff; 
+            text = qtn_sip_loose_no;
+            }
+        };
+    }
+
+RESOURCE ARRAY r_sip_server_routing_array_texts
+    {
+    items =
+        {
+        LBUF 
+            { 
+            txt = qtn_sip_loose_yes; 
+            },
+        LBUF 
+            { 
+            txt = qtn_sip_loose_no; 
+            }
+        };
+    }
+
+// -----------------------------------------------------------------------------
+//   
+//    r_sip_server_transport_page & r_sip_server_transport_popup_page &
+//    r_sip_server_transport_array_texts & r_sip_server_transport_array
+//    The server password configuration page
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE AVKON_SETTING_PAGE r_sip_server_transport_page
+    {
+    label = qtn_sip_proxy_protocol;
+    softkey_resource = R_AVKON_SOFTKEYS_OK_CANCEL__OK;
+    type = EAknCtPopupSettingList;
+    editor_resource_id = r_sip_empty_setting_list;
+    }
+
+RESOURCE AVKON_POPUP_SETTING_TEXTS r_sip_server_transport_popup_page
+    {
+    flags = 0;
+    setting_texts_resource = r_sip_server_transport_array;
+    popped_up_texts_resource = r_sip_server_transport_array_texts;
+    }
+
+RESOURCE ARRAY r_sip_server_transport_array
+    {
+    items = 
+        {
+    AVKON_ENUMERATED_TEXT
+            {
+            value = EGSTranspProtocolAuto;
+            text = qtn_sip_auto;
+            }, 
+		AVKON_ENUMERATED_TEXT 
+            { 
+            value = EGSTranspProtocolUDP; 
+            text = qtn_sip_udp;
+            },
+		AVKON_ENUMERATED_TEXT 
+            { 
+            value = EGSTranspProtocolTCP; 
+            text = qtn_sip_tcp;
+            }
+        };
+    }
+
+RESOURCE ARRAY r_sip_server_transport_array_texts
+    {
+    items =
+        {
+        LBUF
+            {
+            txt = qtn_sip_auto;
+            },
+        LBUF 
+            { 
+            txt = qtn_sip_udp;
+            },
+        LBUF 
+            { 
+            txt = qtn_sip_tcp;
+            }
+        };
+    }
+
+//----------------------------------------------------
+//   
+//    r_gs_softkeys_options_exit_change
+//    Text association with MSK ( CHANGE )
+//
+//----------------------------------------------------
+//
+RESOURCE CBA r_gs_softkeys_options_back_empty
+    {
+    buttons =
+        {
+        CBA_BUTTON 
+            {
+            id=EAknSoftkeyOptions; 
+            txt = text_softkey_option;
+            },
+        CBA_BUTTON 
+            {
+            id=EAknSoftkeyBack; 
+            txt = text_softkey_back; 
+            },
+        CBA_BUTTON 
+            {
+            id=EAknSoftkeyOk; 
+            txt = "";
+            }
+        };
+    }
+
+//----------------------------------------------------
+//   
+//    r_gs_softkeys_options_back_change
+//    Text association with MSK ( CHANGE )
+//
+//----------------------------------------------------
+//
+RESOURCE CBA r_gs_softkeys_options_back_change
+    {
+    buttons =
+        {
+        CBA_BUTTON 
+            {
+            id=EAknSoftkeyOptions; 
+            txt = text_softkey_option;
+            },
+        CBA_BUTTON 
+            {
+            id=EAknSoftkeyBack; 
+            txt = text_softkey_back; 
+            },
+        CBA_BUTTON 
+            {
+            id=EGSMSKCmdAppChange; 
+            txt = qtn_msk_change;
+            }
+        };
+    }
+
+// -----------------------------------------------------------------------------
+//   
+// String resources; loaded dynamically on the application using StringLoader
+// class
+//
+// -----------------------------------------------------------------------------
+//
+
+RESOURCE TBUF r_profile_list_view_new_profile_list_title
+    {
+    buf = qtn_sip_head_use_profile;
+    }
+
+RESOURCE TBUF r_qtn_conf_profile_delete_label
+    {
+    buf = qtn_sip_conf_delete;
+    }
+
+RESOURCE TBUF r_qtn_app_caption_string
+    {
+    buf = qtn_sip_title_sip;
+    }
+
+RESOURCE TBUF r_qtn_proxy_title_pane_label
+    {
+    buf = qtn_sip_title_proxy_server;
+    }
+
+RESOURCE TBUF r_qtn_registrar_title_pane_label
+    {
+    buf = qtn_sip_title_registrar_server;
+    }
+
+RESOURCE TBUF r_qtn_profile_list_profile_reg
+    {
+    buf = qtn_sip_registered;
+    }
+
+RESOURCE TBUF r_qtn_profile_list_profile_not_reg
+    {
+    buf = qtn_sip_not_registered;
+    }
+
+RESOURCE TBUF r_qtn_profile_list_profile_reg_failed
+    {
+    buf = qtn_sip_reg_failed;
+    }
+
+RESOURCE TBUF r_qtn_def_profile_name
+    {
+    buf = qtn_sip_provider;
+    }
+
+RESOURCE TBUF r_qtn_udp_param
+    {
+    buf = qtn_sip_udp;
+    }
+
+RESOURCE TBUF r_qtn_tcp_param
+    {
+    buf = qtn_sip_tcp;
+    }
+
+RESOURCE TBUF r_qtn_sip_ietf
+    {
+    buf = qtn_sip_ietf;
+    }
+
+RESOURCE TBUF r_qtn_sip_three_gpp
+    {
+    buf = qtn_sip_three_gpp;
+    }
+    
+RESOURCE TBUF r_qtn_sip_error_profile_used
+    {
+    buf = qtn_sip_error_profile_used;
+    }
+    
+RESOURCE TBUF r_qtn_sip_error_unable_to_delete
+    {
+    buf = qtn_sip_error_unable_to_delete;
+    }
+
+RESOURCE TBUF r_qtn_sip_error_unable_to_delete_default
+    {
+    buf = qtn_sip_error_unable_to_del_default;
+    }    
+
+RESOURCE TBUF r_qtn_sip_error_invalid_user_name
+    {
+    buf = qtn_sip_error_invalid_user_name;
+    }
+
+RESOURCE TBUF r_qtn_sip_error_proxy_address
+    {
+    buf = qtn_sip_error_proxy_address;
+    }
+
+RESOURCE TBUF r_qtn_sip_error_registrar_address
+    {
+    buf = qtn_sip_error_registrar_address;
+    }
+
+RESOURCE TBUF r_qtn_sip_ims_uname_provisioned
+    {
+    buf = qtn_sip_ims_uname_provisioned;
+    }    
+    
+RESOURCE TBUF r_qtn_sip_ims_uname_not_editable
+    {
+    buf = qtn_sip_ims_username_not_editable;
+    }    
+
+RESOURCE TBUF r_qtn_sip_infonote_realm_user_conflict
+    {
+    buf = qtn_sip_infonote_realm_user_conflict;
+    }    
+
+RESOURCE TBUF r_qtn_sip_items_with_same_name
+    {
+    buf = qtn_fldr_rename_query;
+    }
+
+RESOURCE TBUF r_qtn_sip_infonote_profile_locked
+    {
+    buf = qtn_sip_infonote_profile_locked;
+    }    
+
+RESOURCE TBUF r_qtn_sip_error_unable_to_del_locked
+    {
+    buf = qtn_sip_error_unable_to_del_locked;
+    }
+    
+RESOURCE TBUF r_qtn_sip_not_defined
+    {
+    buf = qtn_sip_def_ap_none;
+    }    
+    
+RESOURCE TBUF r_qtn_sip_infonote_no_destinations_defined
+    {
+    buf = qtn_sip_infonote_no_destinations;
+    }        
+    
+// -----------------------------------------------------------------------------
+//   
+//    r_profiles_msk_edit
+//    Middle softkey label: change.
+//
+// -----------------------------------------------------------------------------
+//    
+RESOURCE TBUF r_profiles_msk_edit
+    {
+    buf = qtn_msk_edit;
+    }
+
+RESOURCE TBUF r_sip_query_select_destination
+    {
+    buf = qtn_sip_query_select_destination;
+    }
+
+RESOURCE STYLUS_POPUP_MENU r_stylus_popup_menu	
+{
+	items =	
+	{	
+	STYLUS_POPUP_MENU_ITEM
+		{
+			txt = qtn_sip_delete;
+			command = EGSCmdAppDelete; // In this example we are using the same set of commands which are handled in AppUi::HandleCommandL
+		},
+	STYLUS_POPUP_MENU_ITEM
+		{
+			txt = qtn_sip_set_def_profile;
+			command = EGSCmdAppDefault;
+		}
+
+	};
+}
+// End of File
+
+

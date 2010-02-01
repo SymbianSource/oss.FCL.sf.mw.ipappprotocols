@@ -1,0 +1,83 @@
+/*
+* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description:
+*
+*/
+TARGET        cap_te_cap_sipserver.exe
+TARGETTYPE    exe
+SOURCEPATH	  .
+SOURCE        CSuite.cpp
+SOURCE        ESipItcTerminateDialog1_CStep.cpp
+SOURCE        ESipItcTerminateRefresh1_CStep.cpp
+SOURCE        ESipItcTerminateDialogRefresh1_CStep.cpp
+SOURCE        ESipItcTerminateRegistration1_CStep.cpp
+SOURCE        ESipItcSupportedSecurityMechanisms1_CStep.cpp
+SOURCE        ESipItcNegotiatedSecurityMechanism1_CStep.cpp
+SOURCE        ESipItcIsSigCompSupported1_CStep.cpp
+SOURCE        ESipItcGetTransactionState1_CStep.cpp
+SOURCE        ESipItcGetDialogState1_CStep.cpp
+SOURCE        ESipItcGetCompartmentCount1_CStep.cpp
+SOURCE        ESipItcGetFromHeader1_CStep.cpp
+SOURCE        ESipItcGetRefreshInterval1_CStep.cpp
+SOURCE        ESipItcGetCallIDHeader1_CStep.cpp
+SOURCE        ESipItcGetLocalTag1_CStep.cpp
+SOURCE        ESipItcOutboundProxy1_CStep.cpp
+SOURCE        ESipItcGetRegisteredContact1_CStep.cpp
+SOURCE        ESipItcGetLocalAddr1_CStep.cpp
+SOURCE        ESipItcSetOutboundProxy1_CStep.cpp
+SOURCE        ESipItcRemoveOutboundProxy1_CStep.cpp
+SOURCE        ESipItcSetRefreshInterval1_CStep.cpp
+SOURCE        ESipItcSetHttpDigestObserver1_CStep.cpp
+SOURCE        ESipItcSetCredentials1_CStep.cpp
+SOURCE        ESipItcRemoveCredentials1_CStep.cpp
+SOURCE        ESipItcIgnoreChallenge1_CStep.cpp
+SOURCE        ESipItcSetSecurityHandling1_CStep.cpp
+SOURCE        ESipItcResetDialogState1_CStep.cpp
+SOURCE        ESipItcSetAppUid1_CStep.cpp
+SOURCE        ESipItcOpenSubSession1_CStep.cpp
+SOURCE        ESipItcCloseSubSession1_CStep.cpp
+SOURCE        ESipItcRegister1_CStep.cpp
+SOURCE        ESipItcRegisterAndSetOutboundProxy1_CStep.cpp
+SOURCE        ESipItcUpdateRegistration1_CStep.cpp
+SOURCE        ESipItcUnRegister1_CStep.cpp
+SOURCE        ESipItcFetchRegistrations1_CStep.cpp
+SOURCE        ESipItcSendRequest1_CStep.cpp
+SOURCE        ESipItcSendRequestAndUpdateRefresh1_CStep.cpp
+SOURCE        ESipItcSendRequestAndTerminateRefresh1_CStep.cpp
+SOURCE        ESipItcSendResponse1_CStep.cpp
+SOURCE        ESipItcSendCancel1_CStep.cpp
+SOURCE        ESipItcSendResponseAndCreateDialog1_CStep.cpp
+SOURCE        ESipItcSendResponseInDialog1_CStep.cpp
+SOURCE        ESipItcSendRequestAndCreateDialog1_CStep.cpp
+SOURCE        ESipItcSendRequestInDialog1_CStep.cpp
+SOURCE        SpItcSendRequestInDialogAndUpdateRefresh1_CStep.cpp
+SOURCE        ESipItcClientReadyToReceive1_CStep.cpp
+SOURCE        ESipItcClientReceiveSipMessage1_CStep.cpp
+SOURCE        ESipItcClientCancelReceive1_CStep.cpp
+SOURCE        ESipItcConnectionReadyToReceive1_CStep.cpp
+SOURCE        ESipItcConnectionReceiveSipMessage1_CStep.cpp
+SOURCE        ESipItcConnectionCancelReceive1_CStep.cpp
+//USERINCLUDE   .\
+
+SYSTEMINCLUDE /epoc32/include /epoc32/include/test
+LIBRARY       euser.lib 
+
+//For TEF 
+LIBRARY		testexecuteutils.lib 
+LIBRARY		testexecutelogclient.lib 
+
+MACRO __SECURE_API__
+CAPABILITY All -TCB
+
+SMPSAFE

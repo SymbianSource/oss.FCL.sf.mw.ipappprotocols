@@ -1,0 +1,112 @@
+EXPORTS
+	??0CSIPProfileContextBase@@IAE@AAVCSIP@@AAVCSIPConnection@@AAVMSIPProfileAgentObserver@@AAVCSIPPrflStateBase@@AAVCSIPConcreteProfile@@AAVCDeltaTimer@@@Z @ 1 NONAME ; CSIPProfileContextBase::CSIPProfileContextBase(class CSIP &, class CSIPConnection &, class MSIPProfileAgentObserver &, class CSIPPrflStateBase &, class CSIPConcreteProfile &, class CDeltaTimer &)
+	??0CSIPProfileQueueHandling@@AAE@AAVMSIPProfileFSMUser@@@Z @ 2 NONAME ; CSIPProfileQueueHandling::CSIPProfileQueueHandling(class MSIPProfileFSMUser &)
+	??1CSIPPrflDeregisterRequestedState@@UAE@XZ @ 3 NONAME ; CSIPPrflDeregisterRequestedState::~CSIPPrflDeregisterRequestedState(void)
+	??1CSIPPrflDeregistrationInProgressState@@UAE@XZ @ 4 NONAME ; CSIPPrflDeregistrationInProgressState::~CSIPPrflDeregistrationInProgressState(void)
+	??1CSIPPrflInitState@@UAE@XZ @ 5 NONAME ; CSIPPrflInitState::~CSIPPrflInitState(void)
+	??1CSIPPrflRegisterDelayRequestedState@@UAE@XZ @ 6 NONAME ; CSIPPrflRegisterDelayRequestedState::~CSIPPrflRegisterDelayRequestedState(void)
+	??1CSIPPrflRegisterRequestedState@@UAE@XZ @ 7 NONAME ; CSIPPrflRegisterRequestedState::~CSIPPrflRegisterRequestedState(void)
+	??1CSIPPrflRegisteredState@@UAE@XZ @ 8 NONAME ; CSIPPrflRegisteredState::~CSIPPrflRegisteredState(void)
+	??1CSIPPrflRegistrationInProgressState@@UAE@XZ @ 9 NONAME ; CSIPPrflRegistrationInProgressState::~CSIPPrflRegistrationInProgressState(void)
+	??1CSIPPrflResolvingProxiesState@@UAE@XZ @ 10 NONAME ; CSIPPrflResolvingProxiesState::~CSIPPrflResolvingProxiesState(void)
+	??1CSIPPrflStateBase@@UAE@XZ @ 11 NONAME ; CSIPPrflStateBase::~CSIPPrflStateBase(void)
+	??1CSIPProfileContextBase@@UAE@XZ @ 12 NONAME ; CSIPProfileContextBase::~CSIPProfileContextBase(void)
+	??1CSIPProfileQueueHandling@@UAE@XZ @ 13 NONAME ; CSIPProfileQueueHandling::~CSIPProfileQueueHandling(void)
+	?AddDeregisterIntoQueue@CSIPProfileContextBase@@QAEHXZ @ 14 NONAME ; int CSIPProfileContextBase::AddDeregisterIntoQueue(void)
+	?AddDeregisterToQueueL@CSIPProfileQueueHandling@@QAEHAAVCSIPConcreteProfile@@@Z @ 15 NONAME ; int CSIPProfileQueueHandling::AddDeregisterToQueueL(class CSIPConcreteProfile &)
+	?AddIntoQueue@CSIPProfileContextBase@@QAEHABVTDesC8@@@Z @ 16 NONAME ; int CSIPProfileContextBase::AddIntoQueue(class TDesC8 const &)
+	?AddRegisterToQueueL@CSIPProfileQueueHandling@@QAEHAAVCSIPConcreteProfile@@H@Z @ 17 NONAME ; int CSIPProfileQueueHandling::AddRegisterToQueueL(class CSIPConcreteProfile &, int)
+	?AgentObserver@CSIPProfileContextBase@@UBEAAVMSIPProfileAgentObserver@@XZ @ 18 NONAME ; class MSIPProfileAgentObserver & CSIPProfileContextBase::AgentObserver(void) const
+	?Cleanup@CSIPProfileQueueHandling@@QAEXAAVCSIPConcreteProfile@@PAV2@@Z @ 19 NONAME ; void CSIPProfileQueueHandling::Cleanup(class CSIPConcreteProfile &, class CSIPConcreteProfile *)
+	?Connection@CSIPProfileContextBase@@UBEABVCSIPConnection@@XZ @ 20 NONAME ; class CSIPConnection const & CSIPProfileContextBase::Connection(void) const
+	?ConnectionStateChanged@CSIPProfileContextBase@@QAEXW4TState@CSIPConnection@@@Z @ 21 NONAME ; void CSIPProfileContextBase::ConnectionStateChanged(enum CSIPConnection::TState)
+	?CreateAuthorizationLC@SIPMessageBuilder@@SAPAVCSIPExtensionHeader@@ABVTDesC8@@00@Z @ 22 NONAME ; class CSIPExtensionHeader * SIPMessageBuilder::CreateAuthorizationLC(class TDesC8 const &, class TDesC8 const &, class TDesC8 const &)
+	?CreateContactLC@SIPMessageBuilder@@SAPAVCSIPContactHeader@@ABVTDesC8@@HABVMDesC8Array@@VRStringF@@H@Z @ 23 NONAME ; class CSIPContactHeader * SIPMessageBuilder::CreateContactLC(class TDesC8 const &, int, class MDesC8Array const &, class RStringF, int)
+	?CreateHeaderLC@SIPMessageBuilder@@SAPAVCSIPHeaderBase@@ABVTDesC8@@@Z @ 24 NONAME ; class CSIPHeaderBase * SIPMessageBuilder::CreateHeaderLC(class TDesC8 const &)
+	?CreateRouteLC@SIPMessageBuilder@@SAPAVCSIPRouteHeader@@ABVTDesC8@@H@Z @ 25 NONAME ; class CSIPRouteHeader * SIPMessageBuilder::CreateRouteLC(class TDesC8 const &, int)
+	?CreateToLC@SIPMessageBuilder@@SAPAVCSIPToHeader@@ABVTDesC8@@@Z @ 26 NONAME ; class CSIPToHeader * SIPMessageBuilder::CreateToLC(class TDesC8 const &)
+	
+	?CurrentState@CSIPProfileContextBase@@QBE?AW4TSIPProfileState@CSIPProfileAgent@@XZ @ 27 NONAME ABSENT ; enum CSIPProfileAgent::TSIPProfileState CSIPProfileContextBase::CurrentState(void) const	
+	?ErrorOccured@CSIPProfileContextBase@@QAEXHAAVCSIPClientTransaction@@AAVCSIPRegistrationBinding@@AAH@Z @ 28 NONAME ; void CSIPProfileContextBase::ErrorOccured(int, class CSIPClientTransaction &, class CSIPRegistrationBinding &, int &)
+	?ErrorOccured@CSIPProfileContextBase@@QAEXHAAVCSIPRegistrationBinding@@AAH@Z @ 29 NONAME ; void CSIPProfileContextBase::ErrorOccured(int, class CSIPRegistrationBinding &, int &)
+	?ForgetProfile@CSIPProfileContextBase@@UAEXXZ @ 30 NONAME ; void CSIPProfileContextBase::ForgetProfile(void)
+	?FoundIPSecProfileCandidate@CSIPProfileQueueHandling@@QAEHXZ @ 31 NONAME ; int CSIPProfileQueueHandling::FoundIPSecProfileCandidate(void)
+	?HandleProxyResolvingError@CSIPProfileContextBase@@UAEXH@Z @ 32 NONAME ; void CSIPProfileContextBase::HandleProxyResolvingError(int)
+	
+	
+	?IPSecProfileCandidate@CSIPProfileQueueHandling@@QAEPAVCSIPConcreteProfile@@AAH@Z @ 33 NONAME ; class CSIPConcreteProfile * CSIPProfileQueueHandling::IPSecProfileCandidate(int &)
+	?IgnoreErrorEvent@CSIPProfileContextBase@@QAEHXZ @ 34 NONAME ; int CSIPProfileContextBase::IgnoreErrorEvent(void)
+	?IsEmpty@CSIPProfileQueueHandling@@QBEHXZ @ 35 NONAME ; int CSIPProfileQueueHandling::IsEmpty(void) const
+	
+	
+	?IsProxyResolvingEnabled@CSIPProfileContextBase@@UBEHXZ @ 36 NONAME ; int CSIPProfileContextBase::IsProxyResolvingEnabled(void) const
+	?LinkStates@CSIPPrflDeregisterRequestedState@@QAEXAAVCSIPPrflStateBase@@00@Z @ 37 NONAME ; void CSIPPrflDeregisterRequestedState::LinkStates(class CSIPPrflStateBase &, class CSIPPrflStateBase &, class CSIPPrflStateBase &)
+	?LinkStates@CSIPPrflDeregistrationInProgressState@@QAEXAAVCSIPPrflStateBase@@@Z @ 38 NONAME ; void CSIPPrflDeregistrationInProgressState::LinkStates(class CSIPPrflStateBase &)
+	?LinkStates@CSIPPrflInitState@@QAEXAAVCSIPPrflStateBase@@00@Z @ 39 NONAME ; void CSIPPrflInitState::LinkStates(class CSIPPrflStateBase &, class CSIPPrflStateBase &, class CSIPPrflStateBase &)
+	?LinkStates@CSIPPrflRegisterDelayRequestedState@@QAEXAAVCSIPPrflStateBase@@@Z @ 40 NONAME ; void CSIPPrflRegisterDelayRequestedState::LinkStates(class CSIPPrflStateBase &)
+	?LinkStates@CSIPPrflRegisterRequestedState@@QAEXAAVCSIPPrflStateBase@@00@Z @ 41 NONAME ; void CSIPPrflRegisterRequestedState::LinkStates(class CSIPPrflStateBase &, class CSIPPrflStateBase &, class CSIPPrflStateBase &)
+	?LinkStates@CSIPPrflRegisteredState@@QAEXAAVCSIPPrflStateBase@@0000@Z @ 42 NONAME ; void CSIPPrflRegisteredState::LinkStates(class CSIPPrflStateBase &, class CSIPPrflStateBase &, class CSIPPrflStateBase &, class CSIPPrflStateBase &, class CSIPPrflStateBase &)
+	?LinkStates@CSIPPrflRegistrationInProgressState@@QAEXAAVCSIPPrflStateBase@@000@Z @ 43 NONAME ; void CSIPPrflRegistrationInProgressState::LinkStates(class CSIPPrflStateBase &, class CSIPPrflStateBase &, class CSIPPrflStateBase &, class CSIPPrflStateBase &)
+	?LinkStates@CSIPPrflResolvingProxiesState@@QAEXAAVCSIPPrflStateBase@@00@Z @ 44 NONAME ; void CSIPPrflResolvingProxiesState::LinkStates(class CSIPPrflStateBase &, class CSIPPrflStateBase &, class CSIPPrflStateBase &)
+	?Name@CSIPPrflStateBase@@QBE?AW4TSIPProfileState@CSIPProfileAgent@@XZ @ 45 NONAME ABSENT ; enum CSIPProfileAgent::TSIPProfileState CSIPPrflStateBase::Name(void) const	
+	?NewL@CSIPPrflDeregisterRequestedState@@SAPAV1@AAVMSIPProfileFSMUser@@@Z @ 46 NONAME ; class CSIPPrflDeregisterRequestedState * CSIPPrflDeregisterRequestedState::NewL(class MSIPProfileFSMUser &)
+	?NewL@CSIPPrflDeregistrationInProgressState@@SAPAV1@AAVMSIPProfileFSMUser@@@Z @ 47 NONAME ; class CSIPPrflDeregistrationInProgressState * CSIPPrflDeregistrationInProgressState::NewL(class MSIPProfileFSMUser &)
+	?NewL@CSIPPrflInitState@@SAPAV1@AAVMSIPProfileFSMUser@@@Z @ 48 NONAME ; class CSIPPrflInitState * CSIPPrflInitState::NewL(class MSIPProfileFSMUser &)
+	?NewL@CSIPPrflRegisterDelayRequestedState@@SAPAV1@AAVMSIPProfileFSMUser@@@Z @ 49 NONAME ; class CSIPPrflRegisterDelayRequestedState * CSIPPrflRegisterDelayRequestedState::NewL(class MSIPProfileFSMUser &)
+	?NewL@CSIPPrflRegisterRequestedState@@SAPAV1@AAVMSIPProfileFSMUser@@@Z @ 50 NONAME ; class CSIPPrflRegisterRequestedState * CSIPPrflRegisterRequestedState::NewL(class MSIPProfileFSMUser &)
+	?NewL@CSIPPrflRegisteredState@@SAPAV1@AAVMSIPProfileFSMUser@@@Z @ 51 NONAME ; class CSIPPrflRegisteredState * CSIPPrflRegisteredState::NewL(class MSIPProfileFSMUser &)
+	?NewL@CSIPPrflRegistrationInProgressState@@SAPAV1@AAVMSIPProfileFSMUser@@@Z @ 52 NONAME ; class CSIPPrflRegistrationInProgressState * CSIPPrflRegistrationInProgressState::NewL(class MSIPProfileFSMUser &)
+	?NewL@CSIPPrflResolvingProxiesState@@SAPAV1@AAVMSIPProfileFSMUser@@@Z @ 53 NONAME ; class CSIPPrflResolvingProxiesState * CSIPPrflResolvingProxiesState::NewL(class MSIPProfileFSMUser &)
+	?NewL@CSIPProfileQueueHandling@@SAPAV1@AAVMSIPProfileFSMUser@@@Z @ 54 NONAME ; class CSIPProfileQueueHandling * CSIPProfileQueueHandling::NewL(class MSIPProfileFSMUser &)
+	?NewLC@CSIPProfileQueueHandling@@SAPAV1@AAVMSIPProfileFSMUser@@@Z @ 55 NONAME ; class CSIPProfileQueueHandling * CSIPProfileQueueHandling::NewLC(class MSIPProfileFSMUser &)
+	?ParseParamL@SIPMessageBuilder@@SAHABVTDesC8@@AAVTPtrC8@@1@Z @ 56 NONAME ; int SIPMessageBuilder::ParseParamL(class TDesC8 const &, class TPtrC8 &, class TPtrC8 &)
+	?Profile@CSIPProfileContextBase@@UAEPAVCSIPConcreteProfile@@XZ @ 57 NONAME ; class CSIPConcreteProfile * CSIPProfileContextBase::Profile(void)
+	?ProxiesAlreadyResolved@CSIPProfileContextBase@@UAEHXZ @ 58 NONAME ; int CSIPProfileContextBase::ProxiesAlreadyResolved(void)
+	?ProxyAddressL@CSIPProfileContextBase@@IAEABVTDesC8@@AAVCSIPConcreteProfile@@@Z @ 59 NONAME ; class TDesC8 const & CSIPProfileContextBase::ProxyAddressL(class CSIPConcreteProfile &)
+	?ProxyAddressL@CSIPProfileContextBase@@IAEABVTDesC8@@XZ @ 60 NONAME ; class TDesC8 const & CSIPProfileContextBase::ProxyAddressL(void)
+	?ProxyResolvingRequestCompleteL@CSIPProfileContextBase@@QAEXAAVMDesC8Array@@@Z @ 61 NONAME ; void CSIPProfileContextBase::ProxyResolvingRequestCompleteL(class MDesC8Array &)
+	?ProxyResolvingRequestFailed@CSIPProfileContextBase@@QAEXH@Z @ 62 NONAME ; void CSIPProfileContextBase::ProxyResolvingRequestFailed(int)
+	?Received2XXRegisterResponse@CSIPProfileContextBase@@IAEXXZ @ 63 NONAME ; void CSIPProfileContextBase::Received2XXRegisterResponse(void)
+	?RegisterFromQueueL@CSIPProfileQueueHandling@@QAEXAAVCSIPConcreteProfile@@@Z @ 64 NONAME ; void CSIPProfileQueueHandling::RegisterFromQueueL(class CSIPConcreteProfile &)
+	?RegisterL@CSIPProfileContextBase@@QAEXXZ @ 65 NONAME ; void CSIPProfileContextBase::RegisterL(void)
+	?RegisterPending@CSIPProfileContextBase@@QBEHXZ @ 66 NONAME ABSENT ; int CSIPProfileContextBase::RegisterPending(void) const
+	
+	?Registration@CSIPProfileContextBase@@UAEPAVCSIPRegistrationBinding@@XZ @ 67 NONAME ; class CSIPRegistrationBinding * CSIPProfileContextBase::Registration(void)
+	?RemoveDeltaTimerEntry@CSIPProfileContextBase@@UAEXXZ @ 68 NONAME ; void CSIPProfileContextBase::RemoveDeltaTimerEntry(void)
+	?RemoveProfileFromRegQueueL@CSIPProfileQueueHandling@@QAEPAVCSIPConcreteProfile@@AAV2@@Z @ 69 NONAME ; class CSIPConcreteProfile * CSIPProfileQueueHandling::RemoveProfileFromRegQueueL(class CSIPConcreteProfile &)
+	?RequireProxyResolving@CSIPProfileContextBase@@IAEHXZ @ 70 NONAME ; int CSIPProfileContextBase::RequireProxyResolving(void)
+	?RetryDeltaTimer@CSIPProfileContextBase@@QAEXIH@Z @ 71 NONAME ; void CSIPProfileContextBase::RetryDeltaTimer(unsigned int, int)
+
+
+
+	?RetryPossible@CSIPProfileContextBase@@IAEHH@Z @ 72 NONAME ; int CSIPProfileContextBase::RetryPossible(int)
+	?RetryRegistration@CSIPProfileContextBase@@UAEXXZ @ 73 NONAME ; void CSIPProfileContextBase::RetryRegistration(void)
+	
+	
+	
+	?SetNextState@CSIPProfileContextBase@@UAEXAAVCSIPPrflStateBase@@@Z @ 74 NONAME ; void CSIPProfileContextBase::SetNextState(class CSIPPrflStateBase &)
+	?SetProfile@CSIPProfileContextBase@@UAEXPAVCSIPConcreteProfile@@@Z @ 75 NONAME ; void CSIPProfileContextBase::SetProfile(class CSIPConcreteProfile *)
+	?SetProxiesL@CSIPProfileContextBase@@UAEXAAVMDesC8Array@@@Z @ 76 NONAME ; void CSIPProfileContextBase::SetProxiesL(class MDesC8Array &)
+	?SetRegisteredAORs@CSIPProfileContextBase@@UAEHXZ @ 77 NONAME ; int CSIPProfileContextBase::SetRegisteredAORs(void)
+	?SetRetryPossible@CSIPProfileContextBase@@IAEXH@Z @ 78 NONAME ; void CSIPProfileContextBase::SetRetryPossible(int)
+	?SetTransaction@CSIPProfileContextBase@@UAEXPAVCSIPClientTransaction@@@Z @ 79 NONAME ; void CSIPProfileContextBase::SetTransaction(class CSIPClientTransaction *)
+	?TerminateHandling@CSIPProfileContextBase@@QAEXXZ @ 80 NONAME ; void CSIPProfileContextBase::TerminateHandling(void)
+	?WaitingForAllowedNetworkProfile@CSIPProfileQueueHandling@@QAEPAVCSIPConcreteProfile@@H@Z @ 81 NONAME ; class CSIPConcreteProfile * CSIPProfileQueueHandling::WaitingForAllowedNetworkProfile(int)
+	?IsIdle@CSIPProfileContextBase@@QAEHXZ @ 82 NONAME ; int CSIPProfileContextBase::IsIdle(void)
+	?IsInQueue@CSIPProfileQueueHandling@@QAEHAAVCSIPConcreteProfile@@@Z @ 83 NONAME ; int CSIPProfileQueueHandling::IsInQueue(class CSIPConcreteProfile &)
+	?IsRegistrationAllowed@CSIPProfileQueueHandling@@QAEHAAVCSIPConcreteProfile@@H@Z @ 84 NONAME ; int CSIPProfileQueueHandling::IsRegistrationAllowed(class CSIPConcreteProfile &, int)
+	?CurrentMappedState@CSIPProfileContextBase@@QBE?AW4TStatus@CSIPConcreteProfile@@XZ @ 85 NONAME ; enum CSIPConcreteProfile::TStatus CSIPProfileContextBase::CurrentMappedState(void) const
+	?CurrentState@CSIPProfileContextBase@@QBE?AW4TSIPProfileState@MSIPProfileContext@@XZ @ 86 NONAME ; enum MSIPProfileContext::TSIPProfileState CSIPProfileContextBase::CurrentState(void) const
+
+	?HasRefresh@CSIPProfileContextBase@@MBEHABVCSIPRefresh@@@Z @ 87 NONAME ; int CSIPProfileContextBase::HasRefresh(class CSIPRefresh const &) const
+	?HasTransaction@CSIPProfileContextBase@@MBEHABVCSIPClientTransaction@@@Z @ 88 NONAME ; int CSIPProfileContextBase::HasTransaction(class CSIPClientTransaction const &) const
+	?Name@CSIPPrflStateBase@@QBE?AW4TSIPProfileState@MSIPProfileContext@@XZ @ 89 NONAME ; enum MSIPProfileContext::TSIPProfileState CSIPPrflStateBase::Name(void) const
+
+	?RegistrarUsername@CSIPProfileContextBase@@MBEABVTDesC8@@XZ @ 90 NONAME ; class TDesC8 const & CSIPProfileContextBase::RegistrarUsername(void) const
+	?ResetNegotiatedSecurityMechanismL@CSIPProfileContextBase@@UAEXXZ @ 91 NONAME ; void CSIPProfileContextBase::ResetNegotiatedSecurityMechanismL(void)
+	?SetCredentials@CSIPProfileContextBase@@QAEHABVCSIPClientTransaction@@AAVCSIPHttpDigest@@@Z @ 92 NONAME ; int CSIPProfileContextBase::SetCredentials(class CSIPClientTransaction const &, class CSIPHttpDigest &)
+	?SetCredentials@CSIPProfileContextBase@@QAEHABVCSIPRefresh@@AAVCSIPHttpDigest@@@Z @ 93 NONAME ; int CSIPProfileContextBase::SetCredentials(class CSIPRefresh const &, class CSIPHttpDigest &)
+	?SetNegotiatedSecurityMechanismL@CSIPProfileContextBase@@UAEXXZ @ 94 NONAME ; void CSIPProfileContextBase::SetNegotiatedSecurityMechanismL(void)
+	?IsRegisterPending@CSIPProfileContextBase@@QBEHXZ @ 95 NONAME ; int CSIPProfileContextBase::IsRegisterPending(void) const
+	?ProfileId@CSIPProfileContextBase@@IBEKXZ @ 96 NONAME ; unsigned long CSIPProfileContextBase::ProfileId(void) const
+

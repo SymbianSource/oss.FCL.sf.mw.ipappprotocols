@@ -1,0 +1,74 @@
+// Copyright (c) 2005-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// dummy_rtpscpr.dll dummy classes used in testing cfrtp
+// 
+//
+
+/**
+ @file
+*/
+
+TARGET        dummy_rtpscpr.dll
+TARGETTYPE    PLUGIN
+UID           0x10009D8D 0xA000CB29
+
+VENDORID 0x70000001
+
+
+SOURCEPATH    ../src
+SOURCE        dummy_rtpscpr.cpp
+SOURCE        dummy_rtpscprstates.cpp
+SOURCE        dummy_rtpscprfactory.cpp
+SOURCE		  ecom_impl.cpp
+SOURCE        dummy_rtp_subconparams.cpp
+SOURCE        dummy_rtpprovisioninfo.cpp
+
+
+USERINCLUDE   ../inc
+USERINCLUDE   ../../../inc
+
+
+SYSTEMINCLUDE  /epoc32/include/ecom
+SYSTEMINCLUDE  /epoc32/include
+SYSTEMINCLUDE  /epoc32/include/comms-infras
+SYSTEMINCLUDE  /epoc32/include/networking
+
+START RESOURCE A0008AA9.rss
+TARGET dummy_rtpscpr.rsc
+END
+
+
+LIBRARY	euser.lib
+LIBRARY esocksvr.lib
+LIBRARY esock.lib
+LIBRARY netmeta.lib
+LIBRARY netsm.lib
+LIBRARY commsfw.lib
+LIBRARY coreproviders.lib
+LIBRARY mobilitycoreproviders.lib
+LIBRARY mbufmgr.lib
+LIBRARY esock_api_ext.lib
+LIBRARY commsdat.lib
+LIBRARY simpleselectorbase.lib
+LIBRARY insock.lib
+
+LIBRARY nodemessages.lib
+LIBRARY	esockmessagesimpl.lib
+LIBRARY virtualconstructors.lib 
+LIBRARY meshmachine.lib
+LIBRARY netinterfaces.lib 
+LIBRARY factories.lib
+
+CAPABILITY CommDD PowerMgmt ReadDeviceData WriteDeviceData TrustedUI ProtServ NetworkControl NetworkServices LocalServices ReadUserData WriteUserData
+SMPSAFE

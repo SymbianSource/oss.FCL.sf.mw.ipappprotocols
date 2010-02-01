@@ -1,0 +1,57 @@
+EXPORTS
+	?AuthKeyLength@CSRTPMasterKey@@QBEIXZ @ 1 NONAME ; unsigned int CSRTPMasterKey::AuthKeyLength(void) const
+	?CryptoParams@CSRTPCryptoContext@@QAEABVTSrtpCryptoParams@@XZ @ 2 NONAME ; class TSrtpCryptoParams const & CSRTPCryptoContext::CryptoParams(void)
+	?EncrKeyLength@CSRTPMasterKey@@QBEIXZ @ 3 NONAME ; unsigned int CSRTPMasterKey::EncrKeyLength(void) const
+	?EncryptL@CSrtpAESCTRCrypto@@QAEPAVHBufC8@@ABVTDesC8@@00@Z @ 4 NONAME ; class HBufC8 * CSrtpAESCTRCrypto::EncryptL(class TDesC8 const &, class TDesC8 const &, class TDesC8 const &)
+	?KeystreamL@CSrtpAESCTRCrypto@@QAEPAVHBufC8@@IABVTDesC8@@0@Z @ 5 NONAME ; class HBufC8 * CSrtpAESCTRCrypto::KeystreamL(unsigned int, class TDesC8 const &, class TDesC8 const &)
+	?MKI@CSRTPMasterKey@@QBEABVTDesC8@@XZ @ 6 NONAME ; class TDesC8 const & CSRTPMasterKey::MKI(void) const
+	?MasterKey@CSRTPCryptoContext@@QBEABVCSRTPMasterKey@@XZ @ 7 NONAME ; class CSRTPMasterKey const & CSRTPCryptoContext::MasterKey(void) const
+	?MasterKey@CSRTPMasterKey@@QBEABVTDesC8@@XZ @ 8 NONAME ; class TDesC8 const & CSRTPMasterKey::MasterKey(void) const
+	?MasterSalt@CSRTPCryptoContext@@QBEABVCSRTPMasterSalt@@XZ @ 9 NONAME ; class CSRTPMasterSalt const & CSRTPCryptoContext::MasterSalt(void) const
+	?MasterSalt@CSRTPMasterSalt@@QBEABVTDesC8@@XZ @ 10 NONAME ; class TDesC8 const & CSRTPMasterSalt::MasterSalt(void) const
+	?NewL@CSRTPCryptoContext@@SAPAV1@PBVCSRTPMasterKey@@PBVCSRTPMasterSalt@@ABVTSrtpCryptoParams@@@Z @ 11 NONAME ; class CSRTPCryptoContext * CSRTPCryptoContext::NewL(class CSRTPMasterKey const *, class CSRTPMasterSalt const *, class TSrtpCryptoParams const &)
+	?NewL@CSRTPMasterKey@@SAPAV1@ABVTDesC8@@0II@Z @ 12 NONAME ; class CSRTPMasterKey * CSRTPMasterKey::NewL(class TDesC8 const &, class TDesC8 const &, unsigned int, unsigned int)
+	?NewL@CSRTPMasterSalt@@SAPAV1@ABVTDesC8@@I@Z @ 13 NONAME ; class CSRTPMasterSalt * CSRTPMasterSalt::NewL(class TDesC8 const &, unsigned int)
+	?NewL@CSRTPSession@@SAPAV1@ABVTInetAddr@@@Z @ 14 NONAME ; class CSRTPSession * CSRTPSession::NewL(class TInetAddr const &)
+	?NewL@CSRTPSession@@SAPAV1@ABVTInetAddr@@PAVCSRTPCryptoContext@@AAVMSRTPReKeyingObserver@@@Z @ 15 NONAME ; class CSRTPSession * CSRTPSession::NewL(class TInetAddr const &, class CSRTPCryptoContext *, class MSRTPReKeyingObserver &)
+	?NewL@CSRTPStreamIn@@SAPAV1@AAVCSRTPSession@@@Z @ 16 NONAME ; class CSRTPStreamIn * CSRTPStreamIn::NewL(class CSRTPSession &)
+	?NewL@CSRTPStreamIn@@SAPAV1@AAVCSRTPSession@@AAVMSRTPReKeyingObserver@@@Z @ 17 NONAME ; class CSRTPStreamIn * CSRTPStreamIn::NewL(class CSRTPSession &, class MSRTPReKeyingObserver &)
+	?NewL@CSRTPStreamIn@@SAPAV1@AAVCSRTPSession@@I@Z @ 18 NONAME ; class CSRTPStreamIn * CSRTPStreamIn::NewL(class CSRTPSession &, unsigned int)
+	?NewL@CSRTPStreamIn@@SAPAV1@AAVCSRTPSession@@IAAVMSRTPReKeyingObserver@@@Z @ 19 NONAME ; class CSRTPStreamIn * CSRTPStreamIn::NewL(class CSRTPSession &, unsigned int, class MSRTPReKeyingObserver &)
+	?NewL@CSRTPStreamIn@@SAPAV1@AAVCSRTPSession@@IPAVCSRTPCryptoContext@@AAVMSRTPReKeyingObserver@@@Z @ 20 NONAME ; class CSRTPStreamIn * CSRTPStreamIn::NewL(class CSRTPSession &, unsigned int, class CSRTPCryptoContext *, class MSRTPReKeyingObserver &)
+	?NewL@CSRTPStreamIn@@SAPAV1@AAVCSRTPSession@@PAVCSRTPCryptoContext@@AAVMSRTPReKeyingObserver@@@Z @ 21 NONAME ; class CSRTPStreamIn * CSRTPStreamIn::NewL(class CSRTPSession &, class CSRTPCryptoContext *, class MSRTPReKeyingObserver &)
+	?NewL@CSRTPStreamOut@@SAPAV1@AAVCSRTPSession@@I@Z @ 22 NONAME ; class CSRTPStreamOut * CSRTPStreamOut::NewL(class CSRTPSession &, unsigned int)
+	?NewL@CSRTPStreamOut@@SAPAV1@AAVCSRTPSession@@IAAVMSRTPReKeyingObserver@@@Z @ 23 NONAME ; class CSRTPStreamOut * CSRTPStreamOut::NewL(class CSRTPSession &, unsigned int, class MSRTPReKeyingObserver &)
+	?NewL@CSRTPStreamOut@@SAPAV1@AAVCSRTPSession@@IPAVCSRTPCryptoContext@@AAVMSRTPReKeyingObserver@@@Z @ 24 NONAME ; class CSRTPStreamOut * CSRTPStreamOut::NewL(class CSRTPSession &, unsigned int, class CSRTPCryptoContext *, class MSRTPReKeyingObserver &)
+	?NewL@CSrtpAESCTRCrypto@@SAPAV1@XZ @ 25 NONAME ; class CSrtpAESCTRCrypto * CSrtpAESCTRCrypto::NewL(void)
+	?NewLC@CSRTPCryptoContext@@SAPAV1@PBVCSRTPMasterKey@@PBVCSRTPMasterSalt@@ABVTSrtpCryptoParams@@@Z @ 26 NONAME ; class CSRTPCryptoContext * CSRTPCryptoContext::NewLC(class CSRTPMasterKey const *, class CSRTPMasterSalt const *, class TSrtpCryptoParams const &)
+	?NewLC@CSRTPCryptoHandlerSRTCP@@SAPAV1@AAVCSRTPStream@@@Z @ 27 NONAME ; class CSRTPCryptoHandlerSRTCP * CSRTPCryptoHandlerSRTCP::NewLC(class CSRTPStream &)
+	?NewLC@CSRTPMasterKey@@SAPAV1@ABVTDesC8@@0II@Z @ 28 NONAME ; class CSRTPMasterKey * CSRTPMasterKey::NewLC(class TDesC8 const &, class TDesC8 const &, unsigned int, unsigned int)
+	?NewLC@CSRTPMasterSalt@@SAPAV1@ABVTDesC8@@I@Z @ 29 NONAME ; class CSRTPMasterSalt * CSRTPMasterSalt::NewLC(class TDesC8 const &, unsigned int)
+	?NewLC@CSRTPSession@@SAPAV1@ABVTInetAddr@@@Z @ 30 NONAME ; class CSRTPSession * CSRTPSession::NewLC(class TInetAddr const &)
+	?NewLC@CSRTPSession@@SAPAV1@ABVTInetAddr@@PAVCSRTPCryptoContext@@AAVMSRTPReKeyingObserver@@@Z @ 31 NONAME ; class CSRTPSession * CSRTPSession::NewLC(class TInetAddr const &, class CSRTPCryptoContext *, class MSRTPReKeyingObserver &)
+	?ProtectRTCPL@CSRTPSession@@QAEPAVHBufC8@@IABVTDesC8@@@Z @ 32 NONAME ; class HBufC8 * CSRTPSession::ProtectRTCPL(unsigned int, class TDesC8 const &)
+	?ProtectRTPL@CSRTPSession@@QAEPAVHBufC8@@IABVTDesC8@@@Z @ 33 NONAME ; class HBufC8 * CSRTPSession::ProtectRTPL(unsigned int, class TDesC8 const &)
+	?ProtectRtcpL@CSRTPStreamOut@@QAEPAVHBufC8@@ABVTDesC8@@@Z @ 34 NONAME ; class HBufC8 * CSRTPStreamOut::ProtectRtcpL(class TDesC8 const &)
+	?ProtectRtpL@CSRTPStreamOut@@QAEPAVHBufC8@@ABVTDesC8@@@Z @ 35 NONAME ; class HBufC8 * CSRTPStreamOut::ProtectRtpL(class TDesC8 const &)
+	?ROC@CSRTPStream@@QBEKXZ @ 36 NONAME ; unsigned long CSRTPStream::ROC(void) const
+	?RemoteAddr@CSRTPSession@@QAEABVTInetAddr@@XZ @ 37 NONAME ; class TInetAddr const & CSRTPSession::RemoteAddr(void)
+	?SSRC@CSRTPStream@@QBEIXZ @ 38 NONAME ; unsigned int CSRTPStream::SSRC(void) const
+	?SaltLength@CSRTPMasterSalt@@QBEIXZ @ 39 NONAME ; unsigned int CSRTPMasterSalt::SaltLength(void) const
+	?SetCryptoContextL@CSRTPSession@@QAEXPAVCSRTPCryptoContext@@@Z @ 40 NONAME ; void CSRTPSession::SetCryptoContextL(class CSRTPCryptoContext *)
+	?SetCryptoInL@CSRTPStreamIn@@QAEXPAVCSRTPCryptoContext@@@Z @ 41 NONAME ; void CSRTPStreamIn::SetCryptoInL(class CSRTPCryptoContext *)
+	?SetCryptoOutL@CSRTPStreamOut@@QAEXPAVCSRTPCryptoContext@@@Z @ 42 NONAME ; void CSRTPStreamOut::SetCryptoOutL(class CSRTPCryptoContext *)
+	?SetMasterKey@CSRTPCryptoContext@@QAEXPBVCSRTPMasterKey@@@Z @ 43 NONAME ; void CSRTPCryptoContext::SetMasterKey(class CSRTPMasterKey const *)
+	?SetMasterSalt@CSRTPCryptoContext@@QAEXPBVCSRTPMasterSalt@@@Z @ 44 NONAME ; void CSRTPCryptoContext::SetMasterSalt(class CSRTPMasterSalt const *)
+	?SetRCCm3Sync@CSRTPCryptoContext@@QAEXH@Z @ 45 NONAME ; void CSRTPCryptoContext::SetRCCm3Sync(int)
+	?SetROC@CSRTPStream@@QAEXK@Z @ 46 NONAME ; void CSRTPStream::SetROC(unsigned long)
+	?StreamL@CSRTPSession@@QAEAAVCSRTPStream@@IH@Z @ 47 NONAME ; class CSRTPStream & CSRTPSession::StreamL(unsigned int, int)
+	?StreamType@CSRTPStream@@QAEHXZ @ 48 NONAME ; int CSRTPStream::StreamType(void)
+	?UnprotectRTCPL@CSRTPSession@@QAEPAVHBufC8@@IABVTDesC8@@@Z @ 49 NONAME ; class HBufC8 * CSRTPSession::UnprotectRTCPL(unsigned int, class TDesC8 const &)
+	?UnprotectRTPL@CSRTPSession@@QAEPAVHBufC8@@IABVTDesC8@@@Z @ 50 NONAME ; class HBufC8 * CSRTPSession::UnprotectRTPL(unsigned int, class TDesC8 const &)
+	?UnprotectSrtcpL@CSRTPStreamIn@@QAEPAVHBufC8@@ABVTDesC8@@@Z @ 51 NONAME ; class HBufC8 * CSRTPStreamIn::UnprotectSrtcpL(class TDesC8 const &)
+	?UnprotectSrtpL@CSRTPStreamIn@@QAEPAVHBufC8@@ABVTDesC8@@@Z @ 52 NONAME ; class HBufC8 * CSRTPStreamIn::UnprotectSrtpL(class TDesC8 const &)
+	?Valid@CSRTPCryptoContext@@QBEHXZ @ 53 NONAME ; int CSRTPCryptoContext::Valid(void) const
+	?Valid@CSRTPMasterKey@@QBEHXZ @ 54 NONAME ; int CSRTPMasterKey::Valid(void) const
+	?Valid@CSRTPMasterSalt@@QBEHXZ @ 55 NONAME ; int CSRTPMasterSalt::Valid(void) const
+

@@ -1,0 +1,91 @@
+// Copyright (c) 2007-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name          : sipimsagent.mmp
+// Part of       : SIP Profile Agent
+// Version       : SIP/6.0
+//
+
+
+
+TARGET sipimsagnt.dll
+TARGETTYPE PLUGIN
+
+// ECom Dll recognition UID followed by the unique UID for this dll
+UID 0x10009D8D 0x10203358
+
+SOURCEPATH	../IMS_Agent/Src
+SOURCE		sipimsprofileagent.cpp
+SOURCE		implementationproxy.cpp
+SOURCE		Sipimsprofilecontext.cpp
+SOURCE		Sipimsconnectioncontext.cpp
+SOURCE		CSIPRegInfoElement.cpp
+SOURCE		CSIPNotifyXmlBodyParser.cpp
+SOURCE		CSIPRegistrationElement.cpp
+SOURCE		CSIPContactElement.cpp
+SOURCE      CSIPRegEventSubscriber.cpp
+SOURCE      CSIPRegEventHandler.cpp
+SOURCE      TSIPRegEventSubscriptionStateBase.cpp
+SOURCE      TSIPRegEventStateNotSubscribed.cpp
+SOURCE      TSIPRegEventStateSubscribed.cpp
+SOURCE      TSIPRegEventStateSubscribing.cpp
+SOURCE      TSIPRegEventStateReSubscribing.cpp
+SOURCE      Sipimsprofilesimrecord.cpp
+SOURCE      Sipimsprofileusimprovider.cpp
+SOURCE      sipimsprofilemccandmnc.cpp
+SOURCE      sipprofilesimauthorization.cpp
+SOURCE      sipprofileimsauthorization.cpp
+SOURCE      authinfomonitor.cpp
+
+
+USERINCLUDE 	../IMS_Agent/Inc
+USERINCLUDE 	../IMS_Agent/Src
+
+//SIP Profile Agent
+USERINCLUDE 	../Client/Api
+USERINCLUDE 	../Profile/Inc
+USERINCLUDE 	../PluginMgr/Inc
+//SIP Profile Fsm
+USERINCLUDE 	../profile_fsm/inc
+//SIP Proxy Resolver
+USERINCLUDE 	../ProxyResolver/inc
+
+MW_LAYER_SYSTEMINCLUDE_SYMBIAN
+
+START RESOURCE 10203358.rss
+TARGET sipimsagnt.rsc                                          
+END 
+
+LIBRARY euser.lib 
+LIBRARY ecom.lib
+LIBRARY bafl.lib
+LIBRARY charconv.lib
+LIBRARY insock.lib
+LIBRARY sipcodec.lib
+LIBRARY sipclient.lib
+LIBRARY sipprofile.lib
+LIBRARY sipprofilefsm.lib
+LIBRARY sipproxyrsv.lib
+LIBRARY inetprotutil.lib
+LIBRARY xmlframework.lib
+LIBRARY etel.lib
+LIBRARY etelmm.lib
+LIBRARY commsdat.lib
+LIBRARY flogger.lib
+LIBRARY efsrv.lib
+
+VENDORID 0x70000001
+
+CAPABILITY ProtServ NetworkServices ReadDeviceData
+
+SMPSAFE

@@ -1,0 +1,62 @@
+/*
+* Copyright (c) 2004 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description:    Provides class for NULL authentication.
+*
+*/
+
+
+
+
+#ifndef __SRTP_AUTHENTICATION_NULL_H__
+#define __SRTP_AUTHENTICATION_NULL_H__
+
+#include "msrtpauthentication.h"
+
+class CSRTPAuthentication_NULL : public CBase, public MSRTPAuthentication
+    {
+    public:
+        /**
+        * Constructor.
+        * @leave KErrNone if success, system-wide error code otherwise
+        */
+	    static CSRTPAuthentication_NULL* NewL();
+    
+        /**
+        * Destructor.
+        */
+	    ~CSRTPAuthentication_NULL();
+
+        /**
+        * This function is called by SRTP for NULL authentication/integrity protection
+        * Returns empty tag
+        * @param aBitLength  authentication tag length
+        * @param aKey  authentication key (n_a)
+        * @param aAuthPortion data to be integrity protected 
+	    * Returns HBufC8* authentication tag (empty) 
+        */
+        HBufC8* AuthenticateL(TUint aBitLength,
+                            const TDesC8& aKey, 
+                            const TDesC8& aAuthPortion,
+                            const TDesC8& aRoc);
+                                
+                 
+    private:         // methods
+        /**
+        * Default constructor.
+        */
+        CSRTPAuthentication_NULL();                  
+    };
+
+#endif // __SRTP_AUTHENTICATION_NULL_H__
+

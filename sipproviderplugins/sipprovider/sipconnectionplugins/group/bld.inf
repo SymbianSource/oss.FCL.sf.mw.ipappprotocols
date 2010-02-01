@@ -1,0 +1,36 @@
+// Copyright (c) 2007-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+//
+
+#ifdef SYMBIAN_NON_SEAMLESS_NETWORK_BEARER_MOBILITY
+
+PRJ_EXPORTS
+
+../inc/sipconnpref.h 				SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipconnpref.h)
+../inc/sipconnpref.inl 				SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipconnpref.inl)
+../inc/SIP_subconparams.h       	SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sip_subconparams.h)
+../inc/SIP_subconparams.inl     	SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sip_subconparams.inl)
+../inc/SIP_subconevents.h       	SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sip_subconevents.h)
+../inc/SIP_subconevents.inl     	SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sip_subconevents.inl)
+
+../data/esock_sip.cmi      			z:/private/101f7988/esock_sip.cmi
+
+../group/sipproviders.iby            /epoc32/rom/include/sipproviders.iby
+
+PRJ_MMPFILES
+sipproviders.mmp
+
+PRJ_TESTMMPFILES
+
+#endif // SYMBIAN_NON_SEAMLESS_NETWORK_BEARER_MOBILITY

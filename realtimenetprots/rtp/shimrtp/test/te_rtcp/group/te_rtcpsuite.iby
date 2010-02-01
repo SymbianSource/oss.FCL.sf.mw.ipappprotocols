@@ -1,0 +1,40 @@
+// Copyright (c) 2007-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name     : te_rtcpsuite.iby
+// Part of  : test Component for RTCP integration test case 
+// IBY file for RTCP test suite
+// 
+//
+
+#ifndef __TE_RTCP_SUITE_IBY__
+#define __TE_RTCP_SUITE_IBY__
+
+#include <testexecute.iby>
+#include <shimrtp.iby>
+
+#if (!defined EKA2)
+file=ABI_DIR\BUILD_DIR\te_rtcpsuite.exe		system\libs\te_rtcpsuite.exe
+#else
+file=ABI_DIR\BUILD_DIR\te_rtcpsuite.exe		system\bin\te_rtcpsuite.exe
+#endif
+data=EPOCROOT##epoc32\data\z\testData\configs\rtp\te_rtcpsuite.ini	testData\configs\rtp\te_rtcpsuite.ini
+data=EPOCROOT##epoc32\data\z\testData\scripts\rtp\te_rtcpsuite.script	testData\scripts\rtp\te_rtcpsuite.Script
+#ifdef SYMBIAN_NON_SEAMLESS_NETWORK_BEARER_MOBILITY
+data=EPOCROOT##epoc32\data\z\testData\scripts\rtp\te_rtcpsuite2.script	testData\scripts\rtp\te_rtcpsuite2.Script
+#endif
+data=EPOCROOT##epoc32\data\z\testData\configs\rtp\srpacket	testData\configs\rtp\srpacket
+data=EPOCROOT##epoc32\data\z\testData\configs\rtp\test.mp3	testData\configs\rtp\test.mp3
+
+
+#endif

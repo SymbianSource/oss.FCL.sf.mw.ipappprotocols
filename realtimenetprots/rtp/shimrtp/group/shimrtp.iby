@@ -1,0 +1,31 @@
+// Copyright (c) 2007-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name     : shimrtp.iby
+// Part of  : Component for shim RTP Logic
+// IBY file for shim Rtp component
+// 
+//
+
+#ifndef __SHIMRTP_IBY__
+#define __SHIMRTP_IBY__
+
+#include <rtpcore.iby>
+
+#ifdef SYMBIAN_EXCLUDE_RTP_RTCP
+REM Feature RTP not included in this rom -> Substituted with rtpremoved.dll
+file=ABI_DIR\BUILD_DIR\rtpremoved.dll	System\Libs\rtp.dll
+#else
+file=ABI_DIR\BUILD_DIR\rtp.dll			system\libs\rtp.dll
+#endif 
+#endif

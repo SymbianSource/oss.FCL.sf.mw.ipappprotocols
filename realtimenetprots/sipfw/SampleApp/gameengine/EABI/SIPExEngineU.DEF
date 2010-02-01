@@ -1,0 +1,41 @@
+EXPORTS
+	_ZN12CSIPExEngine10BoardValueEii @ 1 NONAME
+	_ZN12CSIPExEngine10CursorLeftEv @ 2 NONAME
+	_ZN12CSIPExEngine10DrawCursorEv @ 3 NONAME
+	_ZN12CSIPExEngine11CursorRightEv @ 4 NONAME
+	_ZN12CSIPExEngine11MoveCursorLEi @ 5 NONAME
+	_ZN12CSIPExEngine13CursorPressedEv @ 6 NONAME
+	_ZN12CSIPExEngine14EnableProfileLEv @ 7 NONAME
+	_ZN12CSIPExEngine15DisableProfileLEv @ 8 NONAME
+	_ZN12CSIPExEngine15SendInstantMsgLERK7TDesC16S2_ @ 9 NONAME
+	_ZN12CSIPExEngine15SetViewNotifierER23MSIPExStateViewNotifier @ 10 NONAME
+	_ZN12CSIPExEngine4NewLER18MSIPExGameObserver @ 11 NONAME
+	_ZN12CSIPExEngine5NewLCER18MSIPExGameObserver @ 12 NONAME
+	_ZN12CSIPExEngine6CursorEv @ 13 NONAME
+	_ZN12CSIPExEngine7InviteLERK7TDesC16 @ 14 NONAME
+	_ZN12CSIPExEngine8EndGameLEv @ 15 NONAME
+	_ZN12CSIPExEngine9DrawBoardEv @ 16 NONAME
+	_ZN12CSIPExEngineD0Ev @ 17 NONAME
+	_ZN12CSIPExEngineD1Ev @ 18 NONAME
+	_ZN12CSIPExEngineD2Ev @ 19 NONAME
+	_ZTI11TSIPExState @ 20 NONAME ; #<TI>#
+	_ZTI12CSIPExEngine @ 21 NONAME ; #<TI>#
+	_ZTI15TSIPExStateIdle @ 22 NONAME ; #<TI>#
+	_ZTI16TSIPExStateLocal @ 23 NONAME ; #<TI>#
+	_ZTI17TSIPExStateRemote @ 24 NONAME ; #<TI>#
+	_ZTI19TSIPExStateInviting @ 25 NONAME ; #<TI>#
+	_ZTI21TSIPExStateConnecting @ 26 NONAME ; #<TI>#
+	_ZTI21TSIPExStateRegistered @ 27 NONAME ; #<TI>#
+	_ZTI22TSIPExStateRegistering @ 28 NONAME ; #<TI>#
+	_ZTI23TSIPExStateAcceptingSIP @ 29 NONAME ; #<TI>#
+	_ZTV11TSIPExState @ 30 NONAME ; #<VT>#
+	_ZTV12CSIPExEngine @ 31 NONAME ; #<VT>#
+	_ZTV15TSIPExStateIdle @ 32 NONAME ; #<VT>#
+	_ZTV16TSIPExStateLocal @ 33 NONAME ; #<VT>#
+	_ZTV17TSIPExStateRemote @ 34 NONAME ; #<VT>#
+	_ZTV19TSIPExStateInviting @ 35 NONAME ; #<VT>#
+	_ZTV21TSIPExStateConnecting @ 36 NONAME ; #<VT>#
+	_ZTV21TSIPExStateRegistered @ 37 NONAME ; #<VT>#
+	_ZTV22TSIPExStateRegistering @ 38 NONAME ; #<VT>#
+	_ZTV23TSIPExStateAcceptingSIP @ 39 NONAME ; #<VT>#
+

@@ -1,0 +1,81 @@
+Generating capability tests for Te_Cap_ClientResolver ...
+Need to create new directory .\Te_Cap_ClientResolverSource
+Generating Te_Cap_ClientResolver.script once
+Generating CSuite.h once
+Generating BLD.INF once
+Generating Te_Cap_ClientResolver.IBY once
+
+Generating Te_Cap_ClientResolverSub.script for each capability
+	Cap_00000000_Te_Cap_ClientResolverSub.script
+	Cap_00000010_Te_Cap_ClientResolverSub.script
+	Cap_00000020_Te_Cap_ClientResolverSub.script
+	Cap_80000000_Te_Cap_ClientResolverSub.script
+Generating CSuite.cpp once
+Generating Te_Cap_ClientResolver.MMP once
+
+Generating CStep.h for each message
+	ESIPCRIpcClientCancelReceive1_CStep.h
+	ESIPCRIpcCancelRequest1_CStep.h
+	ESIPCRIpcCancelAllRequests1_CStep.h
+	ESIPCRIpcSetClientUid1_CStep.h
+	ESIPCRIpcRegister1_CStep.h
+	ESIPCRIpcDeregister1_CStep.h
+	ESIPCRIpcClientReceiveSipResponse1_CStep.h
+	ESIPCRIpcChannel1_CStep.h
+	ESIPCRIpcChannelWithResolver1_CStep.h
+
+Generating CStep.cpp for each message
+	ESIPCRIpcClientCancelReceive1_CStep.cpp
+	ESIPCRIpcCancelRequest1_CStep.cpp
+	ESIPCRIpcCancelAllRequests1_CStep.cpp
+	ESIPCRIpcSetClientUid1_CStep.cpp
+	ESIPCRIpcRegister1_CStep.cpp
+	ESIPCRIpcDeregister1_CStep.cpp
+	ESIPCRIpcClientReceiveSipResponse1_CStep.cpp
+	ESIPCRIpcChannel1_CStep.cpp
+	ESIPCRIpcChannelWithResolver1_CStep.cpp
+
+Available Parameters
+
+PARAM_FOREACH_COUNT
+PARAM_FOREACH_HEX_CAPABILITY
+PARAM_FOREACH_LIST_BEGIN
+PARAM_FOREACH_LIST_END
+PARAM_FOREACH_MESS_BEGIN
+PARAM_FOREACH_MESS_CAP_BEGIN
+PARAM_FOREACH_MESS_CAP_END
+PARAM_FOREACH_MESS_END
+PARAM_FOREACH_STRING_CAPABILITY
+PARAM_MESS_CAPABILITY
+PARAM_MESS_CAPMASK
+PARAM_MESS_DYNAMICBASENAME
+PARAM_MESS_HEX_CAPMASK
+PARAM_MESS_IGNORE
+PARAM_MESS_NAME
+PARAM_MESS_NAMECAP
+PARAM_MESS_SERVER
+PARAM_MESS_VALUE
+PARAM_SVR_ALLNEGATIVE
+PARAM_SVR_BUILDNAME
+PARAM_SVR_BUILDOK
+PARAM_SVR_CAPEXCEPT
+PARAM_SVR_CONNECTCAPABILITY
+PARAM_SVR_LIBRARIES
+PARAM_SVR_LISTHEADERFILE
+PARAM_SVR_MAJORNAME
+PARAM_SVR_MESSAGEFILE
+PARAM_SVR_MINORNAME
+PARAM_SVR_NAME
+PARAM_SVR_PANIC
+PARAM_SVR_SCHED_TEST_DEST
+PARAM_SVR_SCHED_TEST_SRC
+PARAM_SVR_SETCAP
+PARAM_SVR_SOURCEDIRECTORY
+PARAM_SVR_SUITENAME
+PARAM_SVR_SYSTEMINCLUDE
+PARAM_SVR_TEMPLATEDIRECTORY
+PARAM_SVR_TEMPLATEFILE
+PARAM_SVR_USERINCLUDE
+PARAM_TMPL_NAME
+PARAM_TMPL_RELOCATIONDIR
+PARAM_TMPL_REPETITION

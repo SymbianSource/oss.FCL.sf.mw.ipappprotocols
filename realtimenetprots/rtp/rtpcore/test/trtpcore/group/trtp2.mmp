@@ -1,0 +1,69 @@
+// Copyright (c) 2005-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// trtp2.exe Application for testing RTP APIs, unit tests
+// 
+//
+
+/**
+ @file
+*/
+
+TARGET      trtp2.exe
+TARGETTYPE  exe
+
+UID         0x1000008d
+
+SOURCEPATH  ../src
+
+SOURCE      	trtpcoreserver.cpp
+SOURCE          trtpcorestep.cpp
+
+SOURCEPATH 		../../../src
+SOURCE          rtpcollisionmng.cpp
+SOURCE 			rtpcontrollerbase.cpp
+SOURCE          rtpcontroller.cpp
+SOURCE			rtpcontrollerdummy.cpp
+SOURCE          rtpsourceentry.cpp
+SOURCE          rtpstatemachine.cpp
+SOURCE          rtputils.cpp
+SOURCE          rtpapi.cpp
+
+SOURCE          rtpsock.cpp
+SOURCE          rtphandlerbase.cpp
+SOURCE          rtpudphandler.cpp
+SOURCE          rtpbthandler.cpp
+
+// RTCP Part
+SOURCE			rtcppacket.cpp
+SOURCE			rtcpsender.cpp
+SOURCE			rtcpsessiondata.cpp
+
+USERINCLUDE 	../../../src/
+USERINCLUDE 	../../../inc/
+
+SYSTEMINCLUDE /epoc32/include
+SYSTEMINCLUDE /epoc32/include/test
+SYSTEMINCLUDE /epoc32/include/libc
+
+
+LIBRARY     euser.lib testexecuteutils.lib esock.lib insock.lib 
+LIBRARY		testexecutelogclient.lib bluetooth.lib
+LIBRARY		estlib.lib random.lib hal.lib netmeta.lib
+//LIBRARY			efsrv.lib
+DEBUGLIBRARY			flogger.lib 
+//LIBRARY			bafl.lib
+
+//CAPABILITY ALL -TCB
+CAPABILITY CommDD PowerMgmt ReadDeviceData WriteDeviceData TrustedUI ProtServ NetworkControl NetworkServices LocalServices ReadUserData WriteUserData
+SMPSAFE

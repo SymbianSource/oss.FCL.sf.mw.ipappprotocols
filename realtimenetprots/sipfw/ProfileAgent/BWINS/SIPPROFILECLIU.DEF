@@ -1,0 +1,48 @@
+EXPORTS
+	??1CSIPManagedProfile@@UAE@XZ @ 1 NONAME ; CSIPManagedProfile::~CSIPManagedProfile(void)
+	??1CSIPManagedProfileRegistry@@UAE@XZ @ 2 NONAME ; CSIPManagedProfileRegistry::~CSIPManagedProfileRegistry(void)
+	??1CSIPProfile@@UAE@XZ @ 3 NONAME ; CSIPProfile::~CSIPProfile(void)
+	??1CSIPProfileRegistry@@UAE@XZ @ 4 NONAME ; CSIPProfileRegistry::~CSIPProfileRegistry(void)
+	??1CSIPProfileRegistryBase@@UAE@XZ @ 5 NONAME ; CSIPProfileRegistryBase::~CSIPProfileRegistryBase(void)
+	?CloneL@CSIPManagedProfile@@QBEPAV1@XZ @ 6 NONAME ; class CSIPManagedProfile * CSIPManagedProfile::CloneL(void) const
+	?ConnectionL@CSIPProfileRegistry@@QAEPAVCSIPConnection@@AAVCSIPProfile@@@Z @ 7 NONAME ; class CSIPConnection * CSIPProfileRegistry::ConnectionL(class CSIPProfile &)
+	?CreateL@CSIPManagedProfileRegistry@@QAEPAVCSIPManagedProfile@@ABVTSIPProfileTypeInfo@@@Z @ 8 NONAME ; class CSIPManagedProfile * CSIPManagedProfileRegistry::CreateL(class TSIPProfileTypeInfo const &)
+	?DefaultProfileL@CSIPProfileRegistryBase@@QAEPAVCSIPProfile@@XZ @ 9 NONAME ; class CSIPProfile * CSIPProfileRegistryBase::DefaultProfileL(void)
+	?DestroyL@CSIPManagedProfileRegistry@@QAEXAAVCSIPProfile@@@Z @ 10 NONAME ; void CSIPManagedProfileRegistry::DestroyL(class CSIPProfile &)
+	?Disable@CSIPProfileRegistry@@QAEHAAVCSIPProfile@@@Z @ 11 NONAME ; int CSIPProfileRegistry::Disable(class CSIPProfile &)
+	?EnableL@CSIPProfileRegistry@@QAEXAAVCSIPProfile@@AAVMSIPConnectionObserver@@@Z @ 12 NONAME ; void CSIPProfileRegistry::EnableL(class CSIPProfile &, class MSIPConnectionObserver &)
+	?GetParameter@CSIPProfile@@QBEHKAAH@Z @ 13 NONAME ; int CSIPProfile::GetParameter(unsigned long, int &) const
+	?GetParameter@CSIPProfile@@QBEHKAAK@Z @ 14 NONAME ; int CSIPProfile::GetParameter(unsigned long, unsigned long &) const
+	?GetParameter@CSIPProfile@@QBEHKAAPBVMDesC8Array@@@Z @ 15 NONAME ; int CSIPProfile::GetParameter(unsigned long, class MDesC8Array const * &) const
+	?GetParameter@CSIPProfile@@QBEHKAAPBVTDesC8@@@Z @ 16 NONAME ; int CSIPProfile::GetParameter(unsigned long, class TDesC8 const * &) const
+	?GetParameter@CSIPProfile@@QBEHKKAAPBVTDesC8@@@Z @ 17 NONAME ; int CSIPProfile::GetParameter(unsigned long, unsigned long, class TDesC8 const * &) const
+	?IsEnabled@CSIPProfileRegistry@@QBEHABVCSIPProfile@@@Z @ 18 NONAME ; int CSIPProfileRegistry::IsEnabled(class CSIPProfile const &) const
+	?IsInUseL@CSIPManagedProfileRegistry@@QBEHABVCSIPProfile@@@Z @ 19 NONAME ; int CSIPManagedProfileRegistry::IsInUseL(class CSIPProfile const &) const
+	?LastRegistrationError@CSIPProfileRegistryBase@@QBEHABVCSIPProfile@@@Z @ 20 NONAME ; int CSIPProfileRegistryBase::LastRegistrationError(class CSIPProfile const &) const
+	?NewL@CSIPManagedProfileRegistry@@SAPAV1@AAVMSIPProfileRegistryObserver@@@Z @ 21 NONAME ; class CSIPManagedProfileRegistry * CSIPManagedProfileRegistry::NewL(class MSIPProfileRegistryObserver &)
+	?NewL@CSIPProfileRegistry@@SAPAV1@AAVCSIP@@AAVMSIPProfileRegistryObserver@@@Z @ 22 NONAME ; class CSIPProfileRegistry * CSIPProfileRegistry::NewL(class CSIP &, class MSIPProfileRegistryObserver &)
+	?NewLC@CSIPManagedProfileRegistry@@SAPAV1@AAVMSIPProfileRegistryObserver@@@Z @ 23 NONAME ; class CSIPManagedProfileRegistry * CSIPManagedProfileRegistry::NewLC(class MSIPProfileRegistryObserver &)
+	?NewLC@CSIPProfileRegistry@@SAPAV1@AAVCSIP@@AAVMSIPProfileRegistryObserver@@@Z @ 24 NONAME ; class CSIPProfileRegistry * CSIPProfileRegistry::NewLC(class CSIP &, class MSIPProfileRegistryObserver &)
+	?ProfileL@CSIPProfileRegistryBase@@QAEPAVCSIPProfile@@K@Z @ 25 NONAME ; class CSIPProfile * CSIPProfileRegistryBase::ProfileL(unsigned long)
+	?ProfilesL@CSIPProfileRegistryBase@@QAEXAAV?$RPointerArray@VCSIPProfile@@@@@Z @ 26 NONAME ; void CSIPProfileRegistryBase::ProfilesL(class RPointerArray<class CSIPProfile> &)
+	?ProfilesL@CSIPProfileRegistryBase@@QAEXABVTDesC8@@AAV?$RPointerArray@VCSIPProfile@@@@@Z @ 27 NONAME ; void CSIPProfileRegistryBase::ProfilesL(class TDesC8 const &, class RPointerArray<class CSIPProfile> &)
+	?ProfilesL@CSIPProfileRegistryBase@@QAEXABVTSIPProfileTypeInfo@@AAV?$RPointerArray@VCSIPProfile@@@@@Z @ 28 NONAME ; void CSIPProfileRegistryBase::ProfilesL(class TSIPProfileTypeInfo const &, class RPointerArray<class CSIPProfile> &)
+	?SIP@CSIPProfileRegistry@@QBEAAVCSIP@@XZ @ 29 NONAME ; class CSIP & CSIPProfileRegistry::SIP(void) const
+	?SaveL@CSIPManagedProfileRegistry@@QAEXAAVCSIPProfile@@@Z @ 30 NONAME ; void CSIPManagedProfileRegistry::SaveL(class CSIPProfile &)
+	?SetParameter@CSIPManagedProfile@@QAEHKABVMDesC8Array@@@Z @ 31 NONAME ; int CSIPManagedProfile::SetParameter(unsigned long, class MDesC8Array const &)
+	?SetParameter@CSIPManagedProfile@@QAEHKABVTDesC8@@@Z @ 32 NONAME ; int CSIPManagedProfile::SetParameter(unsigned long, class TDesC8 const &)
+	?SetParameter@CSIPManagedProfile@@QAEHKH@Z @ 33 NONAME ; int CSIPManagedProfile::SetParameter(unsigned long, int)
+	?SetParameter@CSIPManagedProfile@@QAEHKK@Z @ 34 NONAME ; int CSIPManagedProfile::SetParameter(unsigned long, unsigned long)
+	?SetParameter@CSIPManagedProfile@@QAEHKKABVTDesC8@@@Z @ 35 NONAME ; int CSIPManagedProfile::SetParameter(unsigned long, unsigned long, class TDesC8 const &)
+	?SetParameterL@CSIPManagedProfile@@AAEXKABVMDesC8Array@@@Z @ 36 NONAME ABSENT ; void CSIPManagedProfile::SetParameterL(unsigned long, class MDesC8Array const &)
+	?SetType@CSIPManagedProfile@@QAEXABVTSIPProfileTypeInfo@@@Z @ 37 NONAME ; void CSIPManagedProfile::SetType(class TSIPProfileTypeInfo const &)
+	?SupportedProfileTypesL@CSIPProfileRegistryBase@@QAEXAAV?$RArray@VTSIPProfileTypeInfo@@@@@Z @ 38 NONAME ; void CSIPProfileRegistryBase::SupportedProfileTypesL(class RArray<class TSIPProfileTypeInfo> &)
+	?Type@CSIPProfile@@QBEABVTSIPProfileTypeInfo@@XZ @ 39 NONAME ; class TSIPProfileTypeInfo const & CSIPProfile::Type(void) const
+	?AllowMigrationL@CSipProfileAlrController@@QAEXKK@Z @ 40 NONAME ; void CSipProfileAlrController::AllowMigrationL(unsigned long, unsigned long)
+	?DisallowMigrationL@CSipProfileAlrController@@QAEXKK@Z @ 41 NONAME ; void CSipProfileAlrController::DisallowMigrationL(unsigned long, unsigned long)
+	?NewL@CSipProfileAlrController@@SAPAV1@AAVCSIPProfileRegistryBase@@AAVMSipProfileAlrObserver@@@Z @ 42 NONAME ; class CSipProfileAlrController * CSipProfileAlrController::NewL(class CSIPProfileRegistryBase &, class MSipProfileAlrObserver &)
+	?NewLC@CSipProfileAlrController@@SAPAV1@AAVCSIPProfileRegistryBase@@AAVMSipProfileAlrObserver@@@Z @ 43 NONAME ; class CSipProfileAlrController * CSipProfileAlrController::NewLC(class CSIPProfileRegistryBase &, class MSipProfileAlrObserver &)
+	?RefreshIapAvailabilityL@CSipProfileAlrController@@QAEXK@Z @ 44 NONAME ; void CSipProfileAlrController::RefreshIapAvailabilityL(unsigned long)
+	?ForceDisable@CSIPProfileRegistry@@QAEHAAVCSIPProfile@@@Z @ 45 NONAME ; int CSIPProfileRegistry::ForceDisable(class CSIPProfile &)
+	?RefreshEnableL@CSIPProfileRegistry@@QAEXAAVCSIPProfile@@@Z @ 46 NONAME ; void CSIPProfileRegistry::RefreshEnableL(class CSIPProfile &)
+

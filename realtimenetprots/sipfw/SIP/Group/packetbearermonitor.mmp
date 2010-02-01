@@ -1,0 +1,66 @@
+// Copyright (c) 2006-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name        : packetbearermonitor.mmp
+// Part of     : SIP / NetworkMonitor
+// Version     : SIP/5.0
+//
+
+
+
+TARGET		sipgprsmon.dll
+TARGETTYPE	PLUGIN
+
+UID		0x10009D8D 0x102010D9
+
+SOURCEPATH	../NetworkMonitor/Plugins/Packet/Src
+SOURCE		DllMain.cpp
+SOURCE		CPacketBearerMonitor.cpp
+SOURCE		CLineMonitor.cpp
+SOURCE		CLineWatcher.cpp
+SOURCE		CCallWatcher.cpp
+SOURCE		CPacketServiceMonitor.cpp
+SOURCE		CMsClassWatcher.cpp
+SOURCE		CRegistrationMonitor.cpp
+SOURCE		CPacketContextMonitor.cpp
+SOURCE		CPacketContextWatcher.cpp
+SOURCE		CAccessNetworkMonitor.cpp
+
+USERINCLUDE     ../NetworkMonitor/api
+USERINCLUDE 	../NetworkMonitor/Plugins/Packet/Src
+USERINCLUDE	../Common/inc
+USERINCLUDE       ../Logging/inc
+
+MW_LAYER_SYSTEMINCLUDE_SYMBIAN
+
+START RESOURCE 102010D9.rss 
+TARGET sipgprsmon.rsc                                          
+END
+
+
+LIBRARY		euser.lib
+LIBRARY		ecom.lib
+LIBRARY		etel.lib
+LIBRARY		etelmm.lib
+LIBRARY		etelpckt.lib
+LIBRARY		esock.lib
+LIBRARY     flogger.lib
+LIBRARY     efsrv.lib
+LIBRARY 	featmgr.lib
+
+VENDORID 0x70000001
+
+CAPABILITY ProtServ NetworkControl NetworkServices Location \
+ReadDeviceData WriteDeviceData ReadUserData
+
+SMPSAFE

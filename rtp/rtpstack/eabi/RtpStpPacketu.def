@@ -1,0 +1,5 @@
+EXPORTS
+	_Z4NewLv @ 1 NONAME
+	_ZTI13CRtpStpPacket @ 2 NONAME ; #<TI>#
+	_ZTV13CRtpStpPacket @ 3 NONAME ; #<VT>#
+

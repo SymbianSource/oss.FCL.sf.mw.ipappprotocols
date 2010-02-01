@@ -1,0 +1,108 @@
+// Copyright (c) 2007-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Script file for collision manager unit test case
+// 
+//
+
+
+//! @file 
+//! @internalComponent
+//! @SYMTestSuiteName te_ut_rtpcollisionmgrsuite.script
+//! @SYMScriptInfo Unit test cases for RTP Collision Manager
+//! @SYMScriptTestEnvironment This test runs using the TestExecute framework (TEF) using the following test list entry
+PRINT Run all te_UT_RtpCollisionMgr Suite Tests
+
+//
+LOAD_SUITE te_ut_rtpcollisionmgrsuite 
+//
+START_TESTCASE					HLIP-MMP-RTPCORE-COLLISIONMGRUNIT-01
+//! @SYMTestCaseID              hlip-mmp-rtpcore-collisionmgrunit-01
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            Verifies SSRCs can be changed.
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_ut_rtpcollisionmgrsuite changessrcStep z:\testdata\configs\rtp\te_ut_rtpcollisionmgrsuite.ini Section0
+END_TESTCASE					HLIP-MMP-RTPCORE-COLLISIONMGRUNIT-01
+
+START_TESTCASE					HLIP-MMP-RTPCORE-COLLISIONMGRUNIT-02
+//! @SYMTestCaseID              hlip-mmp-rtpcore-collisionmgrunit-02
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            Create a new Source
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_ut_rtpcollisionmgrsuite createnewsourcelStep z:\testdata\configs\rtp\te_ut_rtpcollisionmgrsuite.ini Section4
+END_TESTCASE					HLIP-MMP-RTPCORE-COLLISIONMGRUNIT-02
+
+START_TESTCASE					HLIP-MMP-RTPCORE-COLLISIONMGRUNIT-03
+//! @SYMTestCaseID              hlip-mmp-rtpcore-collisionmgrunit-03
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            Delete an existing entry.
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_ut_rtpcollisionmgrsuite deleteentryStep z:\testdata\configs\rtp\te_ut_rtpcollisionmgrsuite.ini Section6
+END_TESTCASE					HLIP-MMP-RTPCORE-COLLISIONMGRUNIT-03
+
+START_TESTCASE					HLIP-MMP-RTPCORE-COLLISIONMGRUNIT-04
+//! @SYMTestCaseID              hlip-mmp-rtpcore-collisionmgrunit-04
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            Find an existing entry.
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_ut_rtpcollisionmgrsuite findentryStep z:\testdata\configs\rtp\te_ut_rtpcollisionmgrsuite.ini Section7
+END_TESTCASE					HLIP-MMP-RTPCORE-COLLISIONMGRUNIT-04
+
+
+START_TESTCASE					HLIP-MMP-RTPCORE-COLLISIONMGRUNIT-05
+//! @SYMTestCaseID              hlip-mmp-rtpcore-collisionmgrunit-05
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            Try to get the local entry from CollisionManager.
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_ut_rtpcollisionmgrsuite getlocalentryStep z:\testdata\configs\rtp\te_ut_rtpcollisionmgrsuite.ini Section11
+END_TESTCASE					HLIP-MMP-RTPCORE-COLLISIONMGRUNIT-05
+
+
+START_TESTCASE					HLIP-MMP-RTPCORE-COLLISIONMGRUNIT-06
+//! @SYMTestCaseID              hlip-mmp-rtpcore-collisionmgrunit-06
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            Get Valid Entries.
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_ut_rtpcollisionmgrsuite getvalidentriesStep z:\testdata\configs\rtp\te_ut_rtpcollisionmgrsuite.ini Section12
+END_TESTCASE					HLIP-MMP-RTPCORE-COLLISIONMGRUNIT-06
+
+
+START_TESTCASE					HLIP-MMP-RTPCORE-COLLISIONMGRUNIT-07
+//! @SYMTestCaseID              hlip-mmp-rtpcore-collisionmgrunit-07
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            Simulates a collision and checks collision detection.
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_ut_rtpcollisionmgrsuite iscollisionorloopbackStep z:\testdata\configs\rtp\te_ut_rtpcollisionmgrsuite.ini Section14
+END_TESTCASE					HLIP-MMP-RTPCORE-COLLISIONMGRUNIT-07
+
+
+START_TESTCASE					HLIP-MMP-RTPCORE-COLLISIONMGRUNIT-08
+//! @SYMTestCaseID              hlip-mmp-rtpcore-collisionmgrunit-08
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            NewL of Collision Manager.
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_ut_rtpcollisionmgrsuite newlStep z:\testdata\configs\rtp\te_ut_rtpcollisionmgrsuite.ini Section17
+END_TESTCASE					HLIP-MMP-RTPCORE-COLLISIONMGRUNIT-08
+
+
+START_TESTCASE					HLIP-MMP-RTPCORE-COLLISIONMGRUNIT-09
+//! @SYMTestCaseID              hlip-mmp-rtpcore-collisionmgrunit-09
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            Verifies the resolve collision logic.
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_ut_rtpcollisionmgrsuite resolvertpcollisionorlooplStep z:\testdata\configs\rtp\te_ut_rtpcollisionmgrsuite.ini Section18
+END_TESTCASE					HLIP-MMP-RTPCORE-COLLISIONMGRUNIT-09
+
+
+PRINT Complete te_UT_RtpCollisionMgr Suite Tests
+ 

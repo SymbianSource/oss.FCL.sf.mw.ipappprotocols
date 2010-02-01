@@ -1,0 +1,11 @@
+Name,Value,Server,Capability,Ignore
+ESIPCRIpcClientReadyToReceive,0,siprsvsrv,_None,// Note:  This test step is being ignored as it waits upon some data and requires to be tested using a different mechanism.
+ESIPCRIpcClientCancelReceive,1,siprsvsrv,_None,
+ESIPCRIpcCancelRequest,2,siprsvsrv,_None,
+ESIPCRIpcCancelAllRequests,3,siprsvsrv,_None,
+ESIPCRIpcSetClientUid,4,siprsvsrv,WriteDeviceData,
+ESIPCRIpcRegister,5,siprsvsrv,WriteDeviceData,
+ESIPCRIpcDeregister,6,siprsvsrv,WriteDeviceData,
+ESIPCRIpcClientReceiveSipResponse,7,siprsvsrv,ReadDeviceData,
+ESIPCRIpcChannel,8,siprsvsrv,ReadDeviceData,
+ESIPCRIpcChannelWithResolver,9,siprsvsrv,ReadDeviceData,

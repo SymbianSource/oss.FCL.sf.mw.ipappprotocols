@@ -1,0 +1,201 @@
+// Copyright (c) 2007-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Script file for RTP Suite2
+// 
+//
+
+// Description:
+// TESTEXECUTE,logs\\testexecute\\te_rtpsuite.htm
+//
+
+//! @file 
+//! @internalComponent
+//! @SYMTestSuiteName te_rtpsuite.script
+//! @SYMScriptInfo Test cases for RTP Packet Sending and Receiving Capanility
+//! @SYMScriptTestEnvironment This test runs using the TestExecute framework (TEF) using the following test list entry
+
+PRINT Run all te_rtp Suite Tests
+LOAD_SUITE te_rtpsuite -SharedData
+ced -i z:\testdata\configs\rtp\rtptest.xml ced.log
+
+
+START_TESTCASE					HLIP-MMP-RTP-FUNC-01
+//! @SYMTestCaseID              hlip-mmp-rtp-func-01
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            Verifies if an RTP Session can be opened.
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_rtpsuite rtpOpenSessionStep z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 100 te_rtpsuite rtpCloseSessionStep
+END_TESTCASE					HLIP-MMP-RTP-FUNC-01
+
+
+START_TESTCASE					HLIP-MMP-RTP-FUNC-02
+//! @SYMTestCaseID              hlip-mmp-rtp-func-02
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            RTP Send ,Receive Packet test
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_rtpsuite rtpOpenSessionStep z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 100 te_rtpsuite rtpMakePacketStep
+RUN_TEST_STEP 100 te_rtpsuite rtpSendPacketStep
+RUN_TEST_STEP 100 te_rtpsuite rtpStartSchedulerStep
+RUN_TEST_STEP 100 te_rtpsuite rtpCloseSessionStep
+END_TESTCASE					HLIP-MMP-RTP-FUNC-02
+
+
+START_TESTCASE					HLIP-MMP-RTP-FUNC-03
+//! @SYMTestCaseID              hlip-mmp-rtp-func-03
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            RTP Send ,Receive Packet test
+//! @SYMTestPriority            High
+//RTP Marker Bit test.
+RUN_TEST_STEP 100 te_rtpsuite rtpOpenSessionStep z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 100 te_rtpsuite rtpMakePacketStep
+RUN_TEST_STEP 100 te_rtpsuite rtpSetMarkerStep z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 100 te_rtpsuite rtpSendPacketStep 
+RUN_TEST_STEP 100 te_rtpsuite rtpStartSchedulerStep
+RUN_TEST_STEP 100 te_rtpsuite rtpCheckMarkerStep z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 100 te_rtpsuite rtpCloseSessionStep
+END_TESTCASE					HLIP-MMP-RTP-FUNC-03
+
+
+START_TESTCASE					HLIP-MMP-RTP-FUNC-04
+//! @SYMTestCaseID              hlip-mmp-rtp-func-04
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            RTP Send ,Receive Packet test
+//! @SYMTestPriority            High
+//RTP PayloadType Bit test.
+RUN_TEST_STEP 100 te_rtpsuite rtpOpenSessionStep z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 100 te_rtpsuite rtpMakePacketStep
+RUN_TEST_STEP 100 te_rtpsuite rtpSetPayloadTypeStep z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 100 te_rtpsuite rtpSendPacketStep
+RUN_TEST_STEP 100 te_rtpsuite rtpStartSchedulerStep 
+RUN_TEST_STEP 100 te_rtpsuite rtpCheckPayloadTypeStep z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 100 te_rtpsuite rtpCloseSessionStep
+END_TESTCASE					HLIP-MMP-RTP-FUNC-04
+
+
+START_TESTCASE					HLIP-MMP-RTP-FUNC-05
+//! @SYMTestCaseID              hlip-mmp-rtp-func-05
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            RTP Timestamp test.
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_rtpsuite rtpOpenSessionStep z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 100 te_rtpsuite rtpMakePacketStep
+RUN_TEST_STEP 100 te_rtpsuite rtpSetTimestampStep z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 100 te_rtpsuite rtpSendPacketStep 
+RUN_TEST_STEP 100 te_rtpsuite rtpStartSchedulerStep
+RUN_TEST_STEP 100 te_rtpsuite rtpCheckTimestampStep z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 100 te_rtpsuite rtpCloseSessionStep
+END_TESTCASE					HLIP-MMP-RTP-FUNC-05
+
+
+START_TESTCASE					HLIP-MMP-RTP-FUNC-06
+//! @SYMTestCaseID              hlip-mmp-rtp-func-06
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            RTP HeaderExtensionType Bit test.
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_rtpsuite rtpOpenSessionStep z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 100 te_rtpsuite rtpMakePacketStep z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 100 te_rtpsuite rtpSetHeaderExtensionStep z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 100 te_rtpsuite rtpSendPacketStep 
+RUN_TEST_STEP 100 te_rtpsuite rtpStartSchedulerStep
+RUN_TEST_STEP 100 te_rtpsuite rtpCheckHeaderExtensionStep z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 100 te_rtpsuite rtpCloseSessionStep
+END_TESTCASE					HLIP-MMP-RTP-FUNC-06
+
+
+START_TESTCASE					HLIP-MMP-RTP-FUNC-07
+//! @SYMTestCaseID              hlip-mmp-rtp-func-07
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            RTP Multiple Session Step
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_rtpsuite rtpMultipleSessionStep z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 100 te_rtpsuite rtpMultipleSessionCloseStep
+END_TESTCASE					HLIP-MMP-RTP-FUNC-07
+
+
+START_TESTCASE					HLIP-MMP-RTP-FUNC-08
+//! @SYMTestCaseID              hlip-mmp-rtp-func-08
+//! @SYMPREQ				    PREQ2429
+//! @SYMTestCaseDesc            Non RTP Data Step
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_rtpsuite rtpOpenSessionStep z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 100 te_rtpsuite rtpRegisterNonRtpDataStep z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 20  te_rtpsuite rtpSendNonRtpDataStep
+RUN_TEST_STEP 20  te_rtpsuite rtpReceiveNonRtpDataStep
+RUN_TEST_STEP 20  te_rtpsuite rtpUnregisterNonRtpDataStep
+RUN_TEST_STEP 20  te_rtpsuite rtpRegisterNonRtpAgainStep
+RUN_TEST_STEP 20  te_rtpsuite rtpCloseSessionStep
+END_TESTCASE					HLIP-MMP-RTP-FUNC-08
+
+
+START_TESTCASE					HLIP-MMP-RTP-FUNC-09
+//! @SYMTestCaseID              hlip-mmp-rtp-func-09
+//! @SYMPREQ				    PREQ2429
+//! @SYMTestCaseDesc            RTP pre and Post Processing Step
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_rtpsuite rtpOpenSessionStep z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 20  te_rtpsuite rtpPreAndPostProcessingTestStep  z:\testdata\configs\rtp\te_rtpsuite.ini CallBackDonotFail
+RUN_TEST_STEP 20  te_rtpsuite rtpCloseSessionStep
+RUN_TEST_STEP 100 te_rtpsuite rtpOpenSessionStep z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 20  te_rtpsuite rtpPreProcessingFailTestStep z:\testdata\configs\rtp\te_rtpsuite.ini CallBackFail
+RUN_TEST_STEP 20  te_rtpsuite rtpCloseSessionStep
+END_TESTCASE					HLIP-MMP-RTP-FUNC-09
+
+
+START_TESTCASE					HLIP-MMP-RTP-FUNC-10
+//! @SYMTestCaseID              hlip-mmp-rtp-func-10
+//! @SYMPREQ				    PREQ2429
+//! @SYMTestCaseDesc            RTP Change RemoteAddress Step
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_rtpsuite rtpOpenSessionStep z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 100 te_rtpsuite rtpChangeRemoteAddrToLoopStep z:\testdata\configs\rtp\te_rtpsuite.ini LoopAddrSettings
+RUN_TEST_STEP 100 te_rtpsuite rtpSetupLocalRecvSockStep z:\testdata\configs\rtp\te_rtpsuite.ini LoopAddrSettings
+RUN_TEST_STEP 100 te_rtpsuite rtpMakePacketStep
+RUN_TEST_STEP 100 te_rtpsuite rtpSetTimestampStep z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 100 te_rtpsuite rtpSendPacketStep
+RUN_TEST_STEP  10 te_rtpsuite rtpRecvOnLocalSockStep
+RUN_TEST_STEP  20 te_rtpsuite rtpCloseSessionStep
+END_TESTCASE					HLIP-MMP-RTP-FUNC-10
+
+
+START_TESTCASE					HLIP-MMP-RTP-FUNC-11
+//! @SYMTestCaseID              hlip-mmp-rtp-func-11
+//! @SYMPREQ				    PREQ2429
+//! @SYMTestCaseDesc            RTP Get and Set Opt step
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_rtpsuite rtpOpenSessionStep z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 100 te_rtpsuite rtpSetAndGetOptStep
+RUN_TEST_STEP 20  te_rtpsuite rtpCloseSessionStep
+END_TESTCASE					HLIP-MMP-RTP-FUNC-11
+
+
+START_TESTCASE					HLIP-MMP-RTP-FUNC-12
+//! @SYMTestCaseID              hlip-mmp-rtp-func-12
+//! @SYMPREQ				    PREQ2429
+//! @SYMTestCaseDesc            RTP Set Sampling rate for a PayloadType
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_rtpsuite rtpOpenSessionStep     z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 100 te_rtpsuite rtpSetSamplingRateStep z:\testdata\configs\rtp\te_rtpsuite.ini
+RUN_TEST_STEP 100 te_rtpsuite rtpMakePacketStep
+RUN_TEST_STEP 100 te_rtpsuite rtpSetTimestampStep z:\testdata\configs\rtp\te_rtpsuite.ini ConfigOne
+RUN_TEST_STEP 100 te_rtpsuite rtpSendPacketStep
+RUN_TEST_STEP 100 te_rtpsuite rtpStartSchedulerStep
+RUN_TEST_STEP 100 te_rtpsuite rtpCheckRecvPayloadStep
+RUN_TEST_STEP 100 te_rtpsuite rtpCloseSessionStep
+END_TESTCASE					HLIP-MMP-RTP-FUNC-12
+
+
+PRINT Complete_te_rtp_Tests
+

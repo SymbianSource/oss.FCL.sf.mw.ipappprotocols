@@ -1,0 +1,65 @@
+// Copyright (c) 2007-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name          : sipietfagent.mmp
+// Part of       : SIP Profile Agent
+// Version       : SIP/6.0
+//
+
+
+
+TARGET sipietfagnt.dll
+TARGETTYPE PLUGIN
+
+// ECom Dll recognition UID followed by the unique UID for this dll
+UID 0x10009D8D 0x101F4139
+
+SOURCEPATH	../IETF_Agent/src
+SOURCE		sipietfprofileagent.cpp
+SOURCE		implementationproxy.cpp
+SOURCE		Sipietfprofilecontext.cpp
+SOURCE		Sipietfconnectioncontext.cpp
+	
+USERINCLUDE 	../IETF_Agent/inc
+//SIP Profile Agent
+USERINCLUDE 	../Profile/Inc
+USERINCLUDE 	../PluginMgr/Inc
+//SIP Profile Fsm
+USERINCLUDE 	../profile_fsm/inc
+//SIP Proxy Resolver
+USERINCLUDE 	../ProxyResolver/inc
+
+MW_LAYER_SYSTEMINCLUDE_SYMBIAN
+
+START RESOURCE 101F4139.rss
+TARGET sipietfagnt.rsc                                          
+END
+
+LIBRARY euser.lib 
+LIBRARY ecom.lib
+LIBRARY bafl.lib
+LIBRARY charconv.lib
+LIBRARY sipcodec.lib
+LIBRARY sipclient.lib
+LIBRARY sipprofile.lib
+LIBRARY sipprofilefsm.lib
+LIBRARY sipproxyrsv.lib
+LIBRARY inetprotutil.lib
+LIBRARY flogger.lib
+LIBRARY efsrv.lib
+
+VENDORID 0x70000001
+
+CAPABILITY ProtServ NetworkServices ReadDeviceData
+
+SMPSAFE

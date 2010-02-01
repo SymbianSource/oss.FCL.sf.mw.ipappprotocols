@@ -1,0 +1,102 @@
+// Copyright (c) 2006-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name        : sipclient.mmp
+// Part of     : SIP / SIP Client
+// Version     : SIP/5.0
+//
+
+
+
+TARGET            sipclient.dll
+TARGETTYPE        dll
+UID               0x1000008d 0x101F5D41
+
+SOURCEPATH        ../Client/src
+SOURCE            CSIPITCReceiverBase.cpp
+SOURCE            RSIP.cpp
+SOURCE            CSIPClient.cpp
+SOURCE            CSIPClientReceiver.cpp
+SOURCE            RSIPConnection.cpp
+SOURCE            CSIPITCSender.cpp
+SOURCE            CSIPClientConnection.cpp
+SOURCE            CSIPClientConnectionReceiver.cpp
+SOURCE            CSIPMessageElements.cpp
+SOURCE            CSIPRequestElements.cpp
+SOURCE            CSIPResponseElements.cpp
+SOURCE            SIPServerStarter.cpp
+
+SOURCEPATH        ../sipapi/src
+SOURCE            sip.cpp
+SOURCE            SipImplementation.cpp
+SOURCE            sipconnection.cpp
+SOURCE            SipConnectionImplementation.cpp
+SOURCE            sipregistrationbinding.cpp
+SOURCE            RegBindingImplementation.cpp
+SOURCE            sipregistrationstate.cpp
+SOURCE            unregistered.cpp
+SOURCE            registering.cpp
+SOURCE            registered.cpp
+SOURCE            unregistering.cpp
+SOURCE            siptransactionbase.cpp
+SOURCE            sipclienttransaction.cpp
+SOURCE            sipinviteclienttransaction.cpp
+SOURCE            sipservertransaction.cpp
+SOURCE	          pendingtransaction.cpp
+SOURCE            sipdialog.cpp
+SOURCE            SipDialogImplementation.cpp
+SOURCE            sipdialogassocbase.cpp
+SOURCE            SipDialogAssocImplementation.cpp
+SOURCE            sipinvitedialogassoc.cpp
+SOURCE            sipsubscribedialogassoc.cpp
+SOURCE            sipnotifydialogassoc.cpp
+SOURCE            sipreferdialogassoc.cpp
+SOURCE            sipdialogstate.cpp
+SOURCE            sipdialogtrying.cpp
+SOURCE            sipdialogearly.cpp
+SOURCE            sipdialogconfirmed.cpp
+SOURCE            sipdialogterminated.cpp
+SOURCE            sipresponsesender.cpp
+SOURCE            sipdialogresponsesender.cpp
+SOURCE	          siphttpdigest.cpp
+SOURCE            siprefresh.cpp
+SOURCE	          sipconnectioncallback.cpp
+SOURCE            MessageHeaderCleanup.cpp
+
+// For TTCN (Not part of the API to be published):
+SOURCE            CSIPInternalStates.cpp
+
+
+USERINCLUDE       ../Client/inc
+USERINCLUDE       ../Client/src
+USERINCLUDE       ../sipapi/api
+USERINCLUDE       ../sipapi/inc
+USERINCLUDE       ../sipapi/src
+USERINCLUDE       ../Common/inc
+USERINCLUDE       ../Codec/api
+USERINCLUDE       ../Codec/inc
+
+MW_LAYER_SYSTEMINCLUDE_SYMBIAN
+
+LIBRARY           euser.lib
+LIBRARY           estor.lib
+LIBRARY           bafl.lib
+LIBRARY           inetprotutil.lib
+LIBRARY           insock.lib
+LIBRARY           sipcodec.lib
+
+VENDORID 0x70000001
+
+CAPABILITY All -Tcb
+
+SMPSAFE

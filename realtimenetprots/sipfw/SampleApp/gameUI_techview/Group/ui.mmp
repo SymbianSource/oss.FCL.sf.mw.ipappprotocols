@@ -1,0 +1,88 @@
+
+// Copyright (c) 2004-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+//
+
+
+
+TARGET          sipex.exe
+TARGETTYPE      exe
+UID             0x0 0xA00001EB
+
+START RESOURCE	../Data/SIPEx.rss
+HEADER
+TARGETPATH      /resource/apps
+END
+
+START RESOURCE  ../Data/SIPEx_reg.rss
+HEADER
+TARGETPATH      /private/10003a3f/apps
+END
+
+START RESOURCE ../Data/SIPEx_loc.rss
+HEADER
+TARGETPATH      /resource/apps
+END
+
+SOURCEPATH      ../Src
+SOURCE          SIPExApp.cpp
+SOURCE          SIPExDoc.cpp
+SOURCE          SIPExAppUi.cpp
+SOURCE          SIPExGameContainer.cpp
+SOURCE          SIPExAddrQueryDlg.cpp
+SOURCE          SIPExProfileQueryDlg.cpp
+SOURCE          SIPExGameView.cpp
+SOURCE          SIPExIMDialog.cpp
+SOURCE			Profileutil.cpp
+
+
+RESOURCE        ../Data/SIPEx.rss
+RESOURCE        ../Data/SIPEx_caption.rss
+
+
+USERINCLUDE     ../Inc
+USERINCLUDE     ../Data
+USERINCLUDE	    ../../gameengine/Inc
+USERINCLUDE	    ../../socketengine/Inc
+USERINCLUDE     ../../sipengine/inc
+USERINCLUDE		  ../../../SIP/Codec/inc
+
+SYSTEMINCLUDE   /epoc32/include
+SYSTEMINCLUDE	/epoc32/include/techview
+SYSTEMINCLUDE   /epoc32/include/oem
+
+LIBRARY         euser.lib apparc.lib cone.lib eikcore.lib
+LIBRARY         eikcoctl.lib bafl.lib 
+LIBRARY	        eikctl.lib
+LIBRARY         eikdlg.lib // CEikDialog
+LIBRARY         egul.lib    // TGulBorder
+LIBRARY         etext.lib   // TCharFormat  
+LIBRARY		    eikcdlg.lib 
+LIBRARY         inetprotutil.lib
+LIBRARY         sipprofilecli.lib
+LIBRARY         commdb.lib
+
+
+LIBRARY         sipcodec.lib    // CSIPAddress
+LIBRARY         sipexengine.lib
+
+LANG            SC
+
+VENDORID        0
+
+CAPABILITY     NetworkServices LocalServices Location ReadUserData \
+               WriteUserData WriteDeviceData SwEvent ProtServ
+
+
+SMPSAFE

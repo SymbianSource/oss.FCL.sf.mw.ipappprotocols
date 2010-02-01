@@ -1,0 +1,172 @@
+// Copyright (c) 2008-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// TESTEXECUTE,logs\\testexecute\\te_cfrtpsuite.htm
+// 
+//
+
+//! @file 
+//! @internalComponent
+//! @SYMTestSuiteName te_cfrtpsuite.script
+//! @SYMScriptInfo Run brief Test cases for CFRTP APIs
+//! @SYMScriptTestEnvironment This test runs using the TestExecute framework (TEF) using the following test list entry
+
+PRINT Run all te_Cfrtp Suite Tests
+
+LOAD_SUITE te_cfrtpsuite
+
+ced -i z:\testdata\configs\rtp\rtptest.xml ced.log
+
+
+START_TESTCASE					HLIP-MMP-CFRTP-FUNC-01
+//! @SYMTestCaseID              hlip-mmp-cfrtp-func-01
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            Verifies if a sub-connection can be successfully opened after setting all its parameters correctly
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_cfrtpsuite CSubConTest_01  z:\testdata\configs\rtp\te_cfrtpsuite.ini Section0
+END_TESTCASE					HLIP-MMP-CFRTP-FUNC-01
+
+
+START_TESTCASE					HLIP-MMP-CFRTP-FUNC-02
+//! @SYMTestCaseID              hlip-mmp-cfrtp-func-02
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            Verifies if an RTP socket can be opened successfully
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_cfrtpsuite CRtpSockTest    z:\testdata\configs\rtp\te_cfrtpsuite.ini Section0
+END_TESTCASE					HLIP-MMP-CFRTP-FUNC-02
+
+
+START_TESTCASE					HLIP-MMP-CFRTP-FUNC-03
+//! @SYMTestCaseID              hlip-mmp-cfrtp-func-03
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            Verifies if an RTCP socket can be opened successfully
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_cfrtpsuite CRtcpSockTest   z:\testdata\configs\rtp\te_cfrtpsuite.ini Section0
+END_TESTCASE					HLIP-MMP-CFRTP-FUNC-03
+
+
+//RUN_TEST_STEP 100 te_cfrtpsuite CRtpSendRecv    z:\testdata\configs\rtp\te_cfrtpsuite.ini Section0
+//RUN_TEST_STEP 100 te_cfrtpsuite CRtcpSendRecv   z:\testdata\configs\rtp\te_cfrtpsuite.ini Section0
+
+
+START_TESTCASE					HLIP-MMP-CFRTP-FUNC-04
+//! @SYMTestCaseID              hlip-mmp-cfrtp-func-04
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            Uses a connected socket to send and receive data
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_cfrtpsuite CRtpConnect     z:\testdata\configs\rtp\te_cfrtpsuite.ini Section0
+END_TESTCASE					HLIP-MMP-CFRTP-FUNC-04
+
+
+//RUN_TEST_STEP 100 te_cfrtpsuite CRtcpConnect    z:\testdata\configs\rtp\te_cfrtpsuite.ini Section0
+
+
+START_TESTCASE					HLIP-MMP-CFRTP-FUNC-05
+//! @SYMTestCaseID              hlip-mmp-cfrtp-func-05
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            Opens a socket and sends data without binding it to a local address
+//! @SYMTestPriority            Medium
+RUN_TEST_STEP 100 te_cfrtpsuite CRtpNoBind      z:\testdata\configs\rtp\te_cfrtpsuite.ini Section0
+END_TESTCASE					HLIP-MMP-CFRTP-FUNC-05
+
+
+START_TESTCASE					HLIP-MMP-CFRTP-FUNC-06
+//! @SYMTestCaseID              hlip-mmp-cfrtp-func-06
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            Verifies if the initialized socket is bound to the correct local address
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_cfrtpsuite CRtpBind        z:\testdata\configs\rtp\te_cfrtpsuite.ini Section0
+END_TESTCASE					HLIP-MMP-CFRTP-FUNC-06
+
+
+START_TESTCASE					HLIP-MMP-CFRTP-FUNC-07
+//! @SYMTestCaseID              hlip-mmp-cfrtp-func-07
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            Checks for the rtp socket options
+//! @SYMTestPriority            Medium
+RUN_TEST_STEP 100 te_cfrtpsuite CRtpSockOpt     z:\testdata\configs\rtp\te_cfrtpsuite.ini Section0
+END_TESTCASE					HLIP-MMP-CFRTP-FUNC-07
+
+
+START_TESTCASE					HLIP-MMP-CFRTP-FUNC-08
+//! @SYMTestCaseID              hlip-mmp-cfrtp-func-08
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            Checks for the rtcp socket options
+//! @SYMTestPriority            Medium
+RUN_TEST_STEP 100 te_cfrtpsuite CRtcpSockOpt     z:\testdata\configs\rtp\te_cfrtpsuite.ini Section0
+END_TESTCASE					HLIP-MMP-CFRTP-FUNC-08
+
+
+START_TESTCASE					HLIP-MMP-CFRTP-FUNC-09
+//! @SYMTestCaseID              hlip-mmp-cfrtp-func-09
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            Checks if the socket Ioctl can be exercised
+//! @SYMTestPriority            Medium
+RUN_TEST_STEP 100 te_cfrtpsuite CRtpIoctl       z:\testdata\configs\rtp\te_cfrtpsuite.ini Section0
+END_TESTCASE					HLIP-MMP-CFRTP-FUNC-09
+
+
+START_TESTCASE					HLIP-MMP-CFRTP-FUNC-10
+//! @SYMTestCaseID              hlip-mmp-cfrtp-func-10
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            Sends and receives large sized packets to check for zero copy condition
+//! @SYMTestPriority            High
+RUN_TEST_STEP 100 te_cfrtpsuite CBigSendRecvRtp       Z:\testdata\configs\rtp\te_cfrtpsuite.ini Section0
+END_TESTCASE					HLIP-MMP-CFRTP-FUNC-10
+
+
+START_TESTCASE					HLIP-MMP-CFRTP-FUNC-11
+//! @SYMTestCaseID              hlip-mmp-cfrtp-func-11
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            Opens a sub-connection on an unsupported service protocol and hence socket Open should fail
+//! @SYMTestPriority            Medium
+RUN_TEST_STEP 100 te_cfrtpsuite CRtpNegTests_01   z:\testdata\configs\rtp\te_cfrtpsuite.ini Section0
+END_TESTCASE					HLIP-MMP-CFRTP-FUNC-11
+
+
+//RUN_TEST_STEP 100 te_cfrtpsuite CRtpNegTests_02   z:\testdata\configs\rtp\te_cfrtpsuite.ini Section0
+
+
+START_TESTCASE					HLIP-MMP-CFRTP-FUNC-12
+//! @SYMTestCaseID              hlip-mmp-cfrtp-func-12
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            Tries to open a third socket on the sub-connection and hence fails
+//! @SYMTestPriority            Medium
+RUN_TEST_STEP 100 te_cfrtpsuite CRtpNegTests_03   z:\testdata\configs\rtp\te_cfrtpsuite.ini Section0
+END_TESTCASE					HLIP-MMP-CFRTP-FUNC-12
+
+
+START_TESTCASE					HLIP-MMP-CFRTP-FUNC-13
+//! @SYMTestCaseID              hlip-mmp-cfrtp-func-13
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            Opens a sub-connection using ECreateNew and hence socket Open should fail
+//! @SYMTestPriority            Medium
+RUN_TEST_STEP 100 te_cfrtpsuite CRtpNegTests_04   z:\testdata\configs\rtp\te_cfrtpsuite.ini Section0
+END_TESTCASE					HLIP-MMP-CFRTP-FUNC-13
+
+
+START_TESTCASE					HLIP-MMP-CFRTP-FUNC-14
+//! @SYMTestCaseID              hlip-mmp-cfrtp-func-14
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            Opens a sub-connection with a wrong UID and hence socket Open should fail
+//! @SYMTestPriority            Medium
+RUN_TEST_STEP 100 te_cfrtpsuite CRtpNegTests_05   z:\testdata\configs\rtp\te_cfrtpsuite.ini Section0
+END_TESTCASE					HLIP-MMP-CFRTP-FUNC-14
+
+
+//RUN_TEST_STEP 100 te_cfrtpsuite CRtpNegTestsFailNoBearer   z:\testdata\configs\rtp\te_cfrtpsuite.ini Section0
+//RUN_TEST_STEP 100 te_cfrtpsuite CRtpShutDownImmediate       z:\testdata\configs\rtp\te_cfrtpsuite.ini Section0
+//RUN_TEST_STEP 100 te_cfrtpsuite CRtcpShutDownImmediate       z:\testdata\configs\rtp\te_cfrtpsuite.ini Section0
+//RUN_TEST_STEP 100 te_cfrtpsuite CShutDownImmediate           z:\testdata\configs\rtp\te_cfrtpsuite.ini Section0
+
+PRINT Complete_te_cfrtp_Tests

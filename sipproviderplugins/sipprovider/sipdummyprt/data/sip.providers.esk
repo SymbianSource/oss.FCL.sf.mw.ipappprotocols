@@ -1,0 +1,12 @@
+[sockman]
+protocols= sip_dummy
+
+[sip_dummy]
+filename= SIPDummyPRT.PRT
+index= 1
+
+
+[providers]
+subconn= SIPSubConnectionProviderFactory
+connprov= SIPConnectionProviderFactory
+

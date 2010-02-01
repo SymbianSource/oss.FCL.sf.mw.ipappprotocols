@@ -1,0 +1,1043 @@
+//
+// Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Script file for RTP unit test
+//
+
+
+//!@file
+//! @SYMTestCaseID mm-protocols_rtp-038
+//! @SYMTestCaseDesc Tests RTP high level apis over loopBack
+//! @SYMFssID mm-protocols/rtp/1
+//! @SYMTestStatus Implemented
+//! @SYMTestPriority Normal
+//! @SYMTestActions rtp high level api tests
+//! @SYMTestExpectedResults all pass
+//! @SYMTestType Unit
+//
+PRINT Run all RTP Unit Tests 
+//
+LOAD_SUITE Trtp -SharedData
+//
+
+
+ced -i z:\testdata\configs\rtp\rtptest.xml ced.log
+
+PRINT Complex test with receiving RTCP packets
+PRINT Open Session With RTCP 
+RUN_TEST_STEP_RESULT 0 100 Trtp OpenSessionRtcp2 
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini ErrorCheck
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini NewSrcForRtcp
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini ERtpSDES
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini ERtpRR
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini ERtpANY
+//RUN_TEST_STEP_RESULT 0 100 Trtp RtcpTest z:\TestData\configs\rtp\rtp_unittest.ini NoSource
+RUN_TEST_STEP_RESULT 0 100 Trtp TidyUp2
+
+RUN_TEST_STEP_RESULT 0 100 Trtp OpenSessionRtcp2
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini ErrorCheck
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini OneShotStopNewSourceEvent
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini NoSource
+PRINT Check error handling in the session
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini LeaveSessionEvent
+# Stop when a leave happens
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini StopOnError
+# Check that an event for a particular error that doesn't occur isn't called.
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini PanicOnWrongError
+# Then send a packet on a new stream, which should create an error then stop
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini NoSource
+# Check an error was generated.
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent z:\TestData\configs\rtp\rtp_unittest.ini StopOnError
+
+PRINT Check counting event parameters
+# Here we register an event that'll create a new stream but only after the 3rd packet on a nonexistent source
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini CountNewSource
+# We need to stop after the first packet, so leave and stop in response to the error.
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini LeaveSessionEvent
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini StopOnError
+# Send the first packet.
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini CountingSourceNoCheck
+
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini NewSourceLeave
+# And send a packet to create that stream.
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini LeavingSource
+# And check that the last event was an error
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent z:\TestData\configs\rtp\rtp_unittest.ini StreamError
+
+PRINT Check that errors in subsequent stream events work
+# The previous test only checked the first packet received event. There's a
+# slightly different code path for subsequent ones.
+# This is on the alread-ycreated leaving stream, so this gives us an 
+# oppertunity to check that the packet isn't counted by the counting event
+# above.
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini LeavingSource
+
+PRINT Now create a stream using the previously added counting event
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini CountingSourceCheck
+
+# Add a load of general event handlers...
+# Stop when a packet overflows
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini StopOverflow
+# Create new streams when appropriate.
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini NewSourceEvent
+# When a nonexistent event occurs, panic. (So if the code doesn't panic,
+# it doesn't blindly run all handlers)
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini PanicEvent
+
+# Turn on OOM again. We've finished with 1-shot events.
+RUN_TEST_STEP_RESULT 0 100 Trtp Oom z:\TestData\configs\rtp\rtp_unittest.ini OomOn
+
+# Testing packet creation and access.
+
+PRINT Create packet
+RUN_TEST_STEP_RESULT 0 100 Trtp MakePacket  z:\TestData\configs\rtp\rtp_unittest.ini One
+
+PRINT Set the payload type to 255 and read it back
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayloadType z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini One
+
+PRINT Set the payload type to 0 and read it back
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayloadType z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+
+PRINT Reset the payload type to 255 and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayloadType z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini One
+
+PRINT Set the marker to true and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetMarker z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini One
+
+PRINT Set the marker to false and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetMarker z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+
+PRINT Set the marker to a strange value and check it's interpreted as true
+RUN_TEST_STEP_RESULT 0 100 Trtp SetMarker z:\TestData\configs\rtp\rtp_unittest.ini Error
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini One
+
+PRINT Set everything to 1 and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetFlags z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Flags  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Extension  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp SequenceNumber  z:\TestData\configs\rtp\rtp_unittest.ini One
+
+PRINT Set everything to 0 and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetFlags z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Flags  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Extension  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp SequenceNumber  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+
+PRINT Set flags to 0x87654321 (big endian) and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetFlags z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Flags  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Extension  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SequenceNumber  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+
+PRINT Set Timestamp to 1 and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetTimestamp z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Timestamp  z:\TestData\configs\rtp\rtp_unittest.ini One
+
+PRINT Set Timestamp to 0 and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetTimestamp z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Timestamp  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+
+PRINT Set Timestamp to 0x87654321 and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetTimestamp z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Timestamp  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+
+PRINT Close the packet
+RUN_TEST_STEP_RESULT 0 100 Trtp ClosePacket  z:\TestData\configs\rtp\rtp_unittest.ini
+
+//PRINT Panic testing
+// Panicing Testexecute when using SharedData doesn't seem to work.
+// If fixing this, note that there are some event handlers that should never
+// be called which panic. They'll need to be changed to fail in a different way
+//RUN_PANIC_STEP_RESULT 1 RTP 100 Trtp Flags z:\TestData\configs\rtp\rtp_unittest.ini Zero
+
+PRINT Testing packet reception and accessors of received packets
+# Receive a packet that has a header full of FFs
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini PacketReceived
+RUN_TEST_STEP_RESULT 0 100 Trtp Flags  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Extension  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp SequenceNumber  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Payload  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp SSRC  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Timestamp  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp CSRCs  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp ExtensionContent  z:\TestData\configs\rtp\rtp_unittest.ini One
+
+# And another one full of zeros.
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini PacketReceived
+RUN_TEST_STEP_RESULT 0 100 Trtp Flags  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Extension  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp SequenceNumber  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Payload  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp SSRC  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Timestamp  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp CSRCs  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+
+# And another one crafted to help detect errors in endianness
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini PacketReceived
+RUN_TEST_STEP_RESULT 0 100 Trtp Flags  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Extension  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SequenceNumber  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Payload  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SSRC  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Timestamp  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp CSRCs  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+
+//RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini Extension
+//RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini PacketReceived
+//RUN_TEST_STEP_RESULT 0 100 Trtp ExtensionContent  z:\TestData\configs\rtp\rtp_unittest.ini Extension
+
+PRINT Check the codec change event
+# Receive a packet on the same stream but with a different payload type
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini ChangePayloadType
+# The codec change event is first, so the last event is stil packet received
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini PacketReceived
+# But the new codec can be checked with CheckStatus
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckStatus  z:\TestData\configs\rtp\rtp_unittest.ini PacketChangeCheck
+
+PRINT Sending packet on second stream
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini SecondSource
+
+PRINT Testing overflows
+# Set the RX size to zero and check no packets arrive
+RUN_TEST_STEP_RESULT 0 100 Trtp SetRxSize  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+# Note that a change of size doesn't apply to the packet currently being 
+# waited for, so we need to send another packet to get it to fail.
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini Overflow
+# Set the RX size up to a reasonable value again
+RUN_TEST_STEP_RESULT 0 100 Trtp SetRxSize  z:\TestData\configs\rtp\rtp_unittest.ini One
+# As before, this affects a packet 1 later than you might expect
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+# Check that everything is working again.
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini PacketReceived
+
+# Check for a series of malformed packets. These must be recognised as too 
+# short and generate an appropriate event, but more importantly the stack 
+# shouldn't crash.
+
+PRINT Testing short packets - 11 byte packet
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini ShortPacket
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini Short1
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini ShortPacket
+PRINT Testing short packets - Insuficient CSRCs
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini Short2
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini ShortPacket
+PRINT Testing short packets - Too short for the header extension, but long enough for the start of the extension
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini Short3
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini ShortPacket
+PRINT Testing short packets - Extension present, but not enough data for CSRCs
+//RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini Short4
+//RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini ShortPacket
+PRINT Testing short packets - Apparently too much padding
+//RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini Short5
+//RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini ShortPacket
+
+PRINT Send Packet Testing
+RUN_TEST_STEP_RESULT 0 100 Trtp MakePacket  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini StopOnSend
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayloadType  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SetTimestamp  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayload  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Send  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+
+PRINT Testing that packets aren't unnecesarily padded
+RUN_TEST_STEP_RESULT 0 100 Trtp SetAlignment  z:\TestData\configs\rtp\rtp_unittest.ini Alignment28
+# And while we're at it, check the setting of the payload type via the send 
+# stream
+RUN_TEST_STEP_RESULT 0 100 Trtp SetStreamPayloadType  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp MakePacket  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SetTimestamp  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayload  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Send  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+# Turn padding off again.
+RUN_TEST_STEP_RESULT 0 100 Trtp SetAlignment  z:\TestData\configs\rtp\rtp_unittest.ini AlignmentOff
+
+PRINT Sending packets with extensions
+RUN_TEST_STEP_RESULT 0 100 Trtp MakePacket  z:\TestData\configs\rtp\rtp_unittest.ini SendExtensionTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayloadType  z:\TestData\configs\rtp\rtp_unittest.ini SendExtensionTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SetTimestamp  z:\TestData\configs\rtp\rtp_unittest.ini SendExtensionTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayload  z:\TestData\configs\rtp\rtp_unittest.ini SendExtensionTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Send  z:\TestData\configs\rtp\rtp_unittest.ini SendExtensionTest
+
+RUN_TEST_STEP_RESULT 0 100 Trtp SetAlignment  z:\TestData\configs\rtp\rtp_unittest.ini Alignment
+RUN_TEST_STEP_RESULT 0 100 Trtp MakePacket  z:\TestData\configs\rtp\rtp_unittest.ini SendShortExtension
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayloadType  z:\TestData\configs\rtp\rtp_unittest.ini SendShortExtension
+RUN_TEST_STEP_RESULT 0 100 Trtp SetTimestamp  z:\TestData\configs\rtp\rtp_unittest.ini SendShortExtension
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayload  z:\TestData\configs\rtp\rtp_unittest.ini SendShortExtension
+RUN_TEST_STEP_RESULT 0 100 Trtp Send  z:\TestData\configs\rtp\rtp_unittest.ini SendShortExtension
+
+# Check the error when  packet overflows while padding
+RUN_TEST_STEP_RESULT 0 100 Trtp MakePacket  z:\TestData\configs\rtp\rtp_unittest.ini PadOverflow
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini StopOnSendError
+RUN_TEST_STEP_RESULT 0 100 Trtp Send  z:\TestData\configs\rtp\rtp_unittest.ini PadOverflow
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini PadOverflow
+
+RUN_TEST_STEP_RESULT 0 100 Trtp SetAlignment  z:\TestData\configs\rtp\rtp_unittest.ini AlignmentOff
+
+PRINT Close Session
+RUN_TEST_STEP_RESULT 0 100 Trtp CloseSession2 
+
+RUN_TEST_STEP_RESULT 0 100 Trtp Oom z:\TestData\configs\rtp\rtp_unittest.ini OomOff
+
+#
+PRINT Open Session Without RTCP
+
+RUN_TEST_STEP_RESULT 0 100 Trtp OpenSession2 
+# Handle KErrNoMemory errors. So that OOM testing works.
+# OOM on for the open
+RUN_TEST_STEP_RESULT 0 100 Trtp Oom z:\TestData\configs\rtp\rtp_unittest.ini OomOn
+
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini ErrorCheck
+
+# The next few tests use one-shot events, which don't interact correctly with 
+# OOM, so turn OOM off
+RUN_TEST_STEP_RESULT 0 100 Trtp Oom z:\TestData\configs\rtp\rtp_unittest.ini OomOff
+
+PRINT Check that not creating receive streams works
+# That is to say, that packets are correctly discarded when a stream isn't 
+# created.
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini OneShotStopNewSourceEvent
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini NoSource
+
+PRINT Check error handling in the session
+# Leave in response to new streams
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini LeaveSessionEvent
+# Stop when a leave happens
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini StopOnError
+# Check that an event for a particular error that doesn't occur isn't called.
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini PanicOnWrongError
+# Then send a packet on a new stream, which should create an error then stop
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini NoSource
+# Check an error was generated.
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent z:\TestData\configs\rtp\rtp_unittest.ini StopOnError
+
+PRINT Check counting event parameters
+# Here we register an event that'll create a new stream but only after the 3rd packet on a nonexistent source
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini CountNewSource
+# We need to stop after the first packet, so leave and stop in response to the error.
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini LeaveSessionEvent
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini StopOnError
+# Send the first packet.
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini CountingSourceNoCheck
+
+# While we're doing the counting, also check error handling in stream
+# events. This packet counts as the 2nd packet for the counting test, but is 
+# also used to test leaving events.
+# A one-shot event that creates a stream, all of whose packets will result in
+# a leave, which will be handled by an appropriate event. 
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini NewSourceLeave
+# And send a packet to create that stream.
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini LeavingSource
+# And check that the last event was an error
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent z:\TestData\configs\rtp\rtp_unittest.ini StreamError
+
+PRINT Check that errors in subsequent stream events work
+# The previous test only checked the first packet received event. There's a
+# slightly different code path for subsequent ones.
+# This is on the alread-ycreated leaving stream, so this gives us an 
+# oppertunity to check that the packet isn't counted by the counting event
+# above.
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini LeavingSource
+
+PRINT Now create a stream using the previously added counting event
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini CountingSourceCheck
+
+# Add a load of general event handlers...
+# Stop when a packet overflows
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini StopOverflow
+# Create new streams when appropriate.
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini NewSourceEvent
+# When a nonexistent event occurs, panic. (So if the code doesn't panic,
+# it doesn't blindly run all handlers)
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini PanicEvent
+
+# Turn on OOM again. We've finished with 1-shot events.
+RUN_TEST_STEP_RESULT 0 100 Trtp Oom z:\TestData\configs\rtp\rtp_unittest.ini OomOn
+
+# Testing packet creation and access.
+
+PRINT Create packet
+RUN_TEST_STEP_RESULT 0 100 Trtp MakePacket  z:\TestData\configs\rtp\rtp_unittest.ini One
+
+PRINT Set the payload type to 255 and read it back
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayloadType z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini One
+
+PRINT Set the payload type to 0 and read it back
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayloadType z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+
+PRINT Reset the payload type to 255 and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayloadType z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini One
+
+PRINT Set the marker to true and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetMarker z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini One
+
+PRINT Set the marker to false and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetMarker z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+
+PRINT Set the marker to a strange value and check it's interpreted as true
+RUN_TEST_STEP_RESULT 0 100 Trtp SetMarker z:\TestData\configs\rtp\rtp_unittest.ini Error
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini One
+
+PRINT Set everything to 1 and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetFlags z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Flags  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Extension  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp SequenceNumber  z:\TestData\configs\rtp\rtp_unittest.ini One
+
+PRINT Set everything to 0 and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetFlags z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Flags  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Extension  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp SequenceNumber  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+
+PRINT Set flags to 0x87654321 (big endian) and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetFlags z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Flags  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Extension  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SequenceNumber  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+
+PRINT Set Timestamp to 1 and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetTimestamp z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Timestamp  z:\TestData\configs\rtp\rtp_unittest.ini One
+
+PRINT Set Timestamp to 0 and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetTimestamp z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Timestamp  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+
+PRINT Set Timestamp to 0x87654321 and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetTimestamp z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Timestamp  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+
+PRINT Close the packet
+RUN_TEST_STEP_RESULT 0 100 Trtp ClosePacket  z:\TestData\configs\rtp\rtp_unittest.ini
+
+//PRINT Panic testing
+// Panicing Testexecute when using SharedData doesn't seem to work.
+// If fixing this, note that there are some event handlers that should never
+// be called which panic. They'll need to be changed to fail in a different way
+//RUN_PANIC_STEP_RESULT 1 RTP 100 Trtp Flags z:\TestData\configs\rtp\rtp_unittest.ini Zero
+
+PRINT Testing packet reception and accessors of received packets
+# Receive a packet that has a header full of FFs
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini PacketReceived
+RUN_TEST_STEP_RESULT 0 100 Trtp Flags  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Extension  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp SequenceNumber  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Payload  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp SSRC  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Timestamp  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp CSRCs  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp ExtensionContent  z:\TestData\configs\rtp\rtp_unittest.ini One
+
+# And another one full of zeros.
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini PacketReceived
+RUN_TEST_STEP_RESULT 0 100 Trtp Flags  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Extension  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp SequenceNumber  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Payload  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp SSRC  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Timestamp  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp CSRCs  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+
+# And another one crafted to help detect errors in endianness
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini PacketReceived
+RUN_TEST_STEP_RESULT 0 100 Trtp Flags  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Extension  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SequenceNumber  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Payload  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SSRC  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Timestamp  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp CSRCs  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini Extension
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini PacketReceived
+RUN_TEST_STEP_RESULT 0 100 Trtp ExtensionContent  z:\TestData\configs\rtp\rtp_unittest.ini Extension
+
+PRINT Check the codec change event
+# Receive a packet on the same stream but with a different payload type
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini ChangePayloadType
+# The codec change event is first, so the last event is stil packet received
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini PacketReceived
+# But the new codec can be checked with CheckStatus
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckStatus  z:\TestData\configs\rtp\rtp_unittest.ini PacketChangeCheck
+
+PRINT Sending packet on second stream
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini SecondSource
+
+PRINT Testing overflows
+# Set the RX size to zero and check no packets arrive
+RUN_TEST_STEP_RESULT 0 100 Trtp SetRxSize  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+# Note that a change of size doesn't apply to the packet currently being 
+# waited for, so we need to send another packet to get it to fail.
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini Overflow
+# Set the RX size up to a reasonable value again
+RUN_TEST_STEP_RESULT 0 100 Trtp SetRxSize  z:\TestData\configs\rtp\rtp_unittest.ini One
+# As before, this affects a packet 1 later than you might expect
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+# Check that everything is working again.
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini PacketReceived
+
+# Check for a series of malformed packets. These must be recognised as too 
+# short and generate an appropriate event, but more importantly the stack 
+# shouldn't crash.
+
+
+PRINT Testing short packets - 11 byte packet
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini ShortPacket
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini Short1
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini ShortPacket
+PRINT Testing short packets - Insuficient CSRCs
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini Short2
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini ShortPacket
+PRINT Testing short packets - Too short for the header extension, but long enough for the start of the extension
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini Short3
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini ShortPacket
+PRINT Testing short packets - Extension present, but not enough data for CSRCs
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini Short4
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini ShortPacket
+PRINT Testing short packets - Apparently too much padding
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini Short5
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini ShortPacket
+PRINT Send Packet Testing
+RUN_TEST_STEP_RESULT 0 100 Trtp MakePacket  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini StopOnSend
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayloadType  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SetTimestamp  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayload  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Send  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+
+PRINT Testing that packets aren't unnecesarily padded
+RUN_TEST_STEP_RESULT 0 100 Trtp SetAlignment  z:\TestData\configs\rtp\rtp_unittest.ini Alignment28
+# And while we're at it, check the setting of the payload type via the send 
+# stream
+RUN_TEST_STEP_RESULT 0 100 Trtp SetStreamPayloadType  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp MakePacket  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SetTimestamp  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayload  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Send  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+# Turn padding off again.
+RUN_TEST_STEP_RESULT 0 100 Trtp SetAlignment  z:\TestData\configs\rtp\rtp_unittest.ini AlignmentOff
+
+PRINT Sending packets with extensions
+RUN_TEST_STEP_RESULT 0 100 Trtp MakePacket  z:\TestData\configs\rtp\rtp_unittest.ini SendExtensionTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayloadType  z:\TestData\configs\rtp\rtp_unittest.ini SendExtensionTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SetTimestamp  z:\TestData\configs\rtp\rtp_unittest.ini SendExtensionTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayload  z:\TestData\configs\rtp\rtp_unittest.ini SendExtensionTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Send  z:\TestData\configs\rtp\rtp_unittest.ini SendExtensionTest
+
+RUN_TEST_STEP_RESULT 0 100 Trtp SetAlignment  z:\TestData\configs\rtp\rtp_unittest.ini Alignment
+RUN_TEST_STEP_RESULT 0 100 Trtp MakePacket  z:\TestData\configs\rtp\rtp_unittest.ini SendShortExtension
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayloadType  z:\TestData\configs\rtp\rtp_unittest.ini SendShortExtension
+RUN_TEST_STEP_RESULT 0 100 Trtp SetTimestamp  z:\TestData\configs\rtp\rtp_unittest.ini SendShortExtension
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayload  z:\TestData\configs\rtp\rtp_unittest.ini SendShortExtension
+RUN_TEST_STEP_RESULT 0 100 Trtp Send  z:\TestData\configs\rtp\rtp_unittest.ini SendShortExtension
+
+# Check the error when  packet overflows while padding
+RUN_TEST_STEP_RESULT 0 100 Trtp MakePacket  z:\TestData\configs\rtp\rtp_unittest.ini PadOverflow
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini StopOnSendError
+RUN_TEST_STEP_RESULT 0 100 Trtp Send  z:\TestData\configs\rtp\rtp_unittest.ini PadOverflow
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini PadOverflow
+
+RUN_TEST_STEP_RESULT 0 100 Trtp SetAlignment  z:\TestData\configs\rtp\rtp_unittest.ini AlignmentOff
+
+PRINT Close Session
+RUN_TEST_STEP_RESULT 0 100 Trtp CloseSession2 
+
+RUN_TEST_STEP_RESULT 0 100 Trtp Oom z:\TestData\configs\rtp\rtp_unittest.ini OomOff
+
+PRINT Session Closing Tests
+RUN_TEST_STEP_RESULT 0 100 Trtp OpenSession2 
+# CLose on getting a new stream
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini CloseSession
+# Panic on getting a new stream, to check that event processing is stopped
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini NewSourcePanic
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp TidyUp2 
+
+RUN_TEST_STEP_RESULT 0 100 Trtp OpenSession2 
+# Close session in the first packet of a new stream
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini NewSourceCloseSession
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp TidyUp2
+
+RUN_TEST_STEP_RESULT 0 100 Trtp OpenSession2 
+# Close the session in the 2nd packet of a new stream
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini NewSourceDelayedCloseSession
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp TidyUp2
+
+RUN_TEST_STEP_RESULT 0 100 Trtp OpenSession2 
+# Check closing session in response to leaving in a session event
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini LeaveSessionEvent
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini CloseOnLeave
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini NewSourcePanic
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp TidyUp2
+
+RUN_TEST_STEP_RESULT 0 100 Trtp OpenSession2 
+# Check closing session in response to leaving in a stream event
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini NewSourceLeaveClose
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp TidyUp2
+
+RUN_TEST_STEP_RESULT 0 100 Trtp OpenSession2 
+# Check leaving after closing the session
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini LeaveAfterClose
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp TidyUp2
+
+RUN_TEST_STEP_RESULT 0 100 Trtp OpenSession2 
+# Closing a stream in a stream callback
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini CloseSourceFromSource
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini CloseSourceFromSourceLeave
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp CloseSession2
+
+# Check leaving from a send
+RUN_TEST_STEP_RESULT 0 100 Trtp OpenSession2 
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini LeaveFromSend
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini StopOnSendError
+RUN_TEST_STEP_RESULT 0 100 Trtp MakePacket  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Send  z:\TestData\configs\rtp\rtp_unittest.ini SendNoCheck
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini StopOnSendError
+
+# Check closing from a send callback doesn't crash
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini CloseSendSource
+RUN_TEST_STEP_RESULT 0 100 Trtp MakePacket  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Send  z:\TestData\configs\rtp\rtp_unittest.ini SendNoCheck
+RUN_TEST_STEP_RESULT 0 100 Trtp CloseSession2 
+
+RUN_TEST_STEP_RESULT 0 100 Trtp OpenSession2 
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini CloseSendSession
+RUN_TEST_STEP_RESULT 0 100 Trtp MakePacket  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Send  z:\TestData\configs\rtp\rtp_unittest.ini SendNoCheck
+RUN_TEST_STEP_RESULT 0 100 Trtp CloseSession2 
+
+RUN_TEST_STEP_RESULT 0 100 Trtp OpenSessionRConnect2 z:\TestData\configs\rtp\rtp_unittest.ini OpenSessionRConnect
+RUN_TEST_STEP_RESULT 0 100 Trtp TidyUp2
+
+PRINT Doing tests connected
+RUN_TEST_STEP_RESULT 0 100 Trtp WorkConnected z:\TestData\configs\rtp\rtp_unittest.ini Connected
+ 
+#
+PRINT Open Session
+RUN_TEST_STEP_RESULT 0 100 Trtp OpenSession2 
+
+# OOM on for the open
+RUN_TEST_STEP_RESULT 0 100 Trtp Oom z:\TestData\configs\rtp\rtp_unittest.ini OomOn
+
+# Handle KErrNoMemory errors. So that OOM testing works.
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini ErrorCheck
+
+# The next few tests use one-shot events, which don't interact correctly with 
+# OOM, so turn OOM off
+RUN_TEST_STEP_RESULT 0 100 Trtp Oom z:\TestData\configs\rtp\rtp_unittest.ini OomOff
+
+PRINT Check that not creating receive streams works
+# That is to say, that packets are correctly discarded when a stream isn't 
+# created.
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini OneShotStopNewSourceEvent
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini NoSource
+
+PRINT Check error handling in the session
+# Leave in response to new streams
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini LeaveSessionEvent
+# Stop when a leave happens
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini StopOnError
+# Check that an event for a particular error that doesn't occur isn't called.
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini PanicOnWrongError
+# Then send a packet on a new stream, which should create an error then stop
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini NoSource
+# Check an error was generated.
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent z:\TestData\configs\rtp\rtp_unittest.ini StopOnError
+
+PRINT Check counting event parameters
+# Here we register an event that'll create a new stream but only after the 3rd packet on a nonexistent source
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini CountNewSource
+# We need to stop after the first packet, so leave and stop in response to the error.
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini LeaveSessionEvent
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini StopOnError
+# Send the first packet.
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini CountingSourceNoCheck
+
+# While we're doing the counting, also check error handling in stream
+# events. This packet counts as the 2nd packet for the counting test, but is 
+# also used to test leaving events.
+# A one-shot event that creates a stream, all of whose packets will result in
+# a leave, which will be handled by an appropriate event. 
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini NewSourceLeave
+# And send a packet to create that stream.
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini LeavingSource
+# And check that the last event was an error
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent z:\TestData\configs\rtp\rtp_unittest.ini StreamError
+
+PRINT Check that errors in subsequent stream events work
+# The previous test only checked the first packet received event. There's a
+# slightly different code path for subsequent ones.
+# This is on the alread-ycreated leaving stream, so this gives us an 
+# oppertunity to check that the packet isn't counted by the counting event
+# above.
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini LeavingSource
+
+PRINT Now create a stream using the previously added counting event
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini CountingSourceCheck
+
+# Add a load of general event handlers...
+# Stop when a packet overflows
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini StopOverflow
+# Create new streams when appropriate.
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini NewSourceEvent
+# When a nonexistent event occurs, panic. (So if the code doesn't panic,
+# it doesn't blindly run all handlers)
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini PanicEvent
+
+# Turn on OOM again. We've finished with 1-shot events.
+RUN_TEST_STEP_RESULT 0 100 Trtp Oom z:\TestData\configs\rtp\rtp_unittest.ini OomOn
+
+# Testing packet creation and access.
+
+PRINT Create packet
+RUN_TEST_STEP_RESULT 0 100 Trtp MakePacket  z:\TestData\configs\rtp\rtp_unittest.ini One
+
+PRINT Set the payload type to 255 and read it back
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayloadType z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini One
+
+PRINT Set the payload type to 0 and read it back
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayloadType z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+
+PRINT Reset the payload type to 255 and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayloadType z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini One
+
+PRINT Set the marker to true and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetMarker z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini One
+
+PRINT Set the marker to false and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetMarker z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+
+PRINT Set the marker to a strange value and check it's interpreted as true
+RUN_TEST_STEP_RESULT 0 100 Trtp SetMarker z:\TestData\configs\rtp\rtp_unittest.ini Error
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini One
+
+PRINT Set everything to 1 and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetFlags z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Flags  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Extension  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp SequenceNumber  z:\TestData\configs\rtp\rtp_unittest.ini One
+
+PRINT Set everything to 0 and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetFlags z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Flags  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Extension  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp SequenceNumber  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+
+PRINT Set flags to 0x87654321 (big endian) and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetFlags z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Flags  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Extension  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SequenceNumber  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+
+PRINT Set Timestamp to 1 and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetTimestamp z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Timestamp  z:\TestData\configs\rtp\rtp_unittest.ini One
+
+PRINT Set Timestamp to 0 and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetTimestamp z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Timestamp  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+
+PRINT Set Timestamp to 0x87654321 and check
+RUN_TEST_STEP_RESULT 0 100 Trtp SetTimestamp z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Timestamp  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+
+PRINT Close the packet
+RUN_TEST_STEP_RESULT 0 100 Trtp ClosePacket  z:\TestData\configs\rtp\rtp_unittest.ini
+
+//PRINT Panic testing
+// Panicing Testexecute when using SharedData doesn't seem to work.
+// If fixing this, note that there are some event handlers that should never
+// be called which panic. They'll need to be changed to fail in a different way
+//RUN_PANIC_STEP_RESULT 1 RTP 100 Trtp Flags z:\TestData\configs\rtp\rtp_unittest.ini Zero
+
+PRINT Testing packet reception and accessors of received packets
+# Receive a packet that has a header full of FFs
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini PacketReceived
+RUN_TEST_STEP_RESULT 0 100 Trtp Flags  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Extension  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp SequenceNumber  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Payload  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp SSRC  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp Timestamp  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp CSRCs  z:\TestData\configs\rtp\rtp_unittest.ini One
+RUN_TEST_STEP_RESULT 0 100 Trtp ExtensionContent  z:\TestData\configs\rtp\rtp_unittest.ini One
+
+# And another one full of zeros.
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini PacketReceived
+RUN_TEST_STEP_RESULT 0 100 Trtp Flags  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Extension  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp SequenceNumber  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Payload  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp SSRC  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp Timestamp  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp CSRCs  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+
+# And another one crafted to help detect errors in endianness
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini PacketReceived
+RUN_TEST_STEP_RESULT 0 100 Trtp Flags  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Marker  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp PayloadType  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Extension  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SequenceNumber  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Payload  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SSRC  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Timestamp  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp CSRCs  z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini Extension
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini PacketReceived
+RUN_TEST_STEP_RESULT 0 100 Trtp ExtensionContent  z:\TestData\configs\rtp\rtp_unittest.ini Extension
+
+PRINT Check the codec change event
+# Receive a packet on the same stream but with a different payload type
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini ChangePayloadType
+# The codec change event is first, so the last event is stil packet received
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini PacketReceived
+# But the new codec can be checked with CheckStatus
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckStatus  z:\TestData\configs\rtp\rtp_unittest.ini PacketChangeCheck
+
+PRINT Sending packet on second stream
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini SecondSource
+
+PRINT Testing overflows
+# Set the RX size to zero and check no packets arrive
+RUN_TEST_STEP_RESULT 0 100 Trtp SetRxSize  z:\TestData\configs\rtp\rtp_unittest.ini Zero
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+# Note that a change of size doesn't apply to the packet currently being 
+# waited for, so we need to send another packet to get it to fail.
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini Overflow
+# Set the RX size up to a reasonable value again
+RUN_TEST_STEP_RESULT 0 100 Trtp SetRxSize  z:\TestData\configs\rtp\rtp_unittest.ini One
+# As before, this affects a packet 1 later than you might expect
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+# Check that everything is working again.
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini PacketReceived
+
+# Check for a series of malformed packets. These must be recognised as too 
+# short and generate an appropriate event, but more importantly the stack 
+# shouldn't crash.
+
+PRINT Testing short packets - 11 byte packet
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini ShortPacket
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini Short1
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini ShortPacket
+PRINT Testing short packets - Insuficient CSRCs
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini Short2
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini ShortPacket
+PRINT Testing short packets - Too short for the header extension, but long enough for the start of the extension
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini Short3
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini ShortPacket
+PRINT Testing short packets - Extension present, but not enough data for CSRCs
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini Short4
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini ShortPacket
+PRINT Testing short packets - Apparently too much padding
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini Short5
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini ShortPacket
+PRINT Send Packet Testing
+RUN_TEST_STEP_RESULT 0 100 Trtp MakePacket  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini StopOnSend
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayloadType  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SetTimestamp  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayload  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Send  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+
+PRINT Testing that packets aren't unnecesarily padded
+RUN_TEST_STEP_RESULT 0 100 Trtp SetAlignment  z:\TestData\configs\rtp\rtp_unittest.ini Alignment28
+# And while we're at it, check the setting of the payload type via the send 
+# stream
+RUN_TEST_STEP_RESULT 0 100 Trtp SetStreamPayloadType  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp MakePacket  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SetTimestamp  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayload  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Send  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+# Turn padding off again.
+RUN_TEST_STEP_RESULT 0 100 Trtp SetAlignment  z:\TestData\configs\rtp\rtp_unittest.ini AlignmentOff
+
+PRINT Sending packets with extensions
+RUN_TEST_STEP_RESULT 0 100 Trtp MakePacket  z:\TestData\configs\rtp\rtp_unittest.ini SendExtensionTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayloadType  z:\TestData\configs\rtp\rtp_unittest.ini SendExtensionTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SetTimestamp  z:\TestData\configs\rtp\rtp_unittest.ini SendExtensionTest
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayload  z:\TestData\configs\rtp\rtp_unittest.ini SendExtensionTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Send  z:\TestData\configs\rtp\rtp_unittest.ini SendExtensionTest
+
+RUN_TEST_STEP_RESULT 0 100 Trtp SetAlignment  z:\TestData\configs\rtp\rtp_unittest.ini Alignment
+RUN_TEST_STEP_RESULT 0 100 Trtp MakePacket  z:\TestData\configs\rtp\rtp_unittest.ini SendShortExtension
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayloadType  z:\TestData\configs\rtp\rtp_unittest.ini SendShortExtension
+RUN_TEST_STEP_RESULT 0 100 Trtp SetTimestamp  z:\TestData\configs\rtp\rtp_unittest.ini SendShortExtension
+RUN_TEST_STEP_RESULT 0 100 Trtp SetPayload  z:\TestData\configs\rtp\rtp_unittest.ini SendShortExtension
+RUN_TEST_STEP_RESULT 0 100 Trtp Send  z:\TestData\configs\rtp\rtp_unittest.ini SendShortExtension
+
+# Check the error when  packet overflows while padding
+RUN_TEST_STEP_RESULT 0 100 Trtp MakePacket  z:\TestData\configs\rtp\rtp_unittest.ini PadOverflow
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini StopOnSendError
+RUN_TEST_STEP_RESULT 0 100 Trtp Send  z:\TestData\configs\rtp\rtp_unittest.ini PadOverflow
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini PadOverflow
+
+RUN_TEST_STEP_RESULT 0 100 Trtp SetAlignment  z:\TestData\configs\rtp\rtp_unittest.ini AlignmentOff
+
+PRINT Close Session
+RUN_TEST_STEP_RESULT 0 100 Trtp CloseSession2
+
+RUN_TEST_STEP_RESULT 0 100 Trtp Oom z:\TestData\configs\rtp\rtp_unittest.ini OomOff
+
+PRINT Session Closing Tests
+RUN_TEST_STEP_RESULT 0 100 Trtp OpenSession2 
+# CLose on getting a new stream
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini CloseSession
+# Panic on getting a new stream, to check that event processing is stopped
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini NewSourcePanic
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp TidyUp2 
+
+RUN_TEST_STEP_RESULT 0 100 Trtp OpenSession2 
+# Close session in the first packet of a new stream
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini NewSourceCloseSession
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp TidyUp2
+
+RUN_TEST_STEP_RESULT 0 100 Trtp OpenSession2 
+# Close the session in the 2nd packet of a new stream
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini NewSourceDelayedCloseSession
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp TidyUp2
+
+RUN_TEST_STEP_RESULT 0 100 Trtp OpenSession2 
+# Check closing session in response to leaving in a session event
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini LeaveSessionEvent
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini CloseOnLeave
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini NewSourcePanic
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp TidyUp2
+
+RUN_TEST_STEP_RESULT 0 100 Trtp OpenSession2 
+# Check closing session in response to leaving in a stream event
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini NewSourceLeaveClose
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp TidyUp2
+
+RUN_TEST_STEP_RESULT 0 100 Trtp OpenSession2 
+# Check leaving after closing the session
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini LeaveAfterClose
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp TidyUp2
+
+RUN_TEST_STEP_RESULT 0 100 Trtp OpenSession2 
+# Closing a stream in a stream callback
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini CloseSourceFromSource
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini CloseSourceFromSourceLeave
+RUN_TEST_STEP_RESULT 0 100 Trtp RxPacket z:\TestData\configs\rtp\rtp_unittest.ini EndianTest
+RUN_TEST_STEP_RESULT 0 100 Trtp CloseSession2
+
+# Check leaving from a send
+RUN_TEST_STEP_RESULT 0 100 Trtp OpenSession2 
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini LeaveFromSend
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini StopOnSendError
+RUN_TEST_STEP_RESULT 0 100 Trtp MakePacket  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Send  z:\TestData\configs\rtp\rtp_unittest.ini SendNoCheck
+RUN_TEST_STEP_RESULT 0 100 Trtp CheckEvent  z:\TestData\configs\rtp\rtp_unittest.ini StopOnSendError
+
+# Check closing from a send callback doesn't crash
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini CloseSendSource
+RUN_TEST_STEP_RESULT 0 100 Trtp MakePacket  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Send  z:\TestData\configs\rtp\rtp_unittest.ini SendNoCheck
+RUN_TEST_STEP_RESULT 0 100 Trtp CloseSession2 
+
+RUN_TEST_STEP_RESULT 0 100 Trtp OpenSession2 
+RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtp_unittest.ini CloseSendSession
+RUN_TEST_STEP_RESULT 0 100 Trtp MakePacket  z:\TestData\configs\rtp\rtp_unittest.ini SendTest
+RUN_TEST_STEP_RESULT 0 100 Trtp Send  z:\TestData\configs\rtp\rtp_unittest.ini SendNoCheck
+RUN_TEST_STEP_RESULT 0 100 Trtp CloseSession2 
+
+RUN_TEST_STEP_RESULT 0 100 Trtp OpenSessionRConnect2 z:\TestData\configs\rtp\rtp_unittest.ini OpenSessionRConnect
+ 
+
+RUN_TEST_STEP_RESULT 0 100 Trtp TidyUp2
+PRINT RTP Unit Testing Complete
+

@@ -1,0 +1,127 @@
+Generating capability tests for Te_Cap_ProfileAgent ...
+Need to create new directory .\Te_Cap_ProfileAgentSource
+Generating Te_Cap_ProfileAgent.script once
+Generating CSuite.h once
+Generating BLD.INF once
+Generating Te_Cap_ProfileAgent.IBY once
+
+Generating Te_Cap_ProfileAgentSub.script for each capability
+	Cap_00000000_Te_Cap_ProfileAgentSub.script
+	Cap_00000020_Te_Cap_ProfileAgentSub.script
+	Cap_00002000_Te_Cap_ProfileAgentSub.script
+	Cap_00002020_Te_Cap_ProfileAgentSub.script
+	Cap_00008000_Te_Cap_ProfileAgentSub.script
+	Cap_80000000_Te_Cap_ProfileAgentSub.script
+Generating CSuite.cpp once
+Generating Te_Cap_ProfileAgent.MMP once
+
+Generating CStep.h for each message
+	ESipProfileItcOpCreateProfileSize1_CStep.h
+	ESipProfileItcOpCreateProfile1_CStep.h
+	ESipProfileItcOpCancelReceive1_CStep.h
+	ESipProfileItcOpPluginsSize1_CStep.h
+	ESipProfileItcOpPlugins1_CStep.h
+	ESipProfileItcOpProfileSize1_CStep.h
+	ESipProfileItcOpProfileSizeDefault1_CStep.h
+	ESipProfileItcOpProfilesSize1_CStep.h
+	ESipProfileItcOpProfilesSizeByAOR1_CStep.h
+	ESipProfileItcOpProfilesSizeByType1_CStep.h
+	ESipProfileItcOpRegisteredAORsSize1_CStep.h
+	ESipProfileItcOpNegotiatedSecurity1_CStep.h
+	ESipProfileItcOpNegotiatedSecuritySize1_CStep.h
+	ESipProfileItcOpAddALRObserver1_CStep.h
+	ESipProfileItcOpRemoveALRObserver1_CStep.h
+	ESipProfileItcOpUsage1_CStep.h
+	ESipProfileItcOpProfile1_CStep.h
+	ESipProfileItcOpProfileRefresh1_CStep.h
+	ESipProfileItcOpProfiles1_CStep.h
+	ESipProfileItcOpProfilesByAOR1_CStep.h
+	ESipProfileItcOpProfilesByType1_CStep.h
+	ESipProfileItcOpRegisteredAORs1_CStep.h
+	ESipProfileItcOpAddProfile1_CStep.h
+	ESipProfileItcOpUpdateProfile1_CStep.h
+	ESipProfileItcOpRemoveProfile1_CStep.h
+	ESipProfileItcOpAllowMigration1_CStep.h
+	ESipProfileItcOpDisallowMigration1_CStep.h
+	ESipProfileItcOpRefreshIapAvailability1_CStep.h
+	ESipProfileItcOpDeleteProfile1_CStep.h
+	ESipProfileItcOpDisable1_CStep.h
+	ESipProfileItcOpEnable1_CStep.h
+
+Generating CStep.cpp for each message
+	ESipProfileItcOpCreateProfileSize1_CStep.cpp
+	ESipProfileItcOpCreateProfile1_CStep.cpp
+	ESipProfileItcOpCancelReceive1_CStep.cpp
+	ESipProfileItcOpPluginsSize1_CStep.cpp
+	ESipProfileItcOpPlugins1_CStep.cpp
+	ESipProfileItcOpProfileSize1_CStep.cpp
+	ESipProfileItcOpProfileSizeDefault1_CStep.cpp
+	ESipProfileItcOpProfilesSize1_CStep.cpp
+	ESipProfileItcOpProfilesSizeByAOR1_CStep.cpp
+	ESipProfileItcOpProfilesSizeByType1_CStep.cpp
+	ESipProfileItcOpRegisteredAORsSize1_CStep.cpp
+	ESipProfileItcOpNegotiatedSecurity1_CStep.cpp
+	ESipProfileItcOpNegotiatedSecuritySize1_CStep.cpp
+	ESipProfileItcOpAddALRObserver1_CStep.cpp
+	ESipProfileItcOpRemoveALRObserver1_CStep.cpp
+	ESipProfileItcOpUsage1_CStep.cpp
+	ESipProfileItcOpProfile1_CStep.cpp
+	ESipProfileItcOpProfileRefresh1_CStep.cpp
+	ESipProfileItcOpProfiles1_CStep.cpp
+	ESipProfileItcOpProfilesByAOR1_CStep.cpp
+	ESipProfileItcOpProfilesByType1_CStep.cpp
+	ESipProfileItcOpRegisteredAORs1_CStep.cpp
+	ESipProfileItcOpAddProfile1_CStep.cpp
+	ESipProfileItcOpUpdateProfile1_CStep.cpp
+	ESipProfileItcOpRemoveProfile1_CStep.cpp
+	ESipProfileItcOpAllowMigration1_CStep.cpp
+	ESipProfileItcOpDisallowMigration1_CStep.cpp
+	ESipProfileItcOpRefreshIapAvailability1_CStep.cpp
+	ESipProfileItcOpDeleteProfile1_CStep.cpp
+	ESipProfileItcOpDisable1_CStep.cpp
+	ESipProfileItcOpEnable1_CStep.cpp
+
+Available Parameters
+
+PARAM_FOREACH_COUNT
+PARAM_FOREACH_HEX_CAPABILITY
+PARAM_FOREACH_LIST_BEGIN
+PARAM_FOREACH_LIST_END
+PARAM_FOREACH_MESS_BEGIN
+PARAM_FOREACH_MESS_CAP_BEGIN
+PARAM_FOREACH_MESS_CAP_END
+PARAM_FOREACH_MESS_END
+PARAM_FOREACH_STRING_CAPABILITY
+PARAM_MESS_CAPABILITY
+PARAM_MESS_CAPMASK
+PARAM_MESS_DYNAMICBASENAME
+PARAM_MESS_HEX_CAPMASK
+PARAM_MESS_IGNORE
+PARAM_MESS_NAME
+PARAM_MESS_NAMECAP
+PARAM_MESS_SERVER
+PARAM_MESS_VALUE
+PARAM_SVR_ALLNEGATIVE
+PARAM_SVR_BUILDNAME
+PARAM_SVR_BUILDOK
+PARAM_SVR_CAPEXCEPT
+PARAM_SVR_CONNECTCAPABILITY
+PARAM_SVR_LIBRARIES
+PARAM_SVR_LISTHEADERFILE
+PARAM_SVR_MAJORNAME
+PARAM_SVR_MESSAGEFILE
+PARAM_SVR_MINORNAME
+PARAM_SVR_NAME
+PARAM_SVR_PANIC
+PARAM_SVR_SCHED_TEST_DEST
+PARAM_SVR_SCHED_TEST_SRC
+PARAM_SVR_SETCAP
+PARAM_SVR_SOURCEDIRECTORY
+PARAM_SVR_SUITENAME
+PARAM_SVR_SYSTEMINCLUDE
+PARAM_SVR_TEMPLATEDIRECTORY
+PARAM_SVR_TEMPLATEFILE
+PARAM_SVR_USERINCLUDE
+PARAM_TMPL_NAME
+PARAM_TMPL_RELOCATIONDIR
+PARAM_TMPL_REPETITION

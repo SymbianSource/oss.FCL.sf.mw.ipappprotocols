@@ -1,0 +1,29 @@
+// Copyright (c) 2007-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name     : cfrtp.iby
+// Part of  : RTP In Comms Framework 
+// IBY file for RTP/RTCP Flows
+// 
+//
+
+#ifndef __CFRTP_IBY__
+#define __CFRTP_IBY__
+
+#include <rtpcore.iby>
+
+data=EPOCROOT##epoc32\data\z\private\101F7989\esock\ip.rtp.esk private\101F7989\esock\ip.rtp.esk
+ECOM_PLUGIN(cfrtp.dll,20016F7F.rss)
+
+#endif //__CFRTP_IBY__
+

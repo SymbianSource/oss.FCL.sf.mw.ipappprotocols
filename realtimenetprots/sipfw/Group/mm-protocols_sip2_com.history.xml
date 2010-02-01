@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<relnotes name="SIP Framework">
+  <purpose>
+    Session Initiation Protocol. Main signalling protocol for 3gpp. Used by phone app, multimedia and messaging app. 3 servers implied.
+  </purpose>
+
+ <cr number="1242" title="SIP over TLS" revision="13">
+  Added Note for the following cr:
+  Oghma,GT0362,MS3.4,DS.843 SIP enhancements phase 3
+ </cr>
+ 
+ <defect number="INC136948" title="Improvements to CCHServer robustness" revision="96">
+    Defect fixes:
+	INC136948 Improvements to CCHServer robustness
+  </defect>
+
+ <defect number="DEF137132" title="Crashes occur if VoIP is registered when MC backup is taken (Observed S60 3.2.3)" revision="95">
+    Defect fixes:
+	DEF137132 Crashes occur if VoIP is registered when MC backup is taken (Observed S60 3.2.3)
+  </defect>
+
+ <defect number="PDEF133394" title="SIP : when moving from 3G to 2G , Packet connection goes to CS Only" revision="94">
+    Defect fixes:
+	PDEF133394 SIP : when moving from 3G to 2G , Packet connection goes to CS Only
+  </defect>
+
+ <defect number="PDEF133395" title="SIP : Etel IMSAutheticate Message goes out of scope" revision="93">
+    Defect fixes:
+	PDEF133395 SIP : Etel IMSAutheticate Message goes out of scope
+  </defect>
+
+ <defect number="DEF133888" title="[System Build]: Elfe32 warning in SIP Framework in M04835 vFuture build" revision="92">
+    Defect fixes:
+	DEF133888 [System Build]: Elfe32 warning in SIP Framework in M04835 vFuture build
+  </defect>
+
+ <defect number="PDEF134513" title="Device behaves weirdly after registration fails to VoIP service" revision="91">
+    Defect fixes:
+	PDEF134513 Device behaves weirdly after registration fails to VoIP service
+  </defect>
+
+ <defect number="PDEF133393" title="SIP Registration (Refresh) not triggered after a 2G Call" revision="90">
+    Defect fixes:
+	PDEF133393 SIP Registration (Refresh) not triggered after a 2G Call
+  </defect>
+
+ <defect number="DEF134108" title="[System Build]: GT errors due to SIP Framework in M04843 v9.5" revision="89">
+    Defect fixes:
+	DEF134108 [System Build]: GT errors due to SIP Framework in M04843 v9.5
+  </defect>
+
+ <defect number="PDEF133984" title="SipServer crashes if enabling two service tabs when using allatum settings over" revision="88">
+    Defect fixes:
+	PDEF133984 SipServer crashes if enabling two service tabs when using allatum settings over
+  </defect>
+
+ <defect number="DEF133888" title="[System Build]: Elfe32 warning in SIP Framework in M04835 vFuture build" revision="87">
+    Defect fixes:
+	DEF133888 [System Build]: Elfe32 warning in SIP Framework in M04835 vFuture build
+  </defect>
+
+ <defect number="DEF133557" title="[Coverity]-CHECKED_RETURN,USE_AFTER_FREE -mm-protocols/sip2" revision="86">
+    Defect fixes:
+	DEF133557 [Coverity]-CHECKED_RETURN,USE_AFTER_FREE -mm-protocols/sip2
+  </defect>
+
+ <defect number="DEF133558" title="[Coverity]-FORWARD_NULL,RESOURCE_LEAK -mm-protocols/sip2/sip" revision="85">
+    Defect fixes:
+	DEF133558 [Coverity]-FORWARD_NULL,RESOURCE_LEAK -mm-protocols/sip2/sip
+  </defect>
+
+ <defect number="DEF133559" title="[Coverity]-SYMBIAN.CLEANUP_STACK -mm-protocols/sip2" revision="84">
+    Defect fixes:
+	DEF133559 [Coverity]-SYMBIAN.CLEANUP_STACK -mm-protocols/sip2
+  </defect>
+
+ <defect number="INC133381" title="Non-deterministic behaviour of Symbian's TInetAddr" revision="83">
+    Defect fixes:
+	INC133381 Non-deterministic behaviour of Symbian's TInetAddr
+  </defect>
+
+ <defect number="DEF133138" title="[System Build]: Include statement not case consistent in mm-protocols_SIP2_com" revision="82">
+    Defect fixes:
+	DEF133138 [System Build]: Include statement not case consistent in mm-protocols_SIP2_com
+  </defect>
+
+ <defect number="PDEF130653" title="WLAN stays connected if ICMP has been received to voice mail box unsubscribe mes" revision="81">
+    Defect fixes:
+	PDEF130653 WLAN stays connected if ICMP has been received to voice mail box unsubscribe mes
+  </defect>
+
+ <defect number="DEF132597" title="ICCCodenomicon: SIP UAS responds on 0000 port and goes infinite loop" revision="80">
+    Defect fixes:
+	DEF132597 ICCCodenomicon: SIP UAS responds on 0000 port and goes infinite loop
+  </defect>
+
+ <defect number="DEF132596" title="ICCCodenomicon: SIP UAS responds on 65536 port and goes infinite loop" revision="79">
+    Defect fixes:
+	DEF132596 ICCCodenomicon: SIP UAS responds on 65536 port and goes infinite loop
+  </defect>
+ 
+ <defect number="DEF132485" title="Keyspace design for bearer specific Registration Expiry settings in cenrep" revision="78">
+    Defect fixes:
+	DEF132485 Keyspace design for bearer specific Registration Expiry settings in cenrep
+  </defect>
+
+ <defect number="DEF132486" title="support for data compatibility between sipprofiles.dat and cenrep profile format" revision="77">
+    Defect fixes:
+	DEF132486 support for data compatibility between sipprofiles.dat and cenrep profile format
+  </defect>
+
+ <defect number="PDEF130652" title="Digest AKAv1 authentication does not work with VoiP" revision="76">
+    Defect fixes:
+	PDEF130652 Digest AKAv1 authentication does not work with VoiP
+  </defect>
+
+ <defect number="DEF130788" title="[Coverity]-MISSING_BREAK,SIZECHECK,USE_AFTER_FREE-mm-protocols/sip2/" revision="75">
+    Defect fixes:
+	DEF130788 [Coverity]-MISSING_BREAK,SIZECHECK,USE_AFTER_FREE-mm-protocols/sip2/
+  </defect>
+
+ <defect number="PDEF130654" title="Video Share settings shows deleted profiles in the selection list" revision="74">
+    Defect fixes:
+	PDEF130654 Video Share settings shows deleted profiles in the selection list
+  </defect>
+
+  <defect number="DEF129377" title="[Coverity]-SYMBIAN.CLEANUP_STACK-mm-protocols/sip2" revision="73">
+    Defect fixes:
+	DEF129377 [Coverity]-SYMBIAN.CLEANUP_STACK-mm-protocols/sip2
+  </defect>
+
+ <defect number="DEF129461" title="Registration to VoIP service does not work in IPv4 and IPv6 dual network" revision="72">
+    Defect fixes:
+	DEF129461 Registration to VoIP service does not work in IPv4 and IPv6 dual network
+  </defect>
+
+  <defect number="DEF129701" title="494 response not handled correctly if SIP profile does not contain credentials" revision="71">
+    Defect fixes:
+	DEF129701 494 response not handled correctly if SIP profile does not contain credentials
+  </defect>
+
+ <defect number="PDEF127679" title="Can not do VoIP registration after plugging back the cable to the WLAN AP" revision="70">
+    Defect fixes:
+	PDEF127679 Can not do VoIP registration after plugging back the cable to the WLAN AP
+  </defect>
+
+ <defect number="DEF129655" title="WLAN and GPRS are simultaneous connected after roaming from GPRS to WLAN" revision="69">
+    Defect fixes:
+	DEF129655 WLAN and GPRS are simultaneous connected after roaming from GPRS to WLAN
+  </defect>
+
+  <defect number="PDEF128408" title="Profile registration fails when a deregistration is pending for another profile" revision="68">
+    Defect fixes:
+	PDEF128408 Profile registration fails when a deregistration is pending for another profile
+  </defect>
+
+ <defect number="PDEF127676" title="Incorrect inheritance order in CSigCompHandler" revision="67">
+    Defect fixes:
+	PDEF127676 Incorrect inheritance order in CSigCompHandler 
+  </defect>
+  
+  <defect number="DEF127358" title="Receiving INVITE with IPv6 address in Contact and c= line via IPv4 IAP" revision="66">
+    Defect fixes:
+	DEF127358 Receiving INVITE with IPv6 address in Contact and c= line via IPv4 IAP 
+  </defect>
+  
+  <defect number="DEF126882" title="[Coverity]-SYMBIAN.CLEANUP_STACK -mm-protocols/sip2/" revision="65">
+    Defect fixes:
+	DEF126882 [Coverity]-SYMBIAN.CLEANUP_STACK -mm-protocols/sip2/ 
+  </defect>
+
+ <defect number="DEF126880" title="[Coverity]-PASS_BY_VALUE -mm-protocols/sip2/ " revision="64">
+    Defect fixes:
+	DEF126880 [Coverity]-PASS_BY_VALUE -mm-protocols/sip2/ 
+  </defect>
+
+ <defect number="PDEF128108" title="UDEB version of sipprofilesrv.exe crashes" revision="63">
+    Defect fixes:
+    PDEF128108  UDEB version of sipprofilesrv.exe crashes     
+  </defect>
+
+ <defect number="DEF127309" title="Phone does not send Ack response to 494 Security Agreement Required" revision="62">
+    Defect fixes:
+    DEF127309  Phone does not send Ack response to 494 Security Agreement Required     
+  </defect>
+  
+  <defect number="DEF127121" title="Cloning SDP origin field with address 0.0.0.0" revision="61">
+    Defect fixes:
+    DEF127121   Cloning SDP origin field with address 0.0.0.0    
+  </defect>
+  
+  <defect number="DEF127262" title="It shouldn't be possible to change the SNAP id to zero " revision="60">
+    Defect fixes:
+    DEF127262  It shouldn't be possible to change the SNAP id to zero     
+  </defect>
+  
+  <defect number="DEF125920" title="[coverity] - FORWARD_NULL - mm-protocols/sip2/clientresolver" revision="59">
+    Defect fixes:
+    DEF125920  [coverity] - FORWARD_NULL - mm-protocols/sip2/clientresolver    
+  </defect>
+  
+  <defect number="DEF125926" title="[Coverity] - SYMBIAN.CLEANUP - mm-protocols/sip2/sip/connectionmgr" revision="58">
+    Defect fixes:
+    DEF125926  [Coverity] - SYMBIAN.CLEANUP - mm-protocols/sip2/sip/connectionmgr   
+  </defect>
+  
+  <defect number="PDEF124332" title="Terminal can't receive any calls after several header with bytecode tests
+" revision="57">
+    Defect fixes:
+    PDEF124332  Terminal can't receive any calls after several header with bytecode tests   
+  </defect>
+  
+  <defect number="DEF125137" title="[coverity] - REVERSE_INULL - mm-protocols/sip2/sip/serverresolver" revision="56">
+    Defect fixes:
+    DEF125137  [coverity] - REVERSE_INULL - mm-protocols/sip2/sip/serverresolver   
+  </defect>
+  
+  <defect number="DEF125090" title="[coverity] - NULL_RETURNS - mm-protocols/sip2/sip/sipsec/ipsecplugin" revision="55">
+    Defect fixes:
+    DEF125090  [coverity] - NULL_RETURNS - mm-protocols/sip2/sip/sipsec/ipsecplugin   
+  </defect>
+  
+  <defect number="DEF125138" title="[coverity] - REVERSE_INULL - mm-protocols/sip2/sdp" revision="54">
+    Defect fixes:
+    DEF125138  [coverity] - REVERSE_INULL - mm-protocols/sip2/sdp   
+  </defect>
+  
+  <defect number="DEF125139" title="[coverity] - CHECKED_RETURN - mm-protocols/sip2/sigcomp/sigcompengine" revision="53">
+    Defect fixes:
+    DEF125139  [coverity] - CHECKED_RETURN - mm-protocols/sip2/sigcomp/sigcompengine   
+  </defect>
+  
+  <defect number="DEF125140" title="[coverity] - CHECKED_RETURN - mm-protocols/sip2/profileagent" revision="52">
+    Defect fixes:
+    DEF125140  [coverity] - CHECKED_RETURN - mm-protocols/sip2/profileagent    
+  </defect>
+  
+  <defect number="DEF125106" title="[coverity] - NULL_RETURNS - mm-protocols/sip2/sip/connectionmgr " revision="51">
+    Defect fixes:
+    DEF125106  [coverity] - NULL_RETURNS - mm-protocols/sip2/sip/connectionmgr   
+  </defect>
+  
+  <defect number="DEF125111" title="[Coverity] - OVERRUN_STATIC - mm-protocols/sip2/sip/client/" revision="50">
+    Defect fixes:
+    DEF125111  [Coverity] - OVERRUN_STATIC - mm-protocols/sip2/sip/client/  
+  </defect>
+  
+  <defect number="DEF125136" title="[coverity] - USE_AFTER_FREE - mm-protocols/sip2/profileagent" revision="49">
+    Defect fixes:
+    DEF125136  [coverity] - USE_AFTER_FREE - mm-protocols/sip2/profileagent  
+  </defect>
+  
+  <defect number="DEF125110" title="[coverity] - FORWARD_NULL - mm-protocols/sip2/sip/sipapi " revision="48">
+    Defect fixes:
+    DEF125110  [coverity] - FORWARD_NULL - mm-protocols/sip2/sip/sipapi  
+  </defect>
+  
+  <defect number="DEF125094" title="[coverity] - NULL_RETURNS - mm-protocols/sip2/sip/transactionuser" revision="47">
+    Defect fixes:
+    DEF125094  [coverity] - NULL_RETURNS - mm-protocols/sip2/sip/transactionuser 
+  </defect>
+  
+  <defect number="DEF123023" title="Creating of CSIPProfileRegisty instance takes 50ms" revision="46">
+    Defect fixes:
+    DEF123023  Creating of CSIPProfileRegisty instance takes 50ms 
+  </defect>
+  
+  <defect number="PDEF124112" title="Incorrect handling of some SDP attributes with syntax errors" revision="45">
+    Defect fixes:
+    PDEF124112  Incorrect handling of some SDP attributes with syntax errors 
+  </defect>
+  
+  <defect number="PDEF124114" title="Parsing Refer-To header with a semicolon in SIP-URI's user part fails" revision="44">
+    Defect fixes:
+    PDEF124114  Parsing Refer-To header with a semicolon in SIP-URI's user part fails 
+  </defect>
+  
+  <defect number="PDEF124174" title="Incoming INVITE flood" revision="43">
+    Defect fixes:
+    PDEF124174  Incoming INVITE flood 
+  </defect>
+  
+  <defect number="PDEF124334" title="SDP codec: can't clone CSdpConnectionField where IP address is 0.0.0.0" revision="42">
+    Defect fixes:
+    PDEF124334  SDP codec: can't clone CSdpConnectionField where IP address is 0.0.0.0 
+  </defect>
+  
+  <defect number="DEF124240" title="Digest plugin crash after registration clears cache, dialog is challenged" revision="41">
+    Defect fixes:
+    DEF124240  Digest plugin crash after registration clears cache, dialog is challenged 
+  </defect>
+  
+  <defect number="DEF124235" title="SIPit22 Issue: Double hold not working with Cisco Call Manager" revision="40">
+    Defect fixes:
+    DEF124235  SIPit22 Issue: Double hold not working with Cisco Call Manager 
+  </defect>
+  
+  <defect number="PDEF124110" title="SipProfileSrv crashes under IPC fuzzing" revision="39">
+    Defect fixes:
+    PDEF124110  SipProfileSrv crashes under IPC fuzzing
+  </defect>
+  
+  <defect number="DEF124233" title="Creating two CSIPConnections with different IAP IDs but the same physical AP" revision="38">
+    Defect fixes:
+    DEF124233  Creating two CSIPConnections with different IAP IDs but the same physical AP
+  </defect>
+  
+ <defect number="DEF122893" title="High severity CodeScanner warnings in SIP stack" revision="37">
+    Defect fixes:
+    DEF122893  High severity CodeScanner warnings in SIP stack
+  </defect>
+
+ <defect number="PDEF123267" title="Creating a CSIPConnection with IAP using a static IP fails with EUnavailable" revision="36">
+    Defect fixes:
+    PDEF123267  Creating a CSIPConnection with IAP using a static IP fails with EUnavailable
+  </defect>
+  
+ <defect number="PDEF123269" title="SIP server crashes in Codenomicon tests when using TCP" revision="35">
+    Defect fixes:
+    PDEF123269  SIP server crashes in Codenomicon tests when using TCP
+  </defect>
+  
+   <defect number="DEF122933" title="SIP profile registration lost if the profile is disabled during IAP migration" revision="34">
+    Defect fixes:
+    DEF122933  SIP profile registration lost if the profile is disabled during IAP migration
+  </defect>
+  
+ <defect number="PDEF122840" title="Error in SIPClient library - Native SIP stack" revision="33">
+    Defect fixes:
+    PDEF122840  Error in SIPClient library - Native SIP stack
+  </defect>
+  
+   <defect number="PDEF123081" title="PTT call doesn't resume if network coverage is lost for long time" revision="32">
+    Defect fixes:
+    PDEF123081  PTT call doesn't resume if network coverage is lost for long time
+  </defect>
+  
+ <defect number="DEF121369" title="Registration with SNAP does not work when startup in offline mode" revision="31">
+    Defect fixes:
+    DEF121369  Registration with SNAP does not work when startup in offline mode
+  </defect>
+ 
+ <defect number="PDEF121899" title="SIPDIGEST.DLL dependency on IMUT.DLL should be broken" revision="30">
+    Defect fixes:
+    PDEF121899  SIPDIGEST.DLL dependency on IMUT.DLL should be broken
+  </defect>
+  
+  <defect number="DEF121209" title="App using SIP gets EProfileDeregistered in network lost case too early" revision="29">
+    Defect fixes:
+    DEF121209  App using SIP gets EProfileDeregistered in network lost case too early
+  </defect>
+ 
+ <defect number="DEF121455 " title="Miscellaneous(copyright, Cat F) errros in Sample App and example plugins of SIP" revision="28">
+    Defect fixes:
+    DEF121455  Miscellaneous(copyright, Cat F) errros in Sample App and example plugins of SIP
+  </defect>
+  
+  <defect number=" DEF118609" title="SPPR_PERF: SIP Server crashes under IPC attack" revision="27">
+    Defect fixes:
+    DEF118609 SPPR_PERF: SIP Server crashes under IPC attack 
+  </defect>
+
+ <defect number=" DEF118927" title=" Connection needed prompt looped when using GPRS access point from Sip Settings  " revision="26">
+    Defect fixes:
+    DEF118927 "Connection needed" prompt looped when using GPRS access point from Sip Settings 
+  </defect>
+  
+  <defect number=" PDEF119150" title=" SIP Server crashes after 423 response to REGISTER  " revision="25">
+    Defect fixes:
+    PDEF119150 SIP Server crashes after 423 response to REGISTER
+  </defect>
+  
+ <defect number=" DEF118608" title=" Phone does not answer proxy authentication challenge when making call  " revision="24">
+    Defect fixes:
+    DEF118608 Phone does not answer proxy authentication challenge when making call
+  </defect>
+  
+<defect number=" PDEF117335" title=" SIP Profile parameter KSIPDigestPassword must be write-only  " revision="23">
+    Defect fixes:
+    PDEF117335 SIP Profile parameter KSIPDigestPassword must be write-only
+  </defect>
+  
+  <defect number=" PDEF119071" title=" SipServer crashes with certain sequence of answers to INVITE  " revision="22">
+    Defect fixes:
+    PDEF119071 SipServer crashes with certain sequence of answers to INVITE
+	</defect>
+  
+  <defect number=" DEF117243" title=" Two SIP profiles, registering the second SIP profile fails  " revision="21">
+    Defect fixes:
+    DEF117243  Two SIP profiles, registering the second SIP profile fails
+  </defect>
+  
+ <defect number=" PDEF118401" title=" Incorrect state transition in SIP Connection Mgr after system state event  " revision="20">
+    Defect fixes:
+    PDEF118401 Incorrect state transition in SIP Connection Mgr after system state event
+  </defect>
+
+<defect number=" PDEF118452" title=" Klocwork issues, NULL pointer can be used in release build mm-protocols_sip_com  " revision="19">
+    Defect fixes:
+    PDEF118452 Klocwork issues, NULL pointer can be used in release build mm-protocols_sip_com 
+  </defect>
+
+<defect number=" DEF116133" title=" DEF116133  Cloning empty sdp document crashes " revision="18">
+    Defect fixes:
+    DEF116133 Cloning empty sdp document crashes
+  </defect>
+
+<defect number=" PDEF115951" title=" SIP should accept Allow-header even if it ends with a comma (Allow: INVITE,)  " revision="17">
+    Defect fixes:
+    PDEF115951 SIP should accept Allow-header even if it ends with a comma (Allow: INVITE,)  
+  </defect>
+
+<defect number=" DEF115781" title=" GPRS connection not dropped when roaming from WLAN to GPRS to WLAN " revision="16">
+    Defect fixes:
+    DEF115781 GPRS connection not dropped when roaming from WLAN to GPRS to WLAN 
+  </defect>
+
+<defect number=" DEF115806" title=" Phone doesn't register through other APs in SNAP if fails with first AP " revision="15">
+    Defect fixes:
+    DEF115806 Phone doesn't register through other APs in SNAP if fails with first AP 
+  </defect>
+
+<defect number="PDEF115370" title=" Accept-Encoding-header with an empty value is rejected " revision="14">
+    Defect fixes:
+     PDEF115370 Accept-Encoding-header with an empty value is rejected 
+     PDEF115371  Profile gets unregistered, if no answer to PUBLISH or SUBSCRIBE
+     PDEF115372  Handling of 200 Ok for REGISTER from Ericsson IMS failed
+  </defect>
+
+<defect number="PDEF114883" title=" Backup/restore from PC suite not working " revision="13">
+    Defect fixes:
+     PDEF114883 Backup/restore from PC suite not working 
+     DEF113041 WLAN not disconnected when disconnecting from Broadvoice SIP service 
+  </defect>
+
+<defect number="DEF112885" title=" SIP profile registration status not up-to-date after roaming between APs " revision="12">
+    Defect fixes:
+     DEF112885 SIP profile registration status not up-to-date after roaming   
+     between APs 
+     DEF112603 Setting IP Differentiated Services Field changes the source port    
+     of SIP messages 
+  </defect>
+
+<defect number="DEF112830" title=" Enabling SIP profile with a SNAP works only once " revision="11">
+    Defect fixes:
+    DEF112830 Enabling SIP profile with a SNAP works only once 
+  </defect>
+
+  <defect number="DEF112756" title="SIP stack and SIP Client Resolver central repositories are not backed up" revision="10">
+    Defect fixes:
+    DEF112756 SIP stack and SIP Client Resolver central repositories are not backed up
+  </defect>
+
+  <defect number="DEF111902" title="PDP Context is not dropped when switching from 'Always on' to 'When needed'" revision="09">
+    Defect fixes:
+    DEF111902 PDP Context is not dropped when switching from 'Always on' to 'When needed'
+  </defect>
+  
+  <defect number="DEF110809" title="ALR does not work when no IAPs available in SNAP" revision="08">
+    Defect fixes:
+    DEF110809 ALR does not work when no IAPs available in SNAP
+	DEF111014 SIP parameter transport=TLS to some SIPS-URIs
+	DEF111868 Filiename policy warnings in SIP HL APIs and RTP components
+  </defect>
+  
+  <defect number="DEF110636" title="Warnings generated with checksource build" revision="07">
+    Defect fixes:
+    DEF110636 Warnings generated with checksource build
+	DEF110816 Phone places "nat_traversal_required" to From field on MO call
+	DEF110810 SIP stack allows sips uri to be set to Contact header while tls is not being use
+  </defect>
+  
+  <preq number="1737" title="SIP enhancement phase 3" revision="006">
+  Added Note for the following preq:
+  Oghma,GT0362,MS3.3,DS.676 SIP enhancements phase 3
+  </preq>
+  
+  <preq number="1737" title="SIP enhancement phase 3" revision="005">
+  Added Note for the following preq:
+  The Preq is 1737 MS3.2 submission
+  </preq>
+  
+  <defect number="DEF108003" title="Warnings generated with checksource build" revision="004">
+  Added Note for the following defects:
+	DEF108003 Warnings generated with checksource build
+  </defect>
+  
+  <defect number="PDEF106564" title="Missing IM Tags in SIP Component" revision="003">
+    Added Note for the following defects:
+    PDEF106564 Missing IM Tags in SIP Component
+    DEF106980 Upgrade the handling of String Tables
+  </defect>
+
+  <defect number="DEF106980" title="Upgrade the handling of String Tables" revision="002">
+    Added Note for the following defects:
+    PDEF106564 Missing IM Tags in SIP Component
+    DEF106980 Upgrade the handling of String Tables
+  </defect>
+
+  <defect number="DEF106289" title="Reference Doumentation for SIP_COM component missing in SOSlib" revision="001">
+    Reference Doumentation for SIP_COM component missing in SOSlib
+  </defect>
+</relnotes>

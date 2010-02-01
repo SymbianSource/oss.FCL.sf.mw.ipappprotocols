@@ -1,0 +1,323 @@
+EXPORTS
+	_ZN10CSIPDialog10ConnectionEv @ 1 NONAME
+	_ZN11CSIPRefresh10TerminateLEP19CSIPMessageElements @ 2 NONAME
+	_ZN11CSIPRefresh12SetIntervalLEj @ 3 NONAME
+	_ZN11CSIPRefresh4NewLEv @ 4 NONAME
+	_ZN11CSIPRefresh5NewLCEv @ 5 NONAME
+	_ZN11CSIPRefresh7UpdateLEP19CSIPMessageElements @ 6 NONAME
+	_ZN11CSIPRefreshD0Ev @ 7 NONAME
+	_ZN11CSIPRefreshD1Ev @ 8 NONAME
+	_ZN11CSIPRefreshD2Ev @ 9 NONAME
+	_ZN14CSIPConnection12SendRequestLEP19CSIPRequestElements @ 10 NONAME
+	_ZN14CSIPConnection12SendRequestLEP19CSIPRequestElementsR11CSIPRefresh @ 11 NONAME
+	_ZN14CSIPConnection12SendRequestLEP19CSIPRequestElementsRK23MSIPRegistrationContext @ 12 NONAME
+	_ZN14CSIPConnection12SendRequestLEP19CSIPRequestElementsRK23MSIPRegistrationContextR11CSIPRefresh @ 13 NONAME
+	_ZN14CSIPConnection19FetchRegistrationsLEP19CSIPRequestElements @ 14 NONAME
+	_ZN14CSIPConnection3SIPEv @ 15 NONAME
+	_ZN14CSIPConnection4NewLER4CSIPmR22MSIPConnectionObserver @ 16 NONAME
+	_ZN14CSIPConnection5NewLCER4CSIPmR22MSIPConnectionObserver @ 17 NONAME
+	_ZN14CSIPConnectionD0Ev @ 18 NONAME
+	_ZN14CSIPConnectionD1Ev @ 19 NONAME
+	_ZN14CSIPConnectionD2Ev @ 20 NONAME
+	_ZN14CSIPHttpDigest11SetObserverER31MSIPHttpDigestChallengeObserver @ 21 NONAME
+	_ZN14CSIPHttpDigest15IgnoreChallengeERK6TDesC8 @ 22 NONAME
+	_ZN14CSIPHttpDigest15SetCredentialsLERK6TDesC8S2_S2_ @ 23 NONAME
+	_ZN14CSIPHttpDigest15SetCredentialsLERK6TDesC8S2_S2_S2_ @ 24 NONAME
+	_ZN14CSIPHttpDigest17RemoveCredentialsERK6TDesC8 @ 25 NONAME
+	_ZN14CSIPHttpDigest17RemoveCredentialsEv @ 26 NONAME
+	_ZN14CSIPHttpDigest4NewLER4CSIPR31MSIPHttpDigestChallengeObserver @ 27 NONAME
+	_ZN14CSIPHttpDigest5NewLCER4CSIPR31MSIPHttpDigestChallengeObserver @ 28 NONAME
+	_ZN14CSIPHttpDigestD0Ev @ 29 NONAME
+	_ZN14CSIPHttpDigestD1Ev @ 30 NONAME
+	_ZN14CSIPHttpDigestD2Ev @ 31 NONAME
+	_ZN18CSIPInternalStates14GetDialogStateERK10CSIPDialogRNS_6TStateE @ 32 NONAME
+	_ZN18CSIPInternalStates19GetTransactionStateERK19CSIPTransactionBaseRNS_6TStateE @ 33 NONAME
+	_ZN18CSIPInternalStates23SigCompCompartmentCountEv @ 34 NONAME
+	_ZN18CSIPInternalStates4NewLEv @ 35 NONAME
+	_ZN18CSIPInternalStates5NewLCEv @ 36 NONAME
+	_ZN18CSIPInternalStatesD0Ev @ 37 NONAME
+	_ZN18CSIPInternalStatesD1Ev @ 38 NONAME
+	_ZN18CSIPInternalStatesD2Ev @ 39 NONAME
+	_ZN19CSIPDialogAssocBase28SendNonTargetRefreshRequestLE8RStringFP19CSIPMessageElements @ 40 NONAME
+	_ZN19CSIPDialogAssocBase6DialogEv @ 41 NONAME
+	_ZN19CSIPMessageElements11SetContentLEP6HBufC8P21CSIPContentTypeHeader @ 42 NONAME
+	_ZN19CSIPMessageElements14ExtractContentEv @ 43 NONAME
+	_ZN19CSIPMessageElements15SetUserHeadersLER13RPointerArrayI14CSIPHeaderBaseE @ 44 NONAME
+	_ZN19CSIPMessageElements4NewLEv @ 45 NONAME
+	_ZN19CSIPMessageElements5NewLCEv @ 46 NONAME
+	_ZN19CSIPMessageElementsD0Ev @ 47 NONAME
+	_ZN19CSIPMessageElementsD1Ev @ 48 NONAME
+	_ZN19CSIPMessageElementsD2Ev @ 49 NONAME
+	_ZN19CSIPRequestElements10SetMethodLE8RStringF @ 50 NONAME
+	_ZN19CSIPRequestElements12SetToHeaderLEP12CSIPToHeader @ 51 NONAME
+	_ZN19CSIPRequestElements13SetRemoteUriLEP5CUri8 @ 52 NONAME
+	_ZN19CSIPRequestElements14SetFromHeaderLEP14CSIPFromHeader @ 53 NONAME
+	_ZN19CSIPRequestElements15MessageElementsEv @ 54 NONAME
+	_ZN19CSIPRequestElements4NewLEP5CUri8 @ 55 NONAME
+	_ZN19CSIPRequestElements5NewLCEP5CUri8 @ 56 NONAME
+	_ZN19CSIPRequestElementsD0Ev @ 57 NONAME
+	_ZN19CSIPRequestElementsD1Ev @ 58 NONAME
+	_ZN19CSIPRequestElementsD2Ev @ 59 NONAME
+	_ZN19CSIPTransactionBase6StateLEv @ 60 NONAME
+	_ZN20CSIPReferDialogAssoc10SendReferLEP19CSIPMessageElements @ 61 NONAME
+	_ZN20CSIPReferDialogAssoc4NewLER10CSIPDialogP17CSIPReferToHeader @ 62 NONAME
+	_ZN20CSIPReferDialogAssoc4NewLER14CSIPConnectionP14CSIPFromHeaderP5CUri8P17CSIPReferToHeaderP12CSIPToHeaderP17CSIPContactHeader @ 63 NONAME
+	_ZN20CSIPReferDialogAssoc4NewLER14CSIPConnectionP5CUri8RK23MSIPRegistrationContextP17CSIPReferToHeaderP14CSIPFromHeaderP12CSIPToHeaderP17CSIPContactHeader @ 64 NONAME
+	_ZN20CSIPReferDialogAssoc5NewLCER10CSIPDialogP17CSIPReferToHeader @ 65 NONAME
+	_ZN20CSIPReferDialogAssoc5NewLCER14CSIPConnectionP14CSIPFromHeaderP5CUri8P17CSIPReferToHeaderP12CSIPToHeaderP17CSIPContactHeader @ 66 NONAME
+	_ZN20CSIPReferDialogAssoc5NewLCER14CSIPConnectionP5CUri8RK23MSIPRegistrationContextP17CSIPReferToHeaderP14CSIPFromHeaderP12CSIPToHeaderP17CSIPContactHeader @ 67 NONAME
+	_ZN20CSIPReferDialogAssocD0Ev @ 68 NONAME
+	_ZN20CSIPReferDialogAssocD1Ev @ 69 NONAME
+	_ZN20CSIPReferDialogAssocD2Ev @ 70 NONAME
+	_ZN20CSIPResponseElements14SetStatusCodeLEj @ 71 NONAME
+	_ZN20CSIPResponseElements15MessageElementsEv @ 72 NONAME
+	_ZN20CSIPResponseElements16SetReasonPhraseLE8RStringF @ 73 NONAME
+	_ZN20CSIPResponseElements4NewLEj8RStringF @ 74 NONAME
+	_ZN20CSIPResponseElements5NewLCEj8RStringF @ 75 NONAME
+	_ZN20CSIPResponseElementsD0Ev @ 76 NONAME
+	_ZN20CSIPResponseElementsD1Ev @ 77 NONAME
+	_ZN20CSIPResponseElementsD2Ev @ 78 NONAME
+	_ZN21CSIPClientTransaction7CancelLEv @ 79 NONAME
+	_ZN21CSIPInviteDialogAssoc10SendPrackLEP19CSIPMessageElements @ 80 NONAME
+	_ZN21CSIPInviteDialogAssoc11SendInviteLEP19CSIPMessageElements @ 81 NONAME
+	_ZN21CSIPInviteDialogAssoc11SendUpdateLEP19CSIPMessageElements @ 82 NONAME
+	_ZN21CSIPInviteDialogAssoc4NewLER10CSIPDialog @ 83 NONAME
+	_ZN21CSIPInviteDialogAssoc4NewLER14CSIPConnectionP14CSIPFromHeaderP5CUri8P12CSIPToHeaderP17CSIPContactHeader @ 84 NONAME
+	_ZN21CSIPInviteDialogAssoc4NewLER14CSIPConnectionP5CUri8RK23MSIPRegistrationContextP14CSIPFromHeaderP12CSIPToHeaderP17CSIPContactHeader @ 85 NONAME
+	_ZN21CSIPInviteDialogAssoc4NewLER21CSIPServerTransaction @ 86 NONAME
+	_ZN21CSIPInviteDialogAssoc5NewLCER10CSIPDialog @ 87 NONAME
+	_ZN21CSIPInviteDialogAssoc5NewLCER14CSIPConnectionP14CSIPFromHeaderP5CUri8P12CSIPToHeaderP17CSIPContactHeader @ 88 NONAME
+	_ZN21CSIPInviteDialogAssoc5NewLCER14CSIPConnectionP5CUri8RK23MSIPRegistrationContextP14CSIPFromHeaderP12CSIPToHeaderP17CSIPContactHeader @ 89 NONAME
+	_ZN21CSIPInviteDialogAssoc5NewLCER21CSIPServerTransaction @ 90 NONAME
+	_ZN21CSIPInviteDialogAssoc8SendAckLERK21CSIPClientTransactionP19CSIPMessageElements @ 91 NONAME
+	_ZN21CSIPInviteDialogAssoc8SendByeLEP19CSIPMessageElements @ 92 NONAME
+	_ZN21CSIPInviteDialogAssocD0Ev @ 93 NONAME
+	_ZN21CSIPInviteDialogAssocD1Ev @ 94 NONAME
+	_ZN21CSIPInviteDialogAssocD2Ev @ 95 NONAME
+	_ZN21CSIPNotifyDialogAssoc11SendNotifyLEP19CSIPMessageElements @ 96 NONAME
+	_ZN21CSIPNotifyDialogAssoc17SubscriptionStateEv @ 97 NONAME
+	_ZN21CSIPNotifyDialogAssoc4NewLER21CSIPServerTransactionP15CSIPEventHeaderP27CSIPSubscriptionStateHeader @ 98 NONAME
+	_ZN21CSIPNotifyDialogAssoc5NewLCER21CSIPServerTransactionP15CSIPEventHeaderP27CSIPSubscriptionStateHeader @ 99 NONAME
+	_ZN21CSIPNotifyDialogAssocD0Ev @ 100 NONAME
+	_ZN21CSIPNotifyDialogAssocD1Ev @ 101 NONAME
+	_ZN21CSIPNotifyDialogAssocD2Ev @ 102 NONAME
+	_ZN21CSIPServerTransaction13SendResponseLEP20CSIPResponseElements @ 103 NONAME
+	_ZN21CSIPServerTransactionD0Ev @ 104 NONAME
+	_ZN21CSIPServerTransactionD1Ev @ 105 NONAME
+	_ZN21CSIPServerTransactionD2Ev @ 106 NONAME
+	_ZN23CSIPRegistrationBinding10ConnectionEv @ 107 NONAME
+	_ZN23CSIPRegistrationBinding10SIPRefreshEv @ 108 NONAME
+	_ZN23CSIPRegistrationBinding11DeregisterLEP19CSIPMessageElements @ 109 NONAME
+	_ZN23CSIPRegistrationBinding13ContactHeaderEv @ 110 NONAME
+	_ZN23CSIPRegistrationBinding17SetOutboundProxyLEP15CSIPRouteHeader @ 111 NONAME
+	_ZN23CSIPRegistrationBinding4NewLER14CSIPConnectionP12CSIPToHeaderP17CSIPContactHeaderP11CSIPRefreshP15CSIPRouteHeaderP5CUri8P14CSIPFromHeader @ 112 NONAME
+	_ZN23CSIPRegistrationBinding5NewLCER14CSIPConnectionP12CSIPToHeaderP17CSIPContactHeaderP11CSIPRefreshP15CSIPRouteHeaderP5CUri8P14CSIPFromHeader @ 113 NONAME
+	_ZN23CSIPRegistrationBinding7UpdateLEP19CSIPMessageElements @ 114 NONAME
+	_ZN23CSIPRegistrationBinding7UpdateLEjP19CSIPMessageElements @ 115 NONAME
+	_ZN23CSIPRegistrationBinding9RegisterLEP19CSIPMessageElements @ 116 NONAME
+	_ZN24CSIPSubscribeDialogAssoc14SendSubscribeLEP19CSIPMessageElementsP11CSIPRefresh @ 117 NONAME
+	_ZN24CSIPSubscribeDialogAssoc16SendUnsubscribeLEP19CSIPMessageElements @ 118 NONAME
+	_ZN24CSIPSubscribeDialogAssoc4NewLER10CSIPDialogP15CSIPEventHeader @ 119 NONAME
+	_ZN24CSIPSubscribeDialogAssoc4NewLER14CSIPConnectionP14CSIPFromHeaderP5CUri8P15CSIPEventHeaderP12CSIPToHeaderP17CSIPContactHeader @ 120 NONAME
+	_ZN24CSIPSubscribeDialogAssoc4NewLER14CSIPConnectionP5CUri8RK23MSIPRegistrationContextP15CSIPEventHeaderP14CSIPFromHeaderP12CSIPToHeaderP17CSIPContactHeader @ 121 NONAME
+	_ZN24CSIPSubscribeDialogAssoc5NewLCER10CSIPDialogP15CSIPEventHeader @ 122 NONAME
+	_ZN24CSIPSubscribeDialogAssoc5NewLCER14CSIPConnectionP14CSIPFromHeaderP5CUri8P15CSIPEventHeaderP12CSIPToHeaderP17CSIPContactHeader @ 123 NONAME
+	_ZN24CSIPSubscribeDialogAssoc5NewLCER14CSIPConnectionP5CUri8RK23MSIPRegistrationContextP15CSIPEventHeaderP14CSIPFromHeaderP12CSIPToHeaderP17CSIPContactHeader @ 124 NONAME
+	_ZN24CSIPSubscribeDialogAssoc7UpdateLEP19CSIPMessageElements @ 125 NONAME
+	_ZN24CSIPSubscribeDialogAssocD0Ev @ 126 NONAME
+	_ZN24CSIPSubscribeDialogAssocD1Ev @ 127 NONAME
+	_ZN24CSIPSubscribeDialogAssocD2Ev @ 128 NONAME
+	_ZN4CSIP28NegotiatedSecurityMechanismLERK6TDesC8 @ 129 NONAME
+	_ZN4CSIP4NewLERK4TUidR12MSIPObserver @ 130 NONAME
+	_ZN4CSIP5NewLCERK4TUidR12MSIPObserver @ 131 NONAME
+	_ZN4CSIPD0Ev @ 132 NONAME
+	_ZN4CSIPD1Ev @ 133 NONAME
+	_ZN4CSIPD2Ev @ 134 NONAME
+	_ZNK10CSIPDialog10ConnectionEv @ 135 NONAME
+	_ZNK10CSIPDialog10FromHeaderEv @ 136 NONAME
+	_ZNK10CSIPDialog12IsAssociatedERK19CSIPDialogAssocBase @ 137 NONAME
+	_ZNK10CSIPDialog19RegistrationContextEv @ 138 NONAME
+	_ZNK10CSIPDialog21SIPDialogAssociationsEv @ 139 NONAME
+	_ZNK10CSIPDialog5StateEv @ 140 NONAME
+	_ZNK10CSIPDialog7CallIdLEv @ 141 NONAME
+	_ZNK10CSIPDialog8ToHeaderEv @ 142 NONAME
+	_ZNK10CSIPDialog9RemoteURIEv @ 143 NONAME
+	_ZNK10CSIPDialogeqERKS_ @ 144 NONAME
+	_ZNK11CSIPRefresh12IsStandAloneEv @ 145 NONAME
+	_ZNK11CSIPRefresh14SIPTransactionEv @ 146 NONAME
+	_ZNK11CSIPRefresh5StateEv @ 147 NONAME
+	_ZNK11CSIPRefresh9IntervalLEv @ 148 NONAME
+	_ZNK11CSIPRefresheqERKS_ @ 149 NONAME
+	_ZNK14CSIPConnection3SIPEv @ 150 NONAME
+	_ZNK14CSIPConnection5IapIdEv @ 151 NONAME
+	_ZNK14CSIPConnection5StateEv @ 152 NONAME
+	_ZNK19CSIPDialogAssocBase25IsNonTargetRefreshRequestE8RStringF @ 153 NONAME
+	_ZNK19CSIPDialogAssocBase4TypeEv @ 154 NONAME
+	_ZNK19CSIPDialogAssocBase6DialogEv @ 155 NONAME
+	_ZNK19CSIPMessageElements11ContentTypeEv @ 156 NONAME
+	_ZNK19CSIPMessageElements11UserHeadersEv @ 157 NONAME
+	_ZNK19CSIPMessageElements7ContentEv @ 158 NONAME
+	_ZNK19CSIPRequestElements10FromHeaderEv @ 159 NONAME
+	_ZNK19CSIPRequestElements15MessageElementsEv @ 160 NONAME
+	_ZNK19CSIPRequestElements6MethodEv @ 161 NONAME
+	_ZNK19CSIPRequestElements8ToHeaderEv @ 162 NONAME
+	_ZNK19CSIPRequestElements9RemoteUriEv @ 163 NONAME
+	_ZNK19CSIPTransactionBase22IsSIPClientTransactionEv @ 164 NONAME
+	_ZNK19CSIPTransactionBase4TypeEv @ 165 NONAME
+	_ZNK19CSIPTransactionBaseeqERKS_ @ 166 NONAME
+	_ZNK20CSIPReferDialogAssoc7ReferToEv @ 167 NONAME
+	_ZNK20CSIPResponseElements10CSeqHeaderEv @ 168 NONAME
+	_ZNK20CSIPResponseElements10FromHeaderEv @ 169 NONAME
+	_ZNK20CSIPResponseElements10StatusCodeEv @ 170 NONAME
+	_ZNK20CSIPResponseElements12ReasonPhraseEv @ 171 NONAME
+	_ZNK20CSIPResponseElements15MessageElementsEv @ 172 NONAME
+	_ZNK20CSIPResponseElements8ToHeaderEv @ 173 NONAME
+	_ZNK21CSIPClientTransaction13CancelAllowedEv @ 174 NONAME
+	_ZNK21CSIPClientTransaction16ResponseElementsEv @ 175 NONAME
+	_ZNK21CSIPClientTransaction7RefreshEv @ 176 NONAME
+	_ZNK21CSIPNotifyDialogAssoc17SubscriptionStateEv @ 177 NONAME
+	_ZNK21CSIPNotifyDialogAssoc5EventEv @ 178 NONAME
+	_ZNK21CSIPServerTransaction15RequestElementsEv @ 179 NONAME
+	_ZNK21CSIPServerTransaction15ResponseAllowedEv @ 180 NONAME
+	_ZNK23CSIPRegistrationBinding10ConnectionEv @ 181 NONAME
+	_ZNK23CSIPRegistrationBinding10SIPRefreshEv @ 182 NONAME
+	_ZNK23CSIPRegistrationBinding13ContactHeaderEv @ 183 NONAME
+	_ZNK23CSIPRegistrationBinding13OutboundProxyEv @ 184 NONAME
+	_ZNK23CSIPRegistrationBinding15IsContextActiveEv @ 185 NONAME
+	_ZNK23CSIPRegistrationBinding3AorEv @ 186 NONAME
+	_ZNK23CSIPRegistrationBinding9ContextIdEv @ 187 NONAME
+	_ZNK23CSIPRegistrationBindingeqERKS_ @ 188 NONAME
+	_ZNK24CSIPSubscribeDialogAssoc10SIPRefreshEv @ 189 NONAME
+	_ZNK24CSIPSubscribeDialogAssoc5EventEv @ 190 NONAME
+	_ZNK27CSIPInviteClientTransaction13CancelAllowedEv @ 191 NONAME
+	_ZNK4CSIP10ConnectionEm @ 192 NONAME
+	_ZNK4CSIP19IsSigCompSupportedLEv @ 193 NONAME
+	_ZNK4CSIP28SupportedSecurityMechanismsLEv @ 194 NONAME
+	_ZTI10CSIPClient @ 195 NONAME ; #<TI>#
+	_ZTI10CSIPDialog @ 196 NONAME ; #<TI>#
+	_ZTI11CRegistered @ 197 NONAME ; #<TI>#
+	_ZTI11CSIPRefresh @ 198 NONAME ; #<TI>#
+	_ZTI12CDialogEarly @ 199 NONAME ; #<TI>#
+	_ZTI12CDialogState @ 200 NONAME ; #<TI>#
+	_ZTI12CRegistering @ 201 NONAME ; #<TI>#
+	_ZTI13CDialogTrying @ 202 NONAME ; #<TI>#
+	_ZTI13CSIPITCSender @ 203 NONAME ; #<TI>#
+	_ZTI13CUnregistered @ 204 NONAME ; #<TI>#
+	_ZTI14CSIPConnection @ 205 NONAME ; #<TI>#
+	_ZTI14CSIPHttpDigest @ 206 NONAME ; #<TI>#
+	_ZTI14CUnregistering @ 207 NONAME ; #<TI>#
+	_ZTI14RSIPConnection @ 208 NONAME ; #<TI>#
+	_ZTI16CDialogConfirmed @ 209 NONAME ; #<TI>#
+	_ZTI17CDialogTerminated @ 210 NONAME ; #<TI>#
+	_ZTI18CRegistrationState @ 211 NONAME ; #<TI>#
+	_ZTI18CSIPClientReceiver @ 212 NONAME ; #<TI>#
+	_ZTI18CSIPImplementation @ 213 NONAME ; #<TI>#
+	_ZTI18CSIPInternalStates @ 214 NONAME ; #<TI>#
+	_ZTI18CSIPResponseSender @ 215 NONAME ; #<TI>#
+	_ZTI19CConnectionCallback @ 216 NONAME ; #<TI>#
+	_ZTI19CPendingTransaction @ 217 NONAME ; #<TI>#
+	_ZTI19CSIPDialogAssocBase @ 218 NONAME ; #<TI>#
+	_ZTI19CSIPITCReceiverBase @ 219 NONAME ; #<TI>#
+	_ZTI19CSIPMessageElements @ 220 NONAME ; #<TI>#
+	_ZTI19CSIPRequestElements @ 221 NONAME ; #<TI>#
+	_ZTI19CSIPTransactionBase @ 222 NONAME ; #<TI>#
+	_ZTI20CSIPClientConnection @ 223 NONAME ; #<TI>#
+	_ZTI20CSIPReferDialogAssoc @ 224 NONAME ; #<TI>#
+	_ZTI20CSIPResponseElements @ 225 NONAME ; #<TI>#
+	_ZTI21CSIPClientTransaction @ 226 NONAME ; #<TI>#
+	_ZTI21CSIPInviteDialogAssoc @ 227 NONAME ; #<TI>#
+	_ZTI21CSIPNotifyDialogAssoc @ 228 NONAME ; #<TI>#
+	_ZTI21CSIPServerTransaction @ 229 NONAME ; #<TI>#
+	_ZTI23CSIPRegistrationBinding @ 230 NONAME ; #<TI>#
+	_ZTI24CSIPDialogImplementation @ 231 NONAME ; #<TI>#
+	_ZTI24CSIPDialogResponseSender @ 232 NONAME ; #<TI>#
+	_ZTI24CSIPSubscribeDialogAssoc @ 233 NONAME ; #<TI>#
+	_ZTI25CRegBindingImplementation @ 234 NONAME ; #<TI>#
+	_ZTI27CSIPInviteClientTransaction @ 235 NONAME ; #<TI>#
+	_ZTI28CSIPClientConnectionReceiver @ 236 NONAME ; #<TI>#
+	_ZTI28CSIPConnectionImplementation @ 237 NONAME ; #<TI>#
+	_ZTI29CSIPDialogAssocImplementation @ 238 NONAME ; #<TI>#
+	_ZTI4CSIP @ 239 NONAME ; #<TI>#
+	_ZTI4RSIP @ 240 NONAME ; #<TI>#
+	_ZTV10CSIPClient @ 241 NONAME ; #<VT>#
+	_ZTV10CSIPDialog @ 242 NONAME ; #<VT>#
+	_ZTV11CRegistered @ 243 NONAME ; #<VT>#
+	_ZTV11CSIPRefresh @ 244 NONAME ; #<VT>#
+	_ZTV12CDialogEarly @ 245 NONAME ; #<VT>#
+	_ZTV12CDialogState @ 246 NONAME ; #<VT>#
+	_ZTV12CRegistering @ 247 NONAME ; #<VT>#
+	_ZTV13CDialogTrying @ 248 NONAME ; #<VT>#
+	_ZTV13CSIPITCSender @ 249 NONAME ; #<VT>#
+	_ZTV13CUnregistered @ 250 NONAME ; #<VT>#
+	_ZTV14CSIPConnection @ 251 NONAME ; #<VT>#
+	_ZTV14CSIPHttpDigest @ 252 NONAME ; #<VT>#
+	_ZTV14CUnregistering @ 253 NONAME ; #<VT>#
+	_ZTV14RSIPConnection @ 254 NONAME ; #<VT>#
+	_ZTV16CDialogConfirmed @ 255 NONAME ; #<VT>#
+	_ZTV17CDialogTerminated @ 256 NONAME ; #<VT>#
+	_ZTV18CRegistrationState @ 257 NONAME ; #<VT>#
+	_ZTV18CSIPClientReceiver @ 258 NONAME ; #<VT>#
+	_ZTV18CSIPImplementation @ 259 NONAME ; #<VT>#
+	_ZTV18CSIPInternalStates @ 260 NONAME ; #<VT>#
+	_ZTV18CSIPResponseSender @ 261 NONAME ; #<VT>#
+	_ZTV19CConnectionCallback @ 262 NONAME ; #<VT>#
+	_ZTV19CPendingTransaction @ 263 NONAME ; #<VT>#
+	_ZTV19CSIPDialogAssocBase @ 264 NONAME ; #<VT>#
+	_ZTV19CSIPITCReceiverBase @ 265 NONAME ; #<VT>#
+	_ZTV19CSIPMessageElements @ 266 NONAME ; #<VT>#
+	_ZTV19CSIPRequestElements @ 267 NONAME ; #<VT>#
+	_ZTV19CSIPTransactionBase @ 268 NONAME ; #<VT>#
+	_ZTV20CSIPClientConnection @ 269 NONAME ; #<VT>#
+	_ZTV20CSIPReferDialogAssoc @ 270 NONAME ; #<VT>#
+	_ZTV20CSIPResponseElements @ 271 NONAME ; #<VT>#
+	_ZTV21CSIPClientTransaction @ 272 NONAME ; #<VT>#
+	_ZTV21CSIPInviteDialogAssoc @ 273 NONAME ; #<VT>#
+	_ZTV21CSIPNotifyDialogAssoc @ 274 NONAME ; #<VT>#
+	_ZTV21CSIPServerTransaction @ 275 NONAME ; #<VT>#
+	_ZTV23CSIPRegistrationBinding @ 276 NONAME ; #<VT>#
+	_ZTV24CSIPDialogImplementation @ 277 NONAME ; #<VT>#
+	_ZTV24CSIPDialogResponseSender @ 278 NONAME ; #<VT>#
+	_ZTV24CSIPSubscribeDialogAssoc @ 279 NONAME ; #<VT>#
+	_ZTV25CRegBindingImplementation @ 280 NONAME ; #<VT>#
+	_ZTV27CSIPInviteClientTransaction @ 281 NONAME ; #<VT>#
+	_ZTV28CSIPClientConnectionReceiver @ 282 NONAME ; #<VT>#
+	_ZTV28CSIPConnectionImplementation @ 283 NONAME ; #<VT>#
+	_ZTV29CSIPDialogAssocImplementation @ 284 NONAME ; #<VT>#
+	_ZTV4CSIP @ 285 NONAME ; #<VT>#
+	_ZTV4RSIP @ 286 NONAME ; #<VT>#
+	_ZThn4_NK23CSIPRegistrationBinding15IsContextActiveEv @ 287 NONAME ; #<thunk>#
+	_ZThn4_NK23CSIPRegistrationBinding9ContextIdEv @ 288 NONAME ; #<thunk>#
+	_ZN14CSIPConnection7SetOptLEjjRK6TDesC8 @ 289 NONAME
+	_ZN14CSIPConnection7SetOptLEjji @ 290 NONAME
+	_ZNK14CSIPConnection13GetLocalAddrLER9TInetAddr @ 291 NONAME
+	_ZNK19CSIPRequestElements10CSeqHeaderEv @ 292 NONAME
+	_ZN21CSIPInviteDialogAssoc4NewLER21CSIPServerTransactionRK23MSIPRegistrationContext @ 293 NONAME
+	_ZN21CSIPInviteDialogAssoc5NewLCER21CSIPServerTransactionRK23MSIPRegistrationContext @ 294 NONAME
+	_ZN21CSIPNotifyDialogAssoc4NewLER21CSIPServerTransactionRK23MSIPRegistrationContextP15CSIPEventHeaderP27CSIPSubscriptionStateHeader @ 295 NONAME
+	_ZN21CSIPNotifyDialogAssoc5NewLCER21CSIPServerTransactionRK23MSIPRegistrationContextP15CSIPEventHeaderP27CSIPSubscriptionStateHeader @ 296 NONAME
+	_ZN14CSIPHttpDigest11SetObserverER32MSIPHttpDigestChallengeObserver2 @ 297 NONAME
+	_ZN14CSIPHttpDigest15IgnoreChallengeERK11CSIPRefreshRK6TDesC8 @ 298 NONAME
+	_ZN14CSIPHttpDigest15IgnoreChallengeERK21CSIPClientTransactionRK6TDesC8 @ 299 NONAME
+	_ZN14CSIPHttpDigest15SetCredentialsLERK11CSIPRefreshRK6TDesC8S5_S5_S5_ @ 300 NONAME
+	_ZN14CSIPHttpDigest15SetCredentialsLERK21CSIPClientTransactionRK6TDesC8S5_S5_S5_ @ 301 NONAME
+	_ZN14CSIPHttpDigest4NewLER4CSIPR32MSIPHttpDigestChallengeObserver2 @ 302 NONAME
+	_ZN14CSIPHttpDigest5NewLCER4CSIPR32MSIPHttpDigestChallengeObserver2 @ 303 NONAME
+	_ZNK23CSIPRegistrationBinding17RegisteredContactEv @ 304 NONAME
+	_ZN4CSIP20SetSecurityHandlingLEi @ 305 NONAME
+	_ZNK4CSIP25IsSecurityHandlingEnabledEv @ 306 NONAME
+	_ZN10CSIPDialog23ReuseInitialRequestDataEv @ 307 NONAME
+	_ZNK14CSIPConnection17RefreshConnectionEv @ 308 NONAME
+	_ZN21CSIPClientTransactionD0Ev @ 309 NONAME
+	_ZN21CSIPClientTransactionD1Ev @ 310 NONAME
+	_ZN21CSIPClientTransactionD2Ev @ 311 NONAME
+	_ZN23CSIPRegistrationBindingD0Ev @ 312 NONAME
+	_ZN23CSIPRegistrationBindingD1Ev @ 313 NONAME
+	_ZN23CSIPRegistrationBindingD2Ev @ 314 NONAME
+	_ZN27CSIPInviteClientTransactionD0Ev @ 315 NONAME
+	_ZN27CSIPInviteClientTransactionD1Ev @ 316 NONAME
+	_ZN27CSIPInviteClientTransactionD2Ev @ 317 NONAME
+	_ZThn4_N23CSIPRegistrationBindingD0Ev @ 318 NONAME
+	_ZThn4_N23CSIPRegistrationBindingD1Ev @ 319 NONAME
+	_ZN23CSIPRegistrationBinding11SetPropertyEmi @ 320 NONAME
+	_ZNK14CSIPConnection19GetConnectionErrorLERi @ 321 NONAME
+

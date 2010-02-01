@@ -1,0 +1,5 @@
+EXPORTS
+	??1CSIPClientResolver@@UAE@XZ @ 1 NONAME ; CSIPClientResolver::~CSIPClientResolver(void)
+	?FindUidL@CSIPClientResolver@@QAEPAVCSIPResponse@@ABVCSIPRequest@@AAV?$RArray@VTSipClient@@@@@Z @ 2 NONAME ; class CSIPResponse * CSIPClientResolver::FindUidL(class CSIPRequest const &, class RArray<class TSipClient> &)
+	?NewL@CSIPClientResolver@@SAPAV1@XZ @ 3 NONAME ; class CSIPClientResolver * CSIPClientResolver::NewL(void)
+

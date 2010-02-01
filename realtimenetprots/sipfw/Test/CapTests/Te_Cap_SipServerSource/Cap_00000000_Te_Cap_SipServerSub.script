@@ -1,0 +1,272 @@
+//
+// Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+//
+
+LOAD_SUITE Cap_Te_Cap_SipServer_sc
+//
+PRINT Run Te_Cap_SipServer at 00000000
+PRINT 
+//
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcTerminateDialog1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcTerminateRefresh1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcTerminateDialogRefresh1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcTerminateRegistration1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcSupportedSecurityMechanisms1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcNegotiatedSecurityMechanism1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcIsSigCompSupported1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcGetTransactionState1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcGetDialogState1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcGetCompartmentCount1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcGetFromHeader1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcGetRefreshInterval1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcGetCallIDHeader1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcGetLocalTag1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcOutboundProxy1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcGetRegisteredContact1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcGetLocalAddr1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcSetOutboundProxy1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcRemoveOutboundProxy1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcSetRefreshInterval1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcSetHttpDigestObserver1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcSetCredentials1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcRemoveCredentials1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcIgnoreChallenge1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcSetSecurityHandling1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcResetDialogState1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcSetAppUid1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcOpenSubSession1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcCloseSubSession1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcRegister1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcRegisterAndSetOutboundProxy1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcUpdateRegistration1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcUnRegister1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcFetchRegistrations1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcSendRequest1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcSendRequestAndUpdateRefresh1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcSendRequestAndTerminateRefresh1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcSendResponse1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcSendCancel1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcSendResponseAndCreateDialog1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcSendResponseInDialog1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcSendRequestAndCreateDialog1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcSendRequestInDialog1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CSpItcSendRequestInDialogAndUpdateRefresh1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+//HEAP_MARK
+//RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcClientReadyToReceive1Step
+//TEST_COMPLETE
+//HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcClientReceiveSipMessage1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcClientCancelReceive1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcConnectionReadyToReceive1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcConnectionReceiveSipMessage1Step
+TEST_COMPLETE
+HEAP_MARKEND
+
+HEAP_MARK
+RUN_TEST_STEP 100 Cap_Te_Cap_SipServer_sc CESipItcConnectionCancelReceive1Step
+TEST_COMPLETE
+HEAP_MARKEND
+UNLOAD

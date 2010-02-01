@@ -1,0 +1,107 @@
+/*
+* Copyright (c) 2005 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description:  
+*     Contains definitions SIP Settings Plugin.
+*
+*/
+
+
+#ifndef GSSIPSETTINGSPLUGIN_HRH
+#define GSSIPSETTINGSPLUGIN_HRH
+
+// Data query max length
+#define KGSMaxDataLength 21
+
+// Compression choices
+enum TGSCompressionsIDs
+    {
+    EGSComprNo = 0,
+    EGSComprYes
+    };
+
+// Registration mode choices
+enum TGSRegistrationMode
+    {
+    EGSWhenNeeded = 0,
+    EGSAlwaysOn
+    };
+
+// Security negotiation choices
+enum TGSSecurityNegotiation
+    {
+    EGSSecurityOff = 0,
+    EGSSecurityOn    
+    };
+
+// Loose routing choices
+enum TGSLooseRouting
+    {
+    EGSLooseRoutingOff = 0,
+    EGSLooseRoutingOn    
+    };
+
+// Transport protocols
+enum TGSTransportProtocol
+    {
+    EGSTranspProtocolAuto = 0,
+    EGSTranspProtocolUDP,
+    EGSTranspProtocolTCP
+    };
+    
+enum TGSSIPSettingsMenuCommands
+	{
+	EGSCmdAppNew = 0,
+	EGSCmdAppEdit,
+	EGSCmdAppDelete,
+	EGSCmdAppDefault,
+	EGSCmdAppNewDefault,
+	EGSCmdAppNewExist,
+	EGSCmdAppChange,
+	EGSCmdUpdateList,
+	EGSCmdProfileDeleted,
+	EGSCmdAppShutterExit,
+	EGSMSKCmdAppChange
+	};
+
+// List items of SIP profile setting view
+enum TGSProfileSettingItemListItems
+    {
+    EGSItemProviderName = 0,
+    EGSItemServiceProfile,
+    EGSItemDefaultDest,
+    EGSItemDefaultAP,
+    EGSItemUsername,
+    EGSItemCompression,
+    EGSItemRegistration,
+    EGSItemSecurity,
+    EGSItemProxyServer,
+    EGSItemRegistrarServer
+    };
+
+// List items of proxy & registrar server setting views
+enum TGSServerSettingItemListItems
+    {
+    EGSServerItemAddr = 0,
+    EGSServerItemRealm,
+    EGSServerItemUsername,
+    EGSServerItemPassword,
+    EGSServerItemRouting,
+    EGSServerItemTransportProtocol,    
+    EGSServerItemPort,
+    EGSRegisterServerItemPort = 5
+    };
+
+
+#endif      //GSPDATAPLUGIN_HRH
+//End of File

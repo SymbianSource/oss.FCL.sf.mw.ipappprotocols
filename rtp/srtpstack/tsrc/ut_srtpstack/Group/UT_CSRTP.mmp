@@ -1,0 +1,105 @@
+/*
+* Copyright (c) 2004 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description:  
+*
+*/
+
+
+#include <platform_paths.hrh>
+#include <eunitcaps.h>
+
+TARGET          ut_csrtp.dll
+TARGETTYPE      dll
+TARGETPATH      /digiaeunit/tests
+UID             0x1000af5a 0x01700000
+
+MACRO           EUNIT_TESTING
+//add this manually to CW compiler flags when debug statements
+//are not wanted to be part of the code coverage
+MACRO           SRTP_UNIT_TEST_COVERAGE
+
+
+SOURCEPATH              ../src
+SOURCE                  UT_CSRTPDllMain.cpp
+SOURCE                  UT_CSRTPStream.cpp
+SOURCE              UT_CSRTPSession.cpp // Added by EUnit Wizard
+SOURCE              UT_CSRTPStreamIn.cpp // Added by EUnit Wizard
+SOURCE              UT_CSRTPStreamOut.cpp // Added by EUnit Wizard
+SOURCE              UT_SRTPUtils.cpp // Added by EUnit Wizard
+SOURCE              UT_SRTPAuthentication_HMAC_SHA1.cpp // Added by EUnit Wizard
+SOURCE              UT_SRTPAuthentication_NULL.cpp // Added by EUnit Wizard
+SOURCE              UT_CSRTPCryptoHandler.cpp // Added by EUnit Wizard
+SOURCE              UT_CSRTPCryptoHandlerSRTCP.cpp // Added by EUnit Wizard
+SOURCE              UT_CSRTPCryptoHandlerSRTP.cpp // Added by EUnit Wizard
+SOURCE              UT_CSRTPCipherAESCM128.cpp // Added by EUnit Wizard
+SOURCE              UT_CSRTPCipherNULL.cpp // Added by EUnit Wizard
+SOURCE              UT_CSRTPKeyDerivation_AESCM128.cpp // Added by EUnit Wizard
+SOURCE              UT_CSRTPCryptoContext.cpp // Added by EUnit Wizard
+SOURCE              UT_CSRTPMasterKey.cpp // Added by EUnit Wizard
+SOURCE              UT_CSrtpAESCTRCrypto.cpp // Added by EUnit Wizard  
+SOURCE              UT_CSRTPMasterSalt.cpp // Added by EUnit Wizard 
+SOURCE                  UT_CSrtpAuthentication_RCC.cpp
+// Sources needed by the test  
+
+SOURCEPATH              ../../../src
+SOURCE              srtpstream.cpp
+SOURCE              srtpsession.cpp // Added by EUnit Wizard
+SOURCE              srtpstreamin.cpp // Added by EUnit Wizard
+SOURCE              srtpstreamout.cpp // Added by EUnit Wizard
+SOURCE              srtputils.cpp // Added by EUnit Wizard
+SOURCE              srtpauthentication_hmac_sha1.cpp // Added by EUnit Wizard
+SOURCE              srtpauthentication_null.cpp // Added by EUnit Wizard
+SOURCE              srtpcryptohandler.cpp // Added by EUnit Wizard
+SOURCE              srtpcryptohandlersrtcp.cpp // Added by EUnit Wizard
+SOURCE              srtpcryptohandlersrtp.cpp // Added by EUnit Wizard
+SOURCE              srtpcipher_aescm128.cpp // Added by EUnit Wizard
+SOURCE              srtpcipher_null.cpp // Added by EUnit Wizard
+SOURCE              srtpkeyderivation_aescm128.cpp // Added by EUnit Wizard
+SOURCE              srtpaesctrcrypto.cpp // Added by EUnit Wizard
+SOURCE          	tsrtpstreamstatebase.cpp
+SOURCE          	tsrtpstreaminstatebase.cpp
+SOURCE          	tsrtpstreaminstateuninit.cpp
+SOURCE         		tsrtpstreaminstatelatebind.cpp
+SOURCE          	tsrtpstreaminstatenormal.cpp
+SOURCE          	tsrtpstreamoutstatebase.cpp
+SOURCE          	tsrtpstreamoutstateuninit.cpp
+SOURCE          	tsrtpstreamoutstatenormal.cpp
+SOURCE          	srtppacket.cpp
+SOURCE          	srtppacketrtp.cpp
+SOURCE          	srtppacketsrtp.cpp
+SOURCE          	srtppacketrtcp.cpp
+SOURCE          	srtppacketsrtcp.cpp
+SOURCE          	srtpmasterkey.cpp
+SOURCE          	srtpmastersalt.cpp
+SOURCE			srtpcryptocontext.cpp
+SOURCE              srtpauthentication_rcc.cpp
+
+USERINCLUDE             ../../../inc
+USERINCLUDE             ../inc
+
+
+MW_LAYER_SYSTEMINCLUDE
+
+LIBRARY                 commdb.lib
+LIBRARY                 efsrv.lib
+LIBRARY                 esock.lib
+LIBRARY                 eunit.lib
+LIBRARY                 euser.lib
+LIBRARY                 insock.lib
+LIBRARY                 cryptography.lib
+LIBRARY                 hash.lib
+
+CAPABILITY EUNIT_CAPS
+
+// End of file

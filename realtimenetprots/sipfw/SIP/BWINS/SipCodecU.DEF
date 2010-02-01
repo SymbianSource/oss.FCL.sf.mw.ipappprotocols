@@ -1,0 +1,593 @@
+EXPORTS
+	??0CSIPExpiresHeader@@QAE@I@Z @ 1 NONAME ; CSIPExpiresHeader::CSIPExpiresHeader(unsigned int)
+	??0CSIPMaxForwardsHeader@@QAE@I@Z @ 2 NONAME ; CSIPMaxForwardsHeader::CSIPMaxForwardsHeader(unsigned int)
+	??0CSIPMinExpiresHeader@@QAE@I@Z @ 3 NONAME ; CSIPMinExpiresHeader::CSIPMinExpiresHeader(unsigned int)
+	??0CSIPRSeqHeader@@QAE@I@Z @ 4 NONAME ; CSIPRSeqHeader::CSIPRSeqHeader(unsigned int)
+	??0CSIPTimestampHeader@@QAE@N@Z @ 5 NONAME ; CSIPTimestampHeader::CSIPTimestampHeader(double)
+	??1CSIPAcceptContactHeader@@UAE@XZ @ 6 NONAME ; CSIPAcceptContactHeader::~CSIPAcceptContactHeader(void)
+	??1CSIPAcceptEncodingHeader@@UAE@XZ @ 7 NONAME ; CSIPAcceptEncodingHeader::~CSIPAcceptEncodingHeader(void)
+	??1CSIPAcceptHeader@@UAE@XZ @ 8 NONAME ; CSIPAcceptHeader::~CSIPAcceptHeader(void)
+	??1CSIPAcceptLanguageHeader@@UAE@XZ @ 9 NONAME ; CSIPAcceptLanguageHeader::~CSIPAcceptLanguageHeader(void)
+	??1CSIPAddress@@UAE@XZ @ 10 NONAME ; CSIPAddress::~CSIPAddress(void)
+	??1CSIPAddressHeaderBase@@UAE@XZ @ 11 NONAME ; CSIPAddressHeaderBase::~CSIPAddressHeaderBase(void)
+	??1CSIPAllowEventsHeader@@UAE@XZ @ 12 NONAME ; CSIPAllowEventsHeader::~CSIPAllowEventsHeader(void)
+	??1CSIPAllowHeader@@UAE@XZ @ 13 NONAME ; CSIPAllowHeader::~CSIPAllowHeader(void)
+	??1CSIPAuthHeaderBase@@UAE@XZ @ 14 NONAME ; CSIPAuthHeaderBase::~CSIPAuthHeaderBase(void)
+	??1CSIPAuthenticateHeaderBase@@UAE@XZ @ 15 NONAME ; CSIPAuthenticateHeaderBase::~CSIPAuthenticateHeaderBase(void)
+	??1CSIPAuthenticationInfoHeader@@UAE@XZ @ 16 NONAME ; CSIPAuthenticationInfoHeader::~CSIPAuthenticationInfoHeader(void)
+	??1CSIPAuthorizationHeader@@UAE@XZ @ 17 NONAME ; CSIPAuthorizationHeader::~CSIPAuthorizationHeader(void)
+	??1CSIPAuthorizationHeaderBase@@UAE@XZ @ 18 NONAME ; CSIPAuthorizationHeaderBase::~CSIPAuthorizationHeaderBase(void)
+	??1CSIPCSeqHeader@@UAE@XZ @ 19 NONAME ; CSIPCSeqHeader::~CSIPCSeqHeader(void)
+	??1CSIPCallIDHeader@@UAE@XZ @ 20 NONAME ; CSIPCallIDHeader::~CSIPCallIDHeader(void)
+	??1CSIPContactHeader@@UAE@XZ @ 21 NONAME ; CSIPContactHeader::~CSIPContactHeader(void)
+	??1CSIPContentDispositionHeader@@UAE@XZ @ 22 NONAME ; CSIPContentDispositionHeader::~CSIPContentDispositionHeader(void)
+	??1CSIPContentEncodingHeader@@UAE@XZ @ 23 NONAME ; CSIPContentEncodingHeader::~CSIPContentEncodingHeader(void)
+	??1CSIPContentTypeHeader@@UAE@XZ @ 24 NONAME ; CSIPContentTypeHeader::~CSIPContentTypeHeader(void)
+	??1CSIPEventHeader@@UAE@XZ @ 25 NONAME ; CSIPEventHeader::~CSIPEventHeader(void)
+	??1CSIPExpiresHeader@@UAE@XZ @ 26 NONAME ; CSIPExpiresHeader::~CSIPExpiresHeader(void)
+	??1CSIPExtensionHeader@@UAE@XZ @ 27 NONAME ; CSIPExtensionHeader::~CSIPExtensionHeader(void)
+	??1CSIPFromHeader@@UAE@XZ @ 28 NONAME ; CSIPFromHeader::~CSIPFromHeader(void)
+	??1CSIPFromToHeaderBase@@UAE@XZ @ 29 NONAME ; CSIPFromToHeaderBase::~CSIPFromToHeaderBase(void)
+	??1CSIPHeaderBase@@UAE@XZ @ 30 NONAME ; CSIPHeaderBase::~CSIPHeaderBase(void)
+	??1CSIPHostPort@@UAE@XZ @ 31 NONAME ; CSIPHostPort::~CSIPHostPort(void)
+	??1CSIPMaxForwardsHeader@@UAE@XZ @ 32 NONAME ; CSIPMaxForwardsHeader::~CSIPMaxForwardsHeader(void)
+	??1CSIPMessage@@UAE@XZ @ 33 NONAME ; CSIPMessage::~CSIPMessage(void)
+	??1CSIPMessageParser@@UAE@XZ @ 34 NONAME ; CSIPMessageParser::~CSIPMessageParser(void)
+	??1CSIPMinExpiresHeader@@UAE@XZ @ 35 NONAME ; CSIPMinExpiresHeader::~CSIPMinExpiresHeader(void)
+	??1CSIPPAccessNetworkInfoHeader@@UAE@XZ @ 36 NONAME ; CSIPPAccessNetworkInfoHeader::~CSIPPAccessNetworkInfoHeader(void)
+	??1CSIPPAssociatedURIHeader@@UAE@XZ @ 37 NONAME ; CSIPPAssociatedURIHeader::~CSIPPAssociatedURIHeader(void)
+	??1CSIPParameterHeaderBase@@UAE@XZ @ 38 NONAME ; CSIPParameterHeaderBase::~CSIPParameterHeaderBase(void)
+	??1CSIPProxyAuthenticateHeader@@UAE@XZ @ 39 NONAME ; CSIPProxyAuthenticateHeader::~CSIPProxyAuthenticateHeader(void)
+	??1CSIPProxyAuthorizationHeader@@UAE@XZ @ 40 NONAME ; CSIPProxyAuthorizationHeader::~CSIPProxyAuthorizationHeader(void)
+	??1CSIPProxyRequireHeader@@UAE@XZ @ 41 NONAME ; CSIPProxyRequireHeader::~CSIPProxyRequireHeader(void)
+	??1CSIPRAckHeader@@UAE@XZ @ 42 NONAME ; CSIPRAckHeader::~CSIPRAckHeader(void)
+	??1CSIPRSeqHeader@@UAE@XZ @ 43 NONAME ; CSIPRSeqHeader::~CSIPRSeqHeader(void)
+	??1CSIPRecordRouteHeader@@UAE@XZ @ 44 NONAME ; CSIPRecordRouteHeader::~CSIPRecordRouteHeader(void)
+	??1CSIPReferToHeader@@UAE@XZ @ 45 NONAME ; CSIPReferToHeader::~CSIPReferToHeader(void)
+	??1CSIPReplyToHeader@@UAE@XZ @ 46 NONAME ; CSIPReplyToHeader::~CSIPReplyToHeader(void)
+	??1CSIPRequest@@UAE@XZ @ 47 NONAME ; CSIPRequest::~CSIPRequest(void)
+	??1CSIPRequireHeader@@UAE@XZ @ 48 NONAME ; CSIPRequireHeader::~CSIPRequireHeader(void)
+	??1CSIPResponse@@UAE@XZ @ 49 NONAME ; CSIPResponse::~CSIPResponse(void)
+	??1CSIPRetryAfterHeader@@UAE@XZ @ 50 NONAME ; CSIPRetryAfterHeader::~CSIPRetryAfterHeader(void)
+	??1CSIPRouteHeader@@UAE@XZ @ 51 NONAME ; CSIPRouteHeader::~CSIPRouteHeader(void)
+	??1CSIPRouteHeaderBase@@UAE@XZ @ 52 NONAME ; CSIPRouteHeaderBase::~CSIPRouteHeaderBase(void)
+	??1CSIPSecurityClientHeader@@UAE@XZ @ 53 NONAME ; CSIPSecurityClientHeader::~CSIPSecurityClientHeader(void)
+	??1CSIPSecurityHeaderBase@@UAE@XZ @ 54 NONAME ; CSIPSecurityHeaderBase::~CSIPSecurityHeaderBase(void)
+	??1CSIPSecurityServerHeader@@UAE@XZ @ 55 NONAME ; CSIPSecurityServerHeader::~CSIPSecurityServerHeader(void)
+	??1CSIPSecurityVerifyHeader@@UAE@XZ @ 56 NONAME ; CSIPSecurityVerifyHeader::~CSIPSecurityVerifyHeader(void)
+	??1CSIPServiceRouteHeader@@UAE@XZ @ 57 NONAME ; CSIPServiceRouteHeader::~CSIPServiceRouteHeader(void)
+	??1CSIPSubscriptionStateHeader@@UAE@XZ @ 58 NONAME ; CSIPSubscriptionStateHeader::~CSIPSubscriptionStateHeader(void)
+	??1CSIPSupportedHeader@@UAE@XZ @ 59 NONAME ; CSIPSupportedHeader::~CSIPSupportedHeader(void)
+	??1CSIPTimestampHeader@@UAE@XZ @ 60 NONAME ; CSIPTimestampHeader::~CSIPTimestampHeader(void)
+	??1CSIPToHeader@@UAE@XZ @ 61 NONAME ; CSIPToHeader::~CSIPToHeader(void)
+	??1CSIPTokenHeaderBase@@UAE@XZ @ 62 NONAME ; CSIPTokenHeaderBase::~CSIPTokenHeaderBase(void)
+	??1CSIPURI@@UAE@XZ @ 63 NONAME ; CSIPURI::~CSIPURI(void)
+	??1CSIPUnsignedIntHeaderBase@@UAE@XZ @ 64 NONAME ; CSIPUnsignedIntHeaderBase::~CSIPUnsignedIntHeaderBase(void)
+	??1CSIPUnsupportedHeader@@UAE@XZ @ 65 NONAME ; CSIPUnsupportedHeader::~CSIPUnsupportedHeader(void)
+	??1CSIPViaHeader@@UAE@XZ @ 66 NONAME ; CSIPViaHeader::~CSIPViaHeader(void)
+	??1CSIPWWWAuthenticateHeader@@UAE@XZ @ 67 NONAME ; CSIPWWWAuthenticateHeader::~CSIPWWWAuthenticateHeader(void)
+	??1CURIContainer@@UAE@XZ @ 68 NONAME ; CURIContainer::~CURIContainer(void)
+	??8CSIPAcceptContactHeader@@QBEHABV0@@Z @ 69 NONAME ; int CSIPAcceptContactHeader::operator==(class CSIPAcceptContactHeader const &) const
+	??8CSIPAddress@@QBEHABV0@@Z @ 70 NONAME ; int CSIPAddress::operator==(class CSIPAddress const &) const
+	??8CSIPCallIDHeader@@QAEHABV0@@Z @ 71 NONAME ; int CSIPCallIDHeader::operator==(class CSIPCallIDHeader const &)
+	??8CSIPContactHeader@@QBEHABV0@@Z @ 72 NONAME ; int CSIPContactHeader::operator==(class CSIPContactHeader const &) const
+	??8CSIPEventHeader@@QBEHABV0@@Z @ 73 NONAME ; int CSIPEventHeader::operator==(class CSIPEventHeader const &) const
+	??8CSIPFromToHeaderBase@@QBEHABV0@@Z @ 74 NONAME ; int CSIPFromToHeaderBase::operator==(class CSIPFromToHeaderBase const &) const
+	??8CSIPHostPort@@QBEHABV0@@Z @ 75 NONAME ; int CSIPHostPort::operator==(class CSIPHostPort const &) const
+	??8CSIPURI@@QBEHABV0@@Z @ 76 NONAME ; int CSIPURI::operator==(class CSIPURI const &) const
+	??8CSIPViaHeader@@QAEHABV0@@Z @ 77 NONAME ; int CSIPViaHeader::operator==(class CSIPViaHeader const &)
+	??8CURIContainer@@QBEHABV0@@Z @ 78 NONAME ; int CURIContainer::operator==(class CURIContainer const &) const
+	?AccessType@CSIPPAccessNetworkInfoHeader@@QBE?AVRStringF@@XZ @ 79 NONAME ; class RStringF CSIPPAccessNetworkInfoHeader::AccessType(void) const
+	?AddHeaderL@CSIPMessage@@QAEXABVCSIPHeaderBase@@@Z @ 80 NONAME ; void CSIPMessage::AddHeaderL(class CSIPHeaderBase const &)
+	?AddHeaderL@CSIPMessage@@QAEXPAVCSIPHeaderBase@@@Z @ 81 NONAME ; void CSIPMessage::AddHeaderL(class CSIPHeaderBase *)
+	?AddURIHeaderL@CSIPURI@@QAEXABVTDesC8@@0@Z @ 82 NONAME ; void CSIPURI::AddURIHeaderL(class TDesC8 const &, class TDesC8 const &)
+	?AllHeadersL@CSIPMessage@@QAEABV?$RPointerArray@VCSIPHeaderBase@@@@XZ @ 83 NONAME ; class RPointerArray<class CSIPHeaderBase> const & CSIPMessage::AllHeadersL(void)
+	?AnnouncedContentLength@CSIPMessage@@QBEIXZ @ 84 NONAME ; unsigned int CSIPMessage::AnnouncedContentLength(void) const
+	?AuthScheme@CSIPAuthHeaderBase@@QBE?AVRStringF@@XZ @ 85 NONAME ; class RStringF CSIPAuthHeaderBase::AuthScheme(void) const
+	?CSeq@CSIPMessage@@QAEPAVCSIPCSeqHeader@@XZ @ 86 NONAME ; class CSIPCSeqHeader * CSIPMessage::CSeq(void)
+	?CSeqNum@CSIPRAckHeader@@QBEIXZ @ 87 NONAME ; unsigned int CSIPRAckHeader::CSeqNum(void) const
+	?CallID@CSIPMessage@@QAEPAVCSIPCallIDHeader@@XZ @ 88 NONAME ; class CSIPCallIDHeader * CSIPMessage::CallID(void)
+	?CloneL@CSIPAcceptContactHeader@@UBEPAVCSIPHeaderBase@@XZ @ 89 NONAME ; class CSIPHeaderBase * CSIPAcceptContactHeader::CloneL(void) const
+	?CloneL@CSIPAcceptEncodingHeader@@UBEPAVCSIPHeaderBase@@XZ @ 90 NONAME ; class CSIPHeaderBase * CSIPAcceptEncodingHeader::CloneL(void) const
+	?CloneL@CSIPAcceptHeader@@UBEPAVCSIPHeaderBase@@XZ @ 91 NONAME ; class CSIPHeaderBase * CSIPAcceptHeader::CloneL(void) const
+	?CloneL@CSIPAcceptLanguageHeader@@UBEPAVCSIPHeaderBase@@XZ @ 92 NONAME ; class CSIPHeaderBase * CSIPAcceptLanguageHeader::CloneL(void) const
+	?CloneL@CSIPAllowEventsHeader@@UBEPAVCSIPHeaderBase@@XZ @ 93 NONAME ; class CSIPHeaderBase * CSIPAllowEventsHeader::CloneL(void) const
+	?CloneL@CSIPAllowHeader@@UBEPAVCSIPHeaderBase@@XZ @ 94 NONAME ; class CSIPHeaderBase * CSIPAllowHeader::CloneL(void) const
+	?CloneL@CSIPAuthenticationInfoHeader@@UBEPAVCSIPHeaderBase@@XZ @ 95 NONAME ; class CSIPHeaderBase * CSIPAuthenticationInfoHeader::CloneL(void) const
+	?CloneL@CSIPAuthorizationHeader@@UBEPAVCSIPHeaderBase@@XZ @ 96 NONAME ; class CSIPHeaderBase * CSIPAuthorizationHeader::CloneL(void) const
+	?CloneL@CSIPCSeqHeader@@UBEPAVCSIPHeaderBase@@XZ @ 97 NONAME ; class CSIPHeaderBase * CSIPCSeqHeader::CloneL(void) const
+	?CloneL@CSIPCallIDHeader@@UBEPAVCSIPHeaderBase@@XZ @ 98 NONAME ; class CSIPHeaderBase * CSIPCallIDHeader::CloneL(void) const
+	?CloneL@CSIPContactHeader@@UBEPAVCSIPHeaderBase@@XZ @ 99 NONAME ; class CSIPHeaderBase * CSIPContactHeader::CloneL(void) const
+	?CloneL@CSIPContentDispositionHeader@@UBEPAVCSIPHeaderBase@@XZ @ 100 NONAME ; class CSIPHeaderBase * CSIPContentDispositionHeader::CloneL(void) const
+	?CloneL@CSIPContentEncodingHeader@@UBEPAVCSIPHeaderBase@@XZ @ 101 NONAME ; class CSIPHeaderBase * CSIPContentEncodingHeader::CloneL(void) const
+	?CloneL@CSIPContentTypeHeader@@UBEPAVCSIPHeaderBase@@XZ @ 102 NONAME ; class CSIPHeaderBase * CSIPContentTypeHeader::CloneL(void) const
+	?CloneL@CSIPEventHeader@@UBEPAVCSIPHeaderBase@@XZ @ 103 NONAME ; class CSIPHeaderBase * CSIPEventHeader::CloneL(void) const
+	?CloneL@CSIPExpiresHeader@@UBEPAVCSIPHeaderBase@@XZ @ 104 NONAME ; class CSIPHeaderBase * CSIPExpiresHeader::CloneL(void) const
+	?CloneL@CSIPExtensionHeader@@UBEPAVCSIPHeaderBase@@XZ @ 105 NONAME ; class CSIPHeaderBase * CSIPExtensionHeader::CloneL(void) const
+	?CloneL@CSIPFromHeader@@UBEPAVCSIPHeaderBase@@XZ @ 106 NONAME ; class CSIPHeaderBase * CSIPFromHeader::CloneL(void) const
+	?CloneL@CSIPMaxForwardsHeader@@UBEPAVCSIPHeaderBase@@XZ @ 107 NONAME ; class CSIPHeaderBase * CSIPMaxForwardsHeader::CloneL(void) const
+	?CloneL@CSIPMinExpiresHeader@@UBEPAVCSIPHeaderBase@@XZ @ 108 NONAME ; class CSIPHeaderBase * CSIPMinExpiresHeader::CloneL(void) const
+	?CloneL@CSIPPAccessNetworkInfoHeader@@UBEPAVCSIPHeaderBase@@XZ @ 109 NONAME ; class CSIPHeaderBase * CSIPPAccessNetworkInfoHeader::CloneL(void) const
+	?CloneL@CSIPPAssociatedURIHeader@@UBEPAVCSIPHeaderBase@@XZ @ 110 NONAME ; class CSIPHeaderBase * CSIPPAssociatedURIHeader::CloneL(void) const
+	?CloneL@CSIPProxyAuthenticateHeader@@UBEPAVCSIPHeaderBase@@XZ @ 111 NONAME ; class CSIPHeaderBase * CSIPProxyAuthenticateHeader::CloneL(void) const
+	?CloneL@CSIPProxyAuthorizationHeader@@UBEPAVCSIPHeaderBase@@XZ @ 112 NONAME ; class CSIPHeaderBase * CSIPProxyAuthorizationHeader::CloneL(void) const
+	?CloneL@CSIPProxyRequireHeader@@UBEPAVCSIPHeaderBase@@XZ @ 113 NONAME ; class CSIPHeaderBase * CSIPProxyRequireHeader::CloneL(void) const
+	?CloneL@CSIPRAckHeader@@UBEPAVCSIPHeaderBase@@XZ @ 114 NONAME ; class CSIPHeaderBase * CSIPRAckHeader::CloneL(void) const
+	?CloneL@CSIPRSeqHeader@@UBEPAVCSIPHeaderBase@@XZ @ 115 NONAME ; class CSIPHeaderBase * CSIPRSeqHeader::CloneL(void) const
+	?CloneL@CSIPRecordRouteHeader@@UBEPAVCSIPHeaderBase@@XZ @ 116 NONAME ; class CSIPHeaderBase * CSIPRecordRouteHeader::CloneL(void) const
+	?CloneL@CSIPReferToHeader@@UBEPAVCSIPHeaderBase@@XZ @ 117 NONAME ; class CSIPHeaderBase * CSIPReferToHeader::CloneL(void) const
+	?CloneL@CSIPReplyToHeader@@UBEPAVCSIPHeaderBase@@XZ @ 118 NONAME ; class CSIPHeaderBase * CSIPReplyToHeader::CloneL(void) const
+	?CloneL@CSIPRequireHeader@@UBEPAVCSIPHeaderBase@@XZ @ 119 NONAME ; class CSIPHeaderBase * CSIPRequireHeader::CloneL(void) const
+	?CloneL@CSIPRetryAfterHeader@@UBEPAVCSIPHeaderBase@@XZ @ 120 NONAME ; class CSIPHeaderBase * CSIPRetryAfterHeader::CloneL(void) const
+	?CloneL@CSIPRouteHeader@@UBEPAVCSIPHeaderBase@@XZ @ 121 NONAME ; class CSIPHeaderBase * CSIPRouteHeader::CloneL(void) const
+	?CloneL@CSIPSecurityClientHeader@@UBEPAVCSIPHeaderBase@@XZ @ 122 NONAME ; class CSIPHeaderBase * CSIPSecurityClientHeader::CloneL(void) const
+	?CloneL@CSIPSecurityServerHeader@@UBEPAVCSIPHeaderBase@@XZ @ 123 NONAME ; class CSIPHeaderBase * CSIPSecurityServerHeader::CloneL(void) const
+	?CloneL@CSIPSecurityVerifyHeader@@UBEPAVCSIPHeaderBase@@XZ @ 124 NONAME ; class CSIPHeaderBase * CSIPSecurityVerifyHeader::CloneL(void) const
+	?CloneL@CSIPServiceRouteHeader@@UBEPAVCSIPHeaderBase@@XZ @ 125 NONAME ; class CSIPHeaderBase * CSIPServiceRouteHeader::CloneL(void) const
+	?CloneL@CSIPSubscriptionStateHeader@@UBEPAVCSIPHeaderBase@@XZ @ 126 NONAME ; class CSIPHeaderBase * CSIPSubscriptionStateHeader::CloneL(void) const
+	?CloneL@CSIPSupportedHeader@@UBEPAVCSIPHeaderBase@@XZ @ 127 NONAME ; class CSIPHeaderBase * CSIPSupportedHeader::CloneL(void) const
+	?CloneL@CSIPTimestampHeader@@UBEPAVCSIPHeaderBase@@XZ @ 128 NONAME ; class CSIPHeaderBase * CSIPTimestampHeader::CloneL(void) const
+	?CloneL@CSIPToHeader@@UBEPAVCSIPHeaderBase@@XZ @ 129 NONAME ; class CSIPHeaderBase * CSIPToHeader::CloneL(void) const
+	?CloneL@CSIPUnsupportedHeader@@UBEPAVCSIPHeaderBase@@XZ @ 130 NONAME ; class CSIPHeaderBase * CSIPUnsupportedHeader::CloneL(void) const
+	?CloneL@CSIPViaHeader@@UBEPAVCSIPHeaderBase@@XZ @ 131 NONAME ; class CSIPHeaderBase * CSIPViaHeader::CloneL(void) const
+	?CloneL@CSIPWWWAuthenticateHeader@@UBEPAVCSIPHeaderBase@@XZ @ 132 NONAME ; class CSIPHeaderBase * CSIPWWWAuthenticateHeader::CloneL(void) const
+	?Close@SIPHeaderLookup@@SAXXZ @ 133 NONAME ; void SIPHeaderLookup::Close(void)
+	?Close@SIPStrings@@SAXXZ @ 134 NONAME ; void SIPStrings::Close(void)
+	?Codings@CSIPAcceptEncodingHeader@@QBEABVTDesC8@@XZ @ 135 NONAME ; class TDesC8 const & CSIPAcceptEncodingHeader::Codings(void) const
+	?Comment@CSIPRetryAfterHeader@@QBEABVTDesC8@@XZ @ 136 NONAME ; class TDesC8 const & CSIPRetryAfterHeader::Comment(void) const
+	?Content@CSIPMessage@@QBEABVTDesC8@@XZ @ 137 NONAME ; class TDesC8 const & CSIPMessage::Content(void) const
+	?CreateHeaderL@SIPHeaderLookup@@SA?AV?$RPointerArray@VCSIPHeaderBase@@@@VRStringF@@ABVTDesC8@@@Z @ 138 NONAME ; class RPointerArray<class CSIPHeaderBase> SIPHeaderLookup::CreateHeaderL(class RStringF, class TDesC8 const &)
+	?CreateRecordRouteHeaderLC@SIPCodecUtils@@SAPAVCSIPRecordRouteHeader@@ABVCSIPRouteHeaderBase@@@Z @ 139 NONAME ; class CSIPRecordRouteHeader * SIPCodecUtils::CreateRecordRouteHeaderLC(class CSIPRouteHeaderBase const &)
+	?CreateRouteHeaderLC@SIPCodecUtils@@SAPAVCSIPRouteHeader@@ABVCSIPRouteHeaderBase@@@Z @ 140 NONAME ; class CSIPRouteHeader * SIPCodecUtils::CreateRouteHeaderLC(class CSIPRouteHeaderBase const &)
+	?CreateSIPAddressLC@SIPCodecUtils@@SAPAVCSIPAddress@@PAVCURIContainer@@@Z @ 141 NONAME ; class CSIPAddress * SIPCodecUtils::CreateSIPAddressLC(class CURIContainer *)
+	?DecodeL@CSIPAcceptContactHeader@@SA?AV?$RPointerArray@VCSIPAcceptContactHeader@@@@ABVTDesC8@@@Z @ 142 NONAME ; class RPointerArray<class CSIPAcceptContactHeader> CSIPAcceptContactHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPAcceptEncodingHeader@@SA?AV?$RPointerArray@VCSIPAcceptEncodingHeader@@@@ABVTDesC8@@@Z @ 143 NONAME ; class RPointerArray<class CSIPAcceptEncodingHeader> CSIPAcceptEncodingHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPAcceptHeader@@SA?AV?$RPointerArray@VCSIPAcceptHeader@@@@ABVTDesC8@@@Z @ 144 NONAME ; class RPointerArray<class CSIPAcceptHeader> CSIPAcceptHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPAcceptLanguageHeader@@SA?AV?$RPointerArray@VCSIPAcceptLanguageHeader@@@@ABVTDesC8@@@Z @ 145 NONAME ; class RPointerArray<class CSIPAcceptLanguageHeader> CSIPAcceptLanguageHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPAddress@@SAPAV1@ABVTDesC8@@@Z @ 146 NONAME ; class CSIPAddress * CSIPAddress::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPAllowEventsHeader@@SA?AV?$RPointerArray@VCSIPAllowEventsHeader@@@@ABVTDesC8@@@Z @ 147 NONAME ; class RPointerArray<class CSIPAllowEventsHeader> CSIPAllowEventsHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPAllowHeader@@SA?AV?$RPointerArray@VCSIPAllowHeader@@@@ABVTDesC8@@@Z @ 148 NONAME ; class RPointerArray<class CSIPAllowHeader> CSIPAllowHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPAuthenticationInfoHeader@@SAPAV1@ABVTDesC8@@@Z @ 149 NONAME ; class CSIPAuthenticationInfoHeader * CSIPAuthenticationInfoHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPAuthorizationHeader@@SAPAV1@ABVTDesC8@@@Z @ 150 NONAME ; class CSIPAuthorizationHeader * CSIPAuthorizationHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPCSeqHeader@@SAPAV1@ABVTDesC8@@@Z @ 151 NONAME ; class CSIPCSeqHeader * CSIPCSeqHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPCallIDHeader@@SAPAV1@ABVTDesC8@@@Z @ 152 NONAME ; class CSIPCallIDHeader * CSIPCallIDHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPContactHeader@@SA?AV?$RPointerArray@VCSIPContactHeader@@@@ABVTDesC8@@@Z @ 153 NONAME ; class RPointerArray<class CSIPContactHeader> CSIPContactHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPContentDispositionHeader@@SAPAV1@ABVTDesC8@@@Z @ 154 NONAME ; class CSIPContentDispositionHeader * CSIPContentDispositionHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPContentEncodingHeader@@SA?AV?$RPointerArray@VCSIPContentEncodingHeader@@@@ABVTDesC8@@@Z @ 155 NONAME ; class RPointerArray<class CSIPContentEncodingHeader> CSIPContentEncodingHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPContentTypeHeader@@SAPAV1@ABVTDesC8@@@Z @ 156 NONAME ; class CSIPContentTypeHeader * CSIPContentTypeHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPEventHeader@@SAPAV1@ABVTDesC8@@@Z @ 157 NONAME ; class CSIPEventHeader * CSIPEventHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPExpiresHeader@@SAPAV1@ABVTDesC8@@@Z @ 158 NONAME ; class CSIPExpiresHeader * CSIPExpiresHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPFromHeader@@SAPAV1@ABVTDesC8@@@Z @ 159 NONAME ; class CSIPFromHeader * CSIPFromHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPHostPort@@SAPAV1@ABVTDesC8@@@Z @ 160 NONAME ; class CSIPHostPort * CSIPHostPort::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPMaxForwardsHeader@@SAPAV1@ABVTDesC8@@@Z @ 161 NONAME ; class CSIPMaxForwardsHeader * CSIPMaxForwardsHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPMinExpiresHeader@@SAPAV1@ABVTDesC8@@@Z @ 162 NONAME ; class CSIPMinExpiresHeader * CSIPMinExpiresHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPPAccessNetworkInfoHeader@@SAPAV1@ABVTDesC8@@@Z @ 163 NONAME ; class CSIPPAccessNetworkInfoHeader * CSIPPAccessNetworkInfoHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPPAssociatedURIHeader@@SA?AV?$RPointerArray@VCSIPPAssociatedURIHeader@@@@ABVTDesC8@@@Z @ 164 NONAME ; class RPointerArray<class CSIPPAssociatedURIHeader> CSIPPAssociatedURIHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPProxyAuthenticateHeader@@SAPAV1@ABVTDesC8@@@Z @ 165 NONAME ; class CSIPProxyAuthenticateHeader * CSIPProxyAuthenticateHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPProxyAuthorizationHeader@@SAPAV1@ABVTDesC8@@@Z @ 166 NONAME ; class CSIPProxyAuthorizationHeader * CSIPProxyAuthorizationHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPProxyRequireHeader@@SA?AV?$RPointerArray@VCSIPProxyRequireHeader@@@@ABVTDesC8@@@Z @ 167 NONAME ; class RPointerArray<class CSIPProxyRequireHeader> CSIPProxyRequireHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPRAckHeader@@SAPAV1@ABVTDesC8@@@Z @ 168 NONAME ; class CSIPRAckHeader * CSIPRAckHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPRSeqHeader@@SAPAV1@ABVTDesC8@@@Z @ 169 NONAME ; class CSIPRSeqHeader * CSIPRSeqHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPRecordRouteHeader@@SA?AV?$RPointerArray@VCSIPRecordRouteHeader@@@@ABVTDesC8@@@Z @ 170 NONAME ; class RPointerArray<class CSIPRecordRouteHeader> CSIPRecordRouteHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPReferToHeader@@SAPAV1@ABVTDesC8@@@Z @ 171 NONAME ; class CSIPReferToHeader * CSIPReferToHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPReplyToHeader@@SAPAV1@ABVTDesC8@@@Z @ 172 NONAME ; class CSIPReplyToHeader * CSIPReplyToHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPRequireHeader@@SA?AV?$RPointerArray@VCSIPRequireHeader@@@@ABVTDesC8@@@Z @ 173 NONAME ; class RPointerArray<class CSIPRequireHeader> CSIPRequireHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPRetryAfterHeader@@SAPAV1@ABVTDesC8@@@Z @ 174 NONAME ; class CSIPRetryAfterHeader * CSIPRetryAfterHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPRouteHeader@@SA?AV?$RPointerArray@VCSIPRouteHeader@@@@ABVTDesC8@@@Z @ 175 NONAME ; class RPointerArray<class CSIPRouteHeader> CSIPRouteHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPSecurityClientHeader@@SA?AV?$RPointerArray@VCSIPSecurityClientHeader@@@@ABVTDesC8@@@Z @ 176 NONAME ; class RPointerArray<class CSIPSecurityClientHeader> CSIPSecurityClientHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPSecurityServerHeader@@SA?AV?$RPointerArray@VCSIPSecurityServerHeader@@@@ABVTDesC8@@@Z @ 177 NONAME ; class RPointerArray<class CSIPSecurityServerHeader> CSIPSecurityServerHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPSecurityVerifyHeader@@SA?AV?$RPointerArray@VCSIPSecurityVerifyHeader@@@@ABVTDesC8@@@Z @ 178 NONAME ; class RPointerArray<class CSIPSecurityVerifyHeader> CSIPSecurityVerifyHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPServiceRouteHeader@@SA?AV?$RPointerArray@VCSIPServiceRouteHeader@@@@ABVTDesC8@@@Z @ 179 NONAME ; class RPointerArray<class CSIPServiceRouteHeader> CSIPServiceRouteHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPSubscriptionStateHeader@@SAPAV1@ABVTDesC8@@@Z @ 180 NONAME ; class CSIPSubscriptionStateHeader * CSIPSubscriptionStateHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPSupportedHeader@@SA?AV?$RPointerArray@VCSIPSupportedHeader@@@@ABVTDesC8@@@Z @ 181 NONAME ; class RPointerArray<class CSIPSupportedHeader> CSIPSupportedHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPTimestampHeader@@SAPAV1@ABVTDesC8@@@Z @ 182 NONAME ; class CSIPTimestampHeader * CSIPTimestampHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPToHeader@@SAPAV1@ABVTDesC8@@@Z @ 183 NONAME ; class CSIPToHeader * CSIPToHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPURI@@SAPAV1@ABVTDesC8@@@Z @ 184 NONAME ; class CSIPURI * CSIPURI::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPUnsupportedHeader@@SA?AV?$RPointerArray@VCSIPUnsupportedHeader@@@@ABVTDesC8@@@Z @ 185 NONAME ; class RPointerArray<class CSIPUnsupportedHeader> CSIPUnsupportedHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPViaHeader@@SA?AV?$RPointerArray@VCSIPViaHeader@@@@ABVTDesC8@@@Z @ 186 NONAME ; class RPointerArray<class CSIPViaHeader> CSIPViaHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CSIPWWWAuthenticateHeader@@SAPAV1@ABVTDesC8@@@Z @ 187 NONAME ; class CSIPWWWAuthenticateHeader * CSIPWWWAuthenticateHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CURIContainer@@SAPAV1@ABVTDesC8@@@Z @ 188 NONAME ; class CURIContainer * CURIContainer::DecodeL(class TDesC8 const &)
+	?Delay@CSIPTimestampHeader@@QBENXZ @ 189 NONAME ; double CSIPTimestampHeader::Delay(void) const
+	?DeleteHeaders@CSIPMessage@@QAEHVRStringF@@@Z @ 190 NONAME ; int CSIPMessage::DeleteHeaders(class RStringF)
+	?DeleteParam@CSIPAuthHeaderBase@@QAEXVRStringF@@@Z @ 191 NONAME ; void CSIPAuthHeaderBase::DeleteParam(class RStringF)
+	?DeleteParam@CSIPParameterHeaderBase@@QAEXVRStringF@@@Z @ 192 NONAME ; void CSIPParameterHeaderBase::DeleteParam(class RStringF)
+	?DeleteParam@CSIPURI@@QAEXVRStringF@@@Z @ 193 NONAME ; void CSIPURI::DeleteParam(class RStringF)
+	?DeletePassword@CSIPURI@@QAEXXZ @ 194 NONAME ; void CSIPURI::DeletePassword(void)
+	?DeletePort@CSIPHostPort@@QAEHXZ @ 195 NONAME ; int CSIPHostPort::DeletePort(void)
+	?DeleteUserInfo@CSIPURI@@QAEXXZ @ 196 NONAME ; void CSIPURI::DeleteUserInfo(void)
+	?DispType@CSIPContentDispositionHeader@@QBEABVTDesC8@@XZ @ 197 NONAME ; class TDesC8 const & CSIPContentDispositionHeader::DispType(void) const
+	?DisplayName@CSIPAddress@@QBEABVTDesC8@@XZ @ 198 NONAME ; class TDesC8 const & CSIPAddress::DisplayName(void) const
+	?DurationParam@CSIPRetryAfterHeader@@QBEHXZ @ 199 NONAME ; int CSIPRetryAfterHeader::DurationParam(void) const
+	?EncodedHeaderPartLengthL@CSIPMessage@@QAEHXZ @ 200 NONAME ; int CSIPMessage::EncodedHeaderPartLengthL(void)
+	?EventPackage@CSIPAllowEventsHeader@@QBEABVTDesC8@@XZ @ 201 NONAME ; class TDesC8 const & CSIPAllowEventsHeader::EventPackage(void) const
+	?EventPackage@CSIPEventHeader@@QBEABVTDesC8@@XZ @ 202 NONAME ; class TDesC8 const & CSIPEventHeader::EventPackage(void) const
+	?EventTemplates@CSIPAllowEventsHeader@@QBEABVMDesC8Array@@XZ @ 203 NONAME ; class MDesC8Array const & CSIPAllowEventsHeader::EventTemplates(void) const
+	?EventTemplates@CSIPEventHeader@@QBEABVMDesC8Array@@XZ @ 204 NONAME ; class MDesC8Array const & CSIPEventHeader::EventTemplates(void) const
+	?ExpiresParameter@CSIPContactHeader@@QBEHXZ @ 205 NONAME ; int CSIPContactHeader::ExpiresParameter(void) const
+	?ExpiresParameter@CSIPSubscriptionStateHeader@@QBEHXZ @ 206 NONAME ; int CSIPSubscriptionStateHeader::ExpiresParameter(void) const
+	?ExternalizeHeadersL@CSIPMessage@@QAEXAAVRWriteStream@@@Z @ 207 NONAME ; void CSIPMessage::ExternalizeHeadersL(class RWriteStream &)
+	?ExternalizeL@CSIPAddress@@QAEXAAVRWriteStream@@@Z @ 208 NONAME ; void CSIPAddress::ExternalizeL(class RWriteStream &)
+	?ExternalizeL@CSIPHeaderBase@@QBEXAAVRWriteStream@@H@Z @ 209 NONAME ; void CSIPHeaderBase::ExternalizeL(class RWriteStream &, int) const
+	?ExternalizeL@CURIContainer@@QBEXAAVRWriteStream@@@Z @ 210 NONAME ; void CURIContainer::ExternalizeL(class RWriteStream &) const
+	?ExternalizeSupported@CSIPAuthHeaderBase@@UBEHXZ @ 211 NONAME ; int CSIPAuthHeaderBase::ExternalizeSupported(void) const
+	?ExternalizeSupported@CSIPAuthenticationInfoHeader@@UBEHXZ @ 212 NONAME ; int CSIPAuthenticationInfoHeader::ExternalizeSupported(void) const
+	?ExternalizeSupported@CSIPAuthorizationHeader@@UBEHXZ @ 213 NONAME ; int CSIPAuthorizationHeader::ExternalizeSupported(void) const
+	?ExternalizeSupported@CSIPExtensionHeader@@UBEHXZ @ 214 NONAME ; int CSIPExtensionHeader::ExternalizeSupported(void) const
+	?ExternalizeSupported@CSIPHeaderBase@@UBEHXZ @ 215 NONAME ; int CSIPHeaderBase::ExternalizeSupported(void) const
+	?ExternalizeSupported@CSIPMaxForwardsHeader@@UBEHXZ @ 216 NONAME ; int CSIPMaxForwardsHeader::ExternalizeSupported(void) const
+	?ExternalizeSupported@CSIPMinExpiresHeader@@UBEHXZ @ 217 NONAME ; int CSIPMinExpiresHeader::ExternalizeSupported(void) const
+	?ExternalizeSupported@CSIPPAccessNetworkInfoHeader@@UBEHXZ @ 218 NONAME ; int CSIPPAccessNetworkInfoHeader::ExternalizeSupported(void) const
+	?ExternalizeSupported@CSIPRecordRouteHeader@@UBEHXZ @ 219 NONAME ; int CSIPRecordRouteHeader::ExternalizeSupported(void) const
+	?ExternalizeSupported@CSIPServiceRouteHeader@@UBEHXZ @ 220 NONAME ; int CSIPServiceRouteHeader::ExternalizeSupported(void) const
+	?ExternalizeSupported@CSIPViaHeader@@UBEHXZ @ 221 NONAME ; int CSIPViaHeader::ExternalizeSupported(void) const
+	?From@CSIPMessage@@QAEPAVCSIPFromHeader@@XZ @ 222 NONAME ; class CSIPFromHeader * CSIPMessage::From(void)
+	?FromText@CSIPMessageParser@@QAEHPAVHBufC8@@PAPAVCSIPMessage@@@Z @ 223 NONAME ; int CSIPMessageParser::FromText(class HBufC8 *, class CSIPMessage * *)
+	?HasAnnouncedContentLength@CSIPMessage@@QBEHXZ @ 224 NONAME ; int CSIPMessage::HasAnnouncedContentLength(void) const
+	?HasDelay@CSIPTimestampHeader@@QBEHXZ @ 225 NONAME ; int CSIPTimestampHeader::HasDelay(void) const
+	?HasHeader@CSIPMessage@@QBEHVRStringF@@@Z @ 226 NONAME ; int CSIPMessage::HasHeader(class RStringF) const
+	?HasParam@CSIPAuthHeaderBase@@QBEHVRStringF@@@Z @ 227 NONAME ; int CSIPAuthHeaderBase::HasParam(class RStringF) const
+	?HasParam@CSIPParameterHeaderBase@@QBEHVRStringF@@@Z @ 228 NONAME ; int CSIPParameterHeaderBase::HasParam(class RStringF) const
+	?HasParam@CSIPURI@@QBEHVRStringF@@@Z @ 229 NONAME ; int CSIPURI::HasParam(class RStringF) const
+	?HasParams@CSIPURI@@QBEHXZ @ 230 NONAME ; int CSIPURI::HasParams(void) const
+	?HasPort@CSIPHostPort@@QBEHXZ @ 231 NONAME ; int CSIPHostPort::HasPort(void) const
+	?HasQopValueL@CSIPAuthenticateHeaderBase@@QBEHABVTDesC8@@@Z @ 232 NONAME ; int CSIPAuthenticateHeaderBase::HasQopValueL(class TDesC8 const &) const
+	?HasURIHeaders@CSIPURI@@QBEHABVTDesC8@@@Z @ 233 NONAME ; int CSIPURI::HasURIHeaders(class TDesC8 const &) const
+	?Header@CSIPMessage@@QAEPAVCSIPHeaderBase@@VRStringF@@H@Z @ 234 NONAME ; class CSIPHeaderBase * CSIPMessage::Header(class RStringF, int)
+	?HeaderCount@CSIPMessage@@QAEHVRStringF@@@Z @ 235 NONAME ; int CSIPMessage::HeaderCount(class RStringF)
+	?Headers@CSIPMessage@@QAE?AV?$TSglQueIter@VCSIPHeaderBase@@@@VRStringF@@@Z @ 236 NONAME ; class TSglQueIter<class CSIPHeaderBase> CSIPMessage::Headers(class RStringF)
+	?Host@CSIPHostPort@@QBEABVTDesC8@@XZ @ 237 NONAME ; class TDesC8 const & CSIPHostPort::Host(void) const
+	?HostPort@CSIPURI@@QAEAAVCSIPHostPort@@XZ @ 238 NONAME ; class CSIPHostPort & CSIPURI::HostPort(void)
+	?HostPort@CSIPURI@@QBEABVCSIPHostPort@@XZ @ 239 NONAME ; class CSIPHostPort const & CSIPURI::HostPort(void) const
+	?HostType@CSIPHostPort@@QBE?AW4TType@1@XZ @ 240 NONAME ; enum CSIPHostPort::TType CSIPHostPort::HostType(void) const
+	?InternalizeHeadersL@CSIPMessage@@QAEXAAVRReadStream@@@Z @ 241 NONAME ; void CSIPMessage::InternalizeHeadersL(class RReadStream &)
+	?InternalizeL@CSIPAddress@@SAPAV1@AAVRReadStream@@@Z @ 242 NONAME ; class CSIPAddress * CSIPAddress::InternalizeL(class RReadStream &)
+	?InternalizeL@CURIContainer@@SAPAV1@AAVRReadStream@@@Z @ 243 NONAME ; class CURIContainer * CURIContainer::InternalizeL(class RReadStream &)
+	?InternalizeL@SIPHeaderLookup@@SAPAVCSIPHeaderBase@@VRStringF@@AAVRReadStream@@@Z @ 244 NONAME ; class CSIPHeaderBase * SIPHeaderLookup::InternalizeL(class RStringF, class RReadStream &)
+	?InternalizeValueL@CSIPAcceptContactHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 245 NONAME ; class CSIPHeaderBase * CSIPAcceptContactHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPAcceptEncodingHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 246 NONAME ; class CSIPHeaderBase * CSIPAcceptEncodingHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPAcceptHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 247 NONAME ; class CSIPHeaderBase * CSIPAcceptHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPAcceptLanguageHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 248 NONAME ; class CSIPHeaderBase * CSIPAcceptLanguageHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPAllowEventsHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 249 NONAME ; class CSIPHeaderBase * CSIPAllowEventsHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPAllowHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 250 NONAME ; class CSIPHeaderBase * CSIPAllowHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPCSeqHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 251 NONAME ; class CSIPHeaderBase * CSIPCSeqHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPCallIDHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 252 NONAME ; class CSIPHeaderBase * CSIPCallIDHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPContactHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 253 NONAME ; class CSIPHeaderBase * CSIPContactHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPContentDispositionHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 254 NONAME ; class CSIPHeaderBase * CSIPContentDispositionHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPContentEncodingHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 255 NONAME ; class CSIPHeaderBase * CSIPContentEncodingHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPContentTypeHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 256 NONAME ; class CSIPHeaderBase * CSIPContentTypeHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPEventHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 257 NONAME ; class CSIPHeaderBase * CSIPEventHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPExpiresHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 258 NONAME ; class CSIPHeaderBase * CSIPExpiresHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPExtensionHeader@@SAPAV1@AAVRReadStream@@@Z @ 259 NONAME ; class CSIPExtensionHeader * CSIPExtensionHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPFromHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 260 NONAME ; class CSIPHeaderBase * CSIPFromHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPPAssociatedURIHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 261 NONAME ; class CSIPHeaderBase * CSIPPAssociatedURIHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPProxyRequireHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 262 NONAME ; class CSIPHeaderBase * CSIPProxyRequireHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPRAckHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 263 NONAME ; class CSIPHeaderBase * CSIPRAckHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPRSeqHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 264 NONAME ; class CSIPHeaderBase * CSIPRSeqHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPReferToHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 265 NONAME ; class CSIPHeaderBase * CSIPReferToHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPReplyToHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 266 NONAME ; class CSIPHeaderBase * CSIPReplyToHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPRequireHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 267 NONAME ; class CSIPHeaderBase * CSIPRequireHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPRetryAfterHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 268 NONAME ; class CSIPHeaderBase * CSIPRetryAfterHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPRouteHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 269 NONAME ; class CSIPHeaderBase * CSIPRouteHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPSecurityClientHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 270 NONAME ; class CSIPHeaderBase * CSIPSecurityClientHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPSubscriptionStateHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 271 NONAME ; class CSIPHeaderBase * CSIPSubscriptionStateHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPSupportedHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 272 NONAME ; class CSIPHeaderBase * CSIPSupportedHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPTimestampHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 273 NONAME ; class CSIPHeaderBase * CSIPTimestampHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPToHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 274 NONAME ; class CSIPHeaderBase * CSIPToHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CSIPUnsupportedHeader@@SAPAVCSIPHeaderBase@@AAVRReadStream@@@Z @ 275 NONAME ; class CSIPHeaderBase * CSIPUnsupportedHeader::InternalizeValueL(class RReadStream &)
+	?IsAPIHeader@SIPHeaderLookup@@SAHVRStringF@@@Z @ 276 NONAME ; int SIPHeaderLookup::IsAPIHeader(class RStringF)
+	?IsEmpty@CSIPAcceptHeader@@QBEHXZ @ 277 NONAME ; int CSIPAcceptHeader::IsEmpty(void) const
+	?IsErrorResponse@CSIPResponse@@QBEHXZ @ 278 NONAME ; int CSIPResponse::IsErrorResponse(void) const
+	?IsRequest@CSIPRequest@@UBEHXZ @ 279 NONAME ; int CSIPRequest::IsRequest(void) const
+	?IsRequest@CSIPResponse@@UBEHXZ @ 280 NONAME ; int CSIPResponse::IsRequest(void) const
+	?IsSIPSURI@CSIPURI@@QBEHXZ @ 281 NONAME ; int CSIPURI::IsSIPSURI(void) const
+	?IsSIPURI@CURIContainer@@QBEHXZ @ 282 NONAME ; int CURIContainer::IsSIPURI(void) const
+	?IsSupported@SIPHeaderLookup@@SAHVRStringF@@@Z @ 283 NONAME ; int SIPHeaderLookup::IsSupported(class RStringF)
+	?LanguageRange@CSIPAcceptLanguageHeader@@QBEABVTDesC8@@XZ @ 284 NONAME ; class TDesC8 const & CSIPAcceptLanguageHeader::LanguageRange(void) const
+	?MechanismName@CSIPSecurityHeaderBase@@QBEABVTDesC8@@XZ @ 285 NONAME ; class TDesC8 const & CSIPSecurityHeaderBase::MechanismName(void) const
+	?MediaSubtype@CSIPAcceptHeader@@QBEABVTDesC8@@XZ @ 286 NONAME ; class TDesC8 const & CSIPAcceptHeader::MediaSubtype(void) const
+	?MediaSubtype@CSIPContentTypeHeader@@QBEABVTDesC8@@XZ @ 287 NONAME ; class TDesC8 const & CSIPContentTypeHeader::MediaSubtype(void) const
+	?MediaType@CSIPAcceptHeader@@QBEABVTDesC8@@XZ @ 288 NONAME ; class TDesC8 const & CSIPAcceptHeader::MediaType(void) const
+	?MediaType@CSIPContentTypeHeader@@QBEABVTDesC8@@XZ @ 289 NONAME ; class TDesC8 const & CSIPContentTypeHeader::MediaType(void) const
+	?Method@CSIPCSeqHeader@@QBE?AVRStringF@@XZ @ 290 NONAME ; class RStringF CSIPCSeqHeader::Method(void) const
+	?Method@CSIPRAckHeader@@QBE?AVRStringF@@XZ @ 291 NONAME ; class RStringF CSIPRAckHeader::Method(void) const
+	?Method@CSIPRequest@@QBE?AVRStringF@@XZ @ 292 NONAME ; class RStringF CSIPRequest::Method(void) const
+	?Name@CSIPAcceptContactHeader@@UBE?AVRStringF@@XZ @ 293 NONAME ; class RStringF CSIPAcceptContactHeader::Name(void) const
+	?Name@CSIPAcceptEncodingHeader@@UBE?AVRStringF@@XZ @ 294 NONAME ; class RStringF CSIPAcceptEncodingHeader::Name(void) const
+	?Name@CSIPAcceptHeader@@UBE?AVRStringF@@XZ @ 295 NONAME ; class RStringF CSIPAcceptHeader::Name(void) const
+	?Name@CSIPAcceptLanguageHeader@@UBE?AVRStringF@@XZ @ 296 NONAME ; class RStringF CSIPAcceptLanguageHeader::Name(void) const
+	?Name@CSIPAllowEventsHeader@@UBE?AVRStringF@@XZ @ 297 NONAME ; class RStringF CSIPAllowEventsHeader::Name(void) const
+	?Name@CSIPAllowHeader@@UBE?AVRStringF@@XZ @ 298 NONAME ; class RStringF CSIPAllowHeader::Name(void) const
+	?Name@CSIPAuthenticationInfoHeader@@UBE?AVRStringF@@XZ @ 299 NONAME ; class RStringF CSIPAuthenticationInfoHeader::Name(void) const
+	?Name@CSIPAuthorizationHeader@@UBE?AVRStringF@@XZ @ 300 NONAME ; class RStringF CSIPAuthorizationHeader::Name(void) const
+	?Name@CSIPCSeqHeader@@UBE?AVRStringF@@XZ @ 301 NONAME ; class RStringF CSIPCSeqHeader::Name(void) const
+	?Name@CSIPCallIDHeader@@UBE?AVRStringF@@XZ @ 302 NONAME ; class RStringF CSIPCallIDHeader::Name(void) const
+	?Name@CSIPContactHeader@@UBE?AVRStringF@@XZ @ 303 NONAME ; class RStringF CSIPContactHeader::Name(void) const
+	?Name@CSIPContentDispositionHeader@@UBE?AVRStringF@@XZ @ 304 NONAME ; class RStringF CSIPContentDispositionHeader::Name(void) const
+	?Name@CSIPContentEncodingHeader@@UBE?AVRStringF@@XZ @ 305 NONAME ; class RStringF CSIPContentEncodingHeader::Name(void) const
+	?Name@CSIPContentTypeHeader@@UBE?AVRStringF@@XZ @ 306 NONAME ; class RStringF CSIPContentTypeHeader::Name(void) const
+	?Name@CSIPEventHeader@@UBE?AVRStringF@@XZ @ 307 NONAME ; class RStringF CSIPEventHeader::Name(void) const
+	?Name@CSIPExpiresHeader@@UBE?AVRStringF@@XZ @ 308 NONAME ; class RStringF CSIPExpiresHeader::Name(void) const
+	?Name@CSIPExtensionHeader@@UBE?AVRStringF@@XZ @ 309 NONAME ; class RStringF CSIPExtensionHeader::Name(void) const
+	?Name@CSIPFromHeader@@UBE?AVRStringF@@XZ @ 310 NONAME ; class RStringF CSIPFromHeader::Name(void) const
+	?Name@CSIPMaxForwardsHeader@@UBE?AVRStringF@@XZ @ 311 NONAME ; class RStringF CSIPMaxForwardsHeader::Name(void) const
+	?Name@CSIPMinExpiresHeader@@UBE?AVRStringF@@XZ @ 312 NONAME ; class RStringF CSIPMinExpiresHeader::Name(void) const
+	?Name@CSIPPAccessNetworkInfoHeader@@UBE?AVRStringF@@XZ @ 313 NONAME ; class RStringF CSIPPAccessNetworkInfoHeader::Name(void) const
+	?Name@CSIPPAssociatedURIHeader@@UBE?AVRStringF@@XZ @ 314 NONAME ; class RStringF CSIPPAssociatedURIHeader::Name(void) const
+	?Name@CSIPProxyAuthenticateHeader@@UBE?AVRStringF@@XZ @ 315 NONAME ; class RStringF CSIPProxyAuthenticateHeader::Name(void) const
+	?Name@CSIPProxyAuthorizationHeader@@UBE?AVRStringF@@XZ @ 316 NONAME ; class RStringF CSIPProxyAuthorizationHeader::Name(void) const
+	?Name@CSIPProxyRequireHeader@@UBE?AVRStringF@@XZ @ 317 NONAME ; class RStringF CSIPProxyRequireHeader::Name(void) const
+	?Name@CSIPRAckHeader@@UBE?AVRStringF@@XZ @ 318 NONAME ; class RStringF CSIPRAckHeader::Name(void) const
+	?Name@CSIPRSeqHeader@@UBE?AVRStringF@@XZ @ 319 NONAME ; class RStringF CSIPRSeqHeader::Name(void) const
+	?Name@CSIPRecordRouteHeader@@UBE?AVRStringF@@XZ @ 320 NONAME ; class RStringF CSIPRecordRouteHeader::Name(void) const
+	?Name@CSIPReferToHeader@@UBE?AVRStringF@@XZ @ 321 NONAME ; class RStringF CSIPReferToHeader::Name(void) const
+	?Name@CSIPReplyToHeader@@UBE?AVRStringF@@XZ @ 322 NONAME ; class RStringF CSIPReplyToHeader::Name(void) const
+	?Name@CSIPRequireHeader@@UBE?AVRStringF@@XZ @ 323 NONAME ; class RStringF CSIPRequireHeader::Name(void) const
+	?Name@CSIPRetryAfterHeader@@UBE?AVRStringF@@XZ @ 324 NONAME ; class RStringF CSIPRetryAfterHeader::Name(void) const
+	?Name@CSIPRouteHeader@@UBE?AVRStringF@@XZ @ 325 NONAME ; class RStringF CSIPRouteHeader::Name(void) const
+	?Name@CSIPSecurityClientHeader@@UBE?AVRStringF@@XZ @ 326 NONAME ; class RStringF CSIPSecurityClientHeader::Name(void) const
+	?Name@CSIPSecurityServerHeader@@UBE?AVRStringF@@XZ @ 327 NONAME ; class RStringF CSIPSecurityServerHeader::Name(void) const
+	?Name@CSIPSecurityVerifyHeader@@UBE?AVRStringF@@XZ @ 328 NONAME ; class RStringF CSIPSecurityVerifyHeader::Name(void) const
+	?Name@CSIPServiceRouteHeader@@UBE?AVRStringF@@XZ @ 329 NONAME ; class RStringF CSIPServiceRouteHeader::Name(void) const
+	?Name@CSIPSubscriptionStateHeader@@UBE?AVRStringF@@XZ @ 330 NONAME ; class RStringF CSIPSubscriptionStateHeader::Name(void) const
+	?Name@CSIPSupportedHeader@@UBE?AVRStringF@@XZ @ 331 NONAME ; class RStringF CSIPSupportedHeader::Name(void) const
+	?Name@CSIPTimestampHeader@@UBE?AVRStringF@@XZ @ 332 NONAME ; class RStringF CSIPTimestampHeader::Name(void) const
+	?Name@CSIPToHeader@@UBE?AVRStringF@@XZ @ 333 NONAME ; class RStringF CSIPToHeader::Name(void) const
+	?Name@CSIPUnsupportedHeader@@UBE?AVRStringF@@XZ @ 334 NONAME ; class RStringF CSIPUnsupportedHeader::Name(void) const
+	?Name@CSIPViaHeader@@UBE?AVRStringF@@XZ @ 335 NONAME ; class RStringF CSIPViaHeader::Name(void) const
+	?Name@CSIPWWWAuthenticateHeader@@UBE?AVRStringF@@XZ @ 336 NONAME ; class RStringF CSIPWWWAuthenticateHeader::Name(void) const
+	?NewL@CSIPAcceptContactHeader@@SAPAV1@XZ @ 337 NONAME ; class CSIPAcceptContactHeader * CSIPAcceptContactHeader::NewL(void)
+	?NewL@CSIPAcceptEncodingHeader@@SAPAV1@ABVTDesC8@@@Z @ 338 NONAME ; class CSIPAcceptEncodingHeader * CSIPAcceptEncodingHeader::NewL(class TDesC8 const &)
+	?NewL@CSIPAcceptHeader@@SAPAV1@ABVTDesC8@@0@Z @ 339 NONAME ; class CSIPAcceptHeader * CSIPAcceptHeader::NewL(class TDesC8 const &, class TDesC8 const &)
+	?NewL@CSIPAcceptLanguageHeader@@SAPAV1@ABVTDesC8@@@Z @ 340 NONAME ; class CSIPAcceptLanguageHeader * CSIPAcceptLanguageHeader::NewL(class TDesC8 const &)
+	?NewL@CSIPAddress@@SAPAV1@ABV1@@Z @ 341 NONAME ; class CSIPAddress * CSIPAddress::NewL(class CSIPAddress const &)
+	?NewL@CSIPAddress@@SAPAV1@ABVTDesC8@@PAVCUri8@@@Z @ 342 NONAME ; class CSIPAddress * CSIPAddress::NewL(class TDesC8 const &, class CUri8 *)
+	?NewL@CSIPAddress@@SAPAV1@PAVCUri8@@@Z @ 343 NONAME ; class CSIPAddress * CSIPAddress::NewL(class CUri8 *)
+	?NewL@CSIPAllowEventsHeader@@SAPAV1@ABVTDesC8@@@Z @ 344 NONAME ; class CSIPAllowEventsHeader * CSIPAllowEventsHeader::NewL(class TDesC8 const &)
+	?NewL@CSIPAllowHeader@@SAPAV1@VRStringF@@@Z @ 345 NONAME ; class CSIPAllowHeader * CSIPAllowHeader::NewL(class RStringF)
+	?NewL@CSIPAuthorizationHeader@@SAPAV1@ABVCSIPAuthorizationHeaderBase@@@Z @ 346 NONAME ; class CSIPAuthorizationHeader * CSIPAuthorizationHeader::NewL(class CSIPAuthorizationHeaderBase const &)
+	?NewL@CSIPAuthorizationHeader@@SAPAV1@VRStringF@@@Z @ 347 NONAME ; class CSIPAuthorizationHeader * CSIPAuthorizationHeader::NewL(class RStringF)
+	?NewL@CSIPCSeqHeader@@SAPAV1@IVRStringF@@@Z @ 348 NONAME ; class CSIPCSeqHeader * CSIPCSeqHeader::NewL(unsigned int, class RStringF)
+	?NewL@CSIPContactHeader@@SAPAV1@PAVCSIPAddress@@@Z @ 349 NONAME ; class CSIPContactHeader * CSIPContactHeader::NewL(class CSIPAddress *)
+	?NewL@CSIPContentDispositionHeader@@SAPAV1@ABVTDesC8@@@Z @ 350 NONAME ; class CSIPContentDispositionHeader * CSIPContentDispositionHeader::NewL(class TDesC8 const &)
+	?NewL@CSIPContentEncodingHeader@@SAPAV1@VRStringF@@@Z @ 351 NONAME ; class CSIPContentEncodingHeader * CSIPContentEncodingHeader::NewL(class RStringF)
+	?NewL@CSIPContentTypeHeader@@SAPAV1@ABVTDesC8@@0@Z @ 352 NONAME ; class CSIPContentTypeHeader * CSIPContentTypeHeader::NewL(class TDesC8 const &, class TDesC8 const &)
+	?NewL@CSIPEventHeader@@SAPAV1@ABVTDesC8@@@Z @ 353 NONAME ; class CSIPEventHeader * CSIPEventHeader::NewL(class TDesC8 const &)
+	?NewL@CSIPExtensionHeader@@SAPAV1@ABVTDesC8@@0@Z @ 354 NONAME ; class CSIPExtensionHeader * CSIPExtensionHeader::NewL(class TDesC8 const &, class TDesC8 const &)
+	?NewL@CSIPFromHeader@@SAPAV1@ABVCSIPFromToHeaderBase@@@Z @ 355 NONAME ; class CSIPFromHeader * CSIPFromHeader::NewL(class CSIPFromToHeaderBase const &)
+	?NewL@CSIPFromHeader@@SAPAV1@PAVCSIPAddress@@@Z @ 356 NONAME ; class CSIPFromHeader * CSIPFromHeader::NewL(class CSIPAddress *)
+	?NewL@CSIPHostPort@@SAPAV1@ABV1@@Z @ 357 NONAME ; class CSIPHostPort * CSIPHostPort::NewL(class CSIPHostPort const &)
+	?NewL@CSIPMessageParser@@SAPAV1@XZ @ 358 NONAME ; class CSIPMessageParser * CSIPMessageParser::NewL(void)
+	?NewL@CSIPPAccessNetworkInfoHeader@@SAPAV1@VRStringF@@@Z @ 359 NONAME ; class CSIPPAccessNetworkInfoHeader * CSIPPAccessNetworkInfoHeader::NewL(class RStringF)
+	?NewL@CSIPPAssociatedURIHeader@@SAPAV1@PAVCSIPAddress@@@Z @ 360 NONAME ; class CSIPPAssociatedURIHeader * CSIPPAssociatedURIHeader::NewL(class CSIPAddress *)
+	?NewL@CSIPProxyAuthenticateHeader@@SAPAV1@VRStringF@@@Z @ 361 NONAME ; class CSIPProxyAuthenticateHeader * CSIPProxyAuthenticateHeader::NewL(class RStringF)
+	?NewL@CSIPProxyAuthorizationHeader@@SAPAV1@ABVCSIPAuthorizationHeaderBase@@@Z @ 362 NONAME ; class CSIPProxyAuthorizationHeader * CSIPProxyAuthorizationHeader::NewL(class CSIPAuthorizationHeaderBase const &)
+	?NewL@CSIPProxyAuthorizationHeader@@SAPAV1@VRStringF@@@Z @ 363 NONAME ; class CSIPProxyAuthorizationHeader * CSIPProxyAuthorizationHeader::NewL(class RStringF)
+	?NewL@CSIPProxyRequireHeader@@SAPAV1@VRStringF@@@Z @ 364 NONAME ; class CSIPProxyRequireHeader * CSIPProxyRequireHeader::NewL(class RStringF)
+	?NewL@CSIPRAckHeader@@SAPAV1@IIVRStringF@@@Z @ 365 NONAME ; class CSIPRAckHeader * CSIPRAckHeader::NewL(unsigned int, unsigned int, class RStringF)
+	?NewL@CSIPRecordRouteHeader@@SAPAV1@PAVCSIPAddress@@@Z @ 366 NONAME ; class CSIPRecordRouteHeader * CSIPRecordRouteHeader::NewL(class CSIPAddress *)
+	?NewL@CSIPReferToHeader@@SAPAV1@PAVCSIPAddress@@@Z @ 367 NONAME ; class CSIPReferToHeader * CSIPReferToHeader::NewL(class CSIPAddress *)
+	?NewL@CSIPReplyToHeader@@SAPAV1@PAVCSIPAddress@@@Z @ 368 NONAME ; class CSIPReplyToHeader * CSIPReplyToHeader::NewL(class CSIPAddress *)
+	?NewL@CSIPRequest@@SAPAV1@VRStringF@@@Z @ 369 NONAME ; class CSIPRequest * CSIPRequest::NewL(class RStringF)
+	?NewL@CSIPRequest@@SAPAV1@XZ @ 370 NONAME ; class CSIPRequest * CSIPRequest::NewL(void)
+	?NewL@CSIPRequireHeader@@SAPAV1@VRStringF@@@Z @ 371 NONAME ; class CSIPRequireHeader * CSIPRequireHeader::NewL(class RStringF)
+	?NewL@CSIPResponse@@SAPAV1@IVRStringF@@@Z @ 372 NONAME ; class CSIPResponse * CSIPResponse::NewL(unsigned int, class RStringF)
+	?NewL@CSIPRetryAfterHeader@@SAPAV1@I@Z @ 373 NONAME ; class CSIPRetryAfterHeader * CSIPRetryAfterHeader::NewL(unsigned int)
+	?NewL@CSIPRouteHeader@@SAPAV1@PAVCSIPAddress@@@Z @ 374 NONAME ; class CSIPRouteHeader * CSIPRouteHeader::NewL(class CSIPAddress *)
+	?NewL@CSIPSecurityClientHeader@@SAPAV1@ABVTDesC8@@@Z @ 375 NONAME ; class CSIPSecurityClientHeader * CSIPSecurityClientHeader::NewL(class TDesC8 const &)
+	?NewL@CSIPSecurityServerHeader@@SAPAV1@ABVTDesC8@@@Z @ 376 NONAME ; class CSIPSecurityServerHeader * CSIPSecurityServerHeader::NewL(class TDesC8 const &)
+	?NewL@CSIPSecurityVerifyHeader@@SAPAV1@ABVCSIPSecurityHeaderBase@@@Z @ 377 NONAME ; class CSIPSecurityVerifyHeader * CSIPSecurityVerifyHeader::NewL(class CSIPSecurityHeaderBase const &)
+	?NewL@CSIPSecurityVerifyHeader@@SAPAV1@ABVTDesC8@@@Z @ 378 NONAME ; class CSIPSecurityVerifyHeader * CSIPSecurityVerifyHeader::NewL(class TDesC8 const &)
+	?NewL@CSIPServiceRouteHeader@@SAPAV1@PAVCSIPAddress@@@Z @ 379 NONAME ; class CSIPServiceRouteHeader * CSIPServiceRouteHeader::NewL(class CSIPAddress *)
+	?NewL@CSIPSubscriptionStateHeader@@SAPAV1@ABVTDesC8@@@Z @ 380 NONAME ; class CSIPSubscriptionStateHeader * CSIPSubscriptionStateHeader::NewL(class TDesC8 const &)
+	?NewL@CSIPSupportedHeader@@SAPAV1@VRStringF@@@Z @ 381 NONAME ; class CSIPSupportedHeader * CSIPSupportedHeader::NewL(class RStringF)
+	?NewL@CSIPToHeader@@SAPAV1@ABVCSIPFromToHeaderBase@@@Z @ 382 NONAME ; class CSIPToHeader * CSIPToHeader::NewL(class CSIPFromToHeaderBase const &)
+	?NewL@CSIPToHeader@@SAPAV1@PAVCSIPAddress@@@Z @ 383 NONAME ; class CSIPToHeader * CSIPToHeader::NewL(class CSIPAddress *)
+	?NewL@CSIPUnsupportedHeader@@SAPAV1@VRStringF@@@Z @ 384 NONAME ; class CSIPUnsupportedHeader * CSIPUnsupportedHeader::NewL(class RStringF)
+	?NewL@CSIPViaHeader@@SAPAV1@VRStringF@@PAVCSIPHostPort@@@Z @ 385 NONAME ; class CSIPViaHeader * CSIPViaHeader::NewL(class RStringF, class CSIPHostPort *)
+	?NewL@CSIPWWWAuthenticateHeader@@SAPAV1@VRStringF@@@Z @ 386 NONAME ; class CSIPWWWAuthenticateHeader * CSIPWWWAuthenticateHeader::NewL(class RStringF)
+	?NewL@CURIContainer@@SAPAV1@ABV1@@Z @ 387 NONAME ; class CURIContainer * CURIContainer::NewL(class CURIContainer const &)
+	?NewL@CURIContainer@@SAPAV1@PAVCUri8@@@Z @ 388 NONAME ; class CURIContainer * CURIContainer::NewL(class CUri8 *)
+	?NewLC@CSIPAcceptContactHeader@@SAPAV1@XZ @ 389 NONAME ; class CSIPAcceptContactHeader * CSIPAcceptContactHeader::NewLC(void)
+	?NewLC@CSIPAcceptEncodingHeader@@SAPAV1@ABVTDesC8@@@Z @ 390 NONAME ; class CSIPAcceptEncodingHeader * CSIPAcceptEncodingHeader::NewLC(class TDesC8 const &)
+	?NewLC@CSIPAcceptHeader@@SAPAV1@ABVTDesC8@@0@Z @ 391 NONAME ; class CSIPAcceptHeader * CSIPAcceptHeader::NewLC(class TDesC8 const &, class TDesC8 const &)
+	?NewLC@CSIPAcceptLanguageHeader@@SAPAV1@ABVTDesC8@@@Z @ 392 NONAME ; class CSIPAcceptLanguageHeader * CSIPAcceptLanguageHeader::NewLC(class TDesC8 const &)
+	?NewLC@CSIPAddress@@SAPAV1@ABV1@@Z @ 393 NONAME ; class CSIPAddress * CSIPAddress::NewLC(class CSIPAddress const &)
+	?NewLC@CSIPAddress@@SAPAV1@ABVTDesC8@@PAVCUri8@@@Z @ 394 NONAME ; class CSIPAddress * CSIPAddress::NewLC(class TDesC8 const &, class CUri8 *)
+	?NewLC@CSIPAddress@@SAPAV1@PAVCUri8@@@Z @ 395 NONAME ; class CSIPAddress * CSIPAddress::NewLC(class CUri8 *)
+	?NewLC@CSIPAllowEventsHeader@@SAPAV1@ABVTDesC8@@@Z @ 396 NONAME ; class CSIPAllowEventsHeader * CSIPAllowEventsHeader::NewLC(class TDesC8 const &)
+	?NewLC@CSIPAllowHeader@@SAPAV1@VRStringF@@@Z @ 397 NONAME ; class CSIPAllowHeader * CSIPAllowHeader::NewLC(class RStringF)
+	?NewLC@CSIPAuthorizationHeader@@SAPAV1@ABVCSIPAuthorizationHeaderBase@@@Z @ 398 NONAME ; class CSIPAuthorizationHeader * CSIPAuthorizationHeader::NewLC(class CSIPAuthorizationHeaderBase const &)
+	?NewLC@CSIPAuthorizationHeader@@SAPAV1@VRStringF@@@Z @ 399 NONAME ; class CSIPAuthorizationHeader * CSIPAuthorizationHeader::NewLC(class RStringF)
+	?NewLC@CSIPCSeqHeader@@SAPAV1@IVRStringF@@@Z @ 400 NONAME ; class CSIPCSeqHeader * CSIPCSeqHeader::NewLC(unsigned int, class RStringF)
+	?NewLC@CSIPContactHeader@@SAPAV1@PAVCSIPAddress@@@Z @ 401 NONAME ; class CSIPContactHeader * CSIPContactHeader::NewLC(class CSIPAddress *)
+	?NewLC@CSIPContentDispositionHeader@@SAPAV1@ABVTDesC8@@@Z @ 402 NONAME ; class CSIPContentDispositionHeader * CSIPContentDispositionHeader::NewLC(class TDesC8 const &)
+	?NewLC@CSIPContentEncodingHeader@@SAPAV1@VRStringF@@@Z @ 403 NONAME ; class CSIPContentEncodingHeader * CSIPContentEncodingHeader::NewLC(class RStringF)
+	?NewLC@CSIPContentTypeHeader@@SAPAV1@ABVTDesC8@@0@Z @ 404 NONAME ; class CSIPContentTypeHeader * CSIPContentTypeHeader::NewLC(class TDesC8 const &, class TDesC8 const &)
+	?NewLC@CSIPEventHeader@@SAPAV1@ABVTDesC8@@@Z @ 405 NONAME ; class CSIPEventHeader * CSIPEventHeader::NewLC(class TDesC8 const &)
+	?NewLC@CSIPExtensionHeader@@SAPAV1@ABVTDesC8@@0@Z @ 406 NONAME ; class CSIPExtensionHeader * CSIPExtensionHeader::NewLC(class TDesC8 const &, class TDesC8 const &)
+	?NewLC@CSIPFromHeader@@SAPAV1@ABVCSIPFromToHeaderBase@@@Z @ 407 NONAME ; class CSIPFromHeader * CSIPFromHeader::NewLC(class CSIPFromToHeaderBase const &)
+	?NewLC@CSIPFromHeader@@SAPAV1@PAVCSIPAddress@@@Z @ 408 NONAME ; class CSIPFromHeader * CSIPFromHeader::NewLC(class CSIPAddress *)
+	?NewLC@CSIPHostPort@@SAPAV1@ABV1@@Z @ 409 NONAME ; class CSIPHostPort * CSIPHostPort::NewLC(class CSIPHostPort const &)
+	?NewLC@CSIPMessageParser@@SAPAV1@XZ @ 410 NONAME ; class CSIPMessageParser * CSIPMessageParser::NewLC(void)
+	?NewLC@CSIPPAccessNetworkInfoHeader@@SAPAV1@VRStringF@@@Z @ 411 NONAME ; class CSIPPAccessNetworkInfoHeader * CSIPPAccessNetworkInfoHeader::NewLC(class RStringF)
+	?NewLC@CSIPPAssociatedURIHeader@@SAPAV1@PAVCSIPAddress@@@Z @ 412 NONAME ; class CSIPPAssociatedURIHeader * CSIPPAssociatedURIHeader::NewLC(class CSIPAddress *)
+	?NewLC@CSIPProxyAuthenticateHeader@@SAPAV1@VRStringF@@@Z @ 413 NONAME ; class CSIPProxyAuthenticateHeader * CSIPProxyAuthenticateHeader::NewLC(class RStringF)
+	?NewLC@CSIPProxyAuthorizationHeader@@SAPAV1@ABVCSIPAuthorizationHeaderBase@@@Z @ 414 NONAME ; class CSIPProxyAuthorizationHeader * CSIPProxyAuthorizationHeader::NewLC(class CSIPAuthorizationHeaderBase const &)
+	?NewLC@CSIPProxyAuthorizationHeader@@SAPAV1@VRStringF@@@Z @ 415 NONAME ; class CSIPProxyAuthorizationHeader * CSIPProxyAuthorizationHeader::NewLC(class RStringF)
+	?NewLC@CSIPProxyRequireHeader@@SAPAV1@VRStringF@@@Z @ 416 NONAME ; class CSIPProxyRequireHeader * CSIPProxyRequireHeader::NewLC(class RStringF)
+	?NewLC@CSIPRAckHeader@@SAPAV1@IIVRStringF@@@Z @ 417 NONAME ; class CSIPRAckHeader * CSIPRAckHeader::NewLC(unsigned int, unsigned int, class RStringF)
+	?NewLC@CSIPRecordRouteHeader@@SAPAV1@PAVCSIPAddress@@@Z @ 418 NONAME ; class CSIPRecordRouteHeader * CSIPRecordRouteHeader::NewLC(class CSIPAddress *)
+	?NewLC@CSIPReferToHeader@@SAPAV1@PAVCSIPAddress@@@Z @ 419 NONAME ; class CSIPReferToHeader * CSIPReferToHeader::NewLC(class CSIPAddress *)
+	?NewLC@CSIPReplyToHeader@@SAPAV1@PAVCSIPAddress@@@Z @ 420 NONAME ; class CSIPReplyToHeader * CSIPReplyToHeader::NewLC(class CSIPAddress *)
+	?NewLC@CSIPRequest@@SAPAV1@VRStringF@@@Z @ 421 NONAME ; class CSIPRequest * CSIPRequest::NewLC(class RStringF)
+	?NewLC@CSIPRequest@@SAPAV1@XZ @ 422 NONAME ; class CSIPRequest * CSIPRequest::NewLC(void)
+	?NewLC@CSIPRequireHeader@@SAPAV1@VRStringF@@@Z @ 423 NONAME ; class CSIPRequireHeader * CSIPRequireHeader::NewLC(class RStringF)
+	?NewLC@CSIPResponse@@SAPAV1@IVRStringF@@@Z @ 424 NONAME ; class CSIPResponse * CSIPResponse::NewLC(unsigned int, class RStringF)
+	?NewLC@CSIPRetryAfterHeader@@SAPAV1@I@Z @ 425 NONAME ; class CSIPRetryAfterHeader * CSIPRetryAfterHeader::NewLC(unsigned int)
+	?NewLC@CSIPRouteHeader@@SAPAV1@PAVCSIPAddress@@@Z @ 426 NONAME ; class CSIPRouteHeader * CSIPRouteHeader::NewLC(class CSIPAddress *)
+	?NewLC@CSIPSecurityClientHeader@@SAPAV1@ABVTDesC8@@@Z @ 427 NONAME ; class CSIPSecurityClientHeader * CSIPSecurityClientHeader::NewLC(class TDesC8 const &)
+	?NewLC@CSIPSecurityServerHeader@@SAPAV1@ABVTDesC8@@@Z @ 428 NONAME ; class CSIPSecurityServerHeader * CSIPSecurityServerHeader::NewLC(class TDesC8 const &)
+	?NewLC@CSIPSecurityVerifyHeader@@SAPAV1@ABVCSIPSecurityHeaderBase@@@Z @ 429 NONAME ; class CSIPSecurityVerifyHeader * CSIPSecurityVerifyHeader::NewLC(class CSIPSecurityHeaderBase const &)
+	?NewLC@CSIPSecurityVerifyHeader@@SAPAV1@ABVTDesC8@@@Z @ 430 NONAME ; class CSIPSecurityVerifyHeader * CSIPSecurityVerifyHeader::NewLC(class TDesC8 const &)
+	?NewLC@CSIPServiceRouteHeader@@SAPAV1@PAVCSIPAddress@@@Z @ 431 NONAME ; class CSIPServiceRouteHeader * CSIPServiceRouteHeader::NewLC(class CSIPAddress *)
+	?NewLC@CSIPSubscriptionStateHeader@@SAPAV1@ABVTDesC8@@@Z @ 432 NONAME ; class CSIPSubscriptionStateHeader * CSIPSubscriptionStateHeader::NewLC(class TDesC8 const &)
+	?NewLC@CSIPSupportedHeader@@SAPAV1@VRStringF@@@Z @ 433 NONAME ; class CSIPSupportedHeader * CSIPSupportedHeader::NewLC(class RStringF)
+	?NewLC@CSIPToHeader@@SAPAV1@ABVCSIPFromToHeaderBase@@@Z @ 434 NONAME ; class CSIPToHeader * CSIPToHeader::NewLC(class CSIPFromToHeaderBase const &)
+	?NewLC@CSIPToHeader@@SAPAV1@PAVCSIPAddress@@@Z @ 435 NONAME ; class CSIPToHeader * CSIPToHeader::NewLC(class CSIPAddress *)
+	?NewLC@CSIPUnsupportedHeader@@SAPAV1@VRStringF@@@Z @ 436 NONAME ; class CSIPUnsupportedHeader * CSIPUnsupportedHeader::NewLC(class RStringF)
+	?NewLC@CSIPViaHeader@@SAPAV1@VRStringF@@PAVCSIPHostPort@@@Z @ 437 NONAME ; class CSIPViaHeader * CSIPViaHeader::NewLC(class RStringF, class CSIPHostPort *)
+	?NewLC@CSIPWWWAuthenticateHeader@@SAPAV1@VRStringF@@@Z @ 438 NONAME ; class CSIPWWWAuthenticateHeader * CSIPWWWAuthenticateHeader::NewLC(class RStringF)
+	?NewLC@CURIContainer@@SAPAV1@ABV1@@Z @ 439 NONAME ; class CURIContainer * CURIContainer::NewLC(class CURIContainer const &)
+	?NewLC@CURIContainer@@SAPAV1@PAVCUri8@@@Z @ 440 NONAME ; class CURIContainer * CURIContainer::NewLC(class CUri8 *)
+	?OpenL@SIPHeaderLookup@@SAXXZ @ 441 NONAME ; void SIPHeaderLookup::OpenL(void)
+	?OpenL@SIPStrings@@SAXXZ @ 442 NONAME ; void SIPStrings::OpenL(void)
+	?ParamValue@CSIPAuthHeaderBase@@QBE?AVRStringF@@V2@@Z @ 443 NONAME ; class RStringF CSIPAuthHeaderBase::ParamValue(class RStringF) const
+	?ParamValue@CSIPParameterHeaderBase@@QBE?AVRStringF@@V2@@Z @ 444 NONAME ; class RStringF CSIPParameterHeaderBase::ParamValue(class RStringF) const
+	?ParamValue@CSIPURI@@QBE?AVRStringF@@V2@@Z @ 445 NONAME ; class RStringF CSIPURI::ParamValue(class RStringF) const
+	?Password@CSIPURI@@QBEABVTDesC8@@XZ @ 446 NONAME ; class TDesC8 const & CSIPURI::Password(void) const
+	?Pool@SIPStrings@@SA?AVRStringPool@@XZ @ 447 NONAME ; class RStringPool SIPStrings::Pool(void)
+	?Port@CSIPHostPort@@QBEIXZ @ 448 NONAME ; unsigned int CSIPHostPort::Port(void) const
+	?PreferenceParam@CSIPSecurityHeaderBase@@QBENXZ @ 449 NONAME ; double CSIPSecurityHeaderBase::PreferenceParam(void) const
+	?PushLC@CSIPHeaderBase@@SAXPAV?$RPointerArray@VCSIPHeaderBase@@@@@Z @ 450 NONAME ; void CSIPHeaderBase::PushLC(class RPointerArray<class CSIPHeaderBase> *)
+	?QParameter@CSIPAcceptEncodingHeader@@QBENXZ @ 451 NONAME ; double CSIPAcceptEncodingHeader::QParameter(void) const
+	?QParameter@CSIPAcceptHeader@@QBENXZ @ 452 NONAME ; double CSIPAcceptHeader::QParameter(void) const
+	?QParameter@CSIPAcceptLanguageHeader@@QBENXZ @ 453 NONAME ; double CSIPAcceptLanguageHeader::QParameter(void) const
+	?QParameter@CSIPContactHeader@@QBENXZ @ 454 NONAME ; double CSIPContactHeader::QParameter(void) const
+	?ReasonPhrase@CSIPResponse@@QBE?AVRStringF@@XZ @ 455 NONAME ; class RStringF CSIPResponse::ReasonPhrase(void) const
+	?RemoveHeader@CSIPMessage@@QAEHPBVCSIPHeaderBase@@@Z @ 456 NONAME ; int CSIPMessage::RemoveHeader(class CSIPHeaderBase const *)
+	?ReplaceHeaderL@CSIPMessage@@QAEXPAVCSIPHeaderBase@@0@Z @ 457 NONAME ; void CSIPMessage::ReplaceHeaderL(class CSIPHeaderBase *, class CSIPHeaderBase *)
+	?ReplaceHeadersL@CSIPMessage@@QAEXAAV?$RPointerArray@VCSIPHeaderBase@@@@@Z @ 458 NONAME ; void CSIPMessage::ReplaceHeadersL(class RPointerArray<class CSIPHeaderBase> &)
+	?RequestURI@CSIPRequest@@QAEPAVCURIContainer@@XZ @ 459 NONAME ; class CURIContainer * CSIPRequest::RequestURI(void)
+	?ResponseCode@CSIPResponse@@QBEIXZ @ 460 NONAME ; unsigned int CSIPResponse::ResponseCode(void) const
+	?RetryAfter@CSIPRetryAfterHeader@@QBEIXZ @ 461 NONAME ; unsigned int CSIPRetryAfterHeader::RetryAfter(void) const
+	?RetryAfterParameter@CSIPSubscriptionStateHeader@@QBEHXZ @ 462 NONAME ; int CSIPSubscriptionStateHeader::RetryAfterParameter(void) const
+	?SIPAddress@CSIPAddressHeaderBase@@QAEAAVCSIPAddress@@XZ @ 463 NONAME ; class CSIPAddress & CSIPAddressHeaderBase::SIPAddress(void)
+	?SIPAddress@CSIPAddressHeaderBase@@QBEABVCSIPAddress@@XZ @ 464 NONAME ; class CSIPAddress const & CSIPAddressHeaderBase::SIPAddress(void) const
+	?SIPAddress@CSIPContactHeader@@QAEPAVCSIPAddress@@XZ @ 465 NONAME ; class CSIPAddress * CSIPContactHeader::SIPAddress(void)
+	?SIPAddress@CSIPContactHeader@@QBEPBVCSIPAddress@@XZ @ 466 NONAME ; class CSIPAddress const * CSIPContactHeader::SIPAddress(void) const
+	?SIPAddress@CSIPFromToHeaderBase@@QAEAAVCSIPAddress@@XZ @ 467 NONAME ; class CSIPAddress & CSIPFromToHeaderBase::SIPAddress(void)
+	?SIPAddress@CSIPFromToHeaderBase@@QBEABVCSIPAddress@@XZ @ 468 NONAME ; class CSIPAddress const & CSIPFromToHeaderBase::SIPAddress(void) const
+	?SIPAddress@CSIPRouteHeaderBase@@QAEAAVCSIPAddress@@XZ @ 469 NONAME ; class CSIPAddress & CSIPRouteHeaderBase::SIPAddress(void)
+	?SIPAddress@CSIPRouteHeaderBase@@QBEABVCSIPAddress@@XZ @ 470 NONAME ; class CSIPAddress const & CSIPRouteHeaderBase::SIPAddress(void) const
+	?SIPURI@CURIContainer@@QAEPAVCSIPURI@@XZ @ 471 NONAME ; class CSIPURI * CURIContainer::SIPURI(void)
+	?SIPURI@CURIContainer@@QBEPBVCSIPURI@@XZ @ 472 NONAME ; class CSIPURI const * CURIContainer::SIPURI(void) const
+	?SIPVersion@CSIPMessage@@QBE?AVRStringF@@XZ @ 473 NONAME ; class RStringF CSIPMessage::SIPVersion(void) const
+	?SentByHostPort@CSIPViaHeader@@QAEAAVCSIPHostPort@@XZ @ 474 NONAME ; class CSIPHostPort & CSIPViaHeader::SentByHostPort(void)
+	?SentProtocolName@CSIPViaHeader@@QBE?AVRStringF@@XZ @ 475 NONAME ; class RStringF CSIPViaHeader::SentProtocolName(void) const
+	?SentProtocolVersion@CSIPViaHeader@@QBE?AVRStringF@@XZ @ 476 NONAME ; class RStringF CSIPViaHeader::SentProtocolVersion(void) const
+	?Seq@CSIPCSeqHeader@@QBEIXZ @ 477 NONAME ; unsigned int CSIPCSeqHeader::Seq(void) const
+	?Seq@CSIPRAckHeader@@QBEIXZ @ 478 NONAME ; unsigned int CSIPRAckHeader::Seq(void) const
+	?SetAccessTypeL@CSIPPAccessNetworkInfoHeader@@QAEXVRStringF@@@Z @ 479 NONAME ; void CSIPPAccessNetworkInfoHeader::SetAccessTypeL(class RStringF)
+	?SetCSeqNum@CSIPRAckHeader@@QAEXI@Z @ 480 NONAME ; void CSIPRAckHeader::SetCSeqNum(unsigned int)
+	?SetCodingsL@CSIPAcceptEncodingHeader@@QAEXABVTDesC8@@@Z @ 481 NONAME ; void CSIPAcceptEncodingHeader::SetCodingsL(class TDesC8 const &)
+	?SetContent@CSIPMessage@@QAEXPAVHBufC8@@@Z @ 482 NONAME ; void CSIPMessage::SetContent(class HBufC8 *)
+	?SetConvertToSIPURI@SIPHeaderLookup@@SAXH@Z @ 483 NONAME ; void SIPHeaderLookup::SetConvertToSIPURI(int)
+	?SetDelay@CSIPTimestampHeader@@QAEXN@Z @ 484 NONAME ; void CSIPTimestampHeader::SetDelay(double)
+	?SetDispTypeL@CSIPContentDispositionHeader@@QAEXABVTDesC8@@@Z @ 485 NONAME ; void CSIPContentDispositionHeader::SetDispTypeL(class TDesC8 const &)
+	?SetDisplayNameL@CSIPAddress@@QAEXABVTDesC8@@@Z @ 486 NONAME ; void CSIPAddress::SetDisplayNameL(class TDesC8 const &)
+	?SetDurationParamL@CSIPRetryAfterHeader@@QAEXH@Z @ 487 NONAME ; void CSIPRetryAfterHeader::SetDurationParamL(int)
+	?SetEventPackageL@CSIPAllowEventsHeader@@QAEXABVTDesC8@@@Z @ 488 NONAME ; void CSIPAllowEventsHeader::SetEventPackageL(class TDesC8 const &)
+	?SetEventPackageL@CSIPEventHeader@@QAEXABVTDesC8@@@Z @ 489 NONAME ; void CSIPEventHeader::SetEventPackageL(class TDesC8 const &)
+	?SetEventTemplatesL@CSIPAllowEventsHeader@@QAEXABVMDesC8Array@@@Z @ 490 NONAME ; void CSIPAllowEventsHeader::SetEventTemplatesL(class MDesC8Array const &)
+	?SetEventTemplatesL@CSIPEventHeader@@QAEXABVMDesC8Array@@@Z @ 491 NONAME ; void CSIPEventHeader::SetEventTemplatesL(class MDesC8Array const &)
+	?SetExpiresParameterL@CSIPContactHeader@@QAEXH@Z @ 492 NONAME ; void CSIPContactHeader::SetExpiresParameterL(int)
+	?SetExpiresParameterL@CSIPSubscriptionStateHeader@@QAEXH@Z @ 493 NONAME ; void CSIPSubscriptionStateHeader::SetExpiresParameterL(int)
+	?SetHostL@CSIPHostPort@@QAEXABVTDesC8@@@Z @ 494 NONAME ; void CSIPHostPort::SetHostL(class TDesC8 const &)
+	?SetHostPortL@CSIPURI@@QAEXPAVCSIPHostPort@@@Z @ 495 NONAME ; void CSIPURI::SetHostPortL(class CSIPHostPort *)
+	?SetLanguageRangeL@CSIPAcceptLanguageHeader@@QAEXABVTDesC8@@@Z @ 496 NONAME ; void CSIPAcceptLanguageHeader::SetLanguageRangeL(class TDesC8 const &)
+	?SetMechanismNameL@CSIPSecurityHeaderBase@@QAEXABVTDesC8@@@Z @ 497 NONAME ; void CSIPSecurityHeaderBase::SetMechanismNameL(class TDesC8 const &)
+	?SetMediaSubtypeL@CSIPAcceptHeader@@QAEXABVTDesC8@@@Z @ 498 NONAME ; void CSIPAcceptHeader::SetMediaSubtypeL(class TDesC8 const &)
+	?SetMediaSubtypeL@CSIPContentTypeHeader@@QAEXABVTDesC8@@@Z @ 499 NONAME ; void CSIPContentTypeHeader::SetMediaSubtypeL(class TDesC8 const &)
+	?SetMediaTypeL@CSIPAcceptHeader@@QAEXABVTDesC8@@@Z @ 500 NONAME ; void CSIPAcceptHeader::SetMediaTypeL(class TDesC8 const &)
+	?SetMediaTypeL@CSIPContentTypeHeader@@QAEXABVTDesC8@@@Z @ 501 NONAME ; void CSIPContentTypeHeader::SetMediaTypeL(class TDesC8 const &)
+	?SetMethodL@CSIPCSeqHeader@@QAEXVRStringF@@@Z @ 502 NONAME ; void CSIPCSeqHeader::SetMethodL(class RStringF)
+	?SetMethodL@CSIPRAckHeader@@QAEXVRStringF@@@Z @ 503 NONAME ; void CSIPRAckHeader::SetMethodL(class RStringF)
+	?SetMethodL@CSIPRequest@@QAEXABVTDesC8@@@Z @ 504 NONAME ; void CSIPRequest::SetMethodL(class TDesC8 const &)
+	?SetMethodL@CSIPRequest@@QAEXVRStringF@@@Z @ 505 NONAME ; void CSIPRequest::SetMethodL(class RStringF)
+	?SetParamAndAddQuotesL@CSIPAuthHeaderBase@@QAEXVRStringF@@ABVTDesC8@@@Z @ 506 NONAME ; void CSIPAuthHeaderBase::SetParamAndAddQuotesL(class RStringF, class TDesC8 const &)
+	?SetParamL@CSIPAuthHeaderBase@@QAEXVRStringF@@0@Z @ 507 NONAME ; void CSIPAuthHeaderBase::SetParamL(class RStringF, class RStringF)
+	?SetParamL@CSIPParameterHeaderBase@@QAEXVRStringF@@0@Z @ 508 NONAME ; void CSIPParameterHeaderBase::SetParamL(class RStringF, class RStringF)
+	?SetParamL@CSIPParameterHeaderBase@@QAEXVRStringF@@@Z @ 509 NONAME ; void CSIPParameterHeaderBase::SetParamL(class RStringF)
+	?SetParamL@CSIPURI@@QAEXVRStringF@@0@Z @ 510 NONAME ; void CSIPURI::SetParamL(class RStringF, class RStringF)
+	?SetParamL@CSIPURI@@QAEXVRStringF@@@Z @ 511 NONAME ; void CSIPURI::SetParamL(class RStringF)
+	?SetPasswordL@CSIPURI@@QAEXABVTDesC8@@@Z @ 512 NONAME ; void CSIPURI::SetPasswordL(class TDesC8 const &)
+	?SetPort@CSIPHostPort@@QAEXI@Z @ 513 NONAME ; void CSIPHostPort::SetPort(unsigned int)
+	?SetPreferenceParamL@CSIPSecurityHeaderBase@@QAEXN@Z @ 514 NONAME ; void CSIPSecurityHeaderBase::SetPreferenceParamL(double)
+	?SetQParameterL@CSIPAcceptEncodingHeader@@QAEXN@Z @ 515 NONAME ; void CSIPAcceptEncodingHeader::SetQParameterL(double)
+	?SetQParameterL@CSIPAcceptHeader@@QAEXN@Z @ 516 NONAME ; void CSIPAcceptHeader::SetQParameterL(double)
+	?SetQParameterL@CSIPAcceptLanguageHeader@@QAEXN@Z @ 517 NONAME ; void CSIPAcceptLanguageHeader::SetQParameterL(double)
+	?SetQParameterL@CSIPContactHeader@@QAEXN@Z @ 518 NONAME ; void CSIPContactHeader::SetQParameterL(double)
+	?SetReasonPhraseL@CSIPResponse@@QAEXVRStringF@@@Z @ 519 NONAME ; void CSIPResponse::SetReasonPhraseL(class RStringF)
+	?SetRequestURIL@CSIPRequest@@QAEXPAVCURIContainer@@@Z @ 520 NONAME ; void CSIPRequest::SetRequestURIL(class CURIContainer *)
+	?SetResponseCodeL@CSIPResponse@@QAEXI@Z @ 521 NONAME ; void CSIPResponse::SetResponseCodeL(unsigned int)
+	?SetRetryAfter@CSIPRetryAfterHeader@@QAEXI@Z @ 522 NONAME ; void CSIPRetryAfterHeader::SetRetryAfter(unsigned int)
+	?SetRetryAfterParameterL@CSIPSubscriptionStateHeader@@QAEXH@Z @ 523 NONAME ; void CSIPSubscriptionStateHeader::SetRetryAfterParameterL(int)
+	?SetSIPAddressL@CSIPAddressHeaderBase@@QAEXPAVCSIPAddress@@@Z @ 524 NONAME ; void CSIPAddressHeaderBase::SetSIPAddressL(class CSIPAddress *)
+	?SetSIPAddressL@CSIPContactHeader@@QAEXPAVCSIPAddress@@@Z @ 525 NONAME ; void CSIPContactHeader::SetSIPAddressL(class CSIPAddress *)
+	?SetSIPAddressL@CSIPFromToHeaderBase@@QAEXPAVCSIPAddress@@@Z @ 526 NONAME ; void CSIPFromToHeaderBase::SetSIPAddressL(class CSIPAddress *)
+	?SetSIPAddressL@CSIPRouteHeaderBase@@QAEXPAVCSIPAddress@@@Z @ 527 NONAME ; void CSIPRouteHeaderBase::SetSIPAddressL(class CSIPAddress *)
+	?SetSentProtocolVersionL@CSIPViaHeader@@QAEXVRStringF@@@Z @ 528 NONAME ; void CSIPViaHeader::SetSentProtocolVersionL(class RStringF)
+	?SetSeq@CSIPCSeqHeader@@QAEXI@Z @ 529 NONAME ; void CSIPCSeqHeader::SetSeq(unsigned int)
+	?SetSeq@CSIPRAckHeader@@QAEXI@Z @ 530 NONAME ; void CSIPRAckHeader::SetSeq(unsigned int)
+	?SetSubStateValueL@CSIPSubscriptionStateHeader@@QAEXABVTDesC8@@@Z @ 531 NONAME ; void CSIPSubscriptionStateHeader::SetSubStateValueL(class TDesC8 const &)
+	?SetTimestamp@CSIPTimestampHeader@@QAEXN@Z @ 532 NONAME ; void CSIPTimestampHeader::SetTimestamp(double)
+	?SetTransportL@CSIPViaHeader@@QAEXVRStringF@@@Z @ 533 NONAME ; void CSIPViaHeader::SetTransportL(class RStringF)
+	?SetTtlParamL@CSIPURI@@QAEXH@Z @ 534 NONAME ; void CSIPURI::SetTtlParamL(int)
+	?SetTtlParamL@CSIPViaHeader@@QAEXH@Z @ 535 NONAME ; void CSIPViaHeader::SetTtlParamL(int)
+	?SetUri8L@CSIPAddress@@QAEXPAVCUri8@@@Z @ 536 NONAME ; void CSIPAddress::SetUri8L(class CUri8 *)
+	?SetUserL@CSIPURI@@QAEXABVTDesC8@@@Z @ 537 NONAME ; void CSIPURI::SetUserL(class TDesC8 const &)
+	?SetValue@CSIPUnsignedIntHeaderBase@@QAEXI@Z @ 538 NONAME ; void CSIPUnsignedIntHeaderBase::SetValue(unsigned int)
+	?SetValueL@CSIPExtensionHeader@@QAEXABVTDesC8@@@Z @ 539 NONAME ; void CSIPExtensionHeader::SetValueL(class TDesC8 const &)
+	?SetValueL@CSIPTokenHeaderBase@@QAEXVRStringF@@@Z @ 540 NONAME ; void CSIPTokenHeaderBase::SetValueL(class RStringF)
+	?Star@CSIPContactHeader@@QBEHXZ @ 541 NONAME ; int CSIPContactHeader::Star(void) const
+	?StringF@SIPStrings@@SA?AVRStringF@@H@Z @ 542 NONAME ; class RStringF SIPStrings::StringF(int)
+	?SubStateValue@CSIPSubscriptionStateHeader@@QBEABVTDesC8@@XZ @ 543 NONAME ; class TDesC8 const & CSIPSubscriptionStateHeader::SubStateValue(void) const
+	?Table@SIPStrings@@SAABUTStringTable@@XZ @ 544 NONAME ; struct TStringTable const & SIPStrings::Table(void)
+	?TakeContentOwnershipL@CSIPMessage@@QAEPAVHBufC8@@XZ @ 545 NONAME ; class HBufC8 * CSIPMessage::TakeContentOwnershipL(void)
+	?Timestamp@CSIPTimestampHeader@@QBENXZ @ 546 NONAME ; double CSIPTimestampHeader::Timestamp(void) const
+	?To@CSIPMessage@@QAEPAVCSIPToHeader@@XZ @ 547 NONAME ; class CSIPToHeader * CSIPMessage::To(void)
+	?ToTextHeaderPartL@CSIPMessage@@QAEPAVCBufBase@@XZ @ 548 NONAME ; class CBufBase * CSIPMessage::ToTextHeaderPartL(void)
+	?ToTextHeaderPartLC@CSIPMessage@@QAEPAVCBufBase@@XZ @ 549 NONAME ; class CBufBase * CSIPMessage::ToTextHeaderPartLC(void)
+	?ToTextL@CSIPHeaderBase@@QBEPAVHBufC8@@XZ @ 550 NONAME ; class HBufC8 * CSIPHeaderBase::ToTextL(void) const
+	?ToTextL@CSIPMessage@@QAEPAVCBufBase@@XZ @ 551 NONAME ; class CBufBase * CSIPMessage::ToTextL(void)
+	?ToTextL@CSIPURI@@QBEPAVHBufC8@@XZ @ 552 NONAME ; class HBufC8 * CSIPURI::ToTextL(void) const
+	?ToTextL@CURIContainer@@QBEPAVHBufC8@@XZ @ 553 NONAME ; class HBufC8 * CURIContainer::ToTextL(void) const
+	?ToTextLC@CSIPAddress@@QBEPAVHBufC8@@H@Z @ 554 NONAME ; class HBufC8 * CSIPAddress::ToTextLC(int) const
+	?ToTextLC@CSIPHeaderBase@@QBEPAVHBufC8@@XZ @ 555 NONAME ; class HBufC8 * CSIPHeaderBase::ToTextLC(void) const
+	?ToTextLC@CSIPMessage@@QAEPAVCBufBase@@XZ @ 556 NONAME ; class CBufBase * CSIPMessage::ToTextLC(void)
+	?ToTextValueL@CSIPAllowEventsHeader@@UBEPAVHBufC8@@XZ @ 557 NONAME ; class HBufC8 * CSIPAllowEventsHeader::ToTextValueL(void) const
+	?ToTextValueL@CSIPAuthenticationInfoHeader@@UBEPAVHBufC8@@XZ @ 558 NONAME ; class HBufC8 * CSIPAuthenticationInfoHeader::ToTextValueL(void) const
+	?ToTextValueL@CSIPCSeqHeader@@UBEPAVHBufC8@@XZ @ 559 NONAME ; class HBufC8 * CSIPCSeqHeader::ToTextValueL(void) const
+	?ToTextValueL@CSIPCallIDHeader@@UBEPAVHBufC8@@XZ @ 560 NONAME ; class HBufC8 * CSIPCallIDHeader::ToTextValueL(void) const
+	?ToTextValueL@CSIPExtensionHeader@@UBEPAVHBufC8@@XZ @ 561 NONAME ; class HBufC8 * CSIPExtensionHeader::ToTextValueL(void) const
+	?ToTextValueL@CSIPParameterHeaderBase@@UBEPAVHBufC8@@XZ @ 562 NONAME ; class HBufC8 * CSIPParameterHeaderBase::ToTextValueL(void) const
+	?ToTextValueL@CSIPRAckHeader@@UBEPAVHBufC8@@XZ @ 563 NONAME ; class HBufC8 * CSIPRAckHeader::ToTextValueL(void) const
+	?ToTextValueL@CSIPTimestampHeader@@UBEPAVHBufC8@@XZ @ 564 NONAME ; class HBufC8 * CSIPTimestampHeader::ToTextValueL(void) const
+	?ToTextValueL@CSIPTokenHeaderBase@@UBEPAVHBufC8@@XZ @ 565 NONAME ; class HBufC8 * CSIPTokenHeaderBase::ToTextValueL(void) const
+	?ToTextValueL@CSIPUnsignedIntHeaderBase@@UBEPAVHBufC8@@XZ @ 566 NONAME ; class HBufC8 * CSIPUnsignedIntHeaderBase::ToTextValueL(void) const
+	?ToTextValueLC@CSIPHeaderBase@@QBEPAVHBufC8@@XZ @ 567 NONAME ; class HBufC8 * CSIPHeaderBase::ToTextValueLC(void) const
+	?Transport@CSIPViaHeader@@QBE?AVRStringF@@XZ @ 568 NONAME ; class RStringF CSIPViaHeader::Transport(void) const
+	?TtlParam@CSIPURI@@QBEHXZ @ 569 NONAME ; int CSIPURI::TtlParam(void) const
+	?TtlParam@CSIPViaHeader@@QBEHXZ @ 570 NONAME ; int CSIPViaHeader::TtlParam(void) const
+	?Type@CSIPResponse@@QBE?AW4TType@1@XZ @ 571 NONAME ; enum CSIPResponse::TType CSIPResponse::Type(void) const
+	?URI@CSIPAddress@@QAEAAVCURIContainer@@XZ @ 572 NONAME ; class CURIContainer & CSIPAddress::URI(void)
+	?URI@CSIPAddress@@QBEABVCURIContainer@@XZ @ 573 NONAME ; class CURIContainer const & CSIPAddress::URI(void) const
+	?URIHeaderValuesL@CSIPURI@@QBEPAVCPtrC8Array@@ABVTDesC8@@@Z @ 574 NONAME ; class CPtrC8Array * CSIPURI::URIHeaderValuesL(class TDesC8 const &) const
+	?Uri8@CSIPAddress@@QBEABVCUri8@@XZ @ 575 NONAME ; class CUri8 const & CSIPAddress::Uri8(void) const
+	?Uri8@CURIContainer@@QBEPBVCUri8@@XZ @ 576 NONAME ; class CUri8 const * CURIContainer::Uri8(void) const
+	?User@CSIPURI@@QBEABVTDesC8@@XZ @ 577 NONAME ; class TDesC8 const & CSIPURI::User(void) const
+	?Value@CSIPAuthenticationInfoHeader@@QBE?AVRStringF@@V2@@Z @ 578 NONAME ; class RStringF CSIPAuthenticationInfoHeader::Value(class RStringF) const
+	?Value@CSIPExtensionHeader@@QBEABVTDesC8@@XZ @ 579 NONAME ; class TDesC8 const & CSIPExtensionHeader::Value(void) const
+	?Value@CSIPTokenHeaderBase@@QBE?AVRStringF@@XZ @ 580 NONAME ; class RStringF CSIPTokenHeaderBase::Value(void) const
+	?Value@CSIPUnsignedIntHeaderBase@@QBEIXZ @ 581 NONAME ; unsigned int CSIPUnsignedIntHeaderBase::Value(void) const
+	?Param@CSIPParameterHeaderBase@@QBEHHAAVRStringF@@@Z @ 582 NONAME ; int CSIPParameterHeaderBase::Param(int, class RStringF &) const
+	?ParamCount@CSIPParameterHeaderBase@@QBEHXZ @ 583 NONAME ; int CSIPParameterHeaderBase::ParamCount(void) const
+	?DesParamValue@CSIPAuthHeaderBase@@QBEABVTDesC8@@VRStringF@@@Z @ 584 NONAME ; class TDesC8 const & CSIPAuthHeaderBase::DesParamValue(class RStringF) const
+	?SetDesParamL@CSIPAuthHeaderBase@@QAEXVRStringF@@ABVTDesC8@@@Z @ 585 NONAME ; void CSIPAuthHeaderBase::SetDesParamL(class RStringF, class TDesC8 const &)
+	?DesValue@CSIPAuthenticationInfoHeader@@QBEABVTDesC8@@VRStringF@@@Z @ 586 NONAME ; class TDesC8 const & CSIPAuthenticationInfoHeader::DesValue(class RStringF) const
+	?SetSIPS@CSIPURI@@QAEXH@Z @ 587 NONAME ; void CSIPURI::SetSIPS(int)
+	?CloneAsUri8L@CURIContainer@@QBEPAVCUri8@@XZ @ 588 NONAME ; class CUri8 * CURIContainer::CloneAsUri8L(void) const
+	?ExternalizeSupported@CSIPAuthenticateHeaderBase@@UBEHXZ @ 589 NONAME ; int CSIPAuthenticateHeaderBase::ExternalizeSupported(void) const
+	?ExternalizeSupported@CSIPProxyAuthorizationHeader@@UBEHXZ @ 590 NONAME ; int CSIPProxyAuthorizationHeader::ExternalizeSupported(void) const
+	?RemoveExpiresParam@CSIPContactHeader@@QAEXXZ @ 591 NONAME ; void CSIPContactHeader::RemoveExpiresParam(void)
+

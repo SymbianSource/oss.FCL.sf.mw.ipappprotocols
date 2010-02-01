@@ -1,0 +1,120 @@
+// Copyright (c) 2006-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Registry info for the SIP Tier Manager ECOM Plugin
+// 
+//
+
+/**
+ @file 
+*/
+
+#include <ecom/registryinfo.rh>
+
+RESOURCE REGISTRY_INFO theInfo
+{
+dll_uid =  0x200041F6;
+interfaces = 
+    {
+    INTERFACE_INFO
+        {
+        interface_uid =  0x10281DD7;
+        implementations = 
+            {
+           IMPLEMENTATION_INFO
+                {
+                implementation_uid = 0x200041F7;
+                version_no = 1;
+                display_name = "SIP Tier Manager Factory";
+                default_data = "SIPTierManager";
+                opaque_data = "";
+                }
+            };
+        },
+    INTERFACE_INFO
+        {
+        interface_uid =  0x10274546;
+        implementations = 
+            {
+           IMPLEMENTATION_INFO
+                {
+                implementation_uid = 0x200041F9;
+                version_no = 1;
+                display_name = "SIP Meta Connection Provider Factory";
+                default_data = "SIPMCprFactory";
+                opaque_data = "";
+                }
+            };
+        },
+    INTERFACE_INFO
+        {
+        interface_uid =  0x102070EE;
+        implementations = 
+            {
+           IMPLEMENTATION_INFO
+                {
+                implementation_uid = 0x10274C38;
+                version_no = 1;
+                display_name = "SIP Connection Provider Factory";
+                default_data = "SIPConnectionProviderFactory";
+                opaque_data = "";
+                }
+            };
+        },
+    INTERFACE_INFO
+        {
+        interface_uid = 0x10204301;
+        implementations = 
+            {
+           IMPLEMENTATION_INFO
+                {
+                implementation_uid = 0x10274C17;
+                version_no = 1;
+                display_name = "SIPSubConnection Provider Factory";
+                default_data = "SIPSubConnectionProviderFactory";
+                opaque_data = "";
+                }
+            };
+        },
+    INTERFACE_INFO
+        {
+        interface_uid = 0x10204303;
+        implementations = 
+            {
+           IMPLEMENTATION_INFO
+                {
+                implementation_uid = 0x10274C18;
+                version_no = 1;
+                display_name = "SIP Extension Set of SubConnection Paremers";
+                default_data = "text/wml";
+                opaque_data = "";
+                }
+            };
+        },
+    INTERFACE_INFO
+        {
+        interface_uid = 0x10204305;
+        implementations = 
+            {
+           IMPLEMENTATION_INFO
+                {
+                implementation_uid = 0x10274CAE;
+                version_no = 1;
+                display_name = "SIP Extension Set of SubConnection Events";
+                default_data = "text/wml";
+                opaque_data = "";
+                }
+            };
+        }
+    };
+}

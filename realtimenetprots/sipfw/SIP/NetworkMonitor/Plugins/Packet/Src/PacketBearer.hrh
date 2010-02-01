@@ -1,0 +1,30 @@
+/*
+* Copyright (c) 2004-2009 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description:
+* Name        : PacketBearer.hrh
+* Part of     : NetworkMonitor
+* ECom interface constant definitions for Bearer plugins
+* Version     : SIP/4.0
+*
+*/
+
+
+
+#ifndef __PACKETBEARER_HRH__
+#define __PACKETBEARER_HRH__
+
+/// Official ECom interface UID
+#define PACKETBEARERUID 0x102010D9
+
+#endif // __PACKETBEARER_HRH__

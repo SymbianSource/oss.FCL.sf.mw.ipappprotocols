@@ -1,0 +1,49 @@
+;
+; Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+; All rights reserved.
+; This component and the accompanying materials are made available
+; under the terms of "Eclipse Public License v1.0"
+; which accompanies this distribution, and is available
+; at the URL "http://www.eclipse.org/legal/epl-v10.html".
+;
+; Initial Contributors:
+; Nokia Corporation - initial contribution.
+;
+; Contributors:
+;
+; Description:
+;
+; ------------------------------------------------------------------------------
+; SIPSettingsUI example SIS package file.
+; ------------------------------------------------------------------------------
+
+; Languages
+&EN
+
+; Header
+; Package UID equals the GSSIPSettingsPlugin.dll UID
+#{"SIPSettingsUI patch"}, (0x101fd6d0), 1, 0, 0, TYPE=SP
+
+; Supports S60 v 3.0
+[0x101F7961], 0, 0, 0, {"S60ProductID"}
+
+; Localised Vendor name
+%{"Nokia"}
+
+; Unique Vendor name
+:"Nokia"
+
+; /////////////////////////
+;	SIP Settings UI
+; /////////////////////////
+"\epoc32\RELEASE\armv5\udeb\GSSIPSettingsPlugin.dll"	-	"!:\sys\bin\GSSIPSettingsPlugin.dll"
+"\epoc32\data\z\resource\plugins\GSSIPSettingsPlugin.rsc"	-	"!:\resource\plugins\GSSIPSettingsPlugin.rsc"
+"\epoc32\data\z\resource\apps\GSSIPSettingsPlugin.mif"  - "!:\resource\apps\GSSIPSettingsPlugin.mif"
+;
+; Remember to check if you need to install this file too, only if you have updated icon file
+;"\epoc32\data\z\resource\apps\GSSIPSettingsPlugin.mbm"  - "!:\resource\apps\GSSIPSettingsPlugin.mbm"
+
+; /////////////////////////
+;	SIP Settings UI resources
+; /////////////////////////
+"\epoc32\data\z\resource\GSSIPSettingsPluginRsc.RSC"  - "!:\resource\GSSIPSettingsPluginRsc.RSC"

@@ -1,0 +1,38 @@
+// Copyright (c) 2007-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name     : te_rtpsuite.iby
+// Part of  : test Component for RTP integration test suite 
+// IBY file for RTP test suite
+// 
+//
+
+#ifndef __TE_RTP_SUITE_IBY__
+#define __TE_RTP_SUITE_IBY__
+
+#include <testexecute.iby>
+#include <shimrtp.iby>
+
+#if (!defined EKA2)
+file=ABI_DIR\BUILD_DIR\te_rtpsuite.exe		system\libs\te_rtpsuite.exe
+#else
+file=ABI_DIR\BUILD_DIR\te_rtpsuite.exe		system\bin\te_rtpsuite.exe
+#endif
+data=EPOCROOT##epoc32\data\z\testData\configs\rtp\te_rtpsuite.ini	testData\configs\rtp\te_rtpsuite.ini
+data=EPOCROOT##epoc32\data\z\testData\scripts\rtp\te_rtpsuite.script	testData\scripts\rtp\te_rtpsuite.Script
+#ifdef SYMBIAN_NON_SEAMLESS_NETWORK_BEARER_MOBILITY
+data=EPOCROOT##epoc32\data\z\testData\scripts\rtp\te_rtpsuite2.script	testData\scripts\rtp\te_rtpsuite2.Script
+#endif
+#endif
+
+

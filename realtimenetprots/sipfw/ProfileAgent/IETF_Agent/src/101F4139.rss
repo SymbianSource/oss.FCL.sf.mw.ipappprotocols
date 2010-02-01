@@ -1,0 +1,44 @@
+// Copyright (c) 2005-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name          : 101F4139.RSS
+// Part of       : SIP IETF Agent
+// Version       : SIP/4.0
+//
+
+
+
+#include <ecom/registryinfov2.rh>
+
+RESOURCE REGISTRY_INFO theInfo
+{
+resource_format_version = RESOURCE_FORMAT_VERSION_2;
+dll_uid = 0x101F4139;
+interfaces = 
+    {
+    INTERFACE_INFO
+        {
+        interface_uid = 0x101F4136;
+        implementations = 
+            {
+            IMPLEMENTATION_INFO
+                {
+                implementation_uid = 0x101F413A;
+                version_no = 1;
+                display_name = "standard IETF profile agent";
+                default_data = "0_IETF";
+                }            
+            };
+        }
+    };
+}

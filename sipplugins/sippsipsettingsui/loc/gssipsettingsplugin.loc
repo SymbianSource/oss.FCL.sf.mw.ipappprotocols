@@ -1,0 +1,501 @@
+/*
+* Copyright (c) 2005 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+*		Localization strings for SIPSettings Plugin
+*
+*/
+
+
+//  LOCALISATION STRINGS
+
+// **SIP Settings
+
+// **Profiles view
+
+//d:Text of a title in profile view
+//l:title_pane_t2/opt9
+//
+#define qtn_sip_title_sip "SIP settings"
+
+//d:SIP Settings plugin caption.
+//l:list_single_large_graphic_pane_t1
+//w:
+//r:3.1
+//
+#define qtn_set_folder_conn_sip "SIP"
+
+// **OPTIONS MENU
+
+//d:Command in Options list
+//d:Opens value changing dialog of highlighted item
+//l:list_single_pane_t1_cp2
+//
+#define qtn_set_options_change "Change"
+
+//d:Text of a list item in SIP settings menu
+//d:Item creates new profile
+//l:list_single_pane_t1_cp2/opt3
+//
+#define qtn_sip_add_new "Add new"
+
+//d:Text of a list item in SIP settings menu
+//d:Item sets default profile
+//l:list_single_popup_submenu_pane_t1
+//
+#define qtn_sip_def_profile "Use default profile"
+
+//d:Text of a list item in SIP settings menu
+//d:Item creates new SIP profile with existing profile
+//l:list_single_popup_submenu_pane_t1
+//
+#define qtn_sip_exist_profile "Use existing profile"
+
+//d:Text of a list item in SIP settings menu
+//d:Item opens profile to be edited
+//l:list_single_pane_t1_cp2
+//
+#define qtn_sip_edit "Edit"
+
+//d:Text of a list item in SIP settings menu
+//d:Item deletes SIP profile
+//l:list_single_pane_t1_cp2
+//
+#define qtn_sip_delete "Delete"
+
+//d:Text for default profile
+//l:list_single_pane_t1_cp2
+//
+#define qtn_sip_set_def_profile "Default profile"
+
+//d:Text for query
+//d:Item is used when when using profile
+//l:heading_pane_t1
+//
+#define qtn_sip_head_use_profile "Use profile:"
+
+//d:Text of a delete query
+//d:Item deletes SIP profile
+//l:popup_note_window
+//
+#define qtn_sip_conf_delete "Delete %U?"
+
+//d:Text of a list item in SIP settings menu
+//d:Item creates new SIP profile with default profile
+//l:list_setting_pane_t1
+//
+#define qtn_sip_head_def_profile "Default profile"
+
+//d:Text of a list item in profiles view
+//d:Item is used when profile is not registered
+//l:list_double_pane_t2
+//
+#define qtn_sip_not_registered "Not registered"
+
+//d:Text of a list item in profile view
+//d:Item is used when registration is failed
+//l:list_double_pane_t2
+//
+#define qtn_sip_reg_failed "Registration failed"
+
+//d:Text of a list item in profile view
+//d:Item is used when profile is registered
+//l:list_double_pane_t2
+//
+#define qtn_sip_registered "Registered"
+
+//d:Text for empty listbox item
+//d:No SIP profiles defined.
+//l:popup_note_window
+///
+#define qtn_sip_no_sip_profile "(no SIP profiles)"
+
+// **Settings view
+
+//d:Text of a list item in profile settings view
+//d:Item opens provider name setting page
+//l:list_setting_pane_t1
+//
+#define qtn_sip_prov_name "Profile name"
+
+//d:Text of a list item in profile settings view
+//d:Item opens provider name setting page
+//l:list_setting_pane_t1
+//
+#define qtn_sip_provider "Profile"
+
+//d:Text for service profile
+//l:list_setting_pane_t1
+//
+#define qtn_sip_serv_profile "Service profile"
+
+//d:Text for service profile setting.
+//d:Standard IETF menu item.
+//l:list_set_graphic_pane_t1
+//
+#define qtn_sip_ietf "Internet"
+
+//d:Text for service profile setting.
+//d:Nokia 3GPP menu item.
+//l:list_set_graphic_pane_t1
+//
+#define qtn_sip_three_gpp "IMS"
+
+//d:Text for default destination
+//l:list_setting_pane_t1
+//
+#define qtn_sip_def_destination "Default destination"
+
+//d:Text for default destination if not defined
+//l:list_set_graphic_pane_t1
+//
+#define qtn_sip_def_destination_none "None"
+
+//d:Text for default access point
+//l:list_setting_pane_t1
+//
+#define qtn_sip_def_ap "Default access point"
+
+//d:Text for default access point if not defined
+//l:list_set_graphic_pane_t1
+//
+#define qtn_sip_def_ap_none "None"
+
+//d:Text of a list item in setting view
+//d:Item opens public username setting page
+//l:list_setting_pane_t1
+//
+#define qtn_sip_public_uname "Public username"
+
+//d:Text for public username if not defined
+//l:list_set_graphic_pane_t1
+//
+#define qtn_sip_public_username_none "None"
+
+//d:Text of a list item in SIP profiles
+//d:Item opens SIP profiles compression page
+//l:list_setting_pane_t1
+//
+#define qtn_sip_compression "Use compression"
+
+//d:Text of a list item in compression
+//d:Item sets setting to yes
+//l:list_set_graphic_pane_t1
+//
+#define qtn_sip_comp_yes "Yes"
+
+//d:Text of a list item in compression
+//d:Item sets setting to no
+//l:list_set_graphic_pane_t1
+//
+#define qtn_sip_comp_no "No"
+
+//d:Text of a list item in profile setting view
+//d:Item opens registration mode setting page
+//l:list_double_pane_t1
+//
+#define qtn_sip_reg_mode "Registration mode"
+
+//d:Text of a list item in profile setting view
+//d:Item is used when profile is in when needed mode
+//l:list_set_graphic_pane_t1
+//
+#define qtn_sip_reg_needed "When needed"
+
+//d:Text of a list item in profile settings view
+//d:Item is used when profile is in always on mode
+//l:list_set_graphic_pane_t1
+//
+#define qtn_sip_reg_always "Always on"
+
+//d:Text of a list item in profile settings view
+//d:Item is used when profile is in always on mode in home network
+//l:list_set_graphic_pane_t1
+//
+#define qtn_sip_reg_always_home "Always on in home network"
+
+//d:Text of a list item in profile setting view
+//d:Item opens security negotiation setting page
+//l:list_setting_pane_t1
+//
+#define qtn_sip_security_neg "Security negotiation"
+
+//d:Text of a list item in profile settings view
+//d:Item is used to set security in active
+//l:list_set_graphic_pane_t1
+//
+#define qtn_sip_security_active "Active"
+
+//d:Text of a list item in profile settings view
+//d:Item is used to set security in inactive
+//l:list_set_graphic_pane_t1
+//
+#define qtn_sip_security_inactive "Inactive"
+
+//d:Text of a proxy server view title
+//l:list_setting_pane_t1
+//
+#define qtn_sip_proxy_server "Proxy server"
+
+//d:Text of a title in registarar server view
+//l:list_double_pane_t1
+//
+#define qtn_sip_registrar_server "Registrar server"
+
+// **Proxy server view
+
+//d:Text of a title in proxy server view
+//l:title_pane_t2/opt9
+//
+#define qtn_sip_title_proxy_server "Proxy server"
+
+//d:Text of a list item in server settings view
+//d:Item opens Proxy address setting page 
+//l:list_setting_pane_t1
+//
+#define qtn_sip_proxy_address "Proxy address"
+
+//d:Text of a list item in server setting view
+//d:Item opens opens realm setting page
+//l:list_setting_pane_t1
+//
+#define qtn_sip_proxy_realm "Realm"
+
+//d:Text for realm if not defined
+//l:list_set_graphic_pane_t1
+//
+#define qtn_sip_proxy_realm_none "None"
+
+//d:Text of a list item in server setting view
+//d:Item opens username setting page
+//l:list_setting_pane_t1
+//
+#define qtn_sip_proxy_uname "Username"
+
+//d:Text for username if not defined
+//l:list_set_graphic_pane_t1
+//
+#define qtn_sip_proxy_uname_none "None"
+
+//d:Text of a list item in server setting view
+//d:Item opens password setting page
+//l:list_setting_pane_t1
+//
+#define qtn_sip_proxy_password "Password"
+
+//d:Text for password if not defined
+//l:list_set_graphic_pane_t1
+//
+#define qtn_sip_proxy_password_none "None"
+
+//d:Text of a list item in settings view
+//d:Item opens loose routing setting page
+//l:list_setting_pane_t1
+//
+#define qtn_sip_proxy_lrouting "Loose routing"
+
+//d:Text of a list item in loose routing
+//d:Item sets setting to yes
+//l:list_set_graphic_pane_t1
+//
+#define qtn_sip_loose_yes "Yes"
+
+//d:Text of a list item in loose routing
+//d:Item sets setting to no
+//l:list_set_graphic_pane_t1
+//
+#define qtn_sip_loose_no "No"
+
+//d:Text of a list item in server setting view
+//d:Item opens protocol setting page
+//l:list_setting_pane_t1
+//
+#define qtn_sip_proxy_protocol "Transport protocol"
+
+//d:Text of a list item in server setting view
+//d:Item is used to set trasport protocol
+//l:list_set_graphic_pane_t1
+//
+#define qtn_sip_udp "UDP"
+
+//d:Text of a list item in server setting view
+//d:Item is used to set trasport protocol
+//l:list_set_graphic_pane_t1
+//
+#define qtn_sip_tcp "TCP"
+
+//d:Text of a list item in server setting view
+//d:Item is used to set trasport protocol
+//l:list_set_graphic_pane_t1
+//
+#define qtn_sip_auto "Auto"
+
+//d:Text of a list item in derver setting view
+//d:Item opens port setting page
+//l:list_setting_pane_t1
+//
+#define qtn_sip_proxy_port "Port"
+
+// **Registrar server view
+
+//d:Text of a title in registrar server view
+//l:title_pane_t2/opt9
+//
+#define qtn_sip_title_registrar_server "Registrar server"
+
+//d:Text of a list item in server setting view
+//d:Item opens registrar server address setting page
+//l:list_setting_pane_t1
+//
+#define qtn_sip_reg_address "Registrar address"
+
+//d:Text of a list item in server setting page
+//d:Item opens realm setting page
+//l:list_setting_pane_t1
+//
+#define qtn_sip_reg_realm "Realm"
+
+//d:Text for realm if not defined
+//l:list_set_graphic_pane_t1
+//
+#define qtn_sip_reg_realm_none "None"
+
+//d:Text of a list item in server setting view
+//d:Item opens username setting page
+//l:list_setting_pane_t1
+//
+#define qtn_sip_reg_uname "Username"
+
+//d:Text for username if not defined
+//l:list_set_graphic_pane_t1
+//
+#define qtn_sip_reg_uname_none "None"
+
+//d:Text of a list item in server setting view
+//d:Item opens password setting page
+//l:list_setting_pane_t1
+//
+#define qtn_sip_reg_password "Password"
+
+//d:Text for password if not defined
+//l:list_set_graphic_pane_t1
+//
+#define qtn_sip_reg_password_none "None"
+
+//d:Text of a list item in server setting view
+//d:Item opens protocol setting page
+//l:list_setting_pane_t1
+//
+#define qtn_sip_reg_protocol "Transport protocol"
+
+//d:Text of a list item in server setting view
+//d:Item opens port setting page
+//l:list_setting_pane_t1
+//
+#define qtn_sip_reg_port "Port"
+
+//d:Text for default server addresses
+//l:list_setting_pane_t1
+//
+#define qtn_sip_def_value_not_defined "Not defined"
+
+//d:Text for provisioned private user identity
+//l:list_set_graphic_pane_t1
+//
+#define qtn_sip_ims_uname_provisioned "Defined by provider"
+
+// **Error cases
+
+//d:Text for query
+//d:Item is shown when profile is in use
+//l:popup_note_window
+//
+#define qtn_sip_error_profile_used "Profile is currently in use. Unable to edit"
+
+//d:Text for query
+//d:Item is shown when profile is in use
+//l:popup_note_window
+//
+#define qtn_sip_error_unable_to_delete "Profile is currently in use. Unable to delete"
+
+//d:Text for query
+//d:Item is shown case of invalid public username
+//l:popup_note_window
+//
+#define qtn_sip_error_unable_to_del_default "Default profile. Unable to delete"
+
+//d:Text for query
+//d:Item is shown case of invalid public username
+//l:popup_note_window
+//
+#define qtn_sip_error_invalid_user_name "Invalid Public user name, please check the setting"
+
+//d:Text for query
+//d:Item is shown case of invalid proxy server address
+//l:popup_note_window
+//
+#define qtn_sip_error_proxy_address "Invalid Proxy server address, please check the setting"
+
+//d:Text for query
+//d:Item is shown case of invalid registrar server address
+//l:popup_note_window
+//
+#define qtn_sip_error_registrar_address "Invalid Registrar server address, please check the setting"
+       
+//d:Text for query
+//d:Item is shown case of provisioned private user identity
+//l:popup_note_window
+//
+#define qtn_sip_ims_username_not_editable "Value is defined and concealed by provider and is not changeable"
+
+//d:Text for query
+//d:Item is shown case of saving profile which have same realm but different username
+//l:popup_note_window
+//
+#define qtn_sip_infonote_realm_user_conflict "Profile in the same realm must have the same username"
+
+//d:Text for query
+//d:Item is shown case of SIP profile is locked
+//l:popup_note_window
+//
+#define qtn_sip_infonote_profile_locked "This profile is locked. Editing is not allowed."
+
+//d:Text for query
+//d:Item is shown case of SIP profile is locked and tried to be deleted.
+//l:popup_note_window
+//
+#define qtn_sip_error_unable_to_del_locked "Locked profile. Unable to delete."
+
+//d:Text for query
+//d:Item is shown case of when activating WLAN scanning
+//l:popup_note_window
+//
+#define qtn_sip_infonote_wlan_scan_activated "WLAN scan is activated because of 'always on' configured profile."
+
+//d:Text for query
+//d:Item is shown case of when deactivating WLAN scanning
+//l:popup_note_window
+//
+#define qtn_sip_query_wlan_scan_deactivate "No 'always on' profiles using WLAN, turn off automatic WLAN scanning?"
+
+//d:Text of destination definition
+//d:Item is shown when saving destination
+//l:popup_note_window
+//
+#define qtn_sip_query_select_destination "After selecting a Network Destination, a single access point cannot be selected anymore. Proceed?"
+
+//d:Text for empty Default destination list
+//d:Item is shown case of when trying to open the Default destination list and there are no destinations defined
+//l:popup_note_window
+//
+#define qtn_sip_infonote_no_destinations "There are no Network Destinations defined."

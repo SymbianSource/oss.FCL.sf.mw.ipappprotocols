@@ -1,0 +1,43 @@
+// Copyright (c) 2005-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// build the trtp implementation
+// 
+//
+
+/**
+ @file
+*/
+
+PRJ_TESTEXPORTS
+
+./trtp.iby  /epoc32/rom/include/trtp.iby
+
+../scripts/rtp_unittest.script	z:/testdata/scripts/rtp/rtp_unittest.script
+
+#ifdef SYMBIAN_NON_SEAMLESS_NETWORK_BEARER_MOBILITY
+../scripts/rtp_unittest2.script	z:/testdata/scripts/rtp/rtp_unittest2.script
+#endif
+../scripts/rtp_unittest.ini	z:/testdata/configs/rtp/rtp_unittest.ini
+
+../scripts/short1.dat		z:/testdata/configs/rtp/short1.dat
+../scripts/short2.dat		z:/testdata/configs/rtp/short2.dat
+../scripts/short3.dat		z:/testdata/configs/rtp/short3.dat
+../scripts/short4.dat		z:/testdata/configs/rtp/short4.dat
+../scripts/short5.dat		z:/testdata/configs/rtp/short5.dat
+
+PRJ_TESTMMPFILES
+
+trtp.mmp
+makefile ../scripts/makepackets.mak
+

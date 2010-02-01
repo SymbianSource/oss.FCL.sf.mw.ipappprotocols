@@ -1,0 +1,110 @@
+/*
+* Copyright (c) 2004 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description:  
+*
+*/
+
+
+
+#include <platform_paths.hrh>
+#include <eunitcaps.h>
+
+TARGET          testrtpservice.dll
+TARGETTYPE      dll
+TARGETPATH      /digiaeunit/tests
+
+
+
+UID             0x1000af5a 0x01700000
+
+MACRO           EUNIT_TESTING
+MACRO           RTP_UNIT_TEST_COVERAGE
+
+CAPABILITY      EUNIT_CAPS
+
+
+VENDORID                VID_DEFAULT
+
+
+SOURCEPATH          ../src
+SOURCE              TestRTPServiceDllMain.cpp
+SOURCE              UT_CLocalAddrResolver.cpp
+SOURCE              UT_CRtpAPI.cpp // Added by EUnit Wizard
+SOURCE              UT_CRtpComm.cpp // Added by EUnit Wizard
+SOURCE              UT_CRtpCommRecv.cpp // Added by EUnit Wizard
+SOURCE              UT_CRtpCommSend.cpp // Added by EUnit Wizard
+SOURCE              UT_CRtpManager.cpp // Added by EUnit Wizard
+SOURCE              UT_CRtpPacket.cpp // Added by EUnit Wizard
+SOURCE              UT_CRtpRecvStream.cpp // Added by EUnit Wizard
+SOURCE              UT_CRtpSDES.cpp // Added by EUnit Wizard
+SOURCE              UT_CRtpSendItem.cpp // Added by EUnit Wizard
+SOURCE              UT_CRtpSession.cpp // Added by EUnit Wizard
+SOURCE              UT_CRtpStream.cpp // Added by EUnit Wizard
+SOURCE              UT_CRtpTimer.cpp // Added by EUnit Wizard
+SOURCE              UT_CRtpTranStream.cpp // Added by EUnit Wizard
+SOURCE              UT_CRtpStpPacket.cpp // Added by EUnit Wizard
+SOURCE              UT_TRtpHeaderExtension.cpp // Added by EUnit Wizard
+SOURCE              UT_TRtpSendHeader.cpp // Added by EUnit Wizard
+SOURCE              UT_TRtpRecvHeader.cpp // Added by EUnit Wizard
+SOURCE              UT_TRtpUtil.cpp // Added by EUnit Wizard
+SOURCE              UT_CRtpSessionSRTP.cpp // Added by EUnit Wizard
+
+
+SOURCEPATH          ../stubs/src
+SOURCE		    esock_stubs.cpp 
+
+
+// Sources needed by the test
+SOURCEPATH          ../../../src
+SOURCE              localaddrresolver.cpp
+SOURCE              rtpapi.cpp // Added by EUnit Wizard
+SOURCE              rtpsdes.cpp // Added by EUnit Wizard
+SOURCE              rtpstream.cpp // Added by EUnit Wizard
+SOURCE              rtpsenditem.cpp // Added by EUnit Wizard
+SOURCE              rtpsession.cpp // Added by EUnit Wizard
+SOURCE				rtpsessionsrtp.cpp
+SOURCE              rtputil.cpp // Added by EUnit Wizard
+SOURCE              rtprecvstream.cpp // Added by EUnit Wizard
+SOURCE              rtppacket.cpp // Added by EUnit Wizard
+SOURCE              rtptimer.cpp // Added by EUnit Wizard
+SOURCE              rtpcommsend.cpp // Added by EUnit Wizard
+SOURCE              rtppacketparam.cpp // Added by EUnit Wizard
+SOURCE              rtpcommrecv.cpp // Added by EUnit Wizard
+SOURCE              rtptranstream.cpp // Added by EUnit Wizard
+SOURCE              rtpcomm.cpp // Added by EUnit Wizard
+SOURCE              rtpmanager.cpp // Added by EUnit Wizard
+SOURCE              rtpstppacket.cpp // Added by EUnit Wizard
+
+
+
+USERINCLUDE         ../inc
+USERINCLUDE         ../stubs/inc
+USERINCLUDE         ../../../inc
+
+MW_LAYER_SYSTEMINCLUDE
+
+LIBRARY         	cone.lib
+LIBRARY         	rtpservice.lib
+LIBRARY                 commdb.lib
+LIBRARY                 efsrv.lib
+LIBRARY                 eunit.lib
+LIBRARY                 euser.lib
+LIBRARY                 insock.lib
+LIBRARY             	srtp.lib
+LIBRARY                 cryptography.lib
+LIBRARY                 hash.lib
+LIBRARY			rtpstppacket.lib
+LIBRARY			charconv.lib
+
+// End of file

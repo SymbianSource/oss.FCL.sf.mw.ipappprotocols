@@ -1,0 +1,41 @@
+// Copyright (c) 2005-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// build the SHIM RTP implementation
+// 
+//
+
+/**
+ @file
+*/
+
+PRJ_EXPORTS
+
+./shimrtp.iby  /epoc32/rom/include/shimrtp.iby
+../inc/rtp.h		SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(rtp.h)
+#ifdef SYMBIAN_ENABLE_SPLIT_HEADERS
+../inc/rtpsession_internal.h	SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(rtpsession_internal.h)
+#endif
+../inc/rtpprepostprocessingcallback.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(rtpprepostprocessingcallback.h)
+
+../inc/rtcp.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(rtcp.h)
+../inc/rtp.inl SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(rtp.inl)
+
+PRJ_MMPFILES
+
+rtp.mmp
+rtpremoved.mmp
+
+PRJ_TESTMMPFILES
+#include "../test/bld.inf"
+

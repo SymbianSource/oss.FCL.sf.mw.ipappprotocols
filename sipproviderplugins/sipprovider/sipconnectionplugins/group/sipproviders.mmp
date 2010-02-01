@@ -1,0 +1,86 @@
+// Copyright (c) 2007-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// SIP Tier Manager ECOM plugin
+// 
+//
+
+/**
+ @file siptiermanager.mmp
+*/
+
+#ifdef WINSCW 
+DEFFILE sipproviders.def
+#else
+DEFFILE sipproviders.DEF
+#endif
+
+
+#include <cflog.mmh>
+
+TARGET         sipproviders.dll
+TARGETTYPE     PLUGIN
+
+UID            0x10009D8D 0x200041F6
+VENDORID       0x70000001
+
+SOURCEPATH	../src
+SOURCE		siptiermanager.cpp
+SOURCE		siptiermanagerfactory.cpp
+SOURCE		siptiermanagerselector.cpp
+SOURCE		sipprovision.cpp
+SOURCE		sipmcpr.cpp
+SOURCE		sipmcprfactory.cpp
+SOURCE		sipcpr.cpp
+SOURCE		sipcprfactory.cpp
+SOURCE		sipcprstates.cpp	
+SOURCE      sipscprfactory.cpp 
+SOURCE      sipdeftscpr.cpp 
+SOURCE      sipscpr.cpp 
+SOURCE      sipscprstates.cpp
+SOURCE		ecom_impl.cpp
+SOURCE      SIPParamsAndEvents.cpp 
+
+
+USERINCLUDE    ../inc
+USERINCLUDE 	../../sipstatemachine/inc
+
+
+MW_LAYER_SYSTEMINCLUDE_SYMBIAN
+
+START RESOURCE 	200041F6.rss
+TARGET 		sipproviders.rsc
+END
+
+LIBRARY euser.lib 
+LIBRARY esocksvr.lib
+LIBRARY netmeta.lib
+LIBRARY commsdat.lib
+LIBRARY coreproviders.lib
+LIBRARY esock.lib
+LIBRARY commsfw.lib
+LIBRARY agentdialog.lib
+LIBRARY insock.lib sipstatemachine.lib
+LIBRARY netsm.lib 
+LIBRARY meshmachine.lib 
+LIBRARY nodemessages.lib
+LIBRARY factories.lib
+LIBRARY serverden.lib
+LIBRARY netinterfaces.lib
+
+#include	"comms-infras/commsdebugutility.mmh"
+#include <elements/sd_mintercept.mmh>
+
+CAPABILITY CommDD PowerMgmt ReadDeviceData WriteDeviceData TrustedUI ProtServ NetworkControl NetworkServices LocalServices ReadUserData WriteUserData
+
+SMPSAFE

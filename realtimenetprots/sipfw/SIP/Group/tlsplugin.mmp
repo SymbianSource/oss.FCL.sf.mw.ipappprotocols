@@ -1,0 +1,62 @@
+// Copyright (c) 2006-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name        : tlsplugin.mmp
+// Part of     : SIPSec
+// Version     : SIP/5.0
+//
+
+
+
+TARGET			siptls.dll
+TARGETTYPE    	PLUGIN
+UID           	0x10009d8d 0x102747D4
+
+
+SOURCEPATH    	../SIPSec/TlsPlugin/src
+SOURCE	      	StaticDllEntry.cpp
+SOURCE          csipsectlsplugin.cpp
+SOURCE          ctlscache.cpp
+SOURCE          ctlsentry.cpp
+
+USERINCLUDE     ../SIPSec/TlsPlugin/inc
+USERINCLUDE     ../SIPSec/Framework/inc
+USERINCLUDE   	../Common/inc
+USERINCLUDE     ../Codec/inc
+USERINCLUDE     ../Codec/api
+USERINCLUDE     ../ConnectionMgr/inc
+USERINCLUDE     ../LightWeightTimer/inc
+USERINCLUDE     ../Logging/inc
+
+
+SOURCEPATH      ../SIPSec/TlsPlugin/resource
+START RESOURCE	102747D4.rss 
+TARGET			siptls.rsc
+END
+
+
+MW_LAYER_SYSTEMINCLUDE_SYMBIAN
+
+
+LIBRARY       	euser.lib
+LIBRARY       	ecom.lib
+LIBRARY	      	sipcodec.lib
+LIBRARY     	insock.lib
+
+
+VENDORID 0x70000001
+
+CAPABILITY ProtServ NetworkControl NetworkServices Location \
+ReadDeviceData WriteDeviceData ReadUserData
+
+SMPSAFE

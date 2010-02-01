@@ -1,0 +1,42 @@
+// Copyright (c) 2005-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Bld.inf file for SIP dummy PRT
+// 
+//
+
+/**
+ @file
+ @internalComponent
+*/
+
+PRJ_EXPORTS
+../group/SIPDummyPRT.iby   /epoc32/rom/include/sipdummyprt.iby
+../data/sip.providers.esk  z:/private/101f7989/esock/sip.providers.esk
+
+
+#ifndef SYMBIAN_NON_SEAMLESS_NETWORK_BEARER_MOBILITY
+
+../group/siphlapi.iby      /epoc32/rom/include/siphlapi.iby
+../data/esock_sip.cmi      z:/private/101f7988/esock_sip.cmi
+
+#endif // SYMBIAN_NON_SEAMLESS_NETWORK_BEARER_MOBILITY
+
+PRJ_PLATFORMS
+
+DEFAULT
+
+PRJ_MMPFILES
+
+./SIPDummyPRT.mmp 
+

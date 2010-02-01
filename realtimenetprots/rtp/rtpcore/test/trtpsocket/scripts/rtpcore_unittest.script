@@ -1,0 +1,100 @@
+// Copyright (c) 2008-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// TESTEXECUTE,logs\\testexecute\\rtpcore_unittest.htm
+// 
+//
+
+//! @file 
+//! @internalComponent
+//! @SYMTestSuiteName rtpcore_unittest.script
+//! @SYMScriptInfo Unit test cases for RTP Core implementation
+//! @SYMScriptTestEnvironment This test runs using the TestExecute framework (TEF) using the following test list entry
+//
+
+PRINT Run all RTP_CORE Unit Tests 
+//
+LOAD_SUITE trtpsocket -SharedData
+//LOAD_SUITE trtp -SharedData
+//
+#
+PRINT Open Session
+# OOM on for the open
+//RUN_TEST_STEP_RESULT 0 100 trtpsocket Oom z:\TestData\configs\rtp\rtpcore_unittest.ini OomOn
+//RUN_TEST_STEP_RESULT 0 100 Trtp OpenSession 
+# Handle KErrNoMemory errors. So that OOM testing works.
+//RUN_TEST_STEP_RESULT 0 100 Trtp Event  z:\TestData\configs\rtp\rtpcore_unittest.ini ErrorCheck
+
+# The next few tests use one-shot events, which don't interact correctly with 
+# OOM, so turn OOM off
+//RUN_TEST_STEP_RESULT 0 100 trtpsocket Oom z:\TestData\configs\rtp\rtpcore_unittest.ini OomOff
+
+
+
+PRINT Check that RTPController can be created
+# That is to say, that packets are correctly discarded when a stream isn't 
+# created.
+RUN_TEST_STEP_RESULT 0 100 trtpsocket Oom z:\TestData\configs\rtp\rtpcore_unittest.ini OomOn
+RUN_TEST_STEP_RESULT 0 100 trtpsocket CreateRtpController z:\TestData\configs\rtp\rtpcore_unittest.ini ControllerFromSockServ
+RUN_TEST_STEP_RESULT 106 100 trtpsocket ActivateRtpController z:\TestData\configs\rtp\rtpcore_unittest.ini ActivateWrongType
+RUN_TEST_STEP_RESULT 0 100 trtpsocket ActivateRtpController z:\TestData\configs\rtp\rtpcore_unittest.ini ActivateCLConnection
+RUN_TEST_STEP_RESULT 106 100 trtpsocket ActivateRtpController z:\TestData\configs\rtp\rtpcore_unittest.ini ActivateCLConnection
+RUN_TEST_STEP_RESULT 0 100 trtpsocket DeleteRtpController
+// ControllerFromSockServWithCNAME UDP
+RUN_TEST_STEP_RESULT 0 100 trtpsocket CreateRtpController z:\TestData\configs\rtp\rtpcore_unittest.ini ControllerFromSockServWithCNAME
+RUN_TEST_STEP_RESULT 106 100 trtpsocket ActivateRtpController z:\TestData\configs\rtp\rtpcore_unittest.ini ActivateCOInConnection
+RUN_TEST_STEP_RESULT 0 100 trtpsocket DeleteRtpController
+// ControllerFromSockServ BT
+//RUN_TEST_STEP_RESULT 0 100 trtpsocket CreateRtpController z:\TestData\configs\rtp\rtpcore_unittest.ini ControllerFromSockServBT
+//RUN_TEST_STEP_RESULT 0 100 trtpsocket ActivateRtpController z:\TestData\configs\rtp\rtpcore_unittest.ini ActivateCOInConnection
+//RUN_TEST_STEP_RESULT 0 100 trtpsocket DeleteRtpController
+// ControllerFromSockServWithRtcp - ActivateCOOutConnection
+RUN_TEST_STEP_RESULT 0 100 trtpsocket CreateRtpController z:\TestData\configs\rtp\rtpcore_unittest.ini ControllerFromSockServWithRtcp
+RUN_TEST_STEP_RESULT 0 100 trtpsocket ActivateRtpController z:\TestData\configs\rtp\rtpcore_unittest.ini ActivateCOOutConnection
+RUN_TEST_STEP_RESULT 0 100 trtpsocket DeleteRtpController
+// ControllerFromSockServWithRtcp - ActivateConnected
+RUN_TEST_STEP_RESULT 0 100 trtpsocket CreateRtpController z:\TestData\configs\rtp\rtpcore_unittest.ini ControllerFromSockServWithRtcp
+RUN_TEST_STEP_RESULT 106 100 trtpsocket ActivateRtpController z:\TestData\configs\rtp\rtpcore_unittest.ini ActivateConnected
+RUN_TEST_STEP_RESULT 0 100 trtpsocket DeleteRtpController
+// ControllerFromSocket
+//RUN_TEST_STEP_RESULT 0 100 trtpsocket CreateRtpController z:\TestData\configs\rtp\rtpcore_unittest.ini ControllerFromSocket
+//RUN_TEST_STEP_RESULT 0 100 trtpsocket ActivateRtpController z:\TestData\configs\rtp\rtpcore_unittest.ini ActivateConnected
+//RUN_TEST_STEP_RESULT 0 100 trtpsocket BasicSend
+//RUN_TEST_STEP_RESULT 0 100 trtpsocket DeleteRtpController
+//
+// SEND
+RUN_TEST_STEP_RESULT 0 100 trtpsocket CreateRtpController z:\TestData\configs\rtp\rtpcore_unittest.ini ControllerFromSockServ3
+RUN_TEST_STEP_RESULT 0 100 trtpsocket Oom z:\TestData\configs\rtp\rtpcore_unittest.ini OomOff
+RUN_TEST_STEP_RESULT 0 100 trtpsocket ActivateRtpController z:\TestData\configs\rtp\rtpcore_unittest.ini ActivateCLConnection
+//no oom tests for send/receive
+RUN_TEST_STEP_RESULT 0 100 trtpsocket BasicSend
+RUN_TEST_STEP_RESULT 0 100 trtpsocket FixedHeader
+RUN_TEST_STEP_RESULT 0 100 trtpsocket InitialReceive
+//RUN_TEST_STEP_RESULT 0 100 trtpsocket BasicReceive
+RUN_TEST_STEP_RESULT 0 100 trtpsocket DeleteRtpController
+
+// BASIC RECEIVE
+RUN_TEST_STEP_RESULT 0 100 trtpsocket CreateRtpController z:\TestData\configs\rtp\rtpcore_unittest.ini ControllerFromSockServ1
+RUN_TEST_STEP_RESULT 0 100 trtpsocket ActivateRtpController z:\TestData\configs\rtp\rtpcore_unittest.ini ActivateCLConnection
+RUN_TEST_STEP_RESULT 0 100 trtpsocket BasicReceive
+RUN_TEST_STEP_RESULT 0 100 trtpsocket DeleteRtpController
+
+// RTCP
+// ControllerFromSockServWithRtcp - ActivateCOOutConnection
+RUN_TEST_STEP_RESULT 0 100 trtpsocket CreateRtpController z:\TestData\configs\rtp\rtpcore_unittest.ini ControllerFromSockServWithRtcp
+RUN_TEST_STEP_RESULT 0 100 trtpsocket ActivateRtpController z:\TestData\configs\rtp\rtpcore_unittest.ini ActivateCLConnection
+RUN_TEST_STEP_RESULT 0 100 trtpsocket InitialReceive
+RUN_TEST_STEP_RESULT 0 100 trtpsocket RRFixedHeader
+RUN_TEST_STEP_RESULT 0 100 trtpsocket BYEReceive
+RUN_TEST_STEP_RESULT 0 100 trtpsocket DeleteRtpController
+

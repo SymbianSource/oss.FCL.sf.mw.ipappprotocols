@@ -1,0 +1,68 @@
+/*
+* Copyright (c) 2004 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description:
+*
+*/
+
+#include <platform_paths.hrh>
+#include <eunitcaps.h>
+
+CAPABILITY              EUNIT_CAPS
+
+TARGET          UT_CNSmlDmSIPAdapter.dll
+TARGETTYPE      dll
+TARGETPATH      /DigiaEUnit/Tests
+UID             0x1000af5a 0x01700000
+
+MACRO           TEST_EUNIT
+
+SOURCEPATH              ../src
+SOURCE                  UT_CNSmlDmSIPAdapterDllMain.cpp
+SOURCE                  UT_CNSmlDmSIPAdapter.cpp
+
+SOURCE                  SmlDmCallback_stub.cpp
+SOURCE                  stub_nsmldmiapmatcher.cpp 
+
+// Sources needed by the test
+SOURCEPATH              ../../../src
+SOURCE                  nsmldmsipadapter.cpp
+
+USERINCLUDE             ../../../inc 
+USERINCLUDE             ../inc
+
+#if defined ( OS_LAYER_SYSTEMINCLUDE )
+OS_LAYER_SYSTEMINCLUDE
+#else
+SYSTEMINCLUDE     /epoc32/include
+#endif
+MW_LAYER_SYSTEMINCLUDE
+
+LIBRARY                 bafl.lib
+LIBRARY                 charconv.lib
+LIBRARY                 ecom.lib
+LIBRARY                 EUnit.lib
+LIBRARY                 EUnitUtil.lib
+LIBRARY                 euser.lib
+LIBRARY                 nsmldebug.lib
+LIBRARY                 nsmldmmodule.lib
+LIBRARY                 sipcodec.lib
+LIBRARY                 sipprofilecli.lib
+LIBRARY                 InetProtUtil.lib 
+LIBRARY                 nsmldmiapmatcher.lib
+LIBRARY                 sysutil.lib
+LIBRARY                 efsrv.lib
+LIBRARY                 apengine.lib
+LIBRARY                 commdb.lib
+
+// End of file

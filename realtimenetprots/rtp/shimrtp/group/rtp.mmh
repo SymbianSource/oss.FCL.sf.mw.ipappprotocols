@@ -1,0 +1,62 @@
+// Copyright (c) 2005-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// rtp.dll Realtime Transport Protocol
+// 
+//
+
+/**
+ @file
+*/
+
+#if defined(SYMBIAN_ENABLE_SPLIT_HEADERS)
+	DEFFILE ../~/rtpm.def
+#else
+	DEFFILE ../~/rtp.def
+#endif
+
+
+TARGET rtp.dll
+
+TARGETTYPE dll
+
+UID         0x1000008d 0x10201C94
+
+VENDORID 0x70000001
+
+USERINCLUDE ../inc
+USERINCLUDE ../src/rtp
+USERINCLUDE ../../rtpcore/inc 
+MW_LAYER_SYSTEMINCLUDE_SYMBIAN
+
+
+SOURCEPATH ../src/rtp
+SOURCE rtp.cpp
+SOURCE packet.cpp
+SOURCE session.cpp
+SOURCE events.cpp
+SOURCE receivestream.cpp
+SOURCE sendstream.cpp
+SOURCE rtcp.cpp
+
+
+
+OS_LAYER_ESTLIB_SYSTEMINCLUDE
+
+
+LIBRARY	                rtpcore.lib euser.lib esock.lib insock.lib random.lib bluetooth.lib commsfw.lib
+LIBRARY	                hal.lib
+DEBUGLIBRARY            flogger.lib
+
+
+CAPABILITY ALL -TCB

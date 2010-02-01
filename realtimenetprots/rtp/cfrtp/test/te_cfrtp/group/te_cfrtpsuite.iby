@@ -1,0 +1,33 @@
+// Copyright (c) 2007-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name     : dummy_cfrtp.iby
+// Part of  : test Component for CfRtp
+// IBY file for CF Rtp TestSuite
+// 
+//
+
+#ifndef __TE_CFRTP_SUIT_IBY
+#define __TE_CFRTP_SUIT_IBY
+
+REM CFRtp Test Suite.(Basic Test Cases for Rtp Flows and Rtp Scpr)
+
+#include <testexecute.iby>
+#include <cfrtp.iby>
+#include <dummy_cfrtp.iby>
+
+file=ABI_DIR\BUILD_DIR\te_cfrtpsuite.exe    system\bin\te_cfrtpsuite.exe
+data=EPOCROOT##epoc32\data\z\testData\scripts\rtp\te_cfrtpsuite.script	testData\scripts\rtp\te_cfrtpsuite.script
+data=EPOCROOT##epoc32\data\z\testData\configs\rtp\te_cfrtpsuite.ini		testData\configs\rtp\te_cfrtpsuite.ini
+
+#endif //__TE_CFRTP_SUIT_IBY

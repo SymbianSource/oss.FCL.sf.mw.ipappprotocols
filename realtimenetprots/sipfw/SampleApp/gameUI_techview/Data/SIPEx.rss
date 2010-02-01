@@ -1,0 +1,558 @@
+
+// Copyright (c) 2004-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+//
+
+
+
+//  RESOURCE IDENTIFIER
+NAME    SLGA
+
+//  INCLUDES
+#include <uikon.rh> // RSS_SIGNATURE 
+#include <techview/eikon.rh>
+#include <badef.rh> // TBUF
+#include <techview/eikon.rsg>
+#include "SIPEx_loc.rls"
+#include "SIPEx.hrh"
+
+//  CONSTANTS  
+#define EDWIN_LENGTH    16
+#define SIP_ADDRESS_MAX_LENGTH 256
+#define NUMBER_OF_MSG_LINES 5
+#define SIPEXTOOLBARWIDTH 130
+//  RESOURCE DEFINITIONS 
+
+
+// -----------------------------------------------------------------------------
+//   
+// Resource file signature
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE RSS_SIGNATURE { }
+
+
+// -----------------------------------------------------------------------------
+//   
+// Default document name
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE TBUF 
+    { 
+	buf = ""; 
+    }
+
+
+// -----------------------------------------------------------------------------
+//   
+// Application info
+// Defines the menus, toolband and softkeys for the application.
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE EIK_APP_INFO
+    {
+    menubar = r_sip_ex_menubar;
+    toolbar=r_sip_ex_toolbar;
+    }
+
+// -----------------------------------------------------------------------------
+//   
+// r_sip_ex_menubar
+// The resources for SIPEx menubar
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_BAR r_sip_ex_menubar
+    {
+    titles =
+        {
+        MENU_TITLE 
+            { 
+            menu_pane = r_sip_ex_menu; 
+            }
+        };
+    }
+
+
+// -----------------------------------------------------------------------------
+//   
+// r_sip_ex_menu
+// The resources for SIPEx menubar
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_PANE r_sip_ex_menu
+    {
+    items =
+        {
+        MENU_ITEM
+	        {
+            command = ECmdInviteForGame;
+            txt = sip_ex_invite_for_game;
+            }, 
+        MENU_ITEM
+	        {
+            command = ECmdEnableProfile;
+            txt = sip_ex_enable_profile;
+            }, 
+        MENU_ITEM
+	        {
+            command = ECmdDisableProfile;
+            txt = sip_ex_disable_profile;
+            }, 
+        MENU_ITEM
+            {
+            command = ECmdSendIM;
+            txt = sip_ex_send_im_cmd;
+            },
+        MENU_ITEM
+            {
+            command = ECmdEndGame;
+            txt = sip_ex_end_game_cmd;
+            },
+        MENU_ITEM
+	        {
+            command = EEikCmdExit;
+            txt = sip_ex_exit;
+            }
+        };
+    }
+
+// -----------------------------------------------------------------------------
+//   
+// r_sip_ex_toolbar
+// The cba buttons for SIPEx game
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE TOOLBAR r_sip_ex_toolbar
+	{
+	breadth = SIPEXTOOLBARWIDTH;
+	controls =
+		{
+		TBAR_CTRL  
+			{ 
+			 type = EEikCtFileNameLabel;
+			 id = EToolbarFileNameLabel;
+			 },
+    	TBAR_BUTTON 
+            {
+            id = ECmdInviteForGame;
+            txt = sip_ex_invite_for_game;
+            }, 
+        TBAR_BUTTON 
+            {
+            id = ECmdEnableProfile;
+            txt = sip_ex_enable_profile;
+            }, 
+        TBAR_BUTTON 
+            {
+            id = ECmdDisableProfile;
+            txt = sip_ex_disable_profile;
+            }, 
+        TBAR_BUTTON 
+            {
+            id = ECmdSendIM;
+            txt = sip_ex_send_im_cmd;
+            },
+        TBAR_BUTTON 
+            {
+            id = ECmdEndGame;
+            txt = sip_ex_end_game_cmd;
+            },
+        TBAR_BUTTON 
+            {
+            id = EEikCmdExit;
+            txt = sip_ex_exit;
+            },
+		TBAR_CTRL
+			{
+			type = EEikCtSpacer;
+			flags = EEikToolBarCtrlHasSetMinLength | EEikToolBarCtrlIsStretchable;
+			length = 0;
+			control = SPACER;
+			},
+		TBAR_CTRL
+			{
+			type = EEikCtClock;
+			control = CLOCK 
+			            { 
+			            digitalresourceid = R_EIK_DIGITAL_CLOCK; 
+			            analogresourceid = R_EIK_ANALOG_CLOCK; 
+                        };
+			},
+		TBAR_CTRL
+			{
+			type = EEikCtSpacer;
+			flags = EEikToolBarCtrlHasSetMinLength;
+			length = KEikStdGapBelowClock;
+			control = SPACER;
+			}
+		};
+	}
+
+
+// -----------------------------------------------------------------------------
+//   
+// r_invite_address_dlg
+// 
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE DIALOG r_invite_address_dlg
+    {
+	title = sip_ex_invite_address_dlg_title;
+	buttons = r_invite_address_dlg_buttons;
+	flags = EEikDialogFlagNotifyEsc | EEikDialogFlagWait;
+	items =
+		{
+		DLG_LINE
+		    {
+		    type = EEikCtEdwin;
+		    prompt = sip_ex_address_line;
+		    id = ESIPExInviteAddressId;
+		    control = EDWIN
+                { 
+                width = EDWIN_LENGTH; 
+                };
+		    }
+		};
+    }
+      
+// -----------------------------------------------------------------------------
+//   
+// r_profile_dlg
+// 
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE DIALOG r_profile_dlg
+    {
+    title = sip_ex_default_profile_line;
+	buttons = r_invite_address_dlg_buttons;
+	flags = EEikDialogFlagNotifyEsc | EEikDialogFlagWait;
+	items=
+       {
+        DLG_LINE
+            {
+            type = EEikCtEdwin;
+            prompt = sip_ex_public_uname;
+		    id = EItemUsername;
+            control = EDWIN 
+                { 
+                maxlength = SIP_ADDRESS_MAX_LENGTH;
+                width = EDWIN_LENGTH; 
+                };
+            },
+            
+         DLG_LINE
+		    {
+		    type = EEikCtChoiceList;
+           	prompt = sip_ex_accesspointid;
+           	id = EItemAccesspointid;
+           	control = CHOICELIST
+           		{
+           		//array_id = sip_ex_compression_choices;
+           		};
+		    },
+            
+        DLG_LINE
+		    {
+		    type = EEikCtChoiceList;
+		    prompt = sip_ex_compression;
+		    id = EItemCompression;
+		    control = CHOICELIST
+                { 
+                array_id = sip_ex_compression_choices;
+                };
+		    },
+		    
+        DLG_LINE
+		    {
+		    type = EEikCtChoiceList;
+		    prompt = sip_ex_security_neg;
+		    id = EItemSecurity;
+		    control = CHOICELIST
+                { 
+                array_id = sip_ex_compression_choices;
+                };
+		    },
+		    
+        DLG_LINE
+            {
+            type = EEikCtEdwin;
+            prompt = sip_ex_proxy_address;
+		    id = EProxyServerItemAddr;
+            control = EDWIN 
+                { 
+                maxlength = SIP_ADDRESS_MAX_LENGTH;
+                width = EDWIN_LENGTH; 
+                };
+            },
+		    
+        DLG_LINE
+            {
+            type = EEikCtEdwin;
+            prompt = sip_ex_proxy_realm;
+		    id = EProxyServerItemRealm;
+            control = EDWIN 
+                { 
+                maxlength = SIP_ADDRESS_MAX_LENGTH;
+                width = EDWIN_LENGTH; 
+                };
+            },
+        
+        DLG_LINE
+            {
+            type = EEikCtEdwin;
+            prompt = sip_ex_proxy_uname;
+		    id = EProxyServerItemUsername;
+            control = EDWIN 
+                { 
+                maxlength = SIP_ADDRESS_MAX_LENGTH;
+                width = EDWIN_LENGTH; 
+                };
+            },
+            
+        DLG_LINE
+            {
+            type = EEikCtEdwin;
+            prompt = sip_ex_proxy_password;
+		    id = EProxyServerItemPassword;
+            control = EDWIN 
+                { 
+                maxlength = SIP_ADDRESS_MAX_LENGTH;
+                width = EDWIN_LENGTH; 
+                };
+            },
+            
+        DLG_LINE
+            {
+            type = EEikCtEdwin;
+            prompt = sip_ex_reg_address;
+		    id = ERegistrarServerItemAddr;
+            control = EDWIN 
+                { 
+                maxlength = SIP_ADDRESS_MAX_LENGTH;
+                width = EDWIN_LENGTH; 
+                };
+            },
+		    
+        DLG_LINE
+            {
+            type = EEikCtEdwin;
+            prompt = sip_ex_reg_realm;
+		    id = ERegistrarServerItemRealm;
+            control = EDWIN 
+                { 
+                maxlength = SIP_ADDRESS_MAX_LENGTH;
+                width = EDWIN_LENGTH; 
+                };
+            },
+        
+        DLG_LINE
+            {
+            type = EEikCtEdwin;
+            prompt = sip_ex_reg_uname;
+		    id = ERegistrarServerItemUsername;
+            control = EDWIN 
+                { 
+                maxlength = SIP_ADDRESS_MAX_LENGTH;
+                width = EDWIN_LENGTH; 
+                };
+            },
+            
+        DLG_LINE
+            {
+            type = EEikCtEdwin;
+            prompt = sip_ex_reg_password;
+		    id = ERegistrarServerItemPassword;
+            control = EDWIN 
+                { 
+                maxlength = SIP_ADDRESS_MAX_LENGTH;
+                width = EDWIN_LENGTH; 
+                };
+            }
+            
+            
+        };
+    }
+    
+      
+// -----------------------------------------------------------------------------
+//   
+// r_instant_message_dlg
+// The dialog for instant message sending
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE DIALOG r_instant_message_dlg
+    {
+	title = sip_ex_instant_message_dlg_title;
+	buttons = r_invite_address_dlg_buttons;
+	flags = EEikDialogFlagNotifyEsc | EEikDialogFlagWait;
+	items =
+		{
+		DLG_LINE
+		    {
+		    type = EEikCtEdwin;
+		    prompt = sip_ex_im_address_line;
+		    id = ESIPExIMAddressLineId;
+		    control = EDWIN
+                { 
+                maxlength = SIP_ADDRESS_MAX_LENGTH;
+                width = EDWIN_LENGTH; 
+                };
+		    },
+        DLG_LINE
+            {
+            type = EEikCtGlobalTextEditor;
+            prompt = sip_ex_im_msg_line;
+            id = ESIPExIMMessageLineId;
+            control = GTXTED
+                {
+                width = 150;
+                height = 50;
+                numlines = NUMBER_OF_MSG_LINES;
+                };
+            }
+            
+		};
+    }
+
+//----------------------------------------------------
+//   
+//    r_invite_address_dlg_buttons
+//    The buttons for the credentials dialog
+//
+//----------------------------------------------------
+//
+RESOURCE DLG_BUTTONS r_invite_address_dlg_buttons
+	{
+	buttons = 
+		{
+		DLG_BUTTON
+			{
+			id = EEikBidOk;
+			button = CMBUT { txt = sip_ex_dlg_ok; };		
+			hotkey = EEikBidOk;
+			},
+		DLG_BUTTON
+			{
+			id = EEikBidCancel;
+			button = CMBUT { txt = sip_ex_dlg_cancel; };
+			hotkey = EEikBidCancel;
+			}
+		};
+	}
+
+//----------------------------------------------------
+//   
+//    The text resources
+//
+//----------------------------------------------------
+//
+RESOURCE TBUF r_error_in_address_txt 
+    { 
+    buf = sip_ex_error_in_address;
+    }
+    
+RESOURCE TBUF r_error_in_username_txt 
+    { 
+    buf = sip_ex_error_in_username;
+    }
+    
+RESOURCE TBUF r_error_in_compression_txt 
+    { 
+    buf = sip_ex_error_in_compression;
+    }
+    
+RESOURCE TBUF r_error_in_security_txt 
+    { 
+    buf = sip_ex_error_in_security;
+    }
+    
+RESOURCE TBUF r_error_in_proxy_txt 
+    { 
+    buf = sip_ex_error_in_proxy;
+    }
+
+RESOURCE TBUF r_error_in_registrar_txt 
+    { 
+    buf = sip_ex_error_in_registrar;
+    }
+
+RESOURCE TBUF r_error_in_general_txt 
+    { 
+    buf = sip_ex_error_in_general;
+    }
+
+RESOURCE TBUF r_sip_ex_not_connected_txt
+    {
+    buf = sip_ex_not_connected_txt;
+    }
+
+RESOURCE TBUF r_sip_ex_not_registered_txt
+    {
+    buf = sip_ex_not_registered_txt;
+    }
+
+RESOURCE TBUF r_sip_ex_im_received
+    {
+    buf = sip_ex_im_received;
+    }
+    
+RESOURCE TBUF r_sip_ex_accept_invitation_dlg_title
+    {
+    buf = sip_ex_accept_invitation_dlg_title;
+    }
+
+RESOURCE TBUF r_sip_ex_accept_invitation
+    {
+    buf = sip_ex_accept_invitation;
+    }
+    
+RESOURCE TBUF r_profile_saved 
+    { 
+    buf = sip_ex_profile_saved;
+    }
+    
+RESOURCE TBUF r_sip_ex_def_profile_name
+    {
+    buf = sip_ex_sip_provider;
+    }
+
+RESOURCE TBUF r_sip_ex_def_username
+    {
+    buf = sip_ex_sip_none;
+    }
+
+RESOURCE TBUF r_sip_ex_def_server_address
+    {
+    buf = sip_ex_sip_def_addr;
+    }
+    
+RESOURCE ARRAY sip_ex_compression_choices
+	{
+	items=
+		{
+		LBUF {	txt = sip_ex_comp_no;	},
+		LBUF {	txt = sip_ex_comp_yes;	}
+		};
+	}
+// End of File
+    

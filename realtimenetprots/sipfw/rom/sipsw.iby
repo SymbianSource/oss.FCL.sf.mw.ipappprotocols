@@ -1,0 +1,116 @@
+// Copyright (c) 2008-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name          : sipsw.iby
+// Part of       : SIP stack
+// Version       : SIP/6.0
+//
+
+
+
+#ifndef __SIPSW_IBY__
+#define __SIPSW_IBY__
+
+#ifdef SYMBIAN_EXCLUDE_SIP
+REM Feature SIP is not included in this ROM
+#else
+
+
+/*========================================================================
+* SDP Codec
+* ========================================================================
+*/
+
+file=ABI_DIR\BUILD_DIR\SDPCodec.dll SHARED_LIB_DIR\SDPCodec.dll
+
+
+/*========================================================================
+* SigComp
+* ========================================================================
+*/
+
+file=ABI_DIR\BUILD_DIR\sigcomp.dll SHARED_LIB_DIR\SIGCOMP.DLL
+
+ECOM_PLUGIN(deflatecomp.dll,deflatecomp.rsc)
+
+/* Resources */
+data=DATAC_\private\101f5d36\sipsdp.dic private\101f5d36\sipsdp.dic
+
+
+/*========================================================================
+* Client Resolver 
+* ========================================================================
+*/
+
+file=ABI_DIR\BUILD_DIR\siprsvsrv.exe PROGRAMS_DIR\siprsvsrv.exe
+
+file=ABI_DIR\BUILD_DIR\siprsvclient.dll SHARED_LIB_DIR\siprsvclient.dll
+
+file=ABI_DIR\BUILD_DIR\sipresolver.dll SHARED_LIB_DIR\sipresolver.dll
+
+/*=========================================================================
+* Core Stack
+* =========================================================================
+*/
+
+file=ABI_DIR\BUILD_DIR\sipcodec.dll SHARED_LIB_DIR\sipcodec.dll
+
+file=ABI_DIR\BUILD_DIR\sipclient.dll SHARED_LIB_DIR\sipclient.dll
+
+file=ABI_DIR\BUILD_DIR\sipserver.exe PROGRAMS_DIR\sipserver.exe
+
+ECOM_PLUGIN(SIPSIGCOMP.DLL,SIPSIGCOMP.rsc)
+
+ECOM_PLUGIN(sipgprsmon.dll,sipgprsmon.rsc)
+
+ECOM_PLUGIN(sipdigest.dll,sipdigest.rsc)
+
+ECOM_PLUGIN(siptls.dll,siptls.rsc)
+
+#ifdef SYMBIAN_EXCLUDE_IPSEC
+REM Feature IPSEC not included in this rom
+#else
+ECOM_PLUGIN(sipipsec.dll,sipipsec.rsc)
+#endif
+
+ECOM_PLUGIN(SipReqHand.dll,SipReqHand.rsc)
+
+
+/*========================================================================
+* Profile Agent 
+* ========================================================================
+*/
+
+file=ABI_DIR\BUILD_DIR\sipprofile.dll SHARED_LIB_DIR\sipprofile.dll
+
+file=ABI_DIR\BUILD_DIR\sipprofilecli.dll SHARED_LIB_DIR\sipprofilecli.dll
+
+file=ABI_DIR\BUILD_DIR\sipprofilefsm.dll SHARED_LIB_DIR\sipprofilefsm.dll
+
+file=ABI_DIR\BUILD_DIR\sipproxyrsv.dll SHARED_LIB_DIR\sipproxyrsv.dll
+
+file=ABI_DIR\BUILD_DIR\sipprofilesrv.exe PROGRAMS_DIR\sipprofilesrv.exe
+
+ECOM_PLUGIN(sipietfagnt.dll,sipietfagnt.rsc) 
+
+ECOM_PLUGIN(sipimsagnt.dll,sipimsagnt.rsc)
+
+/* Resources - XML for secure profile backup*/
+data=ZPRIVATE\101F413C\backup_registration.xml private\101F413C\backup_registration.xml
+data=DATAZ_\private\10202be9\2001F889.txt private\10202be9\2001F889.txt
+
+
+#endif /* SYMBIAN_EXCLUDE_SIP*/
+
+#endif /* __SIPSW_IBY__ */
+

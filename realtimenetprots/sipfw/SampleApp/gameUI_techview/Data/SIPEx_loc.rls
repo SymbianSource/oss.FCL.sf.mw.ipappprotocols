@@ -1,0 +1,65 @@
+// Copyright (c) 2005-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+//
+
+rls_string sip_ex_caption	"SIPEx"
+rls_string sip_ex_exit "Exit"
+rls_string sip_ex_invite_address_dlg_title "Invitees address"
+rls_string sip_ex_address_line "Address"
+rls_string sip_ex_dlg_ok "Ok"
+rls_string sip_ex_dlg_cancel "Cancel"
+rls_string sip_ex_error_in_address "Not valid address"
+rls_string sip_ex_error_in_username "Not valid Public Username"
+rls_string sip_ex_error_in_compression "Compression value not valid"
+rls_string sip_ex_error_in_security "Security value not valid"
+rls_string sip_ex_error_in_proxy "Not valid proxy server settings"
+rls_string sip_ex_error_in_registrar "Not valid registrar server settings"
+rls_string sip_ex_error_in_general "One of settings is not correct"
+rls_string sip_ex_not_connected_txt	"Not connected"
+rls_string sip_ex_not_registered_txt "Not registered"
+rls_string sip_ex_invite_for_game	"Invite for game"
+rls_string sip_ex_disable_profile	"Disable profile"
+rls_string sip_ex_enable_profile "Enable profile"
+rls_string sip_ex_profile_saved "Profile saved"
+rls_string sip_ex_instant_message_dlg_title "Instant message"
+rls_string sip_ex_im_address_line "Address"
+rls_string sip_ex_send_im_cmd	"Send instant msg"
+rls_string sip_ex_im_msg_line "Message:"
+rls_string sip_ex_end_game_cmd "End game"
+rls_string sip_ex_im_received "Message from %S:\n%S"
+rls_string sip_ex_accept_invitation_dlg_title "Invitation"
+rls_string sip_ex_accept_invitation	"Accept game invitation from %S?"
+
+rls_string sip_ex_default_profile_line "Default profile"
+rls_string sip_ex_public_uname "Public username"
+rls_string sip_ex_accesspointid "Default access point"
+rls_string sip_ex_compression "Use compression"
+rls_string sip_ex_comp_no "No"
+rls_string sip_ex_comp_yes "Yes"
+rls_string sip_ex_security_neg "Use security"
+rls_string sip_ex_security_active "Yes"
+rls_string sip_ex_security_inactive "No"
+rls_string sip_ex_proxy_server "Proxy server"
+rls_string sip_ex_proxy_address "Proxy serv. address"
+rls_string sip_ex_proxy_realm "Proxy serv. Realm"
+rls_string sip_ex_proxy_uname "Proxy serv. User name"
+rls_string sip_ex_proxy_password "Proxy serv. Password"
+rls_string sip_ex_registrar_server "Registrar server"
+rls_string sip_ex_reg_address "Registrar serv. addr."
+rls_string sip_ex_reg_realm "Registrar serv. Realm"
+rls_string sip_ex_reg_uname "Registrar serv. User name"
+rls_string sip_ex_reg_password "Registrar serv. Password"
+rls_string sip_ex_sip_provider "Provider"
+rls_string sip_ex_sip_none "None@1.2.3.4"
+rls_string sip_ex_sip_def_addr "0.0.0.0"

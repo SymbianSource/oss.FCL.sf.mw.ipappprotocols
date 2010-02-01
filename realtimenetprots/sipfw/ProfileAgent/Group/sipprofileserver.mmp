@@ -1,0 +1,97 @@
+// Copyright (c) 2007-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name          : SIPProfileServer.mmp
+// Part of       : SIP Profile Agent
+// Version       : SIP/6.0
+//
+
+
+
+TARGET            sipprofilesrv.exe
+TARGETTYPE        exe
+UID               0x1000008d 0x101F413C
+
+// Bigger than default stack size is required because of logging in debug mode
+EPOCSTACKSIZE 0x5000
+
+SOURCEPATH        ../Server/Src
+SOURCE            SipProfileActiveScheduler.cpp
+SOURCE            SipProfileCSServer.cpp
+SOURCE            SipProfileCSSession.cpp
+SOURCE            SipProfileCSSessionHelper.cpp
+SOURCE	          SipProfileServerCore.cpp
+SOURCE	          SipProfileCacheItem.cpp
+SOURCE            SipProfileState.cpp
+SOURCE	          SipProfileStateUnregistered.cpp
+SOURCE	          SipProfileStateRegistered.cpp
+SOURCE	          SipProfileStateRegInProg.cpp
+SOURCE	          SipProfileStateUnregInProg.cpp
+SOURCE            sipprofilestatewaitforiap.cpp
+SOURCE            sipprofilestatewaitforpermission.cpp
+SOURCE            sipprofilestatemigratingtonewiap.cpp
+SOURCE            sipprofilestateunregisteringoldiap.cpp
+SOURCE	          SipProfileCSServerCloseTimer.cpp
+SOURCE            sipalrhandler.cpp
+SOURCE            sipalrmigrationcontroller.cpp
+SOURCE            sipalrmigrationobserverinfo.cpp
+
+SOURCEPATH        ../Store/Src
+SOURCE            SIPProfileStorageBase.cpp
+SOURCE            SIPProfileStorageIndex.cpp
+SOURCE            SIPProfileStorage.cpp
+SOURCE            SipProfileStorageSecureBackup.cpp
+
+SOURCEPATH        ../PluginMgr/Src
+SOURCE            Sipplugindirector.cpp
+SOURCE			  SipProfileAgentConfigExtension.cpp
+SOURCE			  SipProfileAgentConfigRetriever.cpp
+
+SOURCEPATH        ../AlrMonitor/src
+SOURCE            sipalrmonitor.cpp
+SOURCE            sipalrsnapmonitor.cpp
+
+USERINCLUDE       ../Server/Inc
+USERINCLUDE       ../Server/Src
+USERINCLUDE       ../Profile/api
+USERINCLUDE       ../Profile/Inc 
+USERINCLUDE       ../PluginMgr/api
+USERINCLUDE       ../PluginMgr/Inc
+USERINCLUDE       ../Store/Inc
+USERINCLUDE       ../AlrMonitor/inc
+
+MW_LAYER_SYSTEMINCLUDE
+
+LIBRARY           euser.lib
+LIBRARY           estor.lib
+LIBRARY           esock.lib
+LIBRARY       	  ecom.lib
+LIBRARY       	  bafl.lib
+LIBRARY       	  efsrv.lib
+LIBRARY       	  charconv.lib
+LIBRARY           inetprotutil.lib
+LIBRARY           sipprofile.lib
+LIBRARY           random.lib
+LIBRARY           flogger.lib
+LIBRARY           netmeta.lib
+LIBRARY           centralrepository.lib
+LIBRARY 	  cmmanager.lib
+
+VENDORID 0x70000001
+
+CAPABILITY ProtServ NetworkServices ReadDeviceData
+
+// MACRO 	PLAT_SEC_TEST
+
+SMPSAFE
+

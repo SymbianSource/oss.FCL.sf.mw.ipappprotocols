@@ -1,0 +1,45 @@
+/*
+* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description:
+*
+*/
+
+TARGET		    sipexresolverplugin.dll
+TARGETTYPE	    PLUGIN
+
+UID		        0x10009D8D 0xA00001EC
+
+SOURCEPATH	    ../Src
+SOURCE		    SIPExResolverPluginDll.cpp
+SOURCE          SIPExResolverPlugin.cpp
+
+USERINCLUDE 	../Inc
+
+SYSTEMINCLUDE 	/epoc32/include /epoc32/include/ecom
+
+START RESOURCE  ../Data/A00001EC.rss
+TARGET          sipexresolverplugin.rsc                                          
+END
+
+LIBRARY			euser.lib
+LIBRARY         ecom.lib 
+LIBRARY         apparc.lib
+LIBRARY         apgrfx.lib
+
+VENDORID        0
+
+CAPABILITY     NetworkServices LocalServices Location ReadUserData \
+               WriteUserData WriteDeviceData SwEvent ProtServ
+
+SMPSAFE

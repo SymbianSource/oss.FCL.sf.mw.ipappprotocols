@@ -1,0 +1,902 @@
+EXPORTS
+	_ZN10SIPStrings4PoolEv @ 1 NONAME
+	_ZN10SIPStrings5CloseEv @ 2 NONAME
+	_ZN10SIPStrings5OpenLEv @ 3 NONAME
+	_ZN10SIPStrings5TableEv @ 4 NONAME
+	_ZN10SIPStrings7StringFEi @ 5 NONAME
+	_ZN11CSIPAddress12ExternalizeLER12RWriteStream @ 6 NONAME
+	_ZN11CSIPAddress12InternalizeLER11RReadStream @ 7 NONAME
+	_ZN11CSIPAddress15SetDisplayNameLERK6TDesC8 @ 8 NONAME
+	_ZN11CSIPAddress3URIEv @ 9 NONAME
+	_ZN11CSIPAddress4NewLEP5CUri8 @ 10 NONAME
+	_ZN11CSIPAddress4NewLERK6TDesC8P5CUri8 @ 11 NONAME
+	_ZN11CSIPAddress4NewLERKS_ @ 12 NONAME
+	_ZN11CSIPAddress5NewLCEP5CUri8 @ 13 NONAME
+	_ZN11CSIPAddress5NewLCERK6TDesC8P5CUri8 @ 14 NONAME
+	_ZN11CSIPAddress5NewLCERKS_ @ 15 NONAME
+	_ZN11CSIPAddress7DecodeLERK6TDesC8 @ 16 NONAME
+	_ZN11CSIPAddress8SetUri8LEP5CUri8 @ 17 NONAME
+	_ZN11CSIPAddressD0Ev @ 18 NONAME
+	_ZN11CSIPAddressD1Ev @ 19 NONAME
+	_ZN11CSIPAddressD2Ev @ 20 NONAME
+	_ZN11CSIPMessage10AddHeaderLEP14CSIPHeaderBase @ 21 NONAME
+	_ZN11CSIPMessage10AddHeaderLERK14CSIPHeaderBase @ 22 NONAME
+	_ZN11CSIPMessage10SetContentEP6HBufC8 @ 23 NONAME
+	_ZN11CSIPMessage11AllHeadersLEv @ 24 NONAME
+	_ZN11CSIPMessage11HeaderCountE8RStringF @ 25 NONAME
+	_ZN11CSIPMessage12RemoveHeaderEPK14CSIPHeaderBase @ 26 NONAME
+	_ZN11CSIPMessage13DeleteHeadersE8RStringF @ 27 NONAME
+	_ZN11CSIPMessage14ReplaceHeaderLEP14CSIPHeaderBaseS1_ @ 28 NONAME
+	_ZN11CSIPMessage15ReplaceHeadersLER13RPointerArrayI14CSIPHeaderBaseE @ 29 NONAME
+	_ZN11CSIPMessage17ToTextHeaderPartLEv @ 30 NONAME
+	_ZN11CSIPMessage18ToTextHeaderPartLCEv @ 31 NONAME
+	_ZN11CSIPMessage19ExternalizeHeadersLER12RWriteStream @ 32 NONAME
+	_ZN11CSIPMessage19InternalizeHeadersLER11RReadStream @ 33 NONAME
+	_ZN11CSIPMessage21TakeContentOwnershipLEv @ 34 NONAME
+	_ZN11CSIPMessage24EncodedHeaderPartLengthLEv @ 35 NONAME
+	_ZN11CSIPMessage2ToEv @ 36 NONAME
+	_ZN11CSIPMessage4CSeqEv @ 37 NONAME
+	_ZN11CSIPMessage4FromEv @ 38 NONAME
+	_ZN11CSIPMessage6CallIDEv @ 39 NONAME
+	_ZN11CSIPMessage6HeaderE8RStringFi @ 40 NONAME
+	_ZN11CSIPMessage7HeadersE8RStringF @ 41 NONAME
+	_ZN11CSIPMessage7ToTextLEv @ 42 NONAME
+	_ZN11CSIPMessage8ToTextLCEv @ 43 NONAME
+	_ZN11CSIPMessageD0Ev @ 44 NONAME
+	_ZN11CSIPMessageD1Ev @ 45 NONAME
+	_ZN11CSIPMessageD2Ev @ 46 NONAME
+	_ZN11CSIPRequest10RequestURIEv @ 47 NONAME
+	_ZN11CSIPRequest10SetMethodLE8RStringF @ 48 NONAME
+	_ZN11CSIPRequest10SetMethodLERK6TDesC8 @ 49 NONAME
+	_ZN11CSIPRequest14SetRequestURILEP13CURIContainer @ 50 NONAME
+	_ZN11CSIPRequest4NewLE8RStringF @ 51 NONAME
+	_ZN11CSIPRequest4NewLEv @ 52 NONAME
+	_ZN11CSIPRequest5NewLCE8RStringF @ 53 NONAME
+	_ZN11CSIPRequest5NewLCEv @ 54 NONAME
+	_ZN11CSIPRequestD0Ev @ 55 NONAME
+	_ZN11CSIPRequestD1Ev @ 56 NONAME
+	_ZN11CSIPRequestD2Ev @ 57 NONAME
+	_ZN12CSIPHostPort10DeletePortEv @ 58 NONAME
+	_ZN12CSIPHostPort4NewLERKS_ @ 59 NONAME
+	_ZN12CSIPHostPort5NewLCERKS_ @ 60 NONAME
+	_ZN12CSIPHostPort7DecodeLERK6TDesC8 @ 61 NONAME
+	_ZN12CSIPHostPort7SetPortEj @ 62 NONAME
+	_ZN12CSIPHostPort8SetHostLERK6TDesC8 @ 63 NONAME
+	_ZN12CSIPHostPortD0Ev @ 64 NONAME
+	_ZN12CSIPHostPortD1Ev @ 65 NONAME
+	_ZN12CSIPHostPortD2Ev @ 66 NONAME
+	_ZN12CSIPResponse16SetReasonPhraseLE8RStringF @ 67 NONAME
+	_ZN12CSIPResponse16SetResponseCodeLEj @ 68 NONAME
+	_ZN12CSIPResponse4NewLEj8RStringF @ 69 NONAME
+	_ZN12CSIPResponse5NewLCEj8RStringF @ 70 NONAME
+	_ZN12CSIPResponseD0Ev @ 71 NONAME
+	_ZN12CSIPResponseD1Ev @ 72 NONAME
+	_ZN12CSIPResponseD2Ev @ 73 NONAME
+	_ZN12CSIPToHeader17InternalizeValueLER11RReadStream @ 74 NONAME
+	_ZN12CSIPToHeader4NewLEP11CSIPAddress @ 75 NONAME
+	_ZN12CSIPToHeader4NewLERK20CSIPFromToHeaderBase @ 76 NONAME
+	_ZN12CSIPToHeader5NewLCEP11CSIPAddress @ 77 NONAME
+	_ZN12CSIPToHeader5NewLCERK20CSIPFromToHeaderBase @ 78 NONAME
+	_ZN12CSIPToHeader7DecodeLERK6TDesC8 @ 79 NONAME
+	_ZN12CSIPToHeaderD0Ev @ 80 NONAME
+	_ZN12CSIPToHeaderD1Ev @ 81 NONAME
+	_ZN12CSIPToHeaderD2Ev @ 82 NONAME
+	_ZN13CSIPViaHeader12SetTtlParamLEi @ 83 NONAME
+	_ZN13CSIPViaHeader13SetTransportLE8RStringF @ 84 NONAME
+	_ZN13CSIPViaHeader14SentByHostPortEv @ 85 NONAME
+	_ZN13CSIPViaHeader23SetSentProtocolVersionLE8RStringF @ 86 NONAME
+	_ZN13CSIPViaHeader4NewLE8RStringFP12CSIPHostPort @ 87 NONAME
+	_ZN13CSIPViaHeader5NewLCE8RStringFP12CSIPHostPort @ 88 NONAME
+	_ZN13CSIPViaHeader7DecodeLERK6TDesC8 @ 89 NONAME
+	_ZN13CSIPViaHeaderD0Ev @ 90 NONAME
+	_ZN13CSIPViaHeaderD1Ev @ 91 NONAME
+	_ZN13CSIPViaHeaderD2Ev @ 92 NONAME
+	_ZN13CSIPViaHeadereqERKS_ @ 93 NONAME
+	_ZN13CURIContainer12InternalizeLER11RReadStream @ 94 NONAME
+	_ZN13CURIContainer4NewLEP5CUri8 @ 95 NONAME
+	_ZN13CURIContainer4NewLERKS_ @ 96 NONAME
+	_ZN13CURIContainer5NewLCEP5CUri8 @ 97 NONAME
+	_ZN13CURIContainer5NewLCERKS_ @ 98 NONAME
+	_ZN13CURIContainer6SIPURIEv @ 99 NONAME
+	_ZN13CURIContainer7DecodeLERK6TDesC8 @ 100 NONAME
+	_ZN13CURIContainerD0Ev @ 101 NONAME
+	_ZN13CURIContainerD1Ev @ 102 NONAME
+	_ZN13CURIContainerD2Ev @ 103 NONAME
+	_ZN13SIPCodecUtils18CreateSIPAddressLCEP13CURIContainer @ 104 NONAME
+	_ZN13SIPCodecUtils19CreateRouteHeaderLCERK19CSIPRouteHeaderBase @ 105 NONAME
+	_ZN13SIPCodecUtils25CreateRecordRouteHeaderLCERK19CSIPRouteHeaderBase @ 106 NONAME
+	_ZN14CSIPCSeqHeader10SetMethodLE8RStringF @ 107 NONAME
+	_ZN14CSIPCSeqHeader17InternalizeValueLER11RReadStream @ 108 NONAME
+	_ZN14CSIPCSeqHeader4NewLEj8RStringF @ 109 NONAME
+	_ZN14CSIPCSeqHeader5NewLCEj8RStringF @ 110 NONAME
+	_ZN14CSIPCSeqHeader6SetSeqEj @ 111 NONAME
+	_ZN14CSIPCSeqHeader7DecodeLERK6TDesC8 @ 112 NONAME
+	_ZN14CSIPCSeqHeaderD0Ev @ 113 NONAME
+	_ZN14CSIPCSeqHeaderD1Ev @ 114 NONAME
+	_ZN14CSIPCSeqHeaderD2Ev @ 115 NONAME
+	_ZN14CSIPFromHeader17InternalizeValueLER11RReadStream @ 116 NONAME
+	_ZN14CSIPFromHeader4NewLEP11CSIPAddress @ 117 NONAME
+	_ZN14CSIPFromHeader4NewLERK20CSIPFromToHeaderBase @ 118 NONAME
+	_ZN14CSIPFromHeader5NewLCEP11CSIPAddress @ 119 NONAME
+	_ZN14CSIPFromHeader5NewLCERK20CSIPFromToHeaderBase @ 120 NONAME
+	_ZN14CSIPFromHeader7DecodeLERK6TDesC8 @ 121 NONAME
+	_ZN14CSIPFromHeaderD0Ev @ 122 NONAME
+	_ZN14CSIPFromHeaderD1Ev @ 123 NONAME
+	_ZN14CSIPFromHeaderD2Ev @ 124 NONAME
+	_ZN14CSIPHeaderBase6PushLCEP13RPointerArrayIS_E @ 125 NONAME
+	_ZN14CSIPHeaderBaseD0Ev @ 126 NONAME
+	_ZN14CSIPHeaderBaseD1Ev @ 127 NONAME
+	_ZN14CSIPHeaderBaseD2Ev @ 128 NONAME
+	_ZN14CSIPRAckHeader10SetCSeqNumEj @ 129 NONAME
+	_ZN14CSIPRAckHeader10SetMethodLE8RStringF @ 130 NONAME
+	_ZN14CSIPRAckHeader17InternalizeValueLER11RReadStream @ 131 NONAME
+	_ZN14CSIPRAckHeader4NewLEjj8RStringF @ 132 NONAME
+	_ZN14CSIPRAckHeader5NewLCEjj8RStringF @ 133 NONAME
+	_ZN14CSIPRAckHeader6SetSeqEj @ 134 NONAME
+	_ZN14CSIPRAckHeader7DecodeLERK6TDesC8 @ 135 NONAME
+	_ZN14CSIPRAckHeaderD0Ev @ 136 NONAME
+	_ZN14CSIPRAckHeaderD1Ev @ 137 NONAME
+	_ZN14CSIPRAckHeaderD2Ev @ 138 NONAME
+	_ZN14CSIPRSeqHeader17InternalizeValueLER11RReadStream @ 139 NONAME
+	_ZN14CSIPRSeqHeader7DecodeLERK6TDesC8 @ 140 NONAME
+	_ZN14CSIPRSeqHeaderC1Ej @ 141 NONAME
+	_ZN14CSIPRSeqHeaderC2Ej @ 142 NONAME
+	_ZN14CSIPRSeqHeaderD0Ev @ 143 NONAME
+	_ZN14CSIPRSeqHeaderD1Ev @ 144 NONAME
+	_ZN14CSIPRSeqHeaderD2Ev @ 145 NONAME
+	_ZN15CSIPAllowHeader17InternalizeValueLER11RReadStream @ 146 NONAME
+	_ZN15CSIPAllowHeader4NewLE8RStringF @ 147 NONAME
+	_ZN15CSIPAllowHeader5NewLCE8RStringF @ 148 NONAME
+	_ZN15CSIPAllowHeader7DecodeLERK6TDesC8 @ 149 NONAME
+	_ZN15CSIPAllowHeaderD0Ev @ 150 NONAME
+	_ZN15CSIPAllowHeaderD1Ev @ 151 NONAME
+	_ZN15CSIPAllowHeaderD2Ev @ 152 NONAME
+	_ZN15CSIPEventHeader16SetEventPackageLERK6TDesC8 @ 153 NONAME
+	_ZN15CSIPEventHeader17InternalizeValueLER11RReadStream @ 154 NONAME
+	_ZN15CSIPEventHeader18SetEventTemplatesLERK11MDesC8Array @ 155 NONAME
+	_ZN15CSIPEventHeader4NewLERK6TDesC8 @ 156 NONAME
+	_ZN15CSIPEventHeader5NewLCERK6TDesC8 @ 157 NONAME
+	_ZN15CSIPEventHeader7DecodeLERK6TDesC8 @ 158 NONAME
+	_ZN15CSIPEventHeaderD0Ev @ 159 NONAME
+	_ZN15CSIPEventHeaderD1Ev @ 160 NONAME
+	_ZN15CSIPEventHeaderD2Ev @ 161 NONAME
+	_ZN15CSIPRouteHeader17InternalizeValueLER11RReadStream @ 162 NONAME
+	_ZN15CSIPRouteHeader4NewLEP11CSIPAddress @ 163 NONAME
+	_ZN15CSIPRouteHeader5NewLCEP11CSIPAddress @ 164 NONAME
+	_ZN15CSIPRouteHeader7DecodeLERK6TDesC8 @ 165 NONAME
+	_ZN15CSIPRouteHeaderD0Ev @ 166 NONAME
+	_ZN15CSIPRouteHeaderD1Ev @ 167 NONAME
+	_ZN15CSIPRouteHeaderD2Ev @ 168 NONAME
+	_ZN15SIPHeaderLookup11IsAPIHeaderE8RStringF @ 169 NONAME
+	_ZN15SIPHeaderLookup11IsSupportedE8RStringF @ 170 NONAME
+	_ZN15SIPHeaderLookup12InternalizeLE8RStringFR11RReadStream @ 171 NONAME
+	_ZN15SIPHeaderLookup13CreateHeaderLE8RStringFRK6TDesC8 @ 172 NONAME
+	_ZN15SIPHeaderLookup18SetConvertToSIPURIEi @ 173 NONAME
+	_ZN15SIPHeaderLookup5CloseEv @ 174 NONAME
+	_ZN15SIPHeaderLookup5OpenLEv @ 175 NONAME
+	_ZN16CSIPAcceptHeader13SetMediaTypeLERK6TDesC8 @ 176 NONAME
+	_ZN16CSIPAcceptHeader14SetQParameterLEd @ 177 NONAME
+	_ZN16CSIPAcceptHeader16SetMediaSubtypeLERK6TDesC8 @ 178 NONAME
+	_ZN16CSIPAcceptHeader17InternalizeValueLER11RReadStream @ 179 NONAME
+	_ZN16CSIPAcceptHeader4NewLERK6TDesC8S2_ @ 180 NONAME
+	_ZN16CSIPAcceptHeader5NewLCERK6TDesC8S2_ @ 181 NONAME
+	_ZN16CSIPAcceptHeader7DecodeLERK6TDesC8 @ 182 NONAME
+	_ZN16CSIPAcceptHeaderD0Ev @ 183 NONAME
+	_ZN16CSIPAcceptHeaderD1Ev @ 184 NONAME
+	_ZN16CSIPAcceptHeaderD2Ev @ 185 NONAME
+	_ZN16CSIPCallIDHeader17InternalizeValueLER11RReadStream @ 186 NONAME
+	_ZN16CSIPCallIDHeader7DecodeLERK6TDesC8 @ 187 NONAME
+	_ZN16CSIPCallIDHeaderD0Ev @ 188 NONAME
+	_ZN16CSIPCallIDHeaderD1Ev @ 189 NONAME
+	_ZN16CSIPCallIDHeaderD2Ev @ 190 NONAME
+	_ZN16CSIPCallIDHeadereqERKS_ @ 191 NONAME
+	_ZN17CSIPContactHeader10SIPAddressEv @ 192 NONAME
+	_ZN17CSIPContactHeader14SetQParameterLEd @ 193 NONAME
+	_ZN17CSIPContactHeader14SetSIPAddressLEP11CSIPAddress @ 194 NONAME
+	_ZN17CSIPContactHeader17InternalizeValueLER11RReadStream @ 195 NONAME
+	_ZN17CSIPContactHeader20SetExpiresParameterLEi @ 196 NONAME
+	_ZN17CSIPContactHeader4NewLEP11CSIPAddress @ 197 NONAME
+	_ZN17CSIPContactHeader5NewLCEP11CSIPAddress @ 198 NONAME
+	_ZN17CSIPContactHeader7DecodeLERK6TDesC8 @ 199 NONAME
+	_ZN17CSIPContactHeaderD0Ev @ 200 NONAME
+	_ZN17CSIPContactHeaderD1Ev @ 201 NONAME
+	_ZN17CSIPContactHeaderD2Ev @ 202 NONAME
+	_ZN17CSIPExpiresHeader17InternalizeValueLER11RReadStream @ 203 NONAME
+	_ZN17CSIPExpiresHeader7DecodeLERK6TDesC8 @ 204 NONAME
+	_ZN17CSIPExpiresHeaderC1Ej @ 205 NONAME
+	_ZN17CSIPExpiresHeaderC2Ej @ 206 NONAME
+	_ZN17CSIPExpiresHeaderD0Ev @ 207 NONAME
+	_ZN17CSIPExpiresHeaderD1Ev @ 208 NONAME
+	_ZN17CSIPExpiresHeaderD2Ev @ 209 NONAME
+	_ZN17CSIPMessageParser4NewLEv @ 210 NONAME
+	_ZN17CSIPMessageParser5NewLCEv @ 211 NONAME
+	_ZN17CSIPMessageParser8FromTextEP6HBufC8PP11CSIPMessage @ 212 NONAME
+	_ZN17CSIPMessageParserD0Ev @ 213 NONAME
+	_ZN17CSIPMessageParserD1Ev @ 214 NONAME
+	_ZN17CSIPMessageParserD2Ev @ 215 NONAME
+	_ZN17CSIPReferToHeader17InternalizeValueLER11RReadStream @ 216 NONAME
+	_ZN17CSIPReferToHeader4NewLEP11CSIPAddress @ 217 NONAME
+	_ZN17CSIPReferToHeader5NewLCEP11CSIPAddress @ 218 NONAME
+	_ZN17CSIPReferToHeader7DecodeLERK6TDesC8 @ 219 NONAME
+	_ZN17CSIPReferToHeaderD0Ev @ 220 NONAME
+	_ZN17CSIPReferToHeaderD1Ev @ 221 NONAME
+	_ZN17CSIPReferToHeaderD2Ev @ 222 NONAME
+	_ZN17CSIPReplyToHeader17InternalizeValueLER11RReadStream @ 223 NONAME
+	_ZN17CSIPReplyToHeader4NewLEP11CSIPAddress @ 224 NONAME
+	_ZN17CSIPReplyToHeader5NewLCEP11CSIPAddress @ 225 NONAME
+	_ZN17CSIPReplyToHeader7DecodeLERK6TDesC8 @ 226 NONAME
+	_ZN17CSIPReplyToHeaderD0Ev @ 227 NONAME
+	_ZN17CSIPReplyToHeaderD1Ev @ 228 NONAME
+	_ZN17CSIPReplyToHeaderD2Ev @ 229 NONAME
+	_ZN17CSIPRequireHeader17InternalizeValueLER11RReadStream @ 230 NONAME
+	_ZN17CSIPRequireHeader4NewLE8RStringF @ 231 NONAME
+	_ZN17CSIPRequireHeader5NewLCE8RStringF @ 232 NONAME
+	_ZN17CSIPRequireHeader7DecodeLERK6TDesC8 @ 233 NONAME
+	_ZN17CSIPRequireHeaderD0Ev @ 234 NONAME
+	_ZN17CSIPRequireHeaderD1Ev @ 235 NONAME
+	_ZN17CSIPRequireHeaderD2Ev @ 236 NONAME
+	_ZN18CSIPAuthHeaderBase11DeleteParamE8RStringF @ 237 NONAME
+	_ZN18CSIPAuthHeaderBase21SetParamAndAddQuotesLE8RStringFRK6TDesC8 @ 238 NONAME
+	_ZN18CSIPAuthHeaderBase9SetParamLE8RStringFS0_ @ 239 NONAME
+	_ZN18CSIPAuthHeaderBaseD0Ev @ 240 NONAME
+	_ZN18CSIPAuthHeaderBaseD1Ev @ 241 NONAME
+	_ZN18CSIPAuthHeaderBaseD2Ev @ 242 NONAME
+	_ZN19CSIPExtensionHeader17InternalizeValueLER11RReadStream @ 243 NONAME
+	_ZN19CSIPExtensionHeader4NewLERK6TDesC8S2_ @ 244 NONAME
+	_ZN19CSIPExtensionHeader5NewLCERK6TDesC8S2_ @ 245 NONAME
+	_ZN19CSIPExtensionHeader9SetValueLERK6TDesC8 @ 246 NONAME
+	_ZN19CSIPExtensionHeaderD0Ev @ 247 NONAME
+	_ZN19CSIPExtensionHeaderD1Ev @ 248 NONAME
+	_ZN19CSIPExtensionHeaderD2Ev @ 249 NONAME
+	_ZN19CSIPRouteHeaderBase10SIPAddressEv @ 250 NONAME
+	_ZN19CSIPRouteHeaderBase14SetSIPAddressLEP11CSIPAddress @ 251 NONAME
+	_ZN19CSIPRouteHeaderBaseD0Ev @ 252 NONAME
+	_ZN19CSIPRouteHeaderBaseD1Ev @ 253 NONAME
+	_ZN19CSIPRouteHeaderBaseD2Ev @ 254 NONAME
+	_ZN19CSIPSupportedHeader17InternalizeValueLER11RReadStream @ 255 NONAME
+	_ZN19CSIPSupportedHeader4NewLE8RStringF @ 256 NONAME
+	_ZN19CSIPSupportedHeader5NewLCE8RStringF @ 257 NONAME
+	_ZN19CSIPSupportedHeader7DecodeLERK6TDesC8 @ 258 NONAME
+	_ZN19CSIPSupportedHeaderD0Ev @ 259 NONAME
+	_ZN19CSIPSupportedHeaderD1Ev @ 260 NONAME
+	_ZN19CSIPSupportedHeaderD2Ev @ 261 NONAME
+	_ZN19CSIPTimestampHeader12SetTimestampEd @ 262 NONAME
+	_ZN19CSIPTimestampHeader17InternalizeValueLER11RReadStream @ 263 NONAME
+	_ZN19CSIPTimestampHeader7DecodeLERK6TDesC8 @ 264 NONAME
+	_ZN19CSIPTimestampHeader8SetDelayEd @ 265 NONAME
+	_ZN19CSIPTimestampHeaderC1Ed @ 266 NONAME
+	_ZN19CSIPTimestampHeaderC2Ed @ 267 NONAME
+	_ZN19CSIPTimestampHeaderD0Ev @ 268 NONAME
+	_ZN19CSIPTimestampHeaderD1Ev @ 269 NONAME
+	_ZN19CSIPTimestampHeaderD2Ev @ 270 NONAME
+	_ZN19CSIPTokenHeaderBase9SetValueLE8RStringF @ 271 NONAME
+	_ZN19CSIPTokenHeaderBaseD0Ev @ 272 NONAME
+	_ZN19CSIPTokenHeaderBaseD1Ev @ 273 NONAME
+	_ZN19CSIPTokenHeaderBaseD2Ev @ 274 NONAME
+	_ZN20CSIPFromToHeaderBase10SIPAddressEv @ 275 NONAME
+	_ZN20CSIPFromToHeaderBase14SetSIPAddressLEP11CSIPAddress @ 276 NONAME
+	_ZN20CSIPFromToHeaderBaseD0Ev @ 277 NONAME
+	_ZN20CSIPFromToHeaderBaseD1Ev @ 278 NONAME
+	_ZN20CSIPFromToHeaderBaseD2Ev @ 279 NONAME
+	_ZN20CSIPMinExpiresHeader7DecodeLERK6TDesC8 @ 280 NONAME
+	_ZN20CSIPMinExpiresHeaderC1Ej @ 281 NONAME
+	_ZN20CSIPMinExpiresHeaderC2Ej @ 282 NONAME
+	_ZN20CSIPMinExpiresHeaderD0Ev @ 283 NONAME
+	_ZN20CSIPMinExpiresHeaderD1Ev @ 284 NONAME
+	_ZN20CSIPMinExpiresHeaderD2Ev @ 285 NONAME
+	_ZN20CSIPRetryAfterHeader13SetRetryAfterEj @ 286 NONAME
+	_ZN20CSIPRetryAfterHeader17InternalizeValueLER11RReadStream @ 287 NONAME
+	_ZN20CSIPRetryAfterHeader17SetDurationParamLEi @ 288 NONAME
+	_ZN20CSIPRetryAfterHeader4NewLEj @ 289 NONAME
+	_ZN20CSIPRetryAfterHeader5NewLCEj @ 290 NONAME
+	_ZN20CSIPRetryAfterHeader7DecodeLERK6TDesC8 @ 291 NONAME
+	_ZN20CSIPRetryAfterHeaderD0Ev @ 292 NONAME
+	_ZN20CSIPRetryAfterHeaderD1Ev @ 293 NONAME
+	_ZN20CSIPRetryAfterHeaderD2Ev @ 294 NONAME
+	_ZN21CSIPAddressHeaderBase10SIPAddressEv @ 295 NONAME
+	_ZN21CSIPAddressHeaderBase14SetSIPAddressLEP11CSIPAddress @ 296 NONAME
+	_ZN21CSIPAddressHeaderBaseD0Ev @ 297 NONAME
+	_ZN21CSIPAddressHeaderBaseD1Ev @ 298 NONAME
+	_ZN21CSIPAddressHeaderBaseD2Ev @ 299 NONAME
+	_ZN21CSIPAllowEventsHeader16SetEventPackageLERK6TDesC8 @ 300 NONAME
+	_ZN21CSIPAllowEventsHeader17InternalizeValueLER11RReadStream @ 301 NONAME
+	_ZN21CSIPAllowEventsHeader18SetEventTemplatesLERK11MDesC8Array @ 302 NONAME
+	_ZN21CSIPAllowEventsHeader4NewLERK6TDesC8 @ 303 NONAME
+	_ZN21CSIPAllowEventsHeader5NewLCERK6TDesC8 @ 304 NONAME
+	_ZN21CSIPAllowEventsHeader7DecodeLERK6TDesC8 @ 305 NONAME
+	_ZN21CSIPAllowEventsHeaderD0Ev @ 306 NONAME
+	_ZN21CSIPAllowEventsHeaderD1Ev @ 307 NONAME
+	_ZN21CSIPAllowEventsHeaderD2Ev @ 308 NONAME
+	_ZN21CSIPContentTypeHeader13SetMediaTypeLERK6TDesC8 @ 309 NONAME
+	_ZN21CSIPContentTypeHeader16SetMediaSubtypeLERK6TDesC8 @ 310 NONAME
+	_ZN21CSIPContentTypeHeader17InternalizeValueLER11RReadStream @ 311 NONAME
+	_ZN21CSIPContentTypeHeader4NewLERK6TDesC8S2_ @ 312 NONAME
+	_ZN21CSIPContentTypeHeader5NewLCERK6TDesC8S2_ @ 313 NONAME
+	_ZN21CSIPContentTypeHeader7DecodeLERK6TDesC8 @ 314 NONAME
+	_ZN21CSIPContentTypeHeaderD0Ev @ 315 NONAME
+	_ZN21CSIPContentTypeHeaderD1Ev @ 316 NONAME
+	_ZN21CSIPContentTypeHeaderD2Ev @ 317 NONAME
+	_ZN21CSIPMaxForwardsHeader7DecodeLERK6TDesC8 @ 318 NONAME
+	_ZN21CSIPMaxForwardsHeaderC1Ej @ 319 NONAME
+	_ZN21CSIPMaxForwardsHeaderC2Ej @ 320 NONAME
+	_ZN21CSIPMaxForwardsHeaderD0Ev @ 321 NONAME
+	_ZN21CSIPMaxForwardsHeaderD1Ev @ 322 NONAME
+	_ZN21CSIPMaxForwardsHeaderD2Ev @ 323 NONAME
+	_ZN21CSIPRecordRouteHeader4NewLEP11CSIPAddress @ 324 NONAME
+	_ZN21CSIPRecordRouteHeader5NewLCEP11CSIPAddress @ 325 NONAME
+	_ZN21CSIPRecordRouteHeader7DecodeLERK6TDesC8 @ 326 NONAME
+	_ZN21CSIPRecordRouteHeaderD0Ev @ 327 NONAME
+	_ZN21CSIPRecordRouteHeaderD1Ev @ 328 NONAME
+	_ZN21CSIPRecordRouteHeaderD2Ev @ 329 NONAME
+	_ZN21CSIPUnsupportedHeader17InternalizeValueLER11RReadStream @ 330 NONAME
+	_ZN21CSIPUnsupportedHeader4NewLE8RStringF @ 331 NONAME
+	_ZN21CSIPUnsupportedHeader5NewLCE8RStringF @ 332 NONAME
+	_ZN21CSIPUnsupportedHeader7DecodeLERK6TDesC8 @ 333 NONAME
+	_ZN21CSIPUnsupportedHeaderD0Ev @ 334 NONAME
+	_ZN21CSIPUnsupportedHeaderD1Ev @ 335 NONAME
+	_ZN21CSIPUnsupportedHeaderD2Ev @ 336 NONAME
+	_ZN22CSIPProxyRequireHeader17InternalizeValueLER11RReadStream @ 337 NONAME
+	_ZN22CSIPProxyRequireHeader4NewLE8RStringF @ 338 NONAME
+	_ZN22CSIPProxyRequireHeader5NewLCE8RStringF @ 339 NONAME
+	_ZN22CSIPProxyRequireHeader7DecodeLERK6TDesC8 @ 340 NONAME
+	_ZN22CSIPProxyRequireHeaderD0Ev @ 341 NONAME
+	_ZN22CSIPProxyRequireHeaderD1Ev @ 342 NONAME
+	_ZN22CSIPProxyRequireHeaderD2Ev @ 343 NONAME
+	_ZN22CSIPSecurityHeaderBase17SetMechanismNameLERK6TDesC8 @ 344 NONAME
+	_ZN22CSIPSecurityHeaderBase19SetPreferenceParamLEd @ 345 NONAME
+	_ZN22CSIPSecurityHeaderBaseD0Ev @ 346 NONAME
+	_ZN22CSIPSecurityHeaderBaseD1Ev @ 347 NONAME
+	_ZN22CSIPSecurityHeaderBaseD2Ev @ 348 NONAME
+	_ZN22CSIPServiceRouteHeader4NewLEP11CSIPAddress @ 349 NONAME
+	_ZN22CSIPServiceRouteHeader5NewLCEP11CSIPAddress @ 350 NONAME
+	_ZN22CSIPServiceRouteHeader7DecodeLERK6TDesC8 @ 351 NONAME
+	_ZN22CSIPServiceRouteHeaderD0Ev @ 352 NONAME
+	_ZN22CSIPServiceRouteHeaderD1Ev @ 353 NONAME
+	_ZN22CSIPServiceRouteHeaderD2Ev @ 354 NONAME
+	_ZN23CSIPAcceptContactHeader17InternalizeValueLER11RReadStream @ 355 NONAME
+	_ZN23CSIPAcceptContactHeader4NewLEv @ 356 NONAME
+	_ZN23CSIPAcceptContactHeader5NewLCEv @ 357 NONAME
+	_ZN23CSIPAcceptContactHeader7DecodeLERK6TDesC8 @ 358 NONAME
+	_ZN23CSIPAcceptContactHeaderD0Ev @ 359 NONAME
+	_ZN23CSIPAcceptContactHeaderD1Ev @ 360 NONAME
+	_ZN23CSIPAcceptContactHeaderD2Ev @ 361 NONAME
+	_ZN23CSIPAuthorizationHeader4NewLE8RStringF @ 362 NONAME
+	_ZN23CSIPAuthorizationHeader4NewLERK27CSIPAuthorizationHeaderBase @ 363 NONAME
+	_ZN23CSIPAuthorizationHeader5NewLCE8RStringF @ 364 NONAME
+	_ZN23CSIPAuthorizationHeader5NewLCERK27CSIPAuthorizationHeaderBase @ 365 NONAME
+	_ZN23CSIPAuthorizationHeader7DecodeLERK6TDesC8 @ 366 NONAME
+	_ZN23CSIPAuthorizationHeaderD0Ev @ 367 NONAME
+	_ZN23CSIPAuthorizationHeaderD1Ev @ 368 NONAME
+	_ZN23CSIPAuthorizationHeaderD2Ev @ 369 NONAME
+	_ZN23CSIPParameterHeaderBase11DeleteParamE8RStringF @ 370 NONAME
+	_ZN23CSIPParameterHeaderBase9SetParamLE8RStringF @ 371 NONAME
+	_ZN23CSIPParameterHeaderBase9SetParamLE8RStringFS0_ @ 372 NONAME
+	_ZN23CSIPParameterHeaderBaseD0Ev @ 373 NONAME
+	_ZN23CSIPParameterHeaderBaseD1Ev @ 374 NONAME
+	_ZN23CSIPParameterHeaderBaseD2Ev @ 375 NONAME
+	_ZN24CSIPAcceptEncodingHeader11SetCodingsLERK6TDesC8 @ 376 NONAME
+	_ZN24CSIPAcceptEncodingHeader14SetQParameterLEd @ 377 NONAME
+	_ZN24CSIPAcceptEncodingHeader17InternalizeValueLER11RReadStream @ 378 NONAME
+	_ZN24CSIPAcceptEncodingHeader4NewLERK6TDesC8 @ 379 NONAME
+	_ZN24CSIPAcceptEncodingHeader5NewLCERK6TDesC8 @ 380 NONAME
+	_ZN24CSIPAcceptEncodingHeader7DecodeLERK6TDesC8 @ 381 NONAME
+	_ZN24CSIPAcceptEncodingHeaderD0Ev @ 382 NONAME
+	_ZN24CSIPAcceptEncodingHeaderD1Ev @ 383 NONAME
+	_ZN24CSIPAcceptEncodingHeaderD2Ev @ 384 NONAME
+	_ZN24CSIPAcceptLanguageHeader14SetQParameterLEd @ 385 NONAME
+	_ZN24CSIPAcceptLanguageHeader17InternalizeValueLER11RReadStream @ 386 NONAME
+	_ZN24CSIPAcceptLanguageHeader17SetLanguageRangeLERK6TDesC8 @ 387 NONAME
+	_ZN24CSIPAcceptLanguageHeader4NewLERK6TDesC8 @ 388 NONAME
+	_ZN24CSIPAcceptLanguageHeader5NewLCERK6TDesC8 @ 389 NONAME
+	_ZN24CSIPAcceptLanguageHeader7DecodeLERK6TDesC8 @ 390 NONAME
+	_ZN24CSIPAcceptLanguageHeaderD0Ev @ 391 NONAME
+	_ZN24CSIPAcceptLanguageHeaderD1Ev @ 392 NONAME
+	_ZN24CSIPAcceptLanguageHeaderD2Ev @ 393 NONAME
+	_ZN24CSIPPAssociatedURIHeader17InternalizeValueLER11RReadStream @ 394 NONAME
+	_ZN24CSIPPAssociatedURIHeader4NewLEP11CSIPAddress @ 395 NONAME
+	_ZN24CSIPPAssociatedURIHeader5NewLCEP11CSIPAddress @ 396 NONAME
+	_ZN24CSIPPAssociatedURIHeader7DecodeLERK6TDesC8 @ 397 NONAME
+	_ZN24CSIPPAssociatedURIHeaderD0Ev @ 398 NONAME
+	_ZN24CSIPPAssociatedURIHeaderD1Ev @ 399 NONAME
+	_ZN24CSIPPAssociatedURIHeaderD2Ev @ 400 NONAME
+	_ZN24CSIPSecurityClientHeader17InternalizeValueLER11RReadStream @ 401 NONAME
+	_ZN24CSIPSecurityClientHeader4NewLERK6TDesC8 @ 402 NONAME
+	_ZN24CSIPSecurityClientHeader5NewLCERK6TDesC8 @ 403 NONAME
+	_ZN24CSIPSecurityClientHeader7DecodeLERK6TDesC8 @ 404 NONAME
+	_ZN24CSIPSecurityClientHeaderD0Ev @ 405 NONAME
+	_ZN24CSIPSecurityClientHeaderD1Ev @ 406 NONAME
+	_ZN24CSIPSecurityClientHeaderD2Ev @ 407 NONAME
+	_ZN24CSIPSecurityServerHeader4NewLERK6TDesC8 @ 408 NONAME
+	_ZN24CSIPSecurityServerHeader5NewLCERK6TDesC8 @ 409 NONAME
+	_ZN24CSIPSecurityServerHeader7DecodeLERK6TDesC8 @ 410 NONAME
+	_ZN24CSIPSecurityServerHeaderD0Ev @ 411 NONAME
+	_ZN24CSIPSecurityServerHeaderD1Ev @ 412 NONAME
+	_ZN24CSIPSecurityServerHeaderD2Ev @ 413 NONAME
+	_ZN24CSIPSecurityVerifyHeader4NewLERK22CSIPSecurityHeaderBase @ 414 NONAME
+	_ZN24CSIPSecurityVerifyHeader4NewLERK6TDesC8 @ 415 NONAME
+	_ZN24CSIPSecurityVerifyHeader5NewLCERK22CSIPSecurityHeaderBase @ 416 NONAME
+	_ZN24CSIPSecurityVerifyHeader5NewLCERK6TDesC8 @ 417 NONAME
+	_ZN24CSIPSecurityVerifyHeader7DecodeLERK6TDesC8 @ 418 NONAME
+	_ZN24CSIPSecurityVerifyHeaderD0Ev @ 419 NONAME
+	_ZN24CSIPSecurityVerifyHeaderD1Ev @ 420 NONAME
+	_ZN24CSIPSecurityVerifyHeaderD2Ev @ 421 NONAME
+	_ZN25CSIPContentEncodingHeader17InternalizeValueLER11RReadStream @ 422 NONAME
+	_ZN25CSIPContentEncodingHeader4NewLE8RStringF @ 423 NONAME
+	_ZN25CSIPContentEncodingHeader5NewLCE8RStringF @ 424 NONAME
+	_ZN25CSIPContentEncodingHeader7DecodeLERK6TDesC8 @ 425 NONAME
+	_ZN25CSIPContentEncodingHeaderD0Ev @ 426 NONAME
+	_ZN25CSIPContentEncodingHeaderD1Ev @ 427 NONAME
+	_ZN25CSIPContentEncodingHeaderD2Ev @ 428 NONAME
+	_ZN25CSIPUnsignedIntHeaderBase8SetValueEj @ 429 NONAME
+	_ZN25CSIPUnsignedIntHeaderBaseD0Ev @ 430 NONAME
+	_ZN25CSIPUnsignedIntHeaderBaseD1Ev @ 431 NONAME
+	_ZN25CSIPUnsignedIntHeaderBaseD2Ev @ 432 NONAME
+	_ZN25CSIPWWWAuthenticateHeader4NewLE8RStringF @ 433 NONAME
+	_ZN25CSIPWWWAuthenticateHeader5NewLCE8RStringF @ 434 NONAME
+	_ZN25CSIPWWWAuthenticateHeader7DecodeLERK6TDesC8 @ 435 NONAME
+	_ZN25CSIPWWWAuthenticateHeaderD0Ev @ 436 NONAME
+	_ZN25CSIPWWWAuthenticateHeaderD1Ev @ 437 NONAME
+	_ZN25CSIPWWWAuthenticateHeaderD2Ev @ 438 NONAME
+	_ZN26CSIPAuthenticateHeaderBaseD0Ev @ 439 NONAME
+	_ZN26CSIPAuthenticateHeaderBaseD1Ev @ 440 NONAME
+	_ZN26CSIPAuthenticateHeaderBaseD2Ev @ 441 NONAME
+	_ZN27CSIPAuthorizationHeaderBaseD0Ev @ 442 NONAME
+	_ZN27CSIPAuthorizationHeaderBaseD1Ev @ 443 NONAME
+	_ZN27CSIPAuthorizationHeaderBaseD2Ev @ 444 NONAME
+	_ZN27CSIPProxyAuthenticateHeader4NewLE8RStringF @ 445 NONAME
+	_ZN27CSIPProxyAuthenticateHeader5NewLCE8RStringF @ 446 NONAME
+	_ZN27CSIPProxyAuthenticateHeader7DecodeLERK6TDesC8 @ 447 NONAME
+	_ZN27CSIPProxyAuthenticateHeaderD0Ev @ 448 NONAME
+	_ZN27CSIPProxyAuthenticateHeaderD1Ev @ 449 NONAME
+	_ZN27CSIPProxyAuthenticateHeaderD2Ev @ 450 NONAME
+	_ZN27CSIPSubscriptionStateHeader17InternalizeValueLER11RReadStream @ 451 NONAME
+	_ZN27CSIPSubscriptionStateHeader17SetSubStateValueLERK6TDesC8 @ 452 NONAME
+	_ZN27CSIPSubscriptionStateHeader20SetExpiresParameterLEi @ 453 NONAME
+	_ZN27CSIPSubscriptionStateHeader23SetRetryAfterParameterLEi @ 454 NONAME
+	_ZN27CSIPSubscriptionStateHeader4NewLERK6TDesC8 @ 455 NONAME
+	_ZN27CSIPSubscriptionStateHeader5NewLCERK6TDesC8 @ 456 NONAME
+	_ZN27CSIPSubscriptionStateHeader7DecodeLERK6TDesC8 @ 457 NONAME
+	_ZN27CSIPSubscriptionStateHeaderD0Ev @ 458 NONAME
+	_ZN27CSIPSubscriptionStateHeaderD1Ev @ 459 NONAME
+	_ZN27CSIPSubscriptionStateHeaderD2Ev @ 460 NONAME
+	_ZN28CSIPAuthenticationInfoHeader7DecodeLERK6TDesC8 @ 461 NONAME
+	_ZN28CSIPAuthenticationInfoHeaderD0Ev @ 462 NONAME
+	_ZN28CSIPAuthenticationInfoHeaderD1Ev @ 463 NONAME
+	_ZN28CSIPAuthenticationInfoHeaderD2Ev @ 464 NONAME
+	_ZN28CSIPContentDispositionHeader12SetDispTypeLERK6TDesC8 @ 465 NONAME
+	_ZN28CSIPContentDispositionHeader17InternalizeValueLER11RReadStream @ 466 NONAME
+	_ZN28CSIPContentDispositionHeader4NewLERK6TDesC8 @ 467 NONAME
+	_ZN28CSIPContentDispositionHeader5NewLCERK6TDesC8 @ 468 NONAME
+	_ZN28CSIPContentDispositionHeader7DecodeLERK6TDesC8 @ 469 NONAME
+	_ZN28CSIPContentDispositionHeaderD0Ev @ 470 NONAME
+	_ZN28CSIPContentDispositionHeaderD1Ev @ 471 NONAME
+	_ZN28CSIPContentDispositionHeaderD2Ev @ 472 NONAME
+	_ZN28CSIPPAccessNetworkInfoHeader14SetAccessTypeLE8RStringF @ 473 NONAME
+	_ZN28CSIPPAccessNetworkInfoHeader4NewLE8RStringF @ 474 NONAME
+	_ZN28CSIPPAccessNetworkInfoHeader5NewLCE8RStringF @ 475 NONAME
+	_ZN28CSIPPAccessNetworkInfoHeader7DecodeLERK6TDesC8 @ 476 NONAME
+	_ZN28CSIPPAccessNetworkInfoHeaderD0Ev @ 477 NONAME
+	_ZN28CSIPPAccessNetworkInfoHeaderD1Ev @ 478 NONAME
+	_ZN28CSIPPAccessNetworkInfoHeaderD2Ev @ 479 NONAME
+	_ZN28CSIPProxyAuthorizationHeader4NewLE8RStringF @ 480 NONAME
+	_ZN28CSIPProxyAuthorizationHeader4NewLERK27CSIPAuthorizationHeaderBase @ 481 NONAME
+	_ZN28CSIPProxyAuthorizationHeader5NewLCE8RStringF @ 482 NONAME
+	_ZN28CSIPProxyAuthorizationHeader5NewLCERK27CSIPAuthorizationHeaderBase @ 483 NONAME
+	_ZN28CSIPProxyAuthorizationHeader7DecodeLERK6TDesC8 @ 484 NONAME
+	_ZN28CSIPProxyAuthorizationHeaderD0Ev @ 485 NONAME
+	_ZN28CSIPProxyAuthorizationHeaderD1Ev @ 486 NONAME
+	_ZN28CSIPProxyAuthorizationHeaderD2Ev @ 487 NONAME
+	_ZN7CSIPURI11DeleteParamE8RStringF @ 488 NONAME
+	_ZN7CSIPURI12SetHostPortLEP12CSIPHostPort @ 489 NONAME
+	_ZN7CSIPURI12SetPasswordLERK6TDesC8 @ 490 NONAME
+	_ZN7CSIPURI12SetTtlParamLEi @ 491 NONAME
+	_ZN7CSIPURI13AddURIHeaderLERK6TDesC8S2_ @ 492 NONAME
+	_ZN7CSIPURI14DeletePasswordEv @ 493 NONAME
+	_ZN7CSIPURI14DeleteUserInfoEv @ 494 NONAME
+	_ZN7CSIPURI7DecodeLERK6TDesC8 @ 495 NONAME
+	_ZN7CSIPURI8HostPortEv @ 496 NONAME
+	_ZN7CSIPURI8SetUserLERK6TDesC8 @ 497 NONAME
+	_ZN7CSIPURI9SetParamLE8RStringF @ 498 NONAME
+	_ZN7CSIPURI9SetParamLE8RStringFS0_ @ 499 NONAME
+	_ZN7CSIPURID0Ev @ 500 NONAME
+	_ZN7CSIPURID1Ev @ 501 NONAME
+	_ZN7CSIPURID2Ev @ 502 NONAME
+	_ZNK11CSIPAddress11DisplayNameEv @ 503 NONAME
+	_ZNK11CSIPAddress3URIEv @ 504 NONAME
+	_ZNK11CSIPAddress4Uri8Ev @ 505 NONAME
+	_ZNK11CSIPAddress8ToTextLCEi @ 506 NONAME
+	_ZNK11CSIPAddresseqERKS_ @ 507 NONAME
+	_ZNK11CSIPMessage10SIPVersionEv @ 508 NONAME
+	_ZNK11CSIPMessage22AnnouncedContentLengthEv @ 509 NONAME
+	_ZNK11CSIPMessage25HasAnnouncedContentLengthEv @ 510 NONAME
+	_ZNK11CSIPMessage7ContentEv @ 511 NONAME
+	_ZNK11CSIPMessage9HasHeaderE8RStringF @ 512 NONAME
+	_ZNK11CSIPRequest6MethodEv @ 513 NONAME
+	_ZNK11CSIPRequest9IsRequestEv @ 514 NONAME
+	_ZNK12CSIPHostPort4HostEv @ 515 NONAME
+	_ZNK12CSIPHostPort4PortEv @ 516 NONAME
+	_ZNK12CSIPHostPort7HasPortEv @ 517 NONAME
+	_ZNK12CSIPHostPort8HostTypeEv @ 518 NONAME
+	_ZNK12CSIPHostPorteqERKS_ @ 519 NONAME
+	_ZNK12CSIPResponse12ReasonPhraseEv @ 520 NONAME
+	_ZNK12CSIPResponse12ResponseCodeEv @ 521 NONAME
+	_ZNK12CSIPResponse15IsErrorResponseEv @ 522 NONAME
+	_ZNK12CSIPResponse4TypeEv @ 523 NONAME
+	_ZNK12CSIPResponse9IsRequestEv @ 524 NONAME
+	_ZNK12CSIPToHeader4NameEv @ 525 NONAME
+	_ZNK12CSIPToHeader6CloneLEv @ 526 NONAME
+	_ZNK13CSIPViaHeader16SentProtocolNameEv @ 527 NONAME
+	_ZNK13CSIPViaHeader19SentProtocolVersionEv @ 528 NONAME
+	_ZNK13CSIPViaHeader20ExternalizeSupportedEv @ 529 NONAME
+	_ZNK13CSIPViaHeader4NameEv @ 530 NONAME
+	_ZNK13CSIPViaHeader6CloneLEv @ 531 NONAME
+	_ZNK13CSIPViaHeader8TtlParamEv @ 532 NONAME
+	_ZNK13CSIPViaHeader9TransportEv @ 533 NONAME
+	_ZNK13CURIContainer12ExternalizeLER12RWriteStream @ 534 NONAME
+	_ZNK13CURIContainer4Uri8Ev @ 535 NONAME
+	_ZNK13CURIContainer6SIPURIEv @ 536 NONAME
+	_ZNK13CURIContainer7ToTextLEv @ 537 NONAME
+	_ZNK13CURIContainer8IsSIPURIEv @ 538 NONAME
+	_ZNK13CURIContainereqERKS_ @ 539 NONAME
+	_ZNK14CSIPCSeqHeader12ToTextValueLEv @ 540 NONAME
+	_ZNK14CSIPCSeqHeader3SeqEv @ 541 NONAME
+	_ZNK14CSIPCSeqHeader4NameEv @ 542 NONAME
+	_ZNK14CSIPCSeqHeader6CloneLEv @ 543 NONAME
+	_ZNK14CSIPCSeqHeader6MethodEv @ 544 NONAME
+	_ZNK14CSIPFromHeader4NameEv @ 545 NONAME
+	_ZNK14CSIPFromHeader6CloneLEv @ 546 NONAME
+	_ZNK14CSIPHeaderBase12ExternalizeLER12RWriteStreami @ 547 NONAME
+	_ZNK14CSIPHeaderBase13ToTextValueLCEv @ 548 NONAME
+	_ZNK14CSIPHeaderBase20ExternalizeSupportedEv @ 549 NONAME
+	_ZNK14CSIPHeaderBase7ToTextLEv @ 550 NONAME
+	_ZNK14CSIPHeaderBase8ToTextLCEv @ 551 NONAME
+	_ZNK14CSIPRAckHeader12ToTextValueLEv @ 552 NONAME
+	_ZNK14CSIPRAckHeader3SeqEv @ 553 NONAME
+	_ZNK14CSIPRAckHeader4NameEv @ 554 NONAME
+	_ZNK14CSIPRAckHeader6CloneLEv @ 555 NONAME
+	_ZNK14CSIPRAckHeader6MethodEv @ 556 NONAME
+	_ZNK14CSIPRAckHeader7CSeqNumEv @ 557 NONAME
+	_ZNK14CSIPRSeqHeader4NameEv @ 558 NONAME
+	_ZNK14CSIPRSeqHeader6CloneLEv @ 559 NONAME
+	_ZNK15CSIPAllowHeader4NameEv @ 560 NONAME
+	_ZNK15CSIPAllowHeader6CloneLEv @ 561 NONAME
+	_ZNK15CSIPEventHeader12EventPackageEv @ 562 NONAME
+	_ZNK15CSIPEventHeader14EventTemplatesEv @ 563 NONAME
+	_ZNK15CSIPEventHeader4NameEv @ 564 NONAME
+	_ZNK15CSIPEventHeader6CloneLEv @ 565 NONAME
+	_ZNK15CSIPEventHeadereqERKS_ @ 566 NONAME
+	_ZNK15CSIPRouteHeader4NameEv @ 567 NONAME
+	_ZNK15CSIPRouteHeader6CloneLEv @ 568 NONAME
+	_ZNK16CSIPAcceptHeader10QParameterEv @ 569 NONAME
+	_ZNK16CSIPAcceptHeader12MediaSubtypeEv @ 570 NONAME
+	_ZNK16CSIPAcceptHeader4NameEv @ 571 NONAME
+	_ZNK16CSIPAcceptHeader6CloneLEv @ 572 NONAME
+	_ZNK16CSIPAcceptHeader7IsEmptyEv @ 573 NONAME
+	_ZNK16CSIPAcceptHeader9MediaTypeEv @ 574 NONAME
+	_ZNK16CSIPCallIDHeader12ToTextValueLEv @ 575 NONAME
+	_ZNK16CSIPCallIDHeader4NameEv @ 576 NONAME
+	_ZNK16CSIPCallIDHeader6CloneLEv @ 577 NONAME
+	_ZNK17CSIPContactHeader10QParameterEv @ 578 NONAME
+	_ZNK17CSIPContactHeader10SIPAddressEv @ 579 NONAME
+	_ZNK17CSIPContactHeader16ExpiresParameterEv @ 580 NONAME
+	_ZNK17CSIPContactHeader4NameEv @ 581 NONAME
+	_ZNK17CSIPContactHeader4StarEv @ 582 NONAME
+	_ZNK17CSIPContactHeader6CloneLEv @ 583 NONAME
+	_ZNK17CSIPContactHeadereqERKS_ @ 584 NONAME
+	_ZNK17CSIPExpiresHeader4NameEv @ 585 NONAME
+	_ZNK17CSIPExpiresHeader6CloneLEv @ 586 NONAME
+	_ZNK17CSIPReferToHeader4NameEv @ 587 NONAME
+	_ZNK17CSIPReferToHeader6CloneLEv @ 588 NONAME
+	_ZNK17CSIPReplyToHeader4NameEv @ 589 NONAME
+	_ZNK17CSIPReplyToHeader6CloneLEv @ 590 NONAME
+	_ZNK17CSIPRequireHeader4NameEv @ 591 NONAME
+	_ZNK17CSIPRequireHeader6CloneLEv @ 592 NONAME
+	_ZNK18CSIPAuthHeaderBase10AuthSchemeEv @ 593 NONAME
+	_ZNK18CSIPAuthHeaderBase10ParamValueE8RStringF @ 594 NONAME
+	_ZNK18CSIPAuthHeaderBase20ExternalizeSupportedEv @ 595 NONAME
+	_ZNK18CSIPAuthHeaderBase8HasParamE8RStringF @ 596 NONAME
+	_ZNK19CSIPExtensionHeader12ToTextValueLEv @ 597 NONAME
+	_ZNK19CSIPExtensionHeader20ExternalizeSupportedEv @ 598 NONAME
+	_ZNK19CSIPExtensionHeader4NameEv @ 599 NONAME
+	_ZNK19CSIPExtensionHeader5ValueEv @ 600 NONAME
+	_ZNK19CSIPExtensionHeader6CloneLEv @ 601 NONAME
+	_ZNK19CSIPRouteHeaderBase10SIPAddressEv @ 602 NONAME
+	_ZNK19CSIPSupportedHeader4NameEv @ 603 NONAME
+	_ZNK19CSIPSupportedHeader6CloneLEv @ 604 NONAME
+	_ZNK19CSIPTimestampHeader12ToTextValueLEv @ 605 NONAME
+	_ZNK19CSIPTimestampHeader4NameEv @ 606 NONAME
+	_ZNK19CSIPTimestampHeader5DelayEv @ 607 NONAME
+	_ZNK19CSIPTimestampHeader6CloneLEv @ 608 NONAME
+	_ZNK19CSIPTimestampHeader8HasDelayEv @ 609 NONAME
+	_ZNK19CSIPTimestampHeader9TimestampEv @ 610 NONAME
+	_ZNK19CSIPTokenHeaderBase12ToTextValueLEv @ 611 NONAME
+	_ZNK19CSIPTokenHeaderBase5ValueEv @ 612 NONAME
+	_ZNK20CSIPFromToHeaderBase10SIPAddressEv @ 613 NONAME
+	_ZNK20CSIPFromToHeaderBaseeqERKS_ @ 614 NONAME
+	_ZNK20CSIPMinExpiresHeader20ExternalizeSupportedEv @ 615 NONAME
+	_ZNK20CSIPMinExpiresHeader4NameEv @ 616 NONAME
+	_ZNK20CSIPMinExpiresHeader6CloneLEv @ 617 NONAME
+	_ZNK20CSIPRetryAfterHeader10RetryAfterEv @ 618 NONAME
+	_ZNK20CSIPRetryAfterHeader13DurationParamEv @ 619 NONAME
+	_ZNK20CSIPRetryAfterHeader4NameEv @ 620 NONAME
+	_ZNK20CSIPRetryAfterHeader6CloneLEv @ 621 NONAME
+	_ZNK20CSIPRetryAfterHeader7CommentEv @ 622 NONAME
+	_ZNK21CSIPAddressHeaderBase10SIPAddressEv @ 623 NONAME
+	_ZNK21CSIPAllowEventsHeader12EventPackageEv @ 624 NONAME
+	_ZNK21CSIPAllowEventsHeader12ToTextValueLEv @ 625 NONAME
+	_ZNK21CSIPAllowEventsHeader14EventTemplatesEv @ 626 NONAME
+	_ZNK21CSIPAllowEventsHeader4NameEv @ 627 NONAME
+	_ZNK21CSIPAllowEventsHeader6CloneLEv @ 628 NONAME
+	_ZNK21CSIPContentTypeHeader12MediaSubtypeEv @ 629 NONAME
+	_ZNK21CSIPContentTypeHeader4NameEv @ 630 NONAME
+	_ZNK21CSIPContentTypeHeader6CloneLEv @ 631 NONAME
+	_ZNK21CSIPContentTypeHeader9MediaTypeEv @ 632 NONAME
+	_ZNK21CSIPMaxForwardsHeader20ExternalizeSupportedEv @ 633 NONAME
+	_ZNK21CSIPMaxForwardsHeader4NameEv @ 634 NONAME
+	_ZNK21CSIPMaxForwardsHeader6CloneLEv @ 635 NONAME
+	_ZNK21CSIPRecordRouteHeader20ExternalizeSupportedEv @ 636 NONAME
+	_ZNK21CSIPRecordRouteHeader4NameEv @ 637 NONAME
+	_ZNK21CSIPRecordRouteHeader6CloneLEv @ 638 NONAME
+	_ZNK21CSIPUnsupportedHeader4NameEv @ 639 NONAME
+	_ZNK21CSIPUnsupportedHeader6CloneLEv @ 640 NONAME
+	_ZNK22CSIPProxyRequireHeader4NameEv @ 641 NONAME
+	_ZNK22CSIPProxyRequireHeader6CloneLEv @ 642 NONAME
+	_ZNK22CSIPSecurityHeaderBase13MechanismNameEv @ 643 NONAME
+	_ZNK22CSIPSecurityHeaderBase15PreferenceParamEv @ 644 NONAME
+	_ZNK22CSIPServiceRouteHeader20ExternalizeSupportedEv @ 645 NONAME
+	_ZNK22CSIPServiceRouteHeader4NameEv @ 646 NONAME
+	_ZNK22CSIPServiceRouteHeader6CloneLEv @ 647 NONAME
+	_ZNK23CSIPAcceptContactHeader4NameEv @ 648 NONAME
+	_ZNK23CSIPAcceptContactHeader6CloneLEv @ 649 NONAME
+	_ZNK23CSIPAcceptContactHeadereqERKS_ @ 650 NONAME
+	_ZNK23CSIPAuthorizationHeader20ExternalizeSupportedEv @ 651 NONAME
+	_ZNK23CSIPAuthorizationHeader4NameEv @ 652 NONAME
+	_ZNK23CSIPAuthorizationHeader6CloneLEv @ 653 NONAME
+	_ZNK23CSIPParameterHeaderBase10ParamValueE8RStringF @ 654 NONAME
+	_ZNK23CSIPParameterHeaderBase12ToTextValueLEv @ 655 NONAME
+	_ZNK23CSIPParameterHeaderBase8HasParamE8RStringF @ 656 NONAME
+	_ZNK24CSIPAcceptEncodingHeader10QParameterEv @ 657 NONAME
+	_ZNK24CSIPAcceptEncodingHeader4NameEv @ 658 NONAME
+	_ZNK24CSIPAcceptEncodingHeader6CloneLEv @ 659 NONAME
+	_ZNK24CSIPAcceptEncodingHeader7CodingsEv @ 660 NONAME
+	_ZNK24CSIPAcceptLanguageHeader10QParameterEv @ 661 NONAME
+	_ZNK24CSIPAcceptLanguageHeader13LanguageRangeEv @ 662 NONAME
+	_ZNK24CSIPAcceptLanguageHeader4NameEv @ 663 NONAME
+	_ZNK24CSIPAcceptLanguageHeader6CloneLEv @ 664 NONAME
+	_ZNK24CSIPPAssociatedURIHeader4NameEv @ 665 NONAME
+	_ZNK24CSIPPAssociatedURIHeader6CloneLEv @ 666 NONAME
+	_ZNK24CSIPSecurityClientHeader4NameEv @ 667 NONAME
+	_ZNK24CSIPSecurityClientHeader6CloneLEv @ 668 NONAME
+	_ZNK24CSIPSecurityServerHeader4NameEv @ 669 NONAME
+	_ZNK24CSIPSecurityServerHeader6CloneLEv @ 670 NONAME
+	_ZNK24CSIPSecurityVerifyHeader4NameEv @ 671 NONAME
+	_ZNK24CSIPSecurityVerifyHeader6CloneLEv @ 672 NONAME
+	_ZNK25CSIPContentEncodingHeader4NameEv @ 673 NONAME
+	_ZNK25CSIPContentEncodingHeader6CloneLEv @ 674 NONAME
+	_ZNK25CSIPUnsignedIntHeaderBase12ToTextValueLEv @ 675 NONAME
+	_ZNK25CSIPUnsignedIntHeaderBase5ValueEv @ 676 NONAME
+	_ZNK25CSIPWWWAuthenticateHeader4NameEv @ 677 NONAME
+	_ZNK25CSIPWWWAuthenticateHeader6CloneLEv @ 678 NONAME
+	_ZNK26CSIPAuthenticateHeaderBase12HasQopValueLERK6TDesC8 @ 679 NONAME
+	_ZNK27CSIPProxyAuthenticateHeader4NameEv @ 680 NONAME
+	_ZNK27CSIPProxyAuthenticateHeader6CloneLEv @ 681 NONAME
+	_ZNK27CSIPSubscriptionStateHeader13SubStateValueEv @ 682 NONAME
+	_ZNK27CSIPSubscriptionStateHeader16ExpiresParameterEv @ 683 NONAME
+	_ZNK27CSIPSubscriptionStateHeader19RetryAfterParameterEv @ 684 NONAME
+	_ZNK27CSIPSubscriptionStateHeader4NameEv @ 685 NONAME
+	_ZNK27CSIPSubscriptionStateHeader6CloneLEv @ 686 NONAME
+	_ZNK28CSIPAuthenticationInfoHeader12ToTextValueLEv @ 687 NONAME
+	_ZNK28CSIPAuthenticationInfoHeader20ExternalizeSupportedEv @ 688 NONAME
+	_ZNK28CSIPAuthenticationInfoHeader4NameEv @ 689 NONAME
+	_ZNK28CSIPAuthenticationInfoHeader5ValueE8RStringF @ 690 NONAME
+	_ZNK28CSIPAuthenticationInfoHeader6CloneLEv @ 691 NONAME
+	_ZNK28CSIPContentDispositionHeader4NameEv @ 692 NONAME
+	_ZNK28CSIPContentDispositionHeader6CloneLEv @ 693 NONAME
+	_ZNK28CSIPContentDispositionHeader8DispTypeEv @ 694 NONAME
+	_ZNK28CSIPPAccessNetworkInfoHeader10AccessTypeEv @ 695 NONAME
+	_ZNK28CSIPPAccessNetworkInfoHeader20ExternalizeSupportedEv @ 696 NONAME
+	_ZNK28CSIPPAccessNetworkInfoHeader4NameEv @ 697 NONAME
+	_ZNK28CSIPPAccessNetworkInfoHeader6CloneLEv @ 698 NONAME
+	_ZNK28CSIPProxyAuthorizationHeader4NameEv @ 699 NONAME
+	_ZNK28CSIPProxyAuthorizationHeader6CloneLEv @ 700 NONAME
+	_ZNK7CSIPURI10ParamValueE8RStringF @ 701 NONAME
+	_ZNK7CSIPURI13HasURIHeadersERK6TDesC8 @ 702 NONAME
+	_ZNK7CSIPURI16URIHeaderValuesLERK6TDesC8 @ 703 NONAME
+	_ZNK7CSIPURI4UserEv @ 704 NONAME
+	_ZNK7CSIPURI7ToTextLEv @ 705 NONAME
+	_ZNK7CSIPURI8HasParamE8RStringF @ 706 NONAME
+	_ZNK7CSIPURI8HostPortEv @ 707 NONAME
+	_ZNK7CSIPURI8PasswordEv @ 708 NONAME
+	_ZNK7CSIPURI8TtlParamEv @ 709 NONAME
+	_ZNK7CSIPURI9HasParamsEv @ 710 NONAME
+	_ZNK7CSIPURI9IsSIPSURIEv @ 711 NONAME
+	_ZNK7CSIPURIeqERKS_ @ 712 NONAME
+	_ZTI11CSIPAddress @ 713 NONAME ; #<TI>#
+	_ZTI11CSIPMessage @ 714 NONAME ; #<TI>#
+	_ZTI11CSIPRequest @ 715 NONAME ; #<TI>#
+	_ZTI11CSIPStrings @ 716 NONAME ; #<TI>#
+	_ZTI12CSIPHostPort @ 717 NONAME ; #<TI>#
+	_ZTI12CSIPResponse @ 718 NONAME ; #<TI>#
+	_ZTI12CSIPToHeader @ 719 NONAME ; #<TI>#
+	_ZTI13CSIPPreParser @ 720 NONAME ; #<TI>#
+	_ZTI13CSIPTokenizer @ 721 NONAME ; #<TI>#
+	_ZTI13CSIPURIParams @ 722 NONAME ; #<TI>#
+	_ZTI13CSIPViaHeader @ 723 NONAME ; #<TI>#
+	_ZTI13CURIContainer @ 724 NONAME ; #<TI>#
+	_ZTI14CSIPCSeqHeader @ 725 NONAME ; #<TI>#
+	_ZTI14CSIPFromHeader @ 726 NONAME ; #<TI>#
+	_ZTI14CSIPHeaderBase @ 727 NONAME ; #<TI>#
+	_ZTI14CSIPRAckHeader @ 728 NONAME ; #<TI>#
+	_ZTI14CSIPRSeqHeader @ 729 NONAME ; #<TI>#
+	_ZTI14CSIPURIHeaders @ 730 NONAME ; #<TI>#
+	_ZTI15CSIPAllowHeader @ 731 NONAME ; #<TI>#
+	_ZTI15CSIPEventHeader @ 732 NONAME ; #<TI>#
+	_ZTI15CSIPRouteHeader @ 733 NONAME ; #<TI>#
+	_ZTI16CSIPAcceptHeader @ 734 NONAME ; #<TI>#
+	_ZTI16CSIPCallIDHeader @ 735 NONAME ; #<TI>#
+	_ZTI16CSIPCodecTlsPtrs @ 736 NONAME ; #<TI>#
+	_ZTI17CSIPContactHeader @ 737 NONAME ; #<TI>#
+	_ZTI17CSIPExpiresHeader @ 738 NONAME ; #<TI>#
+	_ZTI17CSIPMessageParser @ 739 NONAME ; #<TI>#
+	_ZTI17CSIPReferToHeader @ 740 NONAME ; #<TI>#
+	_ZTI17CSIPReplyToHeader @ 741 NONAME ; #<TI>#
+	_ZTI17CSIPRequireHeader @ 742 NONAME ; #<TI>#
+	_ZTI18CSIPAuthHeaderBase @ 743 NONAME ; #<TI>#
+	_ZTI19CSIPExtensionHeader @ 744 NONAME ; #<TI>#
+	_ZTI19CSIPHeaderNameValue @ 745 NONAME ; #<TI>#
+	_ZTI19CSIPRouteHeaderBase @ 746 NONAME ; #<TI>#
+	_ZTI19CSIPSupportedHeader @ 747 NONAME ; #<TI>#
+	_ZTI19CSIPTimestampHeader @ 748 NONAME ; #<TI>#
+	_ZTI19CSIPTokenHeaderBase @ 749 NONAME ; #<TI>#
+	_ZTI19CSIPViaHeaderParams @ 750 NONAME ; #<TI>#
+	_ZTI20CSIPFromToHeaderBase @ 751 NONAME ; #<TI>#
+	_ZTI20CSIPMinExpiresHeader @ 752 NONAME ; #<TI>#
+	_ZTI20CSIPRetryAfterHeader @ 753 NONAME ; #<TI>#
+	_ZTI21CSIPAddressHeaderBase @ 754 NONAME ; #<TI>#
+	_ZTI21CSIPAllowEventsHeader @ 755 NONAME ; #<TI>#
+	_ZTI21CSIPContentTypeHeader @ 756 NONAME ; #<TI>#
+	_ZTI21CSIPEventHeaderParams @ 757 NONAME ; #<TI>#
+	_ZTI21CSIPHeaderLookupTable @ 758 NONAME ; #<TI>#
+	_ZTI21CSIPMaxForwardsHeader @ 759 NONAME ; #<TI>#
+	_ZTI21CSIPRecordRouteHeader @ 760 NONAME ; #<TI>#
+	_ZTI21CSIPUnsupportedHeader @ 761 NONAME ; #<TI>#
+	_ZTI22CSIPAcceptHeaderParams @ 762 NONAME ; #<TI>#
+	_ZTI22CSIPFromToHeaderParams @ 763 NONAME ; #<TI>#
+	_ZTI22CSIPParamContainerBase @ 764 NONAME ; #<TI>#
+	_ZTI22CSIPProxyRequireHeader @ 765 NONAME ; #<TI>#
+	_ZTI22CSIPSecurityHeaderBase @ 766 NONAME ; #<TI>#
+	_ZTI22CSIPServiceRouteHeader @ 767 NONAME ; #<TI>#
+	_ZTI23CSIPAcceptContactHeader @ 768 NONAME ; #<TI>#
+	_ZTI23CSIPAuthorizationHeader @ 769 NONAME ; #<TI>#
+	_ZTI23CSIPContactHeaderParams @ 770 NONAME ; #<TI>#
+	_ZTI23CSIPContentLengthHeader @ 771 NONAME ; #<TI>#
+	_ZTI23CSIPHeaderGenericParams @ 772 NONAME ; #<TI>#
+	_ZTI23CSIPParameterHeaderBase @ 773 NONAME ; #<TI>#
+	_ZTI24CSIPAcceptEncodingHeader @ 774 NONAME ; #<TI>#
+	_ZTI24CSIPAcceptLanguageHeader @ 775 NONAME ; #<TI>#
+	_ZTI24CSIPPAssociatedURIHeader @ 776 NONAME ; #<TI>#
+	_ZTI24CSIPSecurityClientHeader @ 777 NONAME ; #<TI>#
+	_ZTI24CSIPSecurityServerHeader @ 778 NONAME ; #<TI>#
+	_ZTI24CSIPSecurityVerifyHeader @ 779 NONAME ; #<TI>#
+	_ZTI25CSIPContentEncodingHeader @ 780 NONAME ; #<TI>#
+	_ZTI25CSIPUnsignedIntHeaderBase @ 781 NONAME ; #<TI>#
+	_ZTI25CSIPWWWAuthenticateHeader @ 782 NONAME ; #<TI>#
+	_ZTI26CSIPAuthenticateHeaderBase @ 783 NONAME ; #<TI>#
+	_ZTI26CSIPRetryAfterHeaderParams @ 784 NONAME ; #<TI>#
+	_ZTI27CSIPAuthorizationHeaderBase @ 785 NONAME ; #<TI>#
+	_ZTI27CSIPContentTypeHeaderParams @ 786 NONAME ; #<TI>#
+	_ZTI27CSIPProxyAuthenticateHeader @ 787 NONAME ; #<TI>#
+	_ZTI27CSIPSubscriptionStateHeader @ 788 NONAME ; #<TI>#
+	_ZTI28CSIPAuthenticateHeaderParams @ 789 NONAME ; #<TI>#
+	_ZTI28CSIPAuthenticationInfoHeader @ 790 NONAME ; #<TI>#
+	_ZTI28CSIPContentDispositionHeader @ 791 NONAME ; #<TI>#
+	_ZTI28CSIPPAccessNetworkInfoHeader @ 792 NONAME ; #<TI>#
+	_ZTI28CSIPProxyAuthorizationHeader @ 793 NONAME ; #<TI>#
+	_ZTI28CSIPSecurityHeaderBaseParams @ 794 NONAME ; #<TI>#
+	_ZTI29CSIPAcceptContactHeaderParams @ 795 NONAME ; #<TI>#
+	_ZTI29CSIPAuthorizationHeaderParams @ 796 NONAME ; #<TI>#
+	_ZTI33CSIPSubscriptionStateHeaderParams @ 797 NONAME ; #<TI>#
+	_ZTI34CSIPAuthenticationInfoHeaderParams @ 798 NONAME ; #<TI>#
+	_ZTI34CSIPPAccessNetworkInfoHeaderParams @ 799 NONAME ; #<TI>#
+	_ZTI7CSIPURI @ 800 NONAME ; #<TI>#
+	_ZTI9CSIPParam @ 801 NONAME ; #<TI>#
+	_ZTV11CSIPAddress @ 802 NONAME ; #<VT>#
+	_ZTV11CSIPMessage @ 803 NONAME ; #<VT>#
+	_ZTV11CSIPRequest @ 804 NONAME ; #<VT>#
+	_ZTV11CSIPStrings @ 805 NONAME ; #<VT>#
+	_ZTV12CSIPHostPort @ 806 NONAME ; #<VT>#
+	_ZTV12CSIPResponse @ 807 NONAME ; #<VT>#
+	_ZTV12CSIPToHeader @ 808 NONAME ; #<VT>#
+	_ZTV13CSIPPreParser @ 809 NONAME ; #<VT>#
+	_ZTV13CSIPTokenizer @ 810 NONAME ; #<VT>#
+	_ZTV13CSIPURIParams @ 811 NONAME ; #<VT>#
+	_ZTV13CSIPViaHeader @ 812 NONAME ; #<VT>#
+	_ZTV13CURIContainer @ 813 NONAME ; #<VT>#
+	_ZTV14CSIPCSeqHeader @ 814 NONAME ; #<VT>#
+	_ZTV14CSIPFromHeader @ 815 NONAME ; #<VT>#
+	_ZTV14CSIPHeaderBase @ 816 NONAME ; #<VT>#
+	_ZTV14CSIPRAckHeader @ 817 NONAME ; #<VT>#
+	_ZTV14CSIPRSeqHeader @ 818 NONAME ; #<VT>#
+	_ZTV14CSIPURIHeaders @ 819 NONAME ; #<VT>#
+	_ZTV15CSIPAllowHeader @ 820 NONAME ; #<VT>#
+	_ZTV15CSIPEventHeader @ 821 NONAME ; #<VT>#
+	_ZTV15CSIPRouteHeader @ 822 NONAME ; #<VT>#
+	_ZTV16CSIPAcceptHeader @ 823 NONAME ; #<VT>#
+	_ZTV16CSIPCallIDHeader @ 824 NONAME ; #<VT>#
+	_ZTV16CSIPCodecTlsPtrs @ 825 NONAME ; #<VT>#
+	_ZTV17CSIPContactHeader @ 826 NONAME ; #<VT>#
+	_ZTV17CSIPExpiresHeader @ 827 NONAME ; #<VT>#
+	_ZTV17CSIPMessageParser @ 828 NONAME ; #<VT>#
+	_ZTV17CSIPReferToHeader @ 829 NONAME ; #<VT>#
+	_ZTV17CSIPReplyToHeader @ 830 NONAME ; #<VT>#
+	_ZTV17CSIPRequireHeader @ 831 NONAME ; #<VT>#
+	_ZTV18CSIPAuthHeaderBase @ 832 NONAME ; #<VT>#
+	_ZTV19CSIPExtensionHeader @ 833 NONAME ; #<VT>#
+	_ZTV19CSIPHeaderNameValue @ 834 NONAME ; #<VT>#
+	_ZTV19CSIPRouteHeaderBase @ 835 NONAME ; #<VT>#
+	_ZTV19CSIPSupportedHeader @ 836 NONAME ; #<VT>#
+	_ZTV19CSIPTimestampHeader @ 837 NONAME ; #<VT>#
+	_ZTV19CSIPTokenHeaderBase @ 838 NONAME ; #<VT>#
+	_ZTV19CSIPViaHeaderParams @ 839 NONAME ; #<VT>#
+	_ZTV20CSIPFromToHeaderBase @ 840 NONAME ; #<VT>#
+	_ZTV20CSIPMinExpiresHeader @ 841 NONAME ; #<VT>#
+	_ZTV20CSIPRetryAfterHeader @ 842 NONAME ; #<VT>#
+	_ZTV21CSIPAddressHeaderBase @ 843 NONAME ; #<VT>#
+	_ZTV21CSIPAllowEventsHeader @ 844 NONAME ; #<VT>#
+	_ZTV21CSIPContentTypeHeader @ 845 NONAME ; #<VT>#
+	_ZTV21CSIPEventHeaderParams @ 846 NONAME ; #<VT>#
+	_ZTV21CSIPHeaderLookupTable @ 847 NONAME ; #<VT>#
+	_ZTV21CSIPMaxForwardsHeader @ 848 NONAME ; #<VT>#
+	_ZTV21CSIPRecordRouteHeader @ 849 NONAME ; #<VT>#
+	_ZTV21CSIPUnsupportedHeader @ 850 NONAME ; #<VT>#
+	_ZTV22CSIPAcceptHeaderParams @ 851 NONAME ; #<VT>#
+	_ZTV22CSIPFromToHeaderParams @ 852 NONAME ; #<VT>#
+	_ZTV22CSIPParamContainerBase @ 853 NONAME ; #<VT>#
+	_ZTV22CSIPProxyRequireHeader @ 854 NONAME ; #<VT>#
+	_ZTV22CSIPSecurityHeaderBase @ 855 NONAME ; #<VT>#
+	_ZTV22CSIPServiceRouteHeader @ 856 NONAME ; #<VT>#
+	_ZTV23CSIPAcceptContactHeader @ 857 NONAME ; #<VT>#
+	_ZTV23CSIPAuthorizationHeader @ 858 NONAME ; #<VT>#
+	_ZTV23CSIPContactHeaderParams @ 859 NONAME ; #<VT>#
+	_ZTV23CSIPContentLengthHeader @ 860 NONAME ; #<VT>#
+	_ZTV23CSIPHeaderGenericParams @ 861 NONAME ; #<VT>#
+	_ZTV23CSIPParameterHeaderBase @ 862 NONAME ; #<VT>#
+	_ZTV24CSIPAcceptEncodingHeader @ 863 NONAME ; #<VT>#
+	_ZTV24CSIPAcceptLanguageHeader @ 864 NONAME ; #<VT>#
+	_ZTV24CSIPPAssociatedURIHeader @ 865 NONAME ; #<VT>#
+	_ZTV24CSIPSecurityClientHeader @ 866 NONAME ; #<VT>#
+	_ZTV24CSIPSecurityServerHeader @ 867 NONAME ; #<VT>#
+	_ZTV24CSIPSecurityVerifyHeader @ 868 NONAME ; #<VT>#
+	_ZTV25CSIPContentEncodingHeader @ 869 NONAME ; #<VT>#
+	_ZTV25CSIPUnsignedIntHeaderBase @ 870 NONAME ; #<VT>#
+	_ZTV25CSIPWWWAuthenticateHeader @ 871 NONAME ; #<VT>#
+	_ZTV26CSIPAuthenticateHeaderBase @ 872 NONAME ; #<VT>#
+	_ZTV26CSIPRetryAfterHeaderParams @ 873 NONAME ; #<VT>#
+	_ZTV27CSIPAuthorizationHeaderBase @ 874 NONAME ; #<VT>#
+	_ZTV27CSIPContentTypeHeaderParams @ 875 NONAME ; #<VT>#
+	_ZTV27CSIPProxyAuthenticateHeader @ 876 NONAME ; #<VT>#
+	_ZTV27CSIPSubscriptionStateHeader @ 877 NONAME ; #<VT>#
+	_ZTV28CSIPAuthenticateHeaderParams @ 878 NONAME ; #<VT>#
+	_ZTV28CSIPAuthenticationInfoHeader @ 879 NONAME ; #<VT>#
+	_ZTV28CSIPContentDispositionHeader @ 880 NONAME ; #<VT>#
+	_ZTV28CSIPPAccessNetworkInfoHeader @ 881 NONAME ; #<VT>#
+	_ZTV28CSIPProxyAuthorizationHeader @ 882 NONAME ; #<VT>#
+	_ZTV28CSIPSecurityHeaderBaseParams @ 883 NONAME ; #<VT>#
+	_ZTV29CSIPAcceptContactHeaderParams @ 884 NONAME ; #<VT>#
+	_ZTV29CSIPAuthorizationHeaderParams @ 885 NONAME ; #<VT>#
+	_ZTV33CSIPSubscriptionStateHeaderParams @ 886 NONAME ; #<VT>#
+	_ZTV34CSIPAuthenticationInfoHeaderParams @ 887 NONAME ; #<VT>#
+	_ZTV34CSIPPAccessNetworkInfoHeaderParams @ 888 NONAME ; #<VT>#
+	_ZTV7CSIPURI @ 889 NONAME ; #<VT>#
+	_ZTV9CSIPParam @ 890 NONAME ; #<VT>#
+	_ZNK23CSIPParameterHeaderBase10ParamCountEv @ 891 NONAME
+	_ZNK23CSIPParameterHeaderBase5ParamEiR8RStringF @ 892 NONAME
+	_ZN18CSIPAuthHeaderBase12SetDesParamLE8RStringFRK6TDesC8 @ 893 NONAME
+	_ZNK18CSIPAuthHeaderBase13DesParamValueE8RStringF @ 894 NONAME
+	_ZNK28CSIPAuthenticationInfoHeader8DesValueE8RStringF @ 895 NONAME
+	_ZN7CSIPURI7SetSIPSEi @ 896 NONAME
+	_ZNK13CURIContainer12CloneAsUri8LEv @ 897 NONAME
+	_ZNK26CSIPAuthenticateHeaderBase20ExternalizeSupportedEv @ 898 NONAME
+	_ZNK28CSIPProxyAuthorizationHeader20ExternalizeSupportedEv @ 899 NONAME
+	_ZN17CSIPContactHeader18RemoveExpiresParamEv @ 900 NONAME
+

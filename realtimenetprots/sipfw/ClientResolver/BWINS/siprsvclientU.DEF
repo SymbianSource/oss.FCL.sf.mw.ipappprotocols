@@ -1,0 +1,11 @@
+EXPORTS
+	??1CSIPClientDiscovery@@UAE@XZ @ 1 NONAME ; CSIPClientDiscovery::~CSIPClientDiscovery(void)
+	?Cancel@CSIPClientDiscovery@@QAEXK@Z @ 2 NONAME ; void CSIPClientDiscovery::Cancel(unsigned long)
+	?CancelAll@CSIPClientDiscovery@@QAEXXZ @ 3 NONAME ; void CSIPClientDiscovery::CancelAll(void)
+	?ChannelL@CSIPClientDiscovery@@QAEKVRStringF@@ABVTDesC8@@ABV?$RPointerArray@VCSIPHeaderBase@@@@1PBVCSIPContentTypeHeader@@@Z @ 4 NONAME ; unsigned long CSIPClientDiscovery::ChannelL(class RStringF, class TDesC8 const &, class RPointerArray<class CSIPHeaderBase> const &, class TDesC8 const &, class CSIPContentTypeHeader const *)
+	?ChannelL@CSIPClientDiscovery@@QAEKVTUid@@VRStringF@@ABVTDesC8@@ABV?$RPointerArray@VCSIPHeaderBase@@@@2PBVCSIPContentTypeHeader@@@Z @ 5 NONAME ; unsigned long CSIPClientDiscovery::ChannelL(class TUid, class RStringF, class TDesC8 const &, class RPointerArray<class CSIPHeaderBase> const &, class TDesC8 const &, class CSIPContentTypeHeader const *)
+	?Deregister@CSIPClientDiscovery@@QAEHVTUid@@@Z @ 6 NONAME ; int CSIPClientDiscovery::Deregister(class TUid)
+	?NewL@CSIPClientDiscovery@@SAPAV1@AAVMSIPClientDiscoveryObserver@@VTUid@@@Z @ 7 NONAME ; class CSIPClientDiscovery * CSIPClientDiscovery::NewL(class MSIPClientDiscoveryObserver &, class TUid)
+	?NewLC@CSIPClientDiscovery@@SAPAV1@AAVMSIPClientDiscoveryObserver@@VTUid@@@Z @ 8 NONAME ; class CSIPClientDiscovery * CSIPClientDiscovery::NewLC(class MSIPClientDiscoveryObserver &, class TUid)
+	?RegisterL@CSIPClientDiscovery@@QAEXVTUid@@@Z @ 9 NONAME ; void CSIPClientDiscovery::RegisterL(class TUid)
+

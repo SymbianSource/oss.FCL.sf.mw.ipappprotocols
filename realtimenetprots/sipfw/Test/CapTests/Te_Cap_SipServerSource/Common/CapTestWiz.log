@@ -1,0 +1,163 @@
+Generating capability tests for Te_Cap_SipServer ...
+Need to create new directory .\Te_Cap_SipServerSource
+Generating Te_Cap_SipServer.script once
+Generating CSuite.h once
+Generating BLD.INF once
+Generating Te_Cap_SipServer.IBY once
+
+Generating Te_Cap_SipServerSub.script for each capability
+	Cap_00000000_Te_Cap_SipServerSub.script
+	Cap_00000020_Te_Cap_SipServerSub.script
+	Cap_00002000_Te_Cap_SipServerSub.script
+	Cap_80000000_Te_Cap_SipServerSub.script
+Generating CSuite.cpp once
+Generating Te_Cap_SipServer.MMP once
+
+Generating CStep.h for each message
+	ESipItcTerminateDialog1_CStep.h
+	ESipItcTerminateRefresh1_CStep.h
+	ESipItcTerminateDialogRefresh1_CStep.h
+	ESipItcTerminateRegistration1_CStep.h
+	ESipItcSupportedSecurityMechanisms1_CStep.h
+	ESipItcNegotiatedSecurityMechanism1_CStep.h
+	ESipItcIsSigCompSupported1_CStep.h
+	ESipItcGetTransactionState1_CStep.h
+	ESipItcGetDialogState1_CStep.h
+	ESipItcGetCompartmentCount1_CStep.h
+	ESipItcGetFromHeader1_CStep.h
+	ESipItcGetRefreshInterval1_CStep.h
+	ESipItcGetCallIDHeader1_CStep.h
+	ESipItcGetLocalTag1_CStep.h
+	ESipItcOutboundProxy1_CStep.h
+	ESipItcGetRegisteredContact1_CStep.h
+	ESipItcGetLocalAddr1_CStep.h
+	ESipItcSetOutboundProxy1_CStep.h
+	ESipItcRemoveOutboundProxy1_CStep.h
+	ESipItcSetRefreshInterval1_CStep.h
+	ESipItcSetHttpDigestObserver1_CStep.h
+	ESipItcSetCredentials1_CStep.h
+	ESipItcRemoveCredentials1_CStep.h
+	ESipItcIgnoreChallenge1_CStep.h
+	ESipItcSetSecurityHandling1_CStep.h
+	ESipItcResetDialogState1_CStep.h
+	ESipItcSetAppUid1_CStep.h
+	ESipItcOpenSubSession1_CStep.h
+	ESipItcCloseSubSession1_CStep.h
+	ESipItcRegister1_CStep.h
+	ESipItcRegisterAndSetOutboundProxy1_CStep.h
+	ESipItcUpdateRegistration1_CStep.h
+	ESipItcUnRegister1_CStep.h
+	ESipItcFetchRegistrations1_CStep.h
+	ESipItcSendRequest1_CStep.h
+	ESipItcSendRequestAndUpdateRefresh1_CStep.h
+	ESipItcSendRequestAndTerminateRefresh1_CStep.h
+	ESipItcSendResponse1_CStep.h
+	ESipItcSendCancel1_CStep.h
+	ESipItcSendResponseAndCreateDialog1_CStep.h
+	ESipItcSendResponseInDialog1_CStep.h
+	ESipItcSendRequestAndCreateDialog1_CStep.h
+	ESipItcSendRequestInDialog1_CStep.h
+	SpItcSendRequestInDialogAndUpdateRefresh1_CStep.h
+	ESipItcClientReadyToReceive1_CStep.h
+	ESipItcClientReceiveSipMessage1_CStep.h
+	ESipItcClientCancelReceive1_CStep.h
+	ESipItcConnectionReadyToReceive1_CStep.h
+	ESipItcConnectionReceiveSipMessage1_CStep.h
+	ESipItcConnectionCancelReceive1_CStep.h
+
+Generating CStep.cpp for each message
+	ESipItcTerminateDialog1_CStep.cpp
+	ESipItcTerminateRefresh1_CStep.cpp
+	ESipItcTerminateDialogRefresh1_CStep.cpp
+	ESipItcTerminateRegistration1_CStep.cpp
+	ESipItcSupportedSecurityMechanisms1_CStep.cpp
+	ESipItcNegotiatedSecurityMechanism1_CStep.cpp
+	ESipItcIsSigCompSupported1_CStep.cpp
+	ESipItcGetTransactionState1_CStep.cpp
+	ESipItcGetDialogState1_CStep.cpp
+	ESipItcGetCompartmentCount1_CStep.cpp
+	ESipItcGetFromHeader1_CStep.cpp
+	ESipItcGetRefreshInterval1_CStep.cpp
+	ESipItcGetCallIDHeader1_CStep.cpp
+	ESipItcGetLocalTag1_CStep.cpp
+	ESipItcOutboundProxy1_CStep.cpp
+	ESipItcGetRegisteredContact1_CStep.cpp
+	ESipItcGetLocalAddr1_CStep.cpp
+	ESipItcSetOutboundProxy1_CStep.cpp
+	ESipItcRemoveOutboundProxy1_CStep.cpp
+	ESipItcSetRefreshInterval1_CStep.cpp
+	ESipItcSetHttpDigestObserver1_CStep.cpp
+	ESipItcSetCredentials1_CStep.cpp
+	ESipItcRemoveCredentials1_CStep.cpp
+	ESipItcIgnoreChallenge1_CStep.cpp
+	ESipItcSetSecurityHandling1_CStep.cpp
+	ESipItcResetDialogState1_CStep.cpp
+	ESipItcSetAppUid1_CStep.cpp
+	ESipItcOpenSubSession1_CStep.cpp
+	ESipItcCloseSubSession1_CStep.cpp
+	ESipItcRegister1_CStep.cpp
+	ESipItcRegisterAndSetOutboundProxy1_CStep.cpp
+	ESipItcUpdateRegistration1_CStep.cpp
+	ESipItcUnRegister1_CStep.cpp
+	ESipItcFetchRegistrations1_CStep.cpp
+	ESipItcSendRequest1_CStep.cpp
+	ESipItcSendRequestAndUpdateRefresh1_CStep.cpp
+	ESipItcSendRequestAndTerminateRefresh1_CStep.cpp
+	ESipItcSendResponse1_CStep.cpp
+	ESipItcSendCancel1_CStep.cpp
+	ESipItcSendResponseAndCreateDialog1_CStep.cpp
+	ESipItcSendResponseInDialog1_CStep.cpp
+	ESipItcSendRequestAndCreateDialog1_CStep.cpp
+	ESipItcSendRequestInDialog1_CStep.cpp
+	SpItcSendRequestInDialogAndUpdateRefresh1_CStep.cpp
+	ESipItcClientReadyToReceive1_CStep.cpp
+	ESipItcClientReceiveSipMessage1_CStep.cpp
+	ESipItcClientCancelReceive1_CStep.cpp
+	ESipItcConnectionReadyToReceive1_CStep.cpp
+	ESipItcConnectionReceiveSipMessage1_CStep.cpp
+	ESipItcConnectionCancelReceive1_CStep.cpp
+
+Available Parameters
+
+PARAM_FOREACH_COUNT
+PARAM_FOREACH_HEX_CAPABILITY
+PARAM_FOREACH_LIST_BEGIN
+PARAM_FOREACH_LIST_END
+PARAM_FOREACH_MESS_BEGIN
+PARAM_FOREACH_MESS_CAP_BEGIN
+PARAM_FOREACH_MESS_CAP_END
+PARAM_FOREACH_MESS_END
+PARAM_FOREACH_STRING_CAPABILITY
+PARAM_MESS_CAPABILITY
+PARAM_MESS_CAPMASK
+PARAM_MESS_DYNAMICBASENAME
+PARAM_MESS_HEX_CAPMASK
+PARAM_MESS_IGNORE
+PARAM_MESS_NAME
+PARAM_MESS_NAMECAP
+PARAM_MESS_SERVER
+PARAM_MESS_VALUE
+PARAM_SVR_ALLNEGATIVE
+PARAM_SVR_BUILDNAME
+PARAM_SVR_BUILDOK
+PARAM_SVR_CAPEXCEPT
+PARAM_SVR_CONNECTCAPABILITY
+PARAM_SVR_LIBRARIES
+PARAM_SVR_LISTHEADERFILE
+PARAM_SVR_MAJORNAME
+PARAM_SVR_MESSAGEFILE
+PARAM_SVR_MINORNAME
+PARAM_SVR_NAME
+PARAM_SVR_PANIC
+PARAM_SVR_SCHED_TEST_DEST
+PARAM_SVR_SCHED_TEST_SRC
+PARAM_SVR_SETCAP
+PARAM_SVR_SOURCEDIRECTORY
+PARAM_SVR_SUITENAME
+PARAM_SVR_SYSTEMINCLUDE
+PARAM_SVR_TEMPLATEDIRECTORY
+PARAM_SVR_TEMPLATEFILE
+PARAM_SVR_USERINCLUDE
+PARAM_TMPL_NAME
+PARAM_TMPL_RELOCATIONDIR
+PARAM_TMPL_REPETITION

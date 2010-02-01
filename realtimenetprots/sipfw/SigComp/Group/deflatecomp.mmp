@@ -1,0 +1,55 @@
+// Copyright (c) 2003-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name        : deflatecomp.mmp
+// Part of     : deflatecomp / deflate plugin
+// deflatecomp.dll project file
+// Version     : 1.0
+//
+
+
+
+TARGET deflatecomp.dll
+TARGETTYPE PLUGIN
+
+// ECom Dll recognition UID followed by the unique UID for this dll
+UID 0x10009D8D 0x101F9583
+
+SOURCEPATH	../CompDeflate/src
+SOURCE	DLL.CPP
+SOURCE	DeflateComp.cpp
+SOURCE  DeflateCompBytecode.cpp
+SOURCE	Deflate.cpp
+SOURCE      SigCompDeflateContext.cpp
+SOURCE      MessageWriter.cpp
+
+USERINCLUDE 	../CompDeflate/inc
+USERINCLUDE 	../SigCompEngine/inc
+USERINCLUDE 	../SigCompEngine/api
+USERINCLUDE	../../SIP/Common/inc
+
+MW_LAYER_SYSTEMINCLUDE_SYMBIAN
+
+SOURCEPATH	../data
+START RESOURCE 101F9583.RSS 
+TARGET deflatecomp.rsc                                          
+END 
+
+LIBRARY euser.lib ecom.lib sigcomp.lib hash.lib
+
+
+VENDORID 0x70000001
+
+CAPABILITY All -Tcb
+
+SMPSAFE

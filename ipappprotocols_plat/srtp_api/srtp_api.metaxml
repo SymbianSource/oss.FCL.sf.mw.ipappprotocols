@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<api id="f8c24bc6a63af8f166f2ba630e34cb03" dataversion="2.0">
+  <name>SRTP API</name>
+  <description>Provides services to encrypt, decrypt, authenticate and
+replay protect RTP and RTCP packets. Furthermore the API provides key management.</description>
+  <type>c++</type>
+  <collection>rtp</collection>
+  <libs>
+    <lib name="srtp.lib" />
+  </libs>
+  <release category="platform"/>
+  <attributes>
+     <!-- This indicates wether the api provedes separate html documentation -->
+     <!-- or is the additional documentation generated from headers. -->
+     <!-- If you are unsuere then the value is "no" -->
+     <htmldocprovided>no</htmldocprovided>
+     <adaptation>no</adaptation>
+  </attributes>
+</api>

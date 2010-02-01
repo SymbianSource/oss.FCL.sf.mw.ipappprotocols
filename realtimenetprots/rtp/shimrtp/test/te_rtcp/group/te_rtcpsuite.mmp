@@ -1,0 +1,51 @@
+// Copyright (c) 2005-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// te_rtcpsuite.exe Application for testing RTP APIs, integration tests
+// 
+//
+
+/**
+ @file
+*/
+
+TARGET      te_rtcpsuite.exe
+TARGETTYPE  exe
+UID             0x1000007A 0x101F7784
+
+
+//Please add any change under here
+SOURCEPATH  ../src
+SOURCE	          	te_rtcpsuiteserver.cpp
+
+SOURCE              rtcpstep.cpp
+	
+
+USERINCLUDE   ../src
+USERINCLUDE   ../../../inc
+USERINCLUDE   ../../../src/rtp
+
+SYSTEMINCLUDE /epoc32/include
+SYSTEMINCLUDE /epoc32/include/comms-infras
+SYSTEMINCLUDE /epoc32/include/test
+
+//Please add your system include under here. 
+
+LIBRARY     euser.lib
+LIBRARY		testexecuteutils.lib charconv.lib netmeta.lib
+LIBRARY		testexecutelogclient.lib rtp.lib efsrv.lib insock.lib commdb.lib esock.lib hal.lib esocksvr.lib nodemessages.lib
+
+CAPABILITY CommDD PowerMgmt ReadDeviceData WriteDeviceData TrustedUI ProtServ NetworkControl NetworkServices LocalServices ReadUserData WriteUserData
+
+
+SMPSAFE

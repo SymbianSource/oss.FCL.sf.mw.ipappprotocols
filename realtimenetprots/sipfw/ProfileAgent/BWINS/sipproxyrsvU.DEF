@@ -1,0 +1,7 @@
+EXPORTS
+	??1CSIPProxyResolver@@UAE@XZ @ 1 NONAME ; CSIPProxyResolver::~CSIPProxyResolver(void)
+	?Cancel@CSIPProxyResolver@@QAEXI@Z @ 2 NONAME ; void CSIPProxyResolver::Cancel(unsigned int)
+	?NewL@CSIPProxyResolver@@SAPAV1@XZ @ 3 NONAME ; class CSIPProxyResolver * CSIPProxyResolver::NewL(void)
+	?NewLC@CSIPProxyResolver@@SAPAV1@XZ @ 4 NONAME ; class CSIPProxyResolver * CSIPProxyResolver::NewLC(void)
+	?ResolveProxyL@CSIPProxyResolver@@QAEXAAIKAAVMSIPProxyResolverObserver@@@Z @ 5 NONAME ; void CSIPProxyResolver::ResolveProxyL(unsigned int &, unsigned long, class MSIPProxyResolverObserver &)
+

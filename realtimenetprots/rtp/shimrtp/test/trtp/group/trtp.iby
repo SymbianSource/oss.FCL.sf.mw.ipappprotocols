@@ -1,0 +1,52 @@
+// Copyright (c) 2007-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name     : trtp.iby
+// Part of  : test Component for RTP unit test cases
+// IBY file for trtp component
+// 
+//
+
+#ifndef __TRTP_IBY__
+#define __TRTP_IBY__
+
+#include <testexecute.iby>
+#include <rtp.iby>
+
+file=ABI_DIR\BUILD_DIR\trtp.exe		System\bin\trtp.exe
+data=EPOCROOT##epoc32\data\z\testData\configs\rtp\rtp_unittest.ini	testData\configs\rtp\rtp_unittest.ini
+data=EPOCROOT##epoc32\data\z\testData\scripts\rtp\rtp_unittest.script	testData\scripts\rtp\rtp_unittest.script
+data=EPOCROOT##epoc32\data\z\testData\scripts\rtp\rtp_unittest2.script	testData\scripts\rtp\rtp_unittest2.script
+
+// autogenetated files
+data=EPOCROOT##epoc32\data\z\testdata\configs\rtp\one.dat				testdata\configs\rtp\one.dat
+data=EPOCROOT##epoc32\data\z\testdata\configs\rtp\zero.dat				testdata\configs\rtp\zero.dat
+data=EPOCROOT##epoc32\data\z\testdata\configs\rtp\cpt.dat				testdata\configs\rtp\cpt.dat
+data=EPOCROOT##epoc32\data\z\testdata\configs\rtp\endian.dat				testdata\configs\rtp\endian.dat
+data=EPOCROOT##epoc32\data\z\testdata\configs\rtp\secondstream.dat			testdata\configs\rtp\secondstream.dat
+data=EPOCROOT##epoc32\data\z\testdata\configs\rtp\nostream.dat				testdata\configs\rtp\nostream.dat
+data=EPOCROOT##epoc32\data\z\testdata\configs\rtp\leavingstream.dat			testdata\configs\rtp\leavingstream.dat
+data=EPOCROOT##epoc32\data\z\testdata\configs\rtp\countingstream.dat			testdata\configs\rtp\countingstream.dat
+data=EPOCROOT##epoc32\data\z\testdata\configs\rtp\countingstream1.dat			testdata\configs\rtp\countingstream1.dat
+data=EPOCROOT##epoc32\data\z\testdata\configs\rtp\extensions.dat			testdata\configs\rtp\extensions.dat
+data=EPOCROOT##epoc32\data\z\testdata\configs\rtp\send.dat				testdata\configs\rtp\send.dat
+data=EPOCROOT##epoc32\data\z\testdata\configs\rtp\sendex.dat				testdata\configs\rtp\sendex.dat
+data=EPOCROOT##epoc32\data\z\testdata\configs\rtp\shortex.dat				testdata\configs\rtp\shortex.dat
+// data files
+data=EPOCROOT##epoc32\data\z\testdata\configs\rtp\short1.dat				testdata\configs\rtp\short1.dat
+data=EPOCROOT##epoc32\data\z\testdata\configs\rtp\short2.dat				testdata\configs\rtp\short2.dat
+data=EPOCROOT##epoc32\data\z\testdata\configs\rtp\short3.dat				testdata\configs\rtp\short3.dat
+data=EPOCROOT##epoc32\data\z\testdata\configs\rtp\short4.dat				testdata\configs\rtp\short4.dat
+data=EPOCROOT##epoc32\data\z\testdata\configs\rtp\short5.dat				testdata\configs\rtp\short5.dat
+
+#endif

@@ -1,0 +1,214 @@
+// Copyright (c) 2008-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// TESTEXECUTE,logs\\testexecute\\trtp2_unittest.htm
+// 
+//
+
+//! @file 
+//! @internalComponent
+//! @SYMTestSuiteName trtp2_unittest.script
+//! @SYMScriptInfo Unit test cases for RTP Core implementation
+//! @SYMScriptTestEnvironment This test runs using the TestExecute framework (TEF) using the following test list entry
+//
+
+PRINT Run all RTP_CORE Unit Tests 
+//
+LOAD_SUITE trtp2 -SharedData
+
+START_TESTCASE					HLIP-MMP-TRTP-UNIT-01
+//! @SYMTestCaseID              hlip-mmp-trtp-unit-01
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+RUN_TEST_STEP_RESULT 0 100 trtp2 RtpUtilsTest
+END_TESTCASE					HLIP-MMP-TRTP-UNIT-01
+
+START_TESTCASE					HLIP-MMP-TRTP-UNIT-02
+//! @SYMTestCaseID              hlip-mmp-trtp-unit-02
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+RUN_TEST_STEP_RESULT 0 100 trtp2 SDESSetAttribute
+END_TESTCASE					HLIP-MMP-TRTP-UNIT-02
+
+
+START_TESTCASE					HLIP-MMP-TRTP-UNIT-03
+//! @SYMTestCaseID              hlip-mmp-trtp-unit-03
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+RUN_TEST_STEP_RESULT 0 100 trtp2 SDESGetLength
+END_TESTCASE					HLIP-MMP-TRTP-UNIT-03
+
+
+START_TESTCASE					HLIP-MMP-TRTP-UNIT-04
+//! @SYMTestCaseID              hlip-mmp-trtp-unit-04
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+RUN_TEST_STEP_RESULT 0 100 trtp2 SDESGetAttribute
+END_TESTCASE					HLIP-MMP-TRTP-UNIT-04
+
+
+START_TESTCASE					HLIP-MMP-TRTP-UNIT-05
+//! @SYMTestCaseID              hlip-mmp-trtp-unit-05
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+RUN_TEST_STEP_RESULT 0 100 trtp2 SDESGetType
+END_TESTCASE					HLIP-MMP-TRTP-UNIT-05
+
+
+START_TESTCASE					HLIP-MMP-TRTP-UNIT-06
+//! @SYMTestCaseID              hlip-mmp-trtp-unit-06
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+RUN_TEST_STEP_RESULT 0 100 trtp2 APPSetSubType
+END_TESTCASE					HLIP-MMP-TRTP-UNIT-06
+
+
+START_TESTCASE					HLIP-MMP-TRTP-UNIT-07
+//! @SYMTestCaseID              hlip-mmp-trtp-unit-07
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+RUN_TEST_STEP_RESULT 0 100 trtp2 APPGetSubType
+END_TESTCASE					HLIP-MMP-TRTP-UNIT-07
+
+
+START_TESTCASE					HLIP-MMP-TRTP-UNIT-08
+//! @SYMTestCaseID              hlip-mmp-trtp-unit-08
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+RUN_TEST_STEP_RESULT 0 100 trtp2 APPGetAppName
+END_TESTCASE					HLIP-MMP-TRTP-UNIT-08
+
+
+START_TESTCASE					HLIP-MMP-TRTP-UNIT-09
+//! @SYMTestCaseID              hlip-mmp-trtp-unit-09
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+RUN_TEST_STEP_RESULT 0 100 trtp2 BYESetSSRC
+END_TESTCASE					HLIP-MMP-TRTP-UNIT-09
+
+
+START_TESTCASE					HLIP-MMP-TRTP-UNIT-10
+//! @SYMTestCaseID              hlip-mmp-trtp-unit-10
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+RUN_TEST_STEP_RESULT 0 100 trtp2 BYESetReason
+END_TESTCASE					HLIP-MMP-TRTP-UNIT-10
+
+
+START_TESTCASE					HLIP-MMP-TRTP-UNIT-11
+//! @SYMTestCaseID              hlip-mmp-trtp-unit-11
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+RUN_TEST_STEP_RESULT 0 100 trtp2 BYEGetSSRC
+END_TESTCASE					HLIP-MMP-TRTP-UNIT-11
+
+START_TESTCASE					HLIP-MMP-TRTP-UNIT-12
+//! @SYMTestCaseID              hlip-mmp-trtp-unit-12
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+RUN_TEST_STEP_RESULT 0 100 trtp2 BYEGetReason
+END_TESTCASE					HLIP-MMP-TRTP-UNIT-12
+
+START_TESTCASE					HLIP-MMP-TRTP-UNIT-13
+//! @SYMTestCaseID              hlip-mmp-trtp-unit-13
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+RUN_TEST_STEP_RESULT 0 100 trtp2 SMNewL
+END_TESTCASE					HLIP-MMP-TRTP-UNIT-13
+
+START_TESTCASE					HLIP-MMP-TRTP-UNIT-14
+//! @SYMTestCaseID              hlip-mmp-trtp-unit-14
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+RUN_TEST_STEP_RESULT 0 100 trtp2 SMSetRtpStreamParameters
+END_TESTCASE					HLIP-MMP-TRTP-UNIT-14
+
+START_TESTCASE					HLIP-MMP-TRTP-UNIT-15
+//! @SYMTestCaseID              hlip-mmp-trtp-unit-15
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+RUN_TEST_STEP_RESULT 0 100 trtp2 SMMaxDropout
+END_TESTCASE					HLIP-MMP-TRTP-UNIT-15
+
+START_TESTCASE					HLIP-MMP-TRTP-UNIT-16
+//! @SYMTestCaseID              hlip-mmp-trtp-unit-16
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+RUN_TEST_STEP_RESULT 0 100 trtp2 SMMaxMisorder
+END_TESTCASE					HLIP-MMP-TRTP-UNIT-16
+
+START_TESTCASE					HLIP-MMP-TRTP-UNIT-17
+//! @SYMTestCaseID              hlip-mmp-trtp-unit-17
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+RUN_TEST_STEP_RESULT 0 100 trtp2 SMMinSequential
+END_TESTCASE					HLIP-MMP-TRTP-UNIT-17
+
+START_TESTCASE					HLIP-MMP-TRTP-UNIT-18
+//! @SYMTestCaseID              hlip-mmp-trtp-unit-18
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+RUN_TEST_STEP_RESULT 0 100 trtp2 SMByeTimeout
+END_TESTCASE					HLIP-MMP-TRTP-UNIT-18
+
+START_TESTCASE					HLIP-MMP-TRTP-UNIT-19
+//! @SYMTestCaseID              hlip-mmp-trtp-unit-19
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+RUN_TEST_STEP_RESULT 0 100 trtp2 SMShortTimeout
+END_TESTCASE					HLIP-MMP-TRTP-UNIT-19
+
+START_TESTCASE					HLIP-MMP-TRTP-UNIT-20
+//! @SYMTestCaseID              hlip-mmp-trtp-unit-20
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+RUN_TEST_STEP_RESULT 0 100 trtp2 SMLongTimeout
+END_TESTCASE					HLIP-MMP-TRTP-UNIT-20
+
+START_TESTCASE					HLIP-MMP-TRTP-UNIT-21
+//! @SYMTestCaseID              hlip-mmp-trtp-unit-21
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+RUN_TEST_STEP_RESULT 0 100 trtp2 SMNext
+END_TESTCASE					HLIP-MMP-TRTP-UNIT-21
+
+START_TESTCASE					HLIP-MMP-TRTP-UNIT-22
+//! @SYMTestCaseID              hlip-mmp-trtp-unit-22
+//! @SYMPREQ				    PREQ1903
+//! @SYMTestCaseDesc            
+//! @SYMTestPriority            High
+RUN_TEST_STEP_RESULT 0 100 trtp2 RtpApiTest
+END_TESTCASE					HLIP-MMP-TRTP-UNIT-22
+
+

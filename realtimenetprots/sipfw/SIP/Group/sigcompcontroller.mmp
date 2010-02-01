@@ -1,0 +1,66 @@
+// Copyright (c) 2006-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name        : sigcompcontroller.mmp
+// Part of     : SIP / SigCompController
+// Version     : SIP/5.0
+//
+
+
+
+TARGET		sipsigcomp.dll
+TARGETTYPE	PLUGIN
+
+UID		0x10009d8d 0x101FED8D
+  
+SOURCEPATH	../SigCompController/DefaultPlugin/src
+SOURCE		dllentry.cpp
+SOURCE		SipSigCompHandlerImp.cpp
+SOURCE		sigcompvalueconverter.cpp
+SOURCE		sipsigcompcompartmentctx.cpp
+SOURCE      sipsigcompcompartmentuser.cpp
+
+SOURCEPATH 	../SigCompController/Common/src
+SOURCE		compressinglogic.cpp
+
+USERINCLUDE	../SigCompController/DefaultPlugin/inc
+USERINCLUDE	../Codec/inc
+USERINCLUDE	../Codec/api
+USERINCLUDE 	../ConnectionMgr/inc
+USERINCLUDE	../SigCompController/Common/inc
+USERINCLUDE 	../Common/inc
+USERINCLUDE	../sipapi/api
+USERINCLUDE	../sipapi/inc
+
+SOURCEPATH	../SigCompController/DefaultPlugin/resource
+START RESOURCE 101fed8d.rss 
+TARGET sipsigcomp.rsc                                          
+END 
+
+MW_LAYER_SYSTEMINCLUDE_SYMBIAN
+
+LIBRARY	        euser.lib
+LIBRARY	        ecom.lib
+LIBRARY	        sipcodec.lib
+LIBRARY         centralrepository.lib
+LIBRARY		sigcomp.lib
+LIBRARY		insock.lib
+LIBRARY         bafl.lib
+LIBRARY         charconv.lib
+
+VENDORID 0x70000001
+
+CAPABILITY ProtServ NetworkControl NetworkServices Location \
+ReadDeviceData WriteDeviceData ReadUserData
+
+SMPSAFE

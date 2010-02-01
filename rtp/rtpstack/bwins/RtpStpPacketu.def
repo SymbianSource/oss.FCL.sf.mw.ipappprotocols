@@ -1,0 +1,3 @@
+EXPORTS
+	?NewL@@YAPAVMRtpPacketExt@@XZ @ 1 NONAME ; class MRtpPacketExt * NewL(void)
+

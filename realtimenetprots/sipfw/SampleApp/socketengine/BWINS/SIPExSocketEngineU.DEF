@@ -1,0 +1,10 @@
+EXPORTS
+	??1CSIPExSocketEngine@@UAE@XZ @ 1 NONAME ; CSIPExSocketEngine::~CSIPExSocketEngine(void)
+	?ConnectL@CSIPExSocketEngine@@QAEXKABVTInetAddr@@@Z @ 2 NONAME ; void CSIPExSocketEngine::ConnectL(unsigned long, class TInetAddr const &)
+	?NewL@CSIPExSocketEngine@@SAPAV1@AAVMSIPExSocketEngineObserver@@@Z @ 3 NONAME ; class CSIPExSocketEngine * CSIPExSocketEngine::NewL(class MSIPExSocketEngineObserver &)
+	?NewLC@CSIPExSocketEngine@@SAPAV1@AAVMSIPExSocketEngineObserver@@@Z @ 4 NONAME ; class CSIPExSocketEngine * CSIPExSocketEngine::NewLC(class MSIPExSocketEngineObserver &)
+	?Read@CSIPExSocketEngine@@QAEXXZ @ 5 NONAME ; void CSIPExSocketEngine::Read(void)
+	?StartListeningL@CSIPExSocketEngine@@QAEAAVTInetAddr@@K@Z @ 6 NONAME ; class TInetAddr & CSIPExSocketEngine::StartListeningL(unsigned long)
+	?Stop@CSIPExSocketEngine@@QAEXXZ @ 7 NONAME ; void CSIPExSocketEngine::Stop(void)
+	?Write@CSIPExSocketEngine@@QAEXABVTDesC8@@@Z @ 8 NONAME ; void CSIPExSocketEngine::Write(class TDesC8 const &)
+

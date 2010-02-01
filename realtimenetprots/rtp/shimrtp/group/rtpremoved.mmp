@@ -1,0 +1,53 @@
+// Copyright (c) 2008-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// rtpremoved.dll Stub dll to prevent  errors if RTP is not
+// present in ROM Duh! :(.
+// 
+//
+
+/**
+ @file
+*/
+
+#if defined(SYMBIAN_ENABLE_SPLIT_HEADERS)
+	DEFFILE ../~/rtpm.def
+#else
+	DEFFILE ../~/rtp.def
+#endif
+
+TARGET rtpremoved.dll
+
+TARGETTYPE dll
+
+UID         0x1000008d 0x10201C94
+
+VENDORID 0x70000001
+
+USERINCLUDE ../inc
+USERINCLUDE ../../rtpcore/inc
+MW_LAYER_SYSTEMINCLUDE_SYMBIAN
+USERINCLUDE   ../src/rtp
+
+SOURCEPATH ../src/stubs
+SOURCE events_stub.cpp  
+SOURCE receivestream_stub.cpp 
+SOURCE sendstream_stub.cpp
+SOURCE packet_stub.cpp  
+SOURCE rtcp_stub.cpp           
+SOURCE session_stub.cpp 
+
+LIBRARY euser.lib esock.lib
+
+CAPABILITY ALL -TCB
+SMPSAFE

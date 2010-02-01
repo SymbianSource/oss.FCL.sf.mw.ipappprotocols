@@ -1,0 +1,42 @@
+// Copyright (c) 2005-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// mmp file for SIP dummy PRT
+// 
+//
+
+/**
+ @file
+ @internalComponent
+*/
+ 
+TARGET          sipdummyprt.prt
+TARGETTYPE		DLL
+UID             0x10003d38 0x10274CAB
+VENDORID        0x70000001
+
+DEFFILE         SIPDummyPRT.def
+
+
+SOURCEPATH      ../src
+SOURCE          SIPDummy.CPP
+
+USERINCLUDE	    .
+MW_LAYER_SYSTEMINCLUDE_SYMBIAN
+
+LIBRARY         euser.lib esock.lib esocksvr.lib
+
+CAPABILITY CommDD PowerMgmt ReadDeviceData WriteDeviceData TrustedUI ProtServ NetworkControl NetworkServices LocalServices ReadUserData WriteUserData
+
+
+SMPSAFE

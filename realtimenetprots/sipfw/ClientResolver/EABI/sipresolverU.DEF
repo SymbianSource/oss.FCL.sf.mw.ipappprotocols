@@ -1,0 +1,49 @@
+EXPORTS
+	_ZN18CSIPClientResolver4NewLEv @ 1 NONAME
+	_ZN18CSIPClientResolver8FindUidLERK11CSIPRequestR6RArrayI10TSipClientE @ 2 NONAME
+	_ZN18CSIPClientResolverD0Ev @ 3 NONAME
+	_ZN18CSIPClientResolverD1Ev @ 4 NONAME
+	_ZN18CSIPClientResolverD2Ev @ 5 NONAME
+	_ZTI14CSIPClientData @ 6 NONAME ; #<TI>#
+	_ZTI16CSdpStrategyBase @ 7 NONAME ; #<TI>#
+	_ZTI18CSIPClientResolver @ 8 NONAME ; #<TI>#
+	_ZTI18CSIPOptionsHandler @ 9 NONAME ; #<TI>#
+	_ZTI18CSdpRtpmapStrategy @ 10 NONAME ; #<TI>#
+	_ZTI21CSdpMLineNameStrategy @ 11 NONAME ; #<TI>#
+	_ZTI21CSdpMLineStrategyBase @ 12 NONAME ; #<TI>#
+	_ZTI22CSdpMLineMediaStrategy @ 13 NONAME ; #<TI>#
+	_ZTI22CSipHeaderStrategyBase @ 14 NONAME ; #<TI>#
+	_ZTI23CSipAllowEventsStrategy @ 15 NONAME ; #<TI>#
+	_ZTI23CSipContentTypeStrategy @ 16 NONAME ; #<TI>#
+	_ZTI23CSipLaunchingStrategies @ 17 NONAME ; #<TI>#
+	_ZTI25CSipAcceptContactStrategy @ 18 NONAME ; #<TI>#
+	_ZTI26CSdpMLineTransportStrategy @ 19 NONAME ; #<TI>#
+	_ZTV14CSIPClientData @ 20 NONAME ; #<VT>#
+	_ZTV16CSdpStrategyBase @ 21 NONAME ; #<VT>#
+	_ZTV18CSIPClientResolver @ 22 NONAME ; #<VT>#
+	_ZTV18CSIPOptionsHandler @ 23 NONAME ; #<VT>#
+	_ZTV18CSdpRtpmapStrategy @ 24 NONAME ; #<VT>#
+	_ZTV21CSdpMLineNameStrategy @ 25 NONAME ; #<VT>#
+	_ZTV21CSdpMLineStrategyBase @ 26 NONAME ; #<VT>#
+	_ZTV22CSdpMLineMediaStrategy @ 27 NONAME ; #<VT>#
+	_ZTV22CSipHeaderStrategyBase @ 28 NONAME ; #<VT>#
+	_ZTV23CSipAllowEventsStrategy @ 29 NONAME ; #<VT>#
+	_ZTV23CSipContentTypeStrategy @ 30 NONAME ; #<VT>#
+	_ZTV23CSipLaunchingStrategies @ 31 NONAME ; #<VT>#
+	_ZTV25CSipAcceptContactStrategy @ 32 NONAME ; #<VT>#
+	_ZTV26CSdpMLineTransportStrategy @ 33 NONAME ; #<VT>#
+	_ZTI14CSIPFeatureSet @ 34 NONAME ; #<TI>#
+	_ZTI14CSIPFeatureTag @ 35 NONAME ; #<TI>#
+	_ZTI19CSIPTokenFeatureTag @ 36 NONAME ; #<TI>#
+	_ZTI20CSIPStringFeatureTag @ 37 NONAME ; #<TI>#
+	_ZTI21CSIPBooleanFeatureTag @ 38 NONAME ; #<TI>#
+	_ZTI21CSIPNumericFeatureTag @ 39 NONAME ; #<TI>#
+	_ZTV14CSIPFeatureSet @ 40 NONAME ; #<VT>#
+	_ZTV14CSIPFeatureTag @ 41 NONAME ; #<VT>#
+	_ZTV19CSIPTokenFeatureTag @ 42 NONAME ; #<VT>#
+	_ZTV20CSIPStringFeatureTag @ 43 NONAME ; #<VT>#
+	_ZTV21CSIPBooleanFeatureTag @ 44 NONAME ; #<VT>#
+	_ZTV21CSIPNumericFeatureTag @ 45 NONAME ; #<VT>#
+	_ZTI26CSdpMediaAttributeStrategy @ 46 NONAME ; #<TI>#
+	_ZTV26CSdpMediaAttributeStrategy @ 47 NONAME ; #<VT>#
+

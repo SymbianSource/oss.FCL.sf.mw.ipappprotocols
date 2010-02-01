@@ -1,0 +1,5 @@
+EXPORTS
+	?ImplementationGroupProxy@@YAPBUTImplementationProxy@@AAH@Z @ 1 NONAME ; struct TImplementationProxy const * ImplementationGroupProxy(int &)
+	?GetVTablePtr@TSendProvision@SipMCprStates@@SAPAVMStateTransition@NetStateMachine@@AAVTDesC8@@PAX@Z @ 2 NONAME ABSENT ; class NetStateMachine::MStateTransition * SipMCprStates::TSendProvision::GetVTablePtr(class TDesC8 &, void *)
+	?Self@SipMcprActivities@SipMcpr@@SAABUTNodeActivityMap@MeshMachine@@XZ @ 3 NONAME ; struct MeshMachine::TNodeActivityMap const & SipMcpr::SipMcprActivities::Self(void)
+

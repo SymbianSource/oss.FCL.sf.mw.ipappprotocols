@@ -1,0 +1,54 @@
+EXPORTS
+	_Z24ImplementationGroupProxyRi @ 1 NONAME
+	_ZN7SipMcpr17SipMcprActivities4SelfEv @ 2 NONAME
+	_ZTI15CSipTierManager @ 3 NONAME
+	_ZTI19CSipMetaCprSelector @ 4 NONAME
+	_ZTI20TSipCprProvisionInfo @ 5 NONAME
+	_ZTI21TSipMcprProvisionInfo @ 6 NONAME
+	_ZTI22CSipConnectionProvider @ 7 NONAME
+	_ZTI22CSipTierManagerFactory @ 8 NONAME
+	_ZTI23CSubConSIPResponseEvent @ 9 NONAME
+	_ZTI24CSubConSIPInviteParamSet @ 10 NONAME
+	_ZTI25CSipSubConnectionProvider @ 11 NONAME
+	_ZTI27CSubConSIPNotificationEvent @ 12 NONAME
+	_ZTI27CSubConSIPSubscribeParamSet @ 13 NONAME
+	_ZTI28XSIPFindTheSamePrefsCPRQuery @ 14 NONAME
+	_ZTI29CSipConnectionProviderFactory @ 15 NONAME
+	_ZTI30CSubConSIPAuthenticateParamSet @ 16 NONAME
+	_ZTI32CSipDefaultSubConnectionProvider @ 17 NONAME
+	_ZTI32CSipSubConnectionProviderFactory @ 18 NONAME
+	_ZTI33CSipMetaConnectionProviderFactory @ 19 NONAME
+	_ZTI37CSubConSIPAuthenticationRequiredEvent @ 20 NONAME
+	_ZTIN13SipMCprStates14TSendProvisionE @ 21 NONAME ABSENT
+	_ZTIN4Meta18RMetaDataContainerINS_13SMetaDataEComEEE @ 22 NONAME
+	_ZTIN4Meta5TMetaI4TUidEE @ 23 NONAME
+	_ZTIN4Meta5TMetaIP20CSIPTransitionEngineEE @ 24 NONAME
+	_ZTIN4Meta5TMetaIP20CTransitionEngineMgrEE @ 25 NONAME
+	_ZTIN4Meta5TMetaIP6TDesC8EE @ 26 NONAME
+	_ZTIN4Meta5TMetaIiEE @ 27 NONAME
+	_ZTV15CSipTierManager @ 28 NONAME
+	_ZTV19CSipMetaCprSelector @ 29 NONAME
+	_ZTV20TSipCprProvisionInfo @ 30 NONAME
+	_ZTV21TSipMcprProvisionInfo @ 31 NONAME
+	_ZTV22CSipConnectionProvider @ 32 NONAME
+	_ZTV22CSipTierManagerFactory @ 33 NONAME
+	_ZTV23CSubConSIPResponseEvent @ 34 NONAME
+	_ZTV24CSubConSIPInviteParamSet @ 35 NONAME
+	_ZTV25CSipSubConnectionProvider @ 36 NONAME
+	_ZTV27CSubConSIPNotificationEvent @ 37 NONAME
+	_ZTV27CSubConSIPSubscribeParamSet @ 38 NONAME
+	_ZTV28XSIPFindTheSamePrefsCPRQuery @ 39 NONAME
+	_ZTV29CSipConnectionProviderFactory @ 40 NONAME
+	_ZTV30CSubConSIPAuthenticateParamSet @ 41 NONAME
+	_ZTV32CSipDefaultSubConnectionProvider @ 42 NONAME
+	_ZTV32CSipSubConnectionProviderFactory @ 43 NONAME
+	_ZTV33CSipMetaConnectionProviderFactory @ 44 NONAME
+	_ZTV37CSubConSIPAuthenticationRequiredEvent @ 45 NONAME
+	_ZTVN13SipMCprStates14TSendProvisionE @ 46 NONAME ABSENT
+	_ZTVN4Meta18RMetaDataContainerINS_13SMetaDataEComEEE @ 47 NONAME
+	_ZTVN4Meta5TMetaI4TUidEE @ 48 NONAME
+	_ZTVN4Meta5TMetaIP20CSIPTransitionEngineEE @ 49 NONAME
+	_ZTVN4Meta5TMetaIP20CTransitionEngineMgrEE @ 50 NONAME
+	_ZTVN4Meta5TMetaIP6TDesC8EE @ 51 NONAME
+	_ZTVN4Meta5TMetaIiEE @ 52 NONAME
+

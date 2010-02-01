@@ -1,0 +1,79 @@
+EXPORTS
+	_ZN11CSIPProfileD0Ev @ 1 NONAME
+	_ZN11CSIPProfileD1Ev @ 2 NONAME
+	_ZN11CSIPProfileD2Ev @ 3 NONAME
+	_ZN18CSIPManagedProfile12SetParameterEmRK11MDesC8Array @ 4 NONAME
+	_ZN18CSIPManagedProfile12SetParameterEmRK6TDesC8 @ 5 NONAME
+	_ZN18CSIPManagedProfile12SetParameterEmi @ 6 NONAME
+	_ZN18CSIPManagedProfile12SetParameterEmm @ 7 NONAME
+	_ZN18CSIPManagedProfile12SetParameterEmmRK6TDesC8 @ 8 NONAME
+	_ZN18CSIPManagedProfile7SetTypeERK19TSIPProfileTypeInfo @ 9 NONAME
+	_ZN18CSIPManagedProfileD0Ev @ 10 NONAME
+	_ZN18CSIPManagedProfileD1Ev @ 11 NONAME
+	_ZN18CSIPManagedProfileD2Ev @ 12 NONAME
+	_ZN19CSIPProfileRegistry11ConnectionLER11CSIPProfile @ 13 NONAME
+	_ZN19CSIPProfileRegistry4NewLER4CSIPR27MSIPProfileRegistryObserver @ 14 NONAME
+	_ZN19CSIPProfileRegistry5NewLCER4CSIPR27MSIPProfileRegistryObserver @ 15 NONAME
+	_ZN19CSIPProfileRegistry7DisableER11CSIPProfile @ 16 NONAME
+	_ZN19CSIPProfileRegistry7EnableLER11CSIPProfileR22MSIPConnectionObserver @ 17 NONAME
+	_ZN19CSIPProfileRegistryD0Ev @ 18 NONAME
+	_ZN19CSIPProfileRegistryD1Ev @ 19 NONAME
+	_ZN19CSIPProfileRegistryD2Ev @ 20 NONAME
+	_ZN23CSIPProfileRegistryBase15DefaultProfileLEv @ 21 NONAME
+	_ZN23CSIPProfileRegistryBase22SupportedProfileTypesLER6RArrayI19TSIPProfileTypeInfoE @ 22 NONAME
+	_ZN23CSIPProfileRegistryBase8ProfileLEm @ 23 NONAME
+	_ZN23CSIPProfileRegistryBase9ProfilesLER13RPointerArrayI11CSIPProfileE @ 24 NONAME
+	_ZN23CSIPProfileRegistryBase9ProfilesLERK19TSIPProfileTypeInfoR13RPointerArrayI11CSIPProfileE @ 25 NONAME
+	_ZN23CSIPProfileRegistryBase9ProfilesLERK6TDesC8R13RPointerArrayI11CSIPProfileE @ 26 NONAME
+	_ZN23CSIPProfileRegistryBaseD0Ev @ 27 NONAME
+	_ZN23CSIPProfileRegistryBaseD1Ev @ 28 NONAME
+	_ZN23CSIPProfileRegistryBaseD2Ev @ 29 NONAME
+	_ZN26CSIPManagedProfileRegistry4NewLER27MSIPProfileRegistryObserver @ 30 NONAME
+	_ZN26CSIPManagedProfileRegistry5NewLCER27MSIPProfileRegistryObserver @ 31 NONAME
+	_ZN26CSIPManagedProfileRegistry5SaveLER11CSIPProfile @ 32 NONAME
+	_ZN26CSIPManagedProfileRegistry7CreateLERK19TSIPProfileTypeInfo @ 33 NONAME
+	_ZN26CSIPManagedProfileRegistry8DestroyLER11CSIPProfile @ 34 NONAME
+	_ZN26CSIPManagedProfileRegistryD0Ev @ 35 NONAME
+	_ZN26CSIPManagedProfileRegistryD1Ev @ 36 NONAME
+	_ZN26CSIPManagedProfileRegistryD2Ev @ 37 NONAME
+	_ZNK11CSIPProfile12GetParameterEmRPK11MDesC8Array @ 38 NONAME
+	_ZNK11CSIPProfile12GetParameterEmRPK6TDesC8 @ 39 NONAME
+	_ZNK11CSIPProfile12GetParameterEmRi @ 40 NONAME
+	_ZNK11CSIPProfile12GetParameterEmRm @ 41 NONAME
+	_ZNK11CSIPProfile12GetParameterEmmRPK6TDesC8 @ 42 NONAME
+	_ZNK11CSIPProfile4TypeEv @ 43 NONAME
+	_ZNK18CSIPManagedProfile6CloneLEv @ 44 NONAME
+	_ZNK19CSIPProfileRegistry3SIPEv @ 45 NONAME
+	_ZNK19CSIPProfileRegistry9IsEnabledERK11CSIPProfile @ 46 NONAME
+	_ZNK23CSIPProfileRegistryBase21LastRegistrationErrorERK11CSIPProfile @ 47 NONAME
+	_ZNK26CSIPManagedProfileRegistry8IsInUseLERK11CSIPProfile @ 48 NONAME
+	_ZTI11CSIPProfile @ 49 NONAME ; #<TI>#
+	_ZTI14CSIPProfileITC @ 50 NONAME ; #<TI>#
+	_ZTI15CSIPProfileItem @ 51 NONAME ; #<TI>#
+	_ZTI18CSIPManagedProfile @ 52 NONAME ; #<TI>#
+	_ZTI19CSIPProfileRegistry @ 53 NONAME ; #<TI>#
+	_ZTI22CSIPProfileITCReceiver @ 54 NONAME ; #<TI>#
+	_ZTI23CSIPProfileRegistryBase @ 55 NONAME ; #<TI>#
+	_ZTI26CSIPManagedProfileRegistry @ 56 NONAME ; #<TI>#
+	_ZTV11CSIPProfile @ 57 NONAME ; #<VT>#
+	_ZTV14CSIPProfileITC @ 58 NONAME ; #<VT>#
+	_ZTV15CSIPProfileItem @ 59 NONAME ; #<VT>#
+	_ZTV18CSIPManagedProfile @ 60 NONAME ; #<VT>#
+	_ZTV19CSIPProfileRegistry @ 61 NONAME ; #<VT>#
+	_ZTV22CSIPProfileITCReceiver @ 62 NONAME ; #<VT>#
+	_ZTV23CSIPProfileRegistryBase @ 63 NONAME ; #<VT>#
+	_ZTV26CSIPManagedProfileRegistry @ 64 NONAME ; #<VT>#
+	_ZThn4_N11CSIPProfileD0Ev @ 65 NONAME ; #<thunk>#
+	_ZThn4_N11CSIPProfileD1Ev @ 66 NONAME ; #<thunk>#
+	_ZThn4_N18CSIPManagedProfileD0Ev @ 67 NONAME ; #<thunk>#
+	_ZThn4_N18CSIPManagedProfileD1Ev @ 68 NONAME ; #<thunk>#
+	_ZN24CSipProfileAlrController15AllowMigrationLEmm @ 69 NONAME
+	_ZN24CSipProfileAlrController18DisallowMigrationLEmm @ 70 NONAME
+	_ZN24CSipProfileAlrController23RefreshIapAvailabilityLEm @ 71 NONAME
+	_ZN24CSipProfileAlrController4NewLER23CSIPProfileRegistryBaseR22MSipProfileAlrObserver @ 72 NONAME
+	_ZN24CSipProfileAlrController5NewLCER23CSIPProfileRegistryBaseR22MSipProfileAlrObserver @ 73 NONAME
+	_ZTI24CSipProfileAlrController @ 74 NONAME ; #<TI>#
+	_ZTV24CSipProfileAlrController @ 75 NONAME ; #<VT>#
+	_ZN19CSIPProfileRegistry12ForceDisableER11CSIPProfile @ 76 NONAME
+	_ZN19CSIPProfileRegistry14RefreshEnableLER11CSIPProfile @ 77 NONAME
+

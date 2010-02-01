@@ -1,0 +1,33 @@
+Name,Value,Server,Capability,Ignore
+ESipProfileItcOpCreateProfileSize,0,SipProfileSrv,_None,
+ESipProfileItcOpCreateProfile,1,SipProfileSrv,_None,
+ESipProfileItcOpCancelReceive,2,SipProfileSrv,_None,
+ESipProfileItcOpReadyToReceive,3,SipProfileSrv,_None,// Note:  This test step is being ignored out as it waits upon some data and requires to be tested using a different mechanism.
+ESipProfileItcOpPluginsSize,4,SipProfileSrv,_None,
+ESipProfileItcOpPlugins,5,SipProfileSrv,_None,
+ESipProfileItcOpProfileSize,6,SipProfileSrv,_None,
+ESipProfileItcOpProfileSizeDefault,7,SipProfileSrv,_None,
+ESipProfileItcOpProfilesSize,8,SipProfileSrv,_None,
+ESipProfileItcOpProfilesSizeByAOR,9,SipProfileSrv,_None,
+ESipProfileItcOpProfilesSizeByType,10,SipProfileSrv,_None,
+ESipProfileItcOpRegisteredAORsSize,11,SipProfileSrv,_None,
+ESipProfileItcOpNegotiatedSecurity,12,SipProfileSrv,_None,
+ESipProfileItcOpNegotiatedSecuritySize,13,SipProfileSrv,_None,
+ESipProfileItcOpAddALRObserver,14,SipProfileSrv,_None,
+ESipProfileItcOpRemoveALRObserver,15,SipProfileSrv,_None
+ESipProfileItcOpUsage,16,SipProfileSrv,ReadUserData
+ESipProfileItcOpProfile,17,SipProfileSrv,ReadUserData
+ESipProfileItcOpProfileRefresh,18,SipProfileSrv,ReadUserData
+ESipProfileItcOpProfiles,19,SipProfileSrv,ReadUserData
+ESipProfileItcOpProfilesByAOR,20,SipProfileSrv,ReadUserData
+ESipProfileItcOpProfilesByType,21,SipProfileSrv,ReadUserData
+ESipProfileItcOpRegisteredAORs,22,SipProfileSrv,ReadUserData
+ESipProfileItcOpAddProfile,23,SipProfileSrv,WriteDeviceData NetworkServices
+ESipProfileItcOpUpdateProfile,24,SipProfileSrv,WriteDeviceData NetworkServices
+ESipProfileItcOpRemoveProfile,25,SipProfileSrv,WriteDeviceData NetworkServices
+ESipProfileItcOpAllowMigration,26,SipProfileSrv,WriteDeviceData NetworkServices
+ESipProfileItcOpDisallowMigration,27,SipProfileSrv,WriteDeviceData NetworkServices
+ESipProfileItcOpRefreshIapAvailability,28,SipProfileSrv,WriteDeviceData NetworkServices
+ESipProfileItcOpDeleteProfile,29,SipProfileSrv,NetworkServices
+ESipProfileItcOpDisable,30,SipProfileSrv,NetworkServices
+ESipProfileItcOpEnable,31,SipProfileSrv,NetworkServices

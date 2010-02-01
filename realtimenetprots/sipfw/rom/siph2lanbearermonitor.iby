@@ -1,0 +1,35 @@
+// Copyright (c) 2005-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name          : siph2lanbearermonitor.iby
+// Part of       : SIP stack
+// Version       : SIP/4.0
+//
+
+
+
+#ifndef SIPH2LANBEARERMONITOR_IBY
+#define SIPH2LANBEARERMONITOR_IBY
+
+#ifdef SYMBIAN_EXCLUDE_SIP
+REM Feature SIP is not included in this ROM
+#else
+
+#ifndef  _EXCLUDE_SIP_LAN_SUPPORT 
+ECOM_PLUGIN(SipH2LanBearerMonitor.dll, SipH2LanBearerMonitor.rsc)
+
+#endif /* _EXCLUDE_SIP_LAN_SUPPORT */
+
+#endif /* SYMBIAN_EXCLUDE_SIP */
+
+#endif /* SIPH2LANBEARERMONITOR_IBY */

@@ -1,0 +1,18 @@
+EXPORTS
+	?AcceptCall@CSipStateMachine@@QAEHXZ @ 1 NONAME ; int CSipStateMachine::AcceptCall(void)
+	?AddCredentialsL@CSIPTransitionEngine@@QAEXVTSIPCredentials@@@Z @ 2 NONAME ; void CSIPTransitionEngine::AddCredentialsL(class TSIPCredentials)
+	?AddStateMachineL@CSIPTransitionEngine@@QAEXPAVCSipStateMachine@@@Z @ 3 NONAME ; void CSIPTransitionEngine::AddStateMachineL(class CSipStateMachine *)
+	?DefaultProfileId@CTransitionEngineMgr@@QAEKXZ @ 4 NONAME ; unsigned long CTransitionEngineMgr::DefaultProfileId(void)
+	?DeleteWhenReady@CSipStateMachine@@QAEXXZ @ 5 NONAME ; void CSipStateMachine::DeleteWhenReady(void)
+	?Deregister@CSIPTransitionEngine@@QAEXPAVMSIPRegistrationClient@@@Z @ 6 NONAME ; void CSIPTransitionEngine::Deregister(class MSIPRegistrationClient *)
+	?Detach@CTransitionEngineMgr@@QAEXPAVCSIPTransitionEngine@@@Z @ 7 NONAME ; void CTransitionEngineMgr::Detach(class CSIPTransitionEngine *)
+	?FindDuplicateProfile@CSIPTransitionEngine@@QAEKK@Z @ 8 NONAME ; unsigned long CSIPTransitionEngine::FindDuplicateProfile(unsigned long)
+	?FindOrCreateL@CTransitionEngineMgr@@QAEPAVCSIPTransitionEngine@@VTUid@@AAK@Z @ 9 NONAME ; class CSIPTransitionEngine * CTransitionEngineMgr::FindOrCreateL(class TUid, unsigned long &)
+	?GetFromField@CSIPTransitionEngine@@QBEPBVTDesC8@@K@Z @ 10 NONAME ; class TDesC8 const * CSIPTransitionEngine::GetFromField(unsigned long) const
+	?GetSipParams@CSipStateMachine@@QAEAAVTSipParams@@XZ @ 11 NONAME ; class TSipParams & CSipStateMachine::GetSipParams(void)
+	?NewL@CSipStateMachine@@SAPAV1@PAVCSIPTransitionEngine@@PAVMSIPStateMachineClient@@H@Z @ 12 NONAME ; class CSipStateMachine * CSipStateMachine::NewL(class CSIPTransitionEngine *, class MSIPStateMachineClient *, int)
+	?RegisterL@CSIPTransitionEngine@@QAEXPAVMSIPRegistrationClient@@@Z @ 13 NONAME ; void CSIPTransitionEngine::RegisterL(class MSIPRegistrationClient *)
+	?RejectCall@CSipStateMachine@@QAEHXZ @ 14 NONAME ; int CSipStateMachine::RejectCall(void)
+	?StartCall@CSipStateMachine@@QAEHXZ @ 15 NONAME ; int CSipStateMachine::StartCall(void)
+	?StopCall@CSipStateMachine@@QAEHXZ @ 16 NONAME ; int CSipStateMachine::StopCall(void)
+

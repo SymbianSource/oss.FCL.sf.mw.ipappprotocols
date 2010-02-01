@@ -1,0 +1,143 @@
+// Copyright (c) 2006-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name        : sipcodec.mmp
+// Part of     : SIP / SIP Codec
+// Version     : SIP/5.0
+//
+
+
+
+TARGET        sipcodec.dll
+TARGETTYPE    dll
+UID           0x1000008d 0x101F5D46
+
+SOURCEPATH    ../Codec/src
+SOURCE        CSIPCodecTlsPtrs.cpp
+SOURCE        CSIPStrings.cpp
+SOURCE        SIPStrings.cpp
+SOURCE        SIPCodecUtils.cpp
+SOURCE        SIPSyntaxCheck.cpp
+SOURCE        CSIPPreParser.cpp
+SOURCE        CSIPHeaderNameValue.cpp
+SOURCE        TSIPHeaderNameValueIter.cpp
+SOURCE        SIPHeaderLookup.cpp
+SOURCE        TSIPHeaderLookupEntry.cpp
+SOURCE        CSIPHeaderLookupTable.cpp
+SOURCE        CSIPTokenizer.cpp
+SOURCE        CSIPMessageParser.cpp
+SOURCE        CSIPMessage.cpp
+SOURCE        CSIPRequest.cpp
+SOURCE        CSIPResponse.cpp
+SOURCE        CSIPHeaderBase.cpp
+SOURCE        CSIPExtensionHeader.cpp
+SOURCE        CSIPParam.cpp
+SOURCE        CSIPParamContainerBase.cpp
+SOURCE        CSIPHostPort.cpp
+SOURCE        CSIPURIParams.cpp
+SOURCE        CSIPURIHeaders.cpp
+SOURCE        CSIPURI.cpp
+SOURCE        CSIPAddress.cpp
+SOURCE        CSIPParameterHeaderBase.cpp
+SOURCE        CSIPFromToHeaderParams.cpp
+SOURCE        CSIPFromToHeaderBase.cpp
+SOURCE        CSIPFromHeader.cpp
+SOURCE        CSIPToHeader.cpp
+SOURCE        CSIPCallIDHeader.cpp
+SOURCE        CSIPCSeqHeader.cpp
+SOURCE        CSIPUnsignedIntHeaderBase.cpp
+SOURCE        CSIPContentLengthHeader.cpp
+SOURCE        CSIPViaHeaderParams.cpp
+SOURCE        CSIPViaHeader.cpp
+SOURCE        CSIPContactHeaderParams.cpp
+SOURCE        CSIPContactHeader.cpp
+SOURCE        CSIPContentTypeHeaderParams.cpp
+SOURCE        CSIPContentTypeHeader.cpp
+SOURCE        CSIPExpiresHeader.cpp
+SOURCE        CSIPMaxForwardsHeader.cpp
+SOURCE        CSIPMinExpiresHeader.cpp
+SOURCE        CSIPRouteHeaderBase.cpp
+SOURCE        CSIPRecordRouteHeader.cpp
+SOURCE        CSIPRouteHeader.cpp
+SOURCE        CSIPServiceRouteHeader.cpp
+SOURCE        CSIPTokenHeaderBase.cpp
+SOURCE        CSIPRequireHeader.cpp
+SOURCE        CSIPProxyRequireHeader.cpp
+SOURCE        CSIPUnsupportedHeader.cpp
+SOURCE        CSIPSupportedHeader.cpp
+SOURCE        CSIPAllowHeader.cpp
+SOURCE        CSIPContentEncodingHeader.cpp
+SOURCE	      CSIPReferToHeader.cpp
+SOURCE	      CSIPHeaderGenericParams.cpp
+SOURCE        CSIPSecurityHeaderBase.cpp
+SOURCE        CSIPSecurityHeaderBaseParams.cpp
+SOURCE        CSIPAuthenticationInfoHeader.cpp
+SOURCE        CSIPAuthenticationInfoHeaderParams.cpp
+SOURCE        CSIPSubscriptionStateHeader.cpp
+SOURCE        CSIPSubscriptionStateHeaderParams.cpp
+SOURCE        CSIPEventHeader.cpp
+SOURCE        CSIPEventHeaderParams.cpp
+SOURCE        CSIPAcceptLanguageHeader.cpp
+SOURCE        CSIPAcceptHeaderParams.cpp
+SOURCE        CSIPAcceptHeader.cpp
+SOURCE        CSIPAcceptEncodingHeader.cpp
+SOURCE        CSIPContentDispositionHeader.cpp
+SOURCE        CSIPAllowEventsHeader.cpp
+SOURCE        CSIPSecurityClientHeader.cpp
+SOURCE        CSIPSecurityVerifyHeader.cpp
+SOURCE        CSIPSecurityServerHeader.cpp
+SOURCE        CSIPAuthHeaderBase.cpp
+SOURCE        CSIPAuthenticateHeaderBase.cpp
+SOURCE        CSIPAuthenticateHeaderParams.cpp
+SOURCE        CSIPWWWAuthenticateHeader.cpp
+SOURCE        CSIPProxyAuthenticateHeader.cpp
+SOURCE        CSIPAuthorizationHeaderBase.cpp
+SOURCE        CSIPAuthorizationHeaderParams.cpp
+SOURCE        CSIPAuthorizationHeader.cpp
+SOURCE        CSIPProxyAuthorizationHeader.cpp
+SOURCE        CURIContainer.cpp
+SOURCE        CSIPAddressHeaderBase.cpp
+SOURCE        CSIPReplyToHeader.cpp
+SOURCE        CSIPRAckHeader.cpp
+SOURCE        CSIPRSeqHeader.cpp
+SOURCE        CSIPTimestampHeader.cpp
+SOURCE        CSIPRetryAfterHeader.cpp
+SOURCE        CSIPRetryAfterHeaderParams.cpp
+SOURCE        CSIPAcceptContactHeader.cpp
+SOURCE        CSIPAcceptContactHeaderParams.cpp
+SOURCE        CSIPPAssociatedURIHeader.cpp
+SOURCE        CSIPPAccessNetworkInfoHeader.cpp
+SOURCE        CSIPPAccessNetworkInfoHeaderParams.cpp
+
+ SOURCEPATH    ../Codec/strings
+ START STRINGTABLE SipStrConsts.st
+ 	  EXPORTPATH /epoc32/include
+ END
+
+USERINCLUDE   ../Codec/api
+USERINCLUDE   ../Codec/inc
+USERINCLUDE   ../Codec/src
+
+MW_LAYER_SYSTEMINCLUDE_SYMBIAN
+
+LIBRARY       euser.lib
+LIBRARY       bafl.lib
+LIBRARY       estor.lib
+LIBRARY       charconv.lib
+LIBRARY       inetprotutil.lib
+
+VENDORID 0x70000001
+
+CAPABILITY All -Tcb
+
+SMPSAFE

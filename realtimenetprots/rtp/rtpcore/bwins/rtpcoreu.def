@@ -1,0 +1,17 @@
+EXPORTS
+	?NewL@CRtpControllerBase@@SAPAV1@AAVRSocketServ@@AAVTSockAddr@@H@Z @ 1 NONAME ; class CRtpControllerBase * CRtpControllerBase::NewL(class RSocketServ &, class TSockAddr &, int)
+	??0CRtpHandlerBase@@IAE@AAVRSocket@@H@Z @ 2 NONAME ; CRtpHandlerBase::CRtpHandlerBase(class RSocket &, int)
+	?NewL@CRtpControllerBase@@SAPAV1@AAVRSocketServ@@AAVTSockAddr@@ABVTDesC8@@H@Z @ 3 NONAME ; class CRtpControllerBase * CRtpControllerBase::NewL(class RSocketServ &, class TSockAddr &, class TDesC8 const &, int)
+	?NewL@CRtpControllerBase@@SAPAV1@AAVRSocket@@0ABVTDesC8@@H@Z @ 4 NONAME ; class CRtpControllerBase * CRtpControllerBase::NewL(class RSocket &, class RSocket &, class TDesC8 const &, int)
+	?NewL@CRtpControllerBase@@SAPAV1@AAVRSocketServ@@AAVTSockAddr@@IABVTDesC8@@H@Z @ 5 NONAME ; class CRtpControllerBase * CRtpControllerBase::NewL(class RSocketServ &, class TSockAddr &, unsigned int, class TDesC8 const &, int)
+	??1CRtpHandlerBase@@UAE@XZ @ 6 NONAME ; CRtpHandlerBase::~CRtpHandlerBase(void)
+	?NewL@CRtpControllerBase@@SAPAV1@AAVRSocket@@H@Z @ 7 NONAME ; class CRtpControllerBase * CRtpControllerBase::NewL(class RSocket &, int)
+	??0CRtpHandlerBase@@IAE@H@Z @ 8 NONAME ; CRtpHandlerBase::CRtpHandlerBase(int)
+	?RunL@CRtpHandlerBase@@MAEXXZ @ 9 NONAME ; void CRtpHandlerBase::RunL(void)
+	?RunError@CRtpHandlerBase@@MAEHH@Z @ 10 NONAME ; int CRtpHandlerBase::RunError(int)
+	?DoCancel@CRtpHandlerBase@@MAEXXZ @ 11 NONAME ; void CRtpHandlerBase::DoCancel(void)
+	?CompleteRead@CRtpHandlerBase@@UAEXH@Z @ 12 NONAME ; void CRtpHandlerBase::CompleteRead(int)
+	?NewL@CRtpController@@SAPAV1@AAVCRtpHandlerBase@@HVTSockAddr@@ABVTDesC8@@@Z @ 13 NONAME ; class CRtpController * CRtpController::NewL(class CRtpHandlerBase &, int, class TSockAddr, class TDesC8 const &)
+	?SaveReadStatus@CRtpHandlerBase@@UAEXAAVTDes8@@@Z @ 14 NONAME ; void CRtpHandlerBase::SaveReadStatus(class TDes8 &)
+	?SetDataObserver@CRtpHandlerBase@@UAEXPAVMRtpDataObserver@@@Z @ 15 NONAME ; void CRtpHandlerBase::SetDataObserver(class MRtpDataObserver *)
+

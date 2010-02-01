@@ -1,0 +1,116 @@
+
+/*
+* Copyright (c) 2004-2009 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description:
+*
+*/
+
+
+
+#ifndef SIPEXAMPLE_HRH
+#define SIPEXAMPLE_HRH
+
+// DATA TYPES
+
+enum TSIPExUIControlIds
+	{
+	ESIPExInviteAddressId,
+	ESIPExIMAddressLineId,
+	ESIPExIMMessageLineId,
+	ESIPExProfileId
+	};
+
+enum TSIPExMenuCmdIds
+	{
+	ECmdInviteForGame = 0x3000,
+	ECmdEnableProfile,
+	ECmdDisableProfile,
+	ECmdSendIM,
+	ECmdEndGame,
+	EToolbarFileNameLabel
+	};
+	
+enum TSIPExCbaIds
+	{
+	ECbaSendIM = 0x1000
+	};
+	
+// List items of profile setting view
+enum TProfileSettingItemListItems
+    {
+    EItemUsername = 0x3000,
+    EItemAccesspointid,
+    EItemCompression,
+    EItemSecurity,
+    EItemProxyServer,
+    EItemRegistrarServer
+    };
+    
+// List items of proxy server setting view
+enum TProxyServerSettingItemListItems
+    {
+    EProxyServerItemAddr = 0x3500,
+    EProxyServerItemRealm,
+    EProxyServerItemUsername,
+    EProxyServerItemPassword
+    };
+    
+// List items of registrar server setting view
+enum TRegistrarServerSettingItemListItems
+    {
+    ERegistrarServerItemAddr = 0x4000,
+    ERegistrarServerItemRealm,
+    ERegistrarServerItemUsername,
+    ERegistrarServerItemPassword
+    };
+    
+// Compression choices
+enum TCompressionsIDs
+    {
+    EComprNo = 0,
+    EComprYes
+    };
+
+// Registration mode choices
+enum TRegistrationMode
+    {
+    EWhenNeeded = 0,
+    EAlwaysOn
+    };
+
+
+// Security negotiation choices
+enum TSecurityNegotiation
+    {
+    ESecurityOff = 0,
+    ESecurityOn    
+    };
+
+// Loose routing choices
+enum TLooseRouting
+    {
+    ELooseRoutingOff = 0,
+    ELooseRoutingOn    
+    };
+
+// Transport protocols
+enum TTransportProtocol
+    {
+    ETranspProtocolUDP = 0,
+    ETranspProtocolTCP
+    };
+
+#endif // SIPEXAMPLE_HRH
+
+// End of File

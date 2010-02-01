@@ -1,0 +1,112 @@
+/*
+* Copyright (c) 2005 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+*        This is project specification file for SIPSettings Plugin
+*
+*/
+
+#include <data_caging_paths.hrh>    //this is needed for RESOURCE_FILES_DIR
+#include <platform_paths.hrh> //this is needed for MW_LAYER_SYSTEMINCLUDE
+#include "../logger/gssippluginlogconf.h"
+
+CAPABILITY          CAP_ECOM_PLUGIN
+TARGET              gssipsettingsplugin.dll
+TARGETTYPE          PLUGIN
+UID                 0x10009D8D 0x101fd6d0
+VENDORID            VID_DEFAULT
+
+SOURCEPATH          ../src
+SOURCE				sipsettingsplugin.cpp
+SOURCE				sipsettingscontainer.cpp
+SOURCE				sipsettingsmodel.cpp
+SOURCE  			sipsettlistsipprofsetview.cpp
+SOURCE  			sipsettlistsipprofsetcontainer.cpp
+SOURCE  			sipsettlistsipprofsetmodel.cpp
+SOURCE  			sipsettlistsipprofsetitemlist.cpp
+SOURCE  			sipsettlistsipprofsetaplistitem.cpp
+SOURCE  			sipsettlistsipprofsetdestlistitem.cpp
+SOURCE  			sipsettlistsipprofsettypelistitem.cpp
+SOURCE  			sipsettlistsipprofsetprovlistitem.cpp
+SOURCE  			sipsettlistsipsrvsetview.cpp
+SOURCE  			sipsettlistsipregsetview.cpp
+SOURCE  			sipsettlistsipprxsetview.cpp
+SOURCE  			sipsettlistsipsrvsetcontainer.cpp
+SOURCE  			sipsettlistsipsrvsetitemlist.cpp
+SOURCE  			sipsettlistsipsrvsetmodel.cpp
+SOURCE				sipsettlistsipsrvtextsetitem.cpp
+SOURCE				sipsettlistsipsrvtextsetpage.cpp
+SOURCE				sipserversettingvalidator.cpp
+SOURCE  			sipupdatedpasswordsetitem.cpp
+SOURCE				sipsettingspluginimplementationtable.cpp
+SOURCE				gssipmodel.cpp
+SOURCE				gssipappshutter.cpp
+SOURCE				gssipprofileutil.cpp
+SOURCE				SIPSettListSIPSrvTakeOverCBAKeyPress.cpp
+SOURCE                          SIPSettIntegerSetPage.cpp 
+SOURCE                          SipSettIntegerEditItem.cpp
+SOURCE                          gssiptimer.cpp
+
+USERINCLUDE    		../inc
+USERINCLUDE         ../data
+USERINCLUDE         ../logger
+
+APP_LAYER_SYSTEMINCLUDE
+
+SOURCEPATH          ../data
+
+//ECOM resource definition
+START RESOURCE      101fd6d0.rss
+TARGET              gssipsettingsplugin.rsc
+TARGETPATH          ECOM_RESOURCE_DIR
+END                 //  ECOM resource definition
+
+//SIPSetting resources
+START RESOURCE      gssipsettingspluginrsc.rss
+HEADER
+TARGETPATH          RESOURCE_FILES_DIR
+LANGUAGE_IDS
+END // SIPSetting resources
+
+LIBRARY             euser.lib
+LIBRARY             ecom.lib
+LIBRARY             efsrv.lib
+LIBRARY             avkon.lib
+LIBRARY             bafl.lib 
+LIBRARY             cone.lib 
+LIBRARY             eikcoctl.lib 
+LIBRARY             eikcore.lib 
+LIBRARY             commonengine.lib	//For RConeResourceLoader
+LIBRARY             egul.lib 			// CGulIcon
+LIBRARY             aknskins.lib 		// AknsUtils.h
+LIBRARY             flogger.lib 		// For GSLogger
+LIBRARY             commdb.lib
+LIBRARY             featmgr.lib			// Feature manager 
+LIBRARY             hlplch.lib 			// for "Help" options menu
+LIBRARY             gsecomplugin.lib
+LIBRARY             cmmanager.lib       // cmmanager.h
+
+// Libraries for SIP settings.
+LIBRARY  sipprofilecli.lib
+LIBRARY  sipcodec.lib
+LIBRARY  inetprotutil.lib
+
+//Documents. Defining these is optional. Used only by IDE's file browser.
+SOURCEPATH          ../data
+DOCUMENT            101fd6d0.rss
+DOCUMENT            gssipsettingspluginrsc.rss
+
+SOURCEPATH          ../inc
+DOCUMENT            gssipsettingsplugin.hrh
+
+// End of File

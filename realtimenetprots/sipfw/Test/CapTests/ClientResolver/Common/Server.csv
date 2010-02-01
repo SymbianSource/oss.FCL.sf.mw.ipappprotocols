@@ -1,0 +1,2 @@
+Name,MajorName,MinorName,BuildName,ListHeaderFile,Panic,SuiteName,SourceDirectory,TemplateDirectory,MessageFile,TemplateFile,Libraries,UserInclude,SystemInclude,BuildOK,ConnectCapability,CapExcept,AllNegative
+siprsvsrv,KSipCRServerMajorVersionNumber,KSipCRServerMinorVersionNumber,KSipCRServerBuildVersionNumber,,SipCRServer,Te_Cap_ClientResolver,.\Te_Cap_ClientResolverSource,.,Message.csv,Template.csv,euser.lib ,.\,\epoc32\include,yes,,Root,1

@@ -1,0 +1,41 @@
+/*
+* Copyright (c) 2006 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description:    File that exports the files belonging to 
+:                SRTP API
+*
+*/
+
+
+
+
+#include <platform_paths.hrh>
+
+PRJ_PLATFORMS
+DEFAULT
+
+PRJ_EXPORTS
+
+../inc/srtpmastersalt.h     MW_LAYER_PLATFORM_EXPORT_PATH(srtpmastersalt.h)
+../inc/srtpstreamin.h     MW_LAYER_PLATFORM_EXPORT_PATH(srtpstreamin.h)
+../inc/srtpdef.h     MW_LAYER_PLATFORM_EXPORT_PATH(srtpdef.h)
+../inc/srtpstream.h     MW_LAYER_PLATFORM_EXPORT_PATH(srtpstream.h)
+../inc/rtpstpheader.h     MW_LAYER_PLATFORM_EXPORT_PATH(rtpstpheader.h)
+../inc/srtpstreamout.h     MW_LAYER_PLATFORM_EXPORT_PATH(srtpstreamout.h)
+../inc/srtpcryptocontext.h     MW_LAYER_PLATFORM_EXPORT_PATH(srtpcryptocontext.h)
+../inc/msrtpstreamoutcontext.h     MW_LAYER_PLATFORM_EXPORT_PATH(msrtpstreamoutcontext.h)
+../inc/srtpsession.h     MW_LAYER_PLATFORM_EXPORT_PATH(srtpsession.h)
+../inc/srtpmasterkey.h     MW_LAYER_PLATFORM_EXPORT_PATH(srtpmasterkey.h)
+../inc/srtpcryptoparams.h     MW_LAYER_PLATFORM_EXPORT_PATH(srtpcryptoparams.h)
+../inc/msrtpstreamincontext.h     MW_LAYER_PLATFORM_EXPORT_PATH(msrtpstreamincontext.h)
+../inc/msrtprekeyingobserver.h     MW_LAYER_PLATFORM_EXPORT_PATH(msrtprekeyingobserver.h)

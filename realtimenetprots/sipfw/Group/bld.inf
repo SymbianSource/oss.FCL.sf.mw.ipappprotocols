@@ -1,0 +1,243 @@
+// Copyright (c) 2007-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name          : bld.inf
+// Part of       : SIP stack
+// Version       : SIP/6.0
+//
+
+
+
+PRJ_PLATFORMS
+DEFAULT
+
+PRJ_EXPORTS
+
+// SigComp dictionary file
+../Data/SIPSDP.DIC c:/private/101f5d36/sipsdp.dic
+
+// Note: these cre files are exported for testing and techview only. Not used in a device
+// SIP stack's CenRep configuration file
+../Data/101FED88.txt z:/private/10202be9/101fed88.txt
+// SIP Client Resolver's empty CenRep configuration file
+../Data/10282EE7.txt z:/private/10202be9/10282ee7.txt
+// SIP Profile Agent CenRep configuration file
+../Data/101F413C.txt z:/private/10202be9/101f413c.txt
+// ProfileAgent's cenrep configuration file for expiry duration
+../Data/2001F889.txt z:/private/10202be9/2001f889.txt
+
+// ConfML files
+../conf/sipframework.confml          MW_LAYER_EXPORTS_CONFML(sipframework.confml)
+../conf/sipframework_101f413c.crml   MW_LAYER_EXPORTS_CRML(sipframework_101f413c.crml)
+../conf/sipframework_101fed88.crml   MW_LAYER_EXPORTS_CRML(sipframework_101fed88.crml)
+../conf/sipframework_10282ee7.crml   MW_LAYER_EXPORTS_CRML(sipframework_10282ee7.crml)
+// Note: sipframework_2001f889.crml cannot be created yet until spec revision
+
+// SIP iby-files
+../rom/sipsw.iby /epoc32/rom/include/sipsw.iby
+../rom/siph2lanbearermonitor.iby /epoc32/rom/include/siph2lanbearermonitor.iby
+
+// SDP Codec API
+../SDP/api/SdpAttributeField.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sdpattributefield.h)
+../SDP/api/SdpBandwidthField.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sdpbandwidthfield.h)
+../SDP/api/SdpCodecConstants.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sdpcodecconstants.h)
+../SDP/api/SdpCodecErr.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sdpcodecerr.h)
+../SDP/api/SdpCodecStringPool.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sdpcodecstringpool.h)
+../SDP/api/SdpConnectionField.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sdpconnectionfield.h)
+../SDP/api/SdpDocument.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sdpdocument.h)
+../SDP/api/SdpFmtAttributeField.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sdpfmtattributefield.h)
+../SDP/api/SdpKeyField.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sdpkeyfield.h)
+../SDP/api/SdpMediaField.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sdpmediafield.h)
+../SDP/api/SdpOriginField.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sdporiginfield.h)
+../SDP/api/SdpRepeatField.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sdprepeatfield.h)
+../SDP/api/SdpRtpmapValue.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sdprtpmapvalue.h)
+../SDP/api/SdpTimeField.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sdptimefield.h)
+../SDP/api/SdpTypedTime.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sdptypedtime.h)
+../SDP/api/_sdpdefs.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(_sdpdefs.h)
+
+// SIP Client API
+../SIP/sipapi/api/sip.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sip.h)
+../SIP/sipapi/api/sipclienttransaction.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipclienttransaction.h)
+../SIP/sipapi/api/sipconnection.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipconnection.h)
+../SIP/sipapi/api/sipconnectionobserver.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipconnectionobserver.h)
+../SIP/sipapi/api/sipdefs.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipdefs.h)
+../SIP/sipapi/api/SIPSDKCRKeys.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipsdkcrkeys.h)
+../SIP/sipapi/api/sipdialog.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipdialog.h)
+../SIP/sipapi/api/sipdialogassocbase.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipdialogassocbase.h)
+../SIP/sipapi/api/siperr.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(siperr.h)
+../SIP/sipapi/api/siphttpdigest.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(siphttpdigest.h)
+../SIP/sipapi/api/siphttpdigestchallengeobserver.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(siphttpdigestchallengeobserver.h)
+../SIP/sipapi/api/siphttpdigestchallengeobserver2.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(siphttpdigestchallengeobserver2.h)
+../SIP/sipapi/api/sipinvitedialogassoc.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipinvitedialogassoc.h)
+../SIP/sipapi/api/sipmessageelements.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipmessageelements.h)
+../SIP/sipapi/api/sipnotifydialogassoc.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipnotifydialogassoc.h)
+../SIP/sipapi/api/sipobserver.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipobserver.h)
+../SIP/sipapi/api/sipreferdialogassoc.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipreferdialogassoc.h)
+../SIP/sipapi/api/siprefresh.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(siprefresh.h)
+../SIP/sipapi/api/sipregistrationbinding.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipregistrationbinding.h)
+../SIP/sipapi/api/sipregistrationcontext.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipregistrationcontext.h)
+../SIP/sipapi/api/siprequestelements.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(siprequestelements.h)
+../SIP/sipapi/api/sipresponseelements.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipresponseelements.h)
+../SIP/sipapi/api/sipservertransaction.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipservertransaction.h)
+../SIP/sipapi/api/sipsubscribedialogassoc.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipsubscribedialogassoc.h)
+../SIP/sipapi/api/siptransactionbase.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(siptransactionbase.h)
+
+// SIP Codec API
+../SIP/Codec/api/_sipcodecdefs.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(_sipcodecdefs.h)
+../SIP/Codec/api/sipacceptcontactheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipacceptcontactheader.h)
+../SIP/Codec/api/sipacceptencodingheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipacceptencodingheader.h)
+../SIP/Codec/api/sipacceptheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipacceptheader.h)
+../SIP/Codec/api/sipacceptlanguageheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipacceptlanguageheader.h)
+../SIP/Codec/api/sipaddress.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipaddress.h)
+../SIP/Codec/api/sipaddressheaderbase.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipaddressheaderbase.h)
+../SIP/Codec/api/sipalloweventsheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipalloweventsheader.h)
+../SIP/Codec/api/sipallowheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipallowheader.h)
+../SIP/Codec/api/sipauthenticateheaderbase.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipauthenticateheaderbase.h)
+../SIP/Codec/api/sipauthheaderbase.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipauthheaderbase.h)
+../SIP/Codec/api/sipauthorizationheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipauthorizationheader.h)
+../SIP/Codec/api/sipauthorizationheaderbase.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipauthorizationheaderbase.h)
+../SIP/Codec/api/sipproxyauthorizationheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipproxyauthorizationheader.h)
+../SIP/Codec/api/sipcallidheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipcallidheader.h)
+../SIP/Codec/api/sipcodecerr.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipcodecerr.h)
+../SIP/Codec/api/sipcontactheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipcontactheader.h)
+../SIP/Codec/api/sipcontentdispositionheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipcontentdispositionheader.h)
+../SIP/Codec/api/sipcontentencodingheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipcontentencodingheader.h)
+../SIP/Codec/api/sipcontenttypeheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipcontenttypeheader.h)
+../SIP/Codec/api/sipcseqheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipcseqheader.h)
+../SIP/Codec/api/sipeventheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipeventheader.h)
+../SIP/Codec/api/sipexpiresheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipexpiresheader.h)
+../SIP/Codec/api/sipextensionheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipextensionheader.h)
+../SIP/Codec/api/sipfromheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipfromheader.h)
+../SIP/Codec/api/sipfromtoheaderbase.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipfromtoheaderbase.h)
+../SIP/Codec/api/sipheaderbase.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipheaderbase.h)
+../SIP/Codec/api/sipparameterheaderbase.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipparameterheaderbase.h)
+../SIP/Codec/api/sippassociateduriheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sippassociateduriheader.h)
+../SIP/Codec/api/sipproxyauthenticateheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipproxyauthenticateheader.h)
+../SIP/Codec/api/sipproxyrequireheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipproxyrequireheader.h)
+../SIP/Codec/api/siprackheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(siprackheader.h)
+../SIP/Codec/api/siprefertoheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(siprefertoheader.h)
+../SIP/Codec/api/sipreplytoheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipreplytoheader.h)
+../SIP/Codec/api/siprequireheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(siprequireheader.h)
+../SIP/Codec/api/sipretryafterheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipretryafterheader.h)
+../SIP/Codec/api/siprouteheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(siprouteheader.h)
+../SIP/Codec/api/siprouteheaderbase.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(siprouteheaderbase.h)
+../SIP/Codec/api/siprseqheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(siprseqheader.h)
+../SIP/Codec/api/sipsecurityclientheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipsecurityclientheader.h)
+../SIP/Codec/api/sipsecurityheaderbase.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipsecurityheaderbase.h)
+../SIP/Codec/api/sipstrings.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipstrings.h)
+../SIP/Codec/api/sipsubscriptionstateheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipsubscriptionstateheader.h)
+../SIP/Codec/api/sipsupportedheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipsupportedheader.h)
+../SIP/Codec/api/siptimestampheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(siptimestampheader.h)
+../SIP/Codec/api/siptoheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(siptoheader.h)
+../SIP/Codec/api/siptokenheaderbase.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(siptokenheaderbase.h)
+../SIP/Codec/api/sipunsignedintheaderbase.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipunsignedintheaderbase.h)
+../SIP/Codec/api/sipunsupportedheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipunsupportedheader.h)
+../SIP/Codec/api/sipwwwauthenticateheader.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipwwwauthenticateheader.h)
+
+// SIP Profile API
+../ProfileAgent/Client/Api/sipconcreteprofileobserver.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipconcreteprofileobserver.h)
+../ProfileAgent/Client/Api/sipprofile.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipprofile.h)
+../ProfileAgent/Client/Api/sipprofileregistry.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipprofileregistry.h)
+../ProfileAgent/Client/Api/sipprofileregistrybase.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipprofileregistrybase.h)
+../ProfileAgent/Client/Api/sipprofileregistryobserver.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipprofileregistryobserver.h)
+../ProfileAgent/Client/Api/sipprofiletypeinfo.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipprofiletypeinfo.h)
+../ProfileAgent/Client/Api/sipmanagedprofile.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipmanagedprofile.h)
+../ProfileAgent/Client/Api/sipmanagedprofileregistry.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipmanagedprofileregistry.h)
+../ProfileAgent/Client/Api/sipprofilealrcontroller.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipprofilealrcontroller.h)
+../ProfileAgent/Client/Api/sipprofilealrobserver.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipprofilealrobserver.h)
+../ProfileAgent/Client/Api/sipprofileservercrkeys.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipprofileservercrkeys.h)
+../Data/backup_registration.xml z:/private/101f413c/backup_registration.xml
+
+// SIP Client Resolver API
+../ClientResolver/Resolver/api/SipResolvedClient.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipresolvedclient.h)
+../ClientResolver/Resolver/api/SipResolvedClient.inl SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipresolvedclient.inl)
+../ClientResolver/Resolver/api/sipresolvedclient2.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipresolvedclient2.h)
+../ClientResolver/Resolver/api/sipresolvedclient2.inl SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipresolvedclient2.inl)
+../ClientResolver/Resolver/api/sipclientresolverconfigcrkeys.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sipclientresolverconfigcrkeys.h) 
+
+// SIP Client Discovery API
+../ClientResolver/Client/api/sipclientdiscovery.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipclientdiscovery.h)
+../ClientResolver/Client/api/sipclientdiscoveryobserver.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipclientdiscoveryobserver.h)
+
+// SigComp API
+../SigComp/SigCompEngine/api/Sigcomp.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sigcomp.h)
+../SigComp/SigCompEngine/api/sigcompcompartment.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sigcompcompartment.h)
+../SigComp/SigCompEngine/api/sigcompstateitem.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sigcompstateitem.h)
+../SigComp/SigCompEngine/api/SigCompCompartmentContext.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sigcompcompartmentcontext.h)
+
+// SIP Bearer Monitor API
+../SIP/NetworkMonitor/api/sipaccessnetworkinfo.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipaccessnetworkinfo.h)
+../SIP/NetworkMonitor/api/sipaccessnetworkinfo.inl SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipaccessnetworkinfo.inl)
+../SIP/NetworkMonitor/api/sipbearermonitor.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipbearermonitor.h)
+../SIP/NetworkMonitor/api/sipbearermonitor.inl SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipbearermonitor.inl)
+../SIP/NetworkMonitor/api/sipbearermonitorobserver.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipbearermonitorobserver.h)
+../SIP/NetworkMonitor/api/sipbearerowner.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipbearerowner.h)
+../SIP/NetworkMonitor/api/sipnetworkinfoobserver.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipnetworkinfoobserver.h)
+../SIP/NetworkMonitor/api/sipnetworkobserver.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipnetworkobserver.h)
+
+// SIP NAT Traversal Controller API
+../SIP/NATTraversalController/Api/sipnatbindingobserver.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipnatbindingobserver.h)
+../SIP/NATTraversalController/Api/sipnattraversalcontroller.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipnattraversalcontroller.h)
+../SIP/NATTraversalController/Api/sipnattraversalcontroller.inl SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipnattraversalcontroller.inl)
+../SIP/NATTraversalController/Api/sipnattraversalcontrollerinitparams.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipnattraversalcontrollerinitparams.h)
+../SIP/NATTraversalController/Api/sipnattraversalcontrollerinitparams.inl SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipnattraversalcontrollerinitparams.inl)
+../SIP/NATTraversalController/Api/sipnattraversalrequestobserver.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipnattraversalrequestobserver.h)
+
+// SIP Profile Agent plug-in API
+../ProfileAgent/Profile/api/sipconcreteprofile.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipconcreteprofile.h)
+../ProfileAgent/PluginMgr/api/sipprofileagent.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipprofileagent.h)
+../ProfileAgent/PluginMgr/api/sipprofileagent.inl SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipprofileagent.inl)
+../ProfileAgent/PluginMgr/api/sipprofileagentinitparams.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipprofileagentinitparams.h)
+../ProfileAgent/PluginMgr/api/sipprofileagentinitparams.inl SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipprofileagentinitparams.inl)
+../ProfileAgent/PluginMgr/api/sipprofileagentobserver.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipprofileagentobserver.h)
+../ProfileAgent/PluginMgr/api/sipprofileagentextensionparams.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipprofileagentextensionparams.h)
+
+// SIP System State Monitor API
+../SIP/SystemStateMonitor/Api/sipsystemstatemonitor.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipsystemstatemonitor.h)
+../SIP/SystemStateMonitor/Api/sipsystemstatemonitor.inl SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipsystemstatemonitor.inl)
+../SIP/SystemStateMonitor/Api/sipsystemstateobserver.h SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(sipsystemstateobserver.h)
+
+PRJ_MMPFILES
+
+../SigComp/Group/sigcomp.mmp
+../SigComp/Group/deflatecomp.mmp
+
+../SDP/Group/sdpcodec.mmp
+
+../SIP/Group/sipcodec.mmp
+../SIP/Group/sigcompcontroller.mmp
+../SIP/Group/packetbearermonitor.mmp
+../SIP/Group/digestplugin.mmp
+../SIP/Group/ipsecplugin.mmp
+../SIP/Group/tlsplugin.mmp
+../ClientResolver/Group/crresolver.mmp
+../ClientResolver/Group/crserver.mmp
+../ClientResolver/Group/crclient.mmp
+../SIP/Group/siprequesthandler.mmp
+../SIP/Group/sipservercore.mmp 
+../SIP/Group/sipclient.mmp
+../ProfileAgent/Group/sipprofile.mmp
+../ProfileAgent/Group/sipproxyrsv.mmp
+../ProfileAgent/Group/sipprofileserver.mmp
+../ProfileAgent/Group/sipprofileclient.mmp
+../ProfileAgent/Group/sipprofilefsm.mmp
+../ProfileAgent/Group/sipietfagent.mmp
+../ProfileAgent/Group/sipimsagent.mmp
+
+// SIP H2LanBearerMonitor plugin is build only in HW environments
+// since it would distract emulator unit testing
+#if ( !defined( WINS ) && !defined( WINSCW ) )
+../SIP/Group/h2lanbearermonitor.mmp
+#endif
+PRJ_TESTMMPFILES
+#include "../Test/CapTests/Te_Cap_SipServerSource/bld.inf" 

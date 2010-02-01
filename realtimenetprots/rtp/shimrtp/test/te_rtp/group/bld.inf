@@ -1,0 +1,34 @@
+// Copyright (c) 2007-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// build the te_rtpsuite implementation
+// 
+//
+
+/**
+ @file
+*/
+
+PRJ_TESTEXPORTS
+
+../scripts/te_rtpsuite.script		z:/testdata/scripts/rtp/te_rtpsuite.script
+
+#ifdef SYMBIAN_NON_SEAMLESS_NETWORK_BEARER_MOBILITY
+../scripts/te_rtpsuite2.script	z:/testdata/scripts/rtp/te_rtpsuite2.script
+#endif
+../scripts/te_rtpsuite.ini	z:/testdata/configs/rtp/te_rtpsuite.ini
+./te_rtpsuite.iby   		/epoc32/rom/include/te_rtpsuite.iby
+
+
+PRJ_TESTMMPFILES
+te_rtpsuite.mmp

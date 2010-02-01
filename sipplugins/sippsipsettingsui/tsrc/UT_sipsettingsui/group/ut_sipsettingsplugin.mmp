@@ -1,0 +1,110 @@
+/*
+* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+;* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description:
+*
+*/
+#include <platform_paths.hrh>
+#include <eunitcaps.h>
+
+TARGET          				ut_sipsettingsplugin.dll
+TARGETTYPE     					dll
+TARGETPATH      				/DigiaEUnit/Tests
+UID             				0x1000af5a 0x01001100 // Random experimental UID
+CAPABILITY              All -TCB
+VENDORID                VID_DEFAULT
+
+MACRO                   UNIT_TESTING
+
+// Test suite classes
+SOURCEPATH              ../src
+SOURCE                  ut_sipsettingsplugindllmain.cpp
+SOURCE                  ut_gssipprofileutil.cpp
+SOURCE                  ut_gssiptimer.cpp
+SOURCE                  ut_sipsettlistsipsrvsetview.cpp
+SOURCE                  ut_sipsettListsipprofsetview.cpp
+SOURCE                  ut_sipsettingscontainer.cpp
+SOURCE                  ut_sipsettlistsipprofsetcontainer.cpp
+
+SOURCE                  sipsettingspluginstub.cpp
+SOURCE                  sipmanagedprofileregistrystub.cpp 
+SOURCE                  sipmanagedprofilestub.cpp 
+SOURCE                  sipprofileregistrybasestub.cpp 
+SOURCE                  sipprofileregistrystub.cpp 
+SOURCE                  sipstub.cpp 
+SOURCE                  FeatMgr.cpp
+
+// Test classes
+SOURCEPATH              ../src
+SOURCE									sipprofilestub.cpp
+
+// Tested classes
+SOURCEPATH              ../../../src
+SOURCE					gssipprofileutil.cpp
+SOURCE					gssiptimer.cpp
+SOURCE                                  sipsettlistsipsrvsetview.cpp
+SOURCE                                  sipsettlistsipregsetview.cpp
+SOURCE                                  gssipmodel.cpp
+SOURCE                                  sipsettlistsipsrvsetcontainer.cpp
+SOURCE                                  sipsettlistsipsrvsetmodel.cpp
+SOURCE                                  sipsettlistsipprofsetview.cpp
+SOURCE                                  gssipappshutter.cpp
+SOURCE                                  sipsettlistsipsrvsetitemlist.cpp
+SOURCE                                  sipserversettingvalidator.cpp
+SOURCE                                  sipsettlistsipsrvtextsetitem.cpp
+SOURCE                                  sipupdatedpasswordsetitem.cpp
+SOURCE                                  SipSettIntegerEditItem.cpp
+SOURCE                                  SIPSettListSIPSrvTakeOverCBAKeyPress.cpp
+SOURCE                                  sipsettlistsipprofsetcontainer.cpp
+SOURCE                                  sipsettlistsipprofsetmodel.cpp
+SOURCE                                  SIPSettIntegerSetPage.cpp
+SOURCE                                  sipsettlistsipsrvtextsetpage.cpp
+SOURCE                                  sipsettlistsipprofsetdestlistitem.cpp
+SOURCE                                  sipsettlistsipprofsetitemlist.cpp
+SOURCE                                  sipsettlistsipprofsetprovlistitem.cpp
+SOURCE                                  sipsettlistsipprofsettypelistitem.cpp
+SOURCE                                  sipsettlistsipprofsetaplistitem.cpp
+SOURCE                                  sipsettingscontainer.cpp
+// Includes
+
+USERINCLUDE             ../inc
+USERINCLUDE             ../../../inc
+USERINCLUDE             ../../../Logger
+USERINCLUDE         	../../../data
+SYSTEMINCLUDE           /epoc32/include/Digia/EUnit
+MW_LAYER_SYSTEMINCLUDE
+SYSTEMINCLUDE       /epoc32/include/ecom
+
+LIBRARY     						euser.lib
+LIBRARY     						eunit.lib
+LIBRARY									inetprotutil.lib
+
+LIBRARY             ecom.lib
+LIBRARY             efsrv.lib
+LIBRARY             avkon.lib
+LIBRARY             bafl.lib 
+LIBRARY             cone.lib 
+LIBRARY             eikcoctl.lib 
+LIBRARY             eikcore.lib 
+LIBRARY             commonengine.lib	//For RConeResourceLoader
+LIBRARY             egul.lib 			// CGulIcon
+LIBRARY             aknskins.lib 		// AknsUtils.h
+LIBRARY             flogger.lib 		// For GSLogger
+LIBRARY             commdb.lib
+LIBRARY             hlplch.lib 			// for "Help" options menu
+LIBRARY             GSEcomPlugin.lib
+LIBRARY             cmmanager.lib       // cmmanager.h
+LIBRARY             sipcodec.lib
+
+
+//EXPORTUNFROZEN

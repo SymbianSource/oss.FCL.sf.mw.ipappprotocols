@@ -1,0 +1,81 @@
+/*
+* Copyright (c) 2003 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description: 
+*     This file contains declarations for resources of General Settings.
+*     The file can be included only in resource file.
+*     
+*
+*/
+
+
+#ifndef GS_SIP_SETTINGS_PLUGIN_RH
+#define GS_SIP_SETTINGS_PLUGIN_RH
+
+//  INCLUDES
+#include    "gssipsettingsplugin.hrh"
+
+
+//  STRUCTURE DEFINITIONS
+
+// ---------------------------------------------------------
+//    gs_link_apps
+//    It defines structure to contain information about apps 
+//    to be able to included in the softkey list.
+// ---------------------------------------------------------
+//
+STRUCT GS_LINK_APPS
+    {
+    STRUCT apps[];
+    }
+
+// ---------------------------------------------------------
+//    gs_app
+//    It defines structure that contains information about 
+//    a single app.
+// ---------------------------------------------------------
+//
+STRUCT GS_APP
+    {
+    WORD id;    
+    LONG app = -1;
+    }
+
+// ---------------------------------------------------------
+//    gs_feature_array
+//    It defines structure to contain information about items 
+//    to be able to included in the listbox.
+// ---------------------------------------------------------
+//
+STRUCT GS_FEATURE_ARRAY
+    {
+    STRUCT items[];
+    }
+
+
+// ---------------------------------------------------------
+//    gs_feature
+//    It defines structure that contains information about 
+//    a single listbox item.
+// ---------------------------------------------------------
+//
+STRUCT GS_FEATURE
+    {
+    LTEXT txt = "";    
+    WORD item = -1;
+    BYTE type = EGSListBoxItemTypeIsAlwaysVisible;
+    }
+
+#endif //  GS_SIP_SETTINGS_PLUGIN_RH
+
+// end of file

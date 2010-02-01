@@ -1,0 +1,164 @@
+EXPORTS
+	_ZN17CSIPPrflInitState10LinkStatesER17CSIPPrflStateBaseS1_S1_ @ 1 NONAME
+	_ZN17CSIPPrflInitState4NewLER18MSIPProfileFSMUser @ 2 NONAME
+	_ZN17CSIPPrflInitStateD0Ev @ 3 NONAME
+	_ZN17CSIPPrflInitStateD1Ev @ 4 NONAME
+	_ZN17CSIPPrflInitStateD2Ev @ 5 NONAME
+	_ZN17CSIPPrflStateBaseD0Ev @ 6 NONAME
+	_ZN17CSIPPrflStateBaseD1Ev @ 7 NONAME
+	_ZN17CSIPPrflStateBaseD2Ev @ 8 NONAME
+	_ZN17SIPMessageBuilder10CreateToLCERK6TDesC8 @ 9 NONAME
+	_ZN17SIPMessageBuilder11ParseParamLERK6TDesC8R6TPtrC8S4_ @ 10 NONAME
+	_ZN17SIPMessageBuilder13CreateRouteLCERK6TDesC8i @ 11 NONAME
+	_ZN17SIPMessageBuilder14CreateHeaderLCERK6TDesC8 @ 12 NONAME
+	_ZN17SIPMessageBuilder15CreateContactLCERK6TDesC8iRK11MDesC8Array8RStringFi @ 13 NONAME
+	_ZN17SIPMessageBuilder21CreateAuthorizationLCERK6TDesC8S2_S2_ @ 14 NONAME
+	_ZN22CSIPProfileContextBase10SetProfileEP19CSIPConcreteProfile @ 15 NONAME
+	_ZN22CSIPProfileContextBase11SetProxiesLER11MDesC8Array @ 16 NONAME
+	_ZN22CSIPProfileContextBase12AddIntoQueueERK6TDesC8 @ 17 NONAME
+	_ZN22CSIPProfileContextBase12ErrorOccuredEiR21CSIPClientTransactionR23CSIPRegistrationBindingRi @ 18 NONAME
+	_ZN22CSIPProfileContextBase12ErrorOccuredEiR23CSIPRegistrationBindingRi @ 19 NONAME
+	_ZN22CSIPProfileContextBase12RegistrationEv @ 20 NONAME
+	_ZN22CSIPProfileContextBase12SetNextStateER17CSIPPrflStateBase @ 21 NONAME
+	_ZN22CSIPProfileContextBase13ForgetProfileEv @ 22 NONAME
+	_ZN22CSIPProfileContextBase13ProxyAddressLER19CSIPConcreteProfile @ 23 NONAME
+	_ZN22CSIPProfileContextBase13ProxyAddressLEv @ 24 NONAME
+	_ZN22CSIPProfileContextBase13RetryPossibleEi @ 25 NONAME
+	_ZN22CSIPProfileContextBase14SetTransactionEP21CSIPClientTransaction @ 26 NONAME
+	_ZN22CSIPProfileContextBase15RetryDeltaTimerEji @ 27 NONAME
+	_ZN22CSIPProfileContextBase16IgnoreErrorEventEv @ 28 NONAME
+	_ZN22CSIPProfileContextBase16SetRetryPossibleEi @ 29 NONAME
+	_ZN22CSIPProfileContextBase17RetryRegistrationEv @ 30 NONAME
+	_ZN22CSIPProfileContextBase17SetRegisteredAORsEv @ 31 NONAME
+	_ZN22CSIPProfileContextBase17TerminateHandlingEv @ 32 NONAME
+	_ZN22CSIPProfileContextBase21RemoveDeltaTimerEntryEv @ 33 NONAME
+	_ZN22CSIPProfileContextBase21RequireProxyResolvingEv @ 34 NONAME
+	_ZN22CSIPProfileContextBase22AddDeregisterIntoQueueEv @ 35 NONAME
+	_ZN22CSIPProfileContextBase22ConnectionStateChangedEN14CSIPConnection6TStateE @ 36 NONAME
+	_ZN22CSIPProfileContextBase22ProxiesAlreadyResolvedEv @ 37 NONAME
+	_ZN22CSIPProfileContextBase25HandleProxyResolvingErrorEi @ 38 NONAME
+	_ZN22CSIPProfileContextBase27ProxyResolvingRequestFailedEi @ 39 NONAME
+	_ZN22CSIPProfileContextBase27Received2XXRegisterResponseEv @ 40 NONAME
+	_ZN22CSIPProfileContextBase30ProxyResolvingRequestCompleteLER11MDesC8Array @ 41 NONAME
+	_ZN22CSIPProfileContextBase7ProfileEv @ 42 NONAME
+	_ZN22CSIPProfileContextBase9RegisterLEv @ 43 NONAME
+	_ZN22CSIPProfileContextBaseC2ER4CSIPR14CSIPConnectionR24MSIPProfileAgentObserverR17CSIPPrflStateBaseR19CSIPConcreteProfileR11CDeltaTimer @ 44 NONAME
+	_ZN22CSIPProfileContextBaseD0Ev @ 45 NONAME
+	_ZN22CSIPProfileContextBaseD1Ev @ 46 NONAME
+	_ZN22CSIPProfileContextBaseD2Ev @ 47 NONAME
+	_ZN23CSIPPrflRegisteredState10LinkStatesER17CSIPPrflStateBaseS1_S1_S1_S1_ @ 48 NONAME
+	_ZN23CSIPPrflRegisteredState4NewLER18MSIPProfileFSMUser @ 49 NONAME
+	_ZN23CSIPPrflRegisteredStateD0Ev @ 50 NONAME
+	_ZN23CSIPPrflRegisteredStateD1Ev @ 51 NONAME
+	_ZN23CSIPPrflRegisteredStateD2Ev @ 52 NONAME
+	_ZN24CSIPProfileQueueHandling18RegisterFromQueueLER19CSIPConcreteProfile @ 53 NONAME
+	_ZN24CSIPProfileQueueHandling19AddRegisterToQueueLER19CSIPConcreteProfilei @ 54 NONAME
+	_ZN24CSIPProfileQueueHandling21AddDeregisterToQueueLER19CSIPConcreteProfile @ 55 NONAME
+	_ZN24CSIPProfileQueueHandling21IPSecProfileCandidateERi @ 56 NONAME
+	_ZN24CSIPProfileQueueHandling26FoundIPSecProfileCandidateEv @ 57 NONAME
+	_ZN24CSIPProfileQueueHandling26RemoveProfileFromRegQueueLER19CSIPConcreteProfile @ 58 NONAME
+	_ZN24CSIPProfileQueueHandling31WaitingForAllowedNetworkProfileEi @ 59 NONAME
+	_ZN24CSIPProfileQueueHandling4NewLER18MSIPProfileFSMUser @ 60 NONAME
+	_ZN24CSIPProfileQueueHandling5NewLCER18MSIPProfileFSMUser @ 61 NONAME
+	_ZN24CSIPProfileQueueHandling7CleanupER19CSIPConcreteProfilePS0_ @ 62 NONAME
+	_ZN24CSIPProfileQueueHandlingC1ER18MSIPProfileFSMUser @ 63 NONAME
+	_ZN24CSIPProfileQueueHandlingC2ER18MSIPProfileFSMUser @ 64 NONAME
+	_ZN24CSIPProfileQueueHandlingD0Ev @ 65 NONAME
+	_ZN24CSIPProfileQueueHandlingD1Ev @ 66 NONAME
+	_ZN24CSIPProfileQueueHandlingD2Ev @ 67 NONAME
+	_ZN29CSIPPrflResolvingProxiesState10LinkStatesER17CSIPPrflStateBaseS1_S1_ @ 68 NONAME
+	_ZN29CSIPPrflResolvingProxiesState4NewLER18MSIPProfileFSMUser @ 69 NONAME
+	_ZN29CSIPPrflResolvingProxiesStateD0Ev @ 70 NONAME
+	_ZN29CSIPPrflResolvingProxiesStateD1Ev @ 71 NONAME
+	_ZN29CSIPPrflResolvingProxiesStateD2Ev @ 72 NONAME
+	_ZN30CSIPPrflRegisterRequestedState10LinkStatesER17CSIPPrflStateBaseS1_S1_ @ 73 NONAME
+	_ZN30CSIPPrflRegisterRequestedState4NewLER18MSIPProfileFSMUser @ 74 NONAME
+	_ZN30CSIPPrflRegisterRequestedStateD0Ev @ 75 NONAME
+	_ZN30CSIPPrflRegisterRequestedStateD1Ev @ 76 NONAME
+	_ZN30CSIPPrflRegisterRequestedStateD2Ev @ 77 NONAME
+	_ZN32CSIPPrflDeregisterRequestedState10LinkStatesER17CSIPPrflStateBaseS1_S1_ @ 78 NONAME
+	_ZN32CSIPPrflDeregisterRequestedState4NewLER18MSIPProfileFSMUser @ 79 NONAME
+	_ZN32CSIPPrflDeregisterRequestedStateD0Ev @ 80 NONAME
+	_ZN32CSIPPrflDeregisterRequestedStateD1Ev @ 81 NONAME
+	_ZN32CSIPPrflDeregisterRequestedStateD2Ev @ 82 NONAME
+	_ZN35CSIPPrflRegisterDelayRequestedState10LinkStatesER17CSIPPrflStateBase @ 83 NONAME
+	_ZN35CSIPPrflRegisterDelayRequestedState4NewLER18MSIPProfileFSMUser @ 84 NONAME
+	_ZN35CSIPPrflRegisterDelayRequestedStateD0Ev @ 85 NONAME
+	_ZN35CSIPPrflRegisterDelayRequestedStateD1Ev @ 86 NONAME
+	_ZN35CSIPPrflRegisterDelayRequestedStateD2Ev @ 87 NONAME
+	_ZN35CSIPPrflRegistrationInProgressState10LinkStatesER17CSIPPrflStateBaseS1_S1_S1_ @ 88 NONAME
+	_ZN35CSIPPrflRegistrationInProgressState4NewLER18MSIPProfileFSMUser @ 89 NONAME
+	_ZN35CSIPPrflRegistrationInProgressStateD0Ev @ 90 NONAME
+	_ZN35CSIPPrflRegistrationInProgressStateD1Ev @ 91 NONAME
+	_ZN35CSIPPrflRegistrationInProgressStateD2Ev @ 92 NONAME
+	_ZN37CSIPPrflDeregistrationInProgressState10LinkStatesER17CSIPPrflStateBase @ 93 NONAME
+	_ZN37CSIPPrflDeregistrationInProgressState4NewLER18MSIPProfileFSMUser @ 94 NONAME
+	_ZN37CSIPPrflDeregistrationInProgressStateD0Ev @ 95 NONAME
+	_ZN37CSIPPrflDeregistrationInProgressStateD1Ev @ 96 NONAME
+	_ZN37CSIPPrflDeregistrationInProgressStateD2Ev @ 97 NONAME
+	_ZNK17CSIPPrflStateBase4NameEv @ 98 NONAME
+	_ZNK22CSIPProfileContextBase10ConnectionEv @ 99 NONAME
+	_ZNK22CSIPProfileContextBase12CurrentStateEv @ 100 NONAME
+	_ZNK22CSIPProfileContextBase13AgentObserverEv @ 101 NONAME
+	_ZNK22CSIPProfileContextBase15RegisterPendingEv @ 102 NONAME ABSENT
+	_ZNK22CSIPProfileContextBase23IsProxyResolvingEnabledEv @ 103 NONAME
+	_ZNK24CSIPProfileQueueHandling7IsEmptyEv @ 104 NONAME
+	_ZTI17CSIPPrflInitState @ 105 NONAME ; #<TI>#
+	_ZTI17CSIPPrflStateBase @ 106 NONAME ; #<TI>#
+	_ZTI22CSIPProfileContextBase @ 107 NONAME ; #<TI>#
+	_ZTI23CSIPPrflRegisteredState @ 108 NONAME ; #<TI>#
+	_ZTI24CSIPProfileQueueHandling @ 109 NONAME ; #<TI>#
+	_ZTI29CSIPPrflResolvingProxiesState @ 110 NONAME ; #<TI>#
+	_ZTI30CSIPPrflRegisterRequestedState @ 111 NONAME ; #<TI>#
+	_ZTI32CSIPPrflDeregisterRequestedState @ 112 NONAME ; #<TI>#
+	_ZTI35CSIPPrflRegisterDelayRequestedState @ 113 NONAME ; #<TI>#
+	_ZTI35CSIPPrflRegistrationInProgressState @ 114 NONAME ; #<TI>#
+	_ZTI37CSIPPrflDeregistrationInProgressState @ 115 NONAME ; #<TI>#
+	_ZTV17CSIPPrflInitState @ 116 NONAME ; #<VT>#
+	_ZTV17CSIPPrflStateBase @ 117 NONAME ; #<VT>#
+	_ZTV22CSIPProfileContextBase @ 118 NONAME ; #<VT>#
+	_ZTV23CSIPPrflRegisteredState @ 119 NONAME ; #<VT>#
+	_ZTV24CSIPProfileQueueHandling @ 120 NONAME ; #<VT>#
+	_ZTV29CSIPPrflResolvingProxiesState @ 121 NONAME ; #<VT>#
+	_ZTV30CSIPPrflRegisterRequestedState @ 122 NONAME ; #<VT>#
+	_ZTV32CSIPPrflDeregisterRequestedState @ 123 NONAME ; #<VT>#
+	_ZTV35CSIPPrflRegisterDelayRequestedState @ 124 NONAME ; #<VT>#
+	_ZTV35CSIPPrflRegistrationInProgressState @ 125 NONAME ; #<VT>#
+	_ZTV37CSIPPrflDeregistrationInProgressState @ 126 NONAME ; #<VT>#
+	_ZThn4_N22CSIPProfileContextBase10SetProfileEP19CSIPConcreteProfile @ 127 NONAME ; #<thunk>#
+	_ZThn4_N22CSIPProfileContextBase11SetProxiesLER11MDesC8Array @ 128 NONAME ; #<thunk>#
+	_ZThn4_N22CSIPProfileContextBase12RegistrationEv @ 129 NONAME ; #<thunk>#
+	_ZThn4_N22CSIPProfileContextBase12SetNextStateER17CSIPPrflStateBase @ 130 NONAME ; #<thunk>#
+	_ZThn4_N22CSIPProfileContextBase13ForgetProfileEv @ 131 NONAME ; #<thunk>#
+	_ZThn4_N22CSIPProfileContextBase14SetTransactionEP21CSIPClientTransaction @ 132 NONAME ; #<thunk>#
+	_ZThn4_N22CSIPProfileContextBase17RetryRegistrationEv @ 133 NONAME ; #<thunk>#
+	_ZThn4_N22CSIPProfileContextBase17SetRegisteredAORsEv @ 134 NONAME ; #<thunk>#
+	_ZThn4_N22CSIPProfileContextBase21RemoveDeltaTimerEntryEv @ 135 NONAME ; #<thunk>#
+	_ZThn4_N22CSIPProfileContextBase22ProxiesAlreadyResolvedEv @ 136 NONAME ; #<thunk>#
+	_ZThn4_N22CSIPProfileContextBase25HandleProxyResolvingErrorEi @ 137 NONAME ; #<thunk>#
+	_ZThn4_N22CSIPProfileContextBase7ProfileEv @ 138 NONAME ; #<thunk>#
+	_ZThn4_NK22CSIPProfileContextBase10ConnectionEv @ 139 NONAME ; #<thunk>#
+	_ZThn4_NK22CSIPProfileContextBase13AgentObserverEv @ 140 NONAME ; #<thunk>#
+	_ZThn4_NK22CSIPProfileContextBase23IsProxyResolvingEnabledEv @ 141 NONAME ; #<thunk>#
+	_ZN22CSIPProfileContextBase6IsIdleEv @ 142 NONAME
+	_ZN24CSIPProfileQueueHandling9IsInQueueER19CSIPConcreteProfile @ 143 NONAME
+
+	_ZN24CSIPProfileQueueHandling21IsRegistrationAllowedER19CSIPConcreteProfilei @ 144 NONAME
+
+	_ZN22CSIPProfileContextBase14SetCredentialsERK11CSIPRefreshR14CSIPHttpDigest @ 145 NONAME
+	_ZN22CSIPProfileContextBase14SetCredentialsERK21CSIPClientTransactionR14CSIPHttpDigest @ 146 NONAME
+	_ZN22CSIPProfileContextBase31SetNegotiatedSecurityMechanismLEv @ 147 NONAME
+	_ZN22CSIPProfileContextBase33ResetNegotiatedSecurityMechanismLEv @ 148 NONAME
+
+
+	_ZNK22CSIPProfileContextBase10HasRefreshERK11CSIPRefresh @ 149 NONAME
+
+	_ZNK22CSIPProfileContextBase14HasTransactionERK21CSIPClientTransaction @ 150 NONAME
+
+	_ZNK22CSIPProfileContextBase17RegistrarUsernameEv @ 151 NONAME
+	_ZNK22CSIPProfileContextBase18CurrentMappedStateEv @ 152 NONAME
+	_ZThn4_N22CSIPProfileContextBase31SetNegotiatedSecurityMechanismLEv @ 153 NONAME ; #<thunk>#
+	_ZThn4_N22CSIPProfileContextBase33ResetNegotiatedSecurityMechanismLEv @ 154 NONAME ; #<thunk>#
+	_ZNK22CSIPProfileContextBase17IsRegisterPendingEv @ 155 NONAME
+	_ZNK22CSIPProfileContextBase9ProfileIdEv @ 156 NONAME
+

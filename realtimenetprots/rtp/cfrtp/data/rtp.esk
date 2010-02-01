@@ -1,0 +1,11 @@
+[sockman]
+protocols= rtp,rtcp
+
+[rtp]
+flow_factory_uid= 536964994
+flow_protocol_id= 250
+
+[rtcp]
+flow_factory_uid= 536964994
+flow_protocol_id= 251
+

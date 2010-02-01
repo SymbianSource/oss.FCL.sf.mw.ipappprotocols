@@ -1,0 +1,322 @@
+// Copyright (c) 2006-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name        : sipservercore.mmp
+// Part of     : SIP / SIP ServerCore
+// Version     : SIP/5.0
+//
+
+
+
+TARGET            sipserver.exe
+TARGETTYPE        exe
+UID               0x1000008d 0x101F5D36
+
+// Bigger than default stack size is required because of logging in debug mode
+EPOCSTACKSIZE 0x5000
+
+SOURCEPATH        ../Server/src
+SOURCE            SipServerMain.cpp
+SOURCE            CSipServerCore.cpp
+SOURCE            CSipActiveScheduler.cpp
+SOURCE            CSIPCSSerializer.cpp
+SOURCE            CSipCSServerITC.cpp
+SOURCE            CSipCSServer.cpp
+SOURCE            CSipCSServerCloseTimer.cpp
+SOURCE            CSipCSSession.cpp
+SOURCE            CSipCSSubSession.cpp
+SOURCE            TSipCSReceiveItem.cpp
+SOURCE            CSipCSReceiveQueue.cpp
+SOURCE            CSipCSReceiverBase.cpp
+SOURCE            CSipCSSessionReceiver.cpp
+SOURCE            CSipCSSubSessionReceiver.cpp
+SOURCE            CSIPRoutingRequest.cpp
+SOURCE            CSIPRoutingRequestStore.cpp
+
+#if (defined(WINS)||defined(WINSCW))
+SOURCE            TSIPMemAllocFailureSimulation.cpp
+#endif
+
+SOURCEPATH        ../Refreshes/src
+SOURCE            CSipRefreshMgr.cpp
+SOURCE            CSipRefreshBase.cpp
+SOURCE            CSipRegisterRefresh.cpp
+SOURCE            CSipAnyRefresh.cpp
+
+SOURCEPATH        ../Registration/src
+SOURCE        	  csipregistrationstate.cpp
+SOURCE            csipregistering.cpp
+SOURCE            csip423responsereceived.cpp
+SOURCE            csipregistered.cpp
+SOURCE            csipregisterupdating.cpp
+SOURCE            csipunregistering.cpp
+SOURCE            csipunregistered.cpp
+SOURCE            CSIPRegistrationMgr.cpp
+SOURCE            CSIPRegistrationBindingStore.cpp
+SOURCE            CSIPRegistrationBindingBase.cpp
+SOURCE            CSIPRegistrationBinding.cpp
+SOURCE            CSIPRegistrationRefreshBinding.cpp
+SOURCE            CSIPRegistrarStore.cpp
+SOURCE            CSIPRegistrar.cpp
+SOURCE            CSIPResponseUtility.cpp
+SOURCE            TSIPRegistrationUtility.cpp
+
+SOURCEPATH        ../Common/src
+SOURCE            DeleteMgr.cpp
+
+// --------------------------------------------------------------
+SOURCEPATH      ../LightWeightTimer/src
+SOURCE			TimerManager.cpp
+SOURCE			timerstore.cpp
+SOURCE			timerrequest.cpp
+SOURCE			singletimer.cpp
+
+// --------------------------------------------------------------
+SOURCEPATH	../ConnectionMgr/src
+SOURCE		CSipConnection.cpp CTransport.cpp 
+SOURCE		COutgoingData.cpp
+SOURCE		CTransportUdp.cpp CSender.cpp CReceiver.cpp 
+SOURCE		CErrorHandler.cpp
+SOURCE		CSenderUdp.cpp CSenderTcp.cpp
+SOURCE		CReceiverTcp.cpp CListener.cpp
+SOURCE		CTransportTcp.cpp CTcpTransState.cpp
+SOURCE		CTcpTransConnected.cpp
+SOURCE		CTcpTransConnecting.cpp
+SOURCE    CTransportTls.cpp
+SOURCE    TTlsTransStateBase.cpp
+SOURCE    TTlsTransTcpConnecting.cpp
+SOURCE    TTlsTransTlsConnecting.cpp
+SOURCE    TTlsTransTlsConnected.cpp
+SOURCE    CSocketContainer.cpp
+SOURCE    CSecureSocketContainer.cpp
+SOURCE		CSIPMsgAssembler.cpp CIcmpReceiver.cpp
+SOURCE		CIcmpV4Receiver.cpp CIcmpV6Receiver.cpp
+SOURCE		multipleaddrressender.cpp
+SOURCE		CTcpListeningPoint.cpp
+SOURCE		CServerTransport.cpp
+SOURCE		TResponseRoute.cpp
+SOURCE		CResHandler.cpp
+SOURCE		CTcpResSender.cpp
+SOURCE		CSipConnectionMgr.cpp
+SOURCE		CLocalAddrResolver.cpp
+SOURCE		sipsigcompnotintegrated.cpp
+SOURCE		CConnectionContainer.cpp
+SOURCE		CStateModel.cpp
+SOURCE		TStateActiveResolved.cpp
+SOURCE		TStateActiveResolving.cpp
+SOURCE		TStateBase.cpp
+SOURCE		TStateInactiveConnecting.cpp
+SOURCE		TStateInactiveMonitoring.cpp
+SOURCE		TStateInit.cpp
+SOURCE		TStateSuspended.cpp
+SOURCE		TStateUnavailable.cpp
+SOURCE      TTCPMsgState.cpp
+SOURCE		TTCPMsgInit.cpp
+SOURCE      TTCPMsgHeaderStart.cpp
+SOURCE      TTCPMsgHeaderEnd.cpp
+SOURCE      TTCPMsgContentStart.cpp
+SOURCE      TTCPMsgContentEnd.cpp
+SOURCE      TTCPCompMsgStart.cpp
+SOURCE      TTCPCompMsgEnd.cpp
+SOURCE      TTCPMsgComplete.cpp
+SOURCE      CConnectionMonitor.cpp
+SOURCE      COwnerSettingsList.cpp COwnerSettings.cpp
+SOURCE      CSocketOpt.cpp
+SOURCE      NetworkInfo.cpp
+SOURCE      CNATTraversalNotIntegrated.cpp
+SOURCE      COutgoingRequestQueue.cpp
+SOURCE      TOutgoingRequestQueueItem.cpp
+SOURCE 		cellulardatausagemonitor.cpp
+
+
+// --------------------------------------------------------------
+SOURCEPATH        ../Dialogs/src
+SOURCE            SipDialogMgr.cpp
+SOURCE            SipDialogItem.cpp
+SOURCE            DialogStateBase.cpp
+SOURCE            Establishing.cpp
+SOURCE            Early.cpp
+SOURCE            Confirmed.cpp
+SOURCE            Terminated.cpp
+SOURCE            TransactionItem.cpp
+SOURCE            TransactionItemBase.cpp
+SOURCE            TransactionItemStore.cpp
+SOURCE            RefreshItem.cpp
+SOURCE            DialogsStore.cpp
+SOURCE            CSigCompMgr.cpp
+
+// --------------------------------------------------------------
+SOURCEPATH	../ServerResolver/src
+SOURCE		CSIPServerResolver.cpp
+SOURCE		CRequestQueue.cpp
+SOURCE		CSIPHostResolver.cpp
+SOURCE		CServerQuery.cpp
+SOURCE		CSIPResolvingResult.cpp
+SOURCE		CSIPNaptrOrigDomain.cpp
+SOURCE		CSIPA_AAAAOrigDomain.cpp
+SOURCE		CSIPSRVOrigDomain.cpp
+SOURCE		CSIPSRVOrigDomainUDP.cpp
+SOURCE		CSIPSRVOrigDomainTCP.cpp
+SOURCE		CSIPA_AAAASRVDomainTCP.cpp
+SOURCE		CSIPA_AAAASRVDomainUDP.cpp
+SOURCE		CSIPSRVNaptrDomain.cpp
+SOURCE		CSIPA_AAAASRVDomain.cpp
+SOURCE		CSIPQueryData.cpp
+SOURCE		CSIPQueryConditionBase.cpp
+SOURCE		CSIPQueryBase.cpp
+SOURCE		CSIPQueryA_AAAA.cpp
+SOURCE		CSIPQuerySrv.cpp
+SOURCE		CSIPQueryNaptr.cpp
+SOURCE		CSIPA_AAAASRVDomainOrig.cpp
+
+// --------------------------------------------------------------
+SOURCEPATH  ../TransactionUser/src
+SOURCE 	    CTransactionUser.cpp
+SOURCE      TransactionStore.cpp
+SOURCE		TransactionInfo.cpp
+SOURCE      TransactionHeaders.cpp
+SOURCE      UserAgent.cpp
+SOURCE		UserAgentState.cpp
+SOURCE	 	UserAgentClient.cpp
+SOURCE		UserAgentServer.cpp
+SOURCE      InviteUAC.cpp
+SOURCE		InviteUACStates.cpp
+SOURCE      InviteUAS.cpp
+SOURCE		InviteUASStates.cpp
+SOURCE		NormalUAC.cpp
+SOURCE		NormalUACStates.cpp
+SOURCE		NormalUAS.cpp
+SOURCE		NormalUASStates.cpp
+SOURCE		CancelUAC.cpp
+SOURCE		CancelUACStates.cpp
+SOURCE		CancelUAS.cpp
+SOURCE		CancelUASStates.cpp
+SOURCE		TimerValues.cpp
+SOURCE		TimerValueRetriever.cpp
+SOURCE		TimerBase.cpp
+SOURCE		UserAgentTimer.cpp
+SOURCE		UserAgentCreateParams.cpp
+SOURCE		RouteSet.cpp
+SOURCE		ResolvingResults.cpp
+SOURCE		SIPMessageUtility.cpp
+SOURCE		SIPRequestUtility.cpp
+SOURCE		StopUserAgent.cpp
+SOURCE      RestoreUaState.cpp
+
+// --------------------------------------------------------------
+SOURCEPATH      ../Transaction/src
+SOURCE		TransactionMgr.cpp
+SOURCE		Transaction.cpp
+SOURCE		ClientTransaction.cpp
+SOURCE		NormalClientTa.cpp
+SOURCE		InviteClientTa.cpp
+SOURCE		ServerTransaction.cpp
+SOURCE		NormalServerTa.cpp
+SOURCE		InviteServerTa.cpp
+SOURCE		TransactionState.cpp
+SOURCE		NormalClientTaStates.cpp 
+SOURCE		InviteClientTaStates.cpp
+SOURCE		NormalServerTaStates.cpp
+SOURCE		InviteServerTaStates.cpp 
+
+SOURCE		Transmitter.cpp
+SOURCE		ResponseQueue.cpp
+SOURCE		ResponseQueueItem.cpp
+SOURCE		TransactionTimer.cpp
+SOURCE		RestoreTransactionState.cpp
+SOURCE		ClearProxy.cpp
+
+// ---------------------------------------------------------------
+SOURCEPATH        ../NetworkMonitor/src
+SOURCE            CNetworkManager.cpp
+
+// ---------------------------------------------------------------
+SOURCEPATH        ../Logging/src
+SOURCE            TSIPLogLineParser.cpp
+SOURCE            TSIPMessageLogger.cpp
+
+// ---------------------------------------------------------------
+SOURCEPATH        ../SIPSec/Framework/src
+SOURCE			TSipSecUtils.cpp
+SOURCE			sipsec.cpp
+SOURCE			TSIPSecMechanismIter.cpp
+SOURCE			sipsecagreement.cpp
+SOURCE			sipsecagreementcontainer.cpp
+SOURCE			sipsecresponsehandler.cpp
+SOURCE			tsipseccontext.cpp
+SOURCE			TSIPSecResponsehandlerIter.cpp
+SOURCE			CSIPSecParam.cpp
+SOURCE			TSIPSecParamIter.cpp
+SOURCE			CSIPSecEngineContext.cpp
+SOURCE			ClientMechanisms.cpp
+SOURCE			tcleanresponsehandler.cpp
+
+USERINCLUDE       ../Server/inc
+USERINCLUDE       ../Server/src
+USERINCLUDE       ../Common/inc
+USERINCLUDE       ../Client/inc
+USERINCLUDE       ../sipapi/api
+USERINCLUDE       ../sipapi/inc
+USERINCLUDE       ../LightWeightTimer/inc
+USERINCLUDE       ../Codec/api
+USERINCLUDE       ../Codec/inc
+USERINCLUDE       ../TransactionUser/inc
+USERINCLUDE       ../Dialogs/inc
+USERINCLUDE       ../Registration/inc
+USERINCLUDE       ../Refreshes/inc
+USERINCLUDE       ../ConnectionMgr/inc
+USERINCLUDE       ../ConnectionMgr/src
+USERINCLUDE       ../Logging/inc
+USERINCLUDE       ../ServerResolver/inc
+USERINCLUDE       ../Transaction/inc
+USERINCLUDE       ../SigCompController/Common/inc
+USERINCLUDE       ../TransactionUser/src
+USERINCLUDE       ../NetworkMonitor/inc
+USERINCLUDE       ../SIPSec/Framework/inc
+USERINCLUDE       ../RequestHandler/inc
+
+MW_LAYER_SYSTEMINCLUDE
+
+LIBRARY           ecom.lib
+LIBRARY           euser.lib
+LIBRARY           estor.lib
+LIBRARY           bafl.lib
+LIBRARY           insock.lib					
+LIBRARY           charconv.lib
+LIBRARY           esock.lib
+LIBRARY           commdb.lib
+LIBRARY           commsdat.lib
+LIBRARY           inetprotutil.lib
+LIBRARY           centralrepository.lib
+LIBRARY           flogger.lib
+LIBRARY           sipcodec.lib
+LIBRARY           securesocket.lib
+LIBRARY           efsrv.lib
+LIBRARY		  extendedconnpref.lib
+LIBRARY 	  netmeta.lib
+LIBRARY 	  featmgr.lib
+LIBRARY		  x509.lib
+LIBRARY		  x500.lib
+LIBRARY		  asn1.lib	
+
+
+
+
+VENDORID 0x70000001
+
+CAPABILITY ProtServ NetworkControl NetworkServices Location \
+ReadDeviceData WriteDeviceData ReadUserData
+
+//MACRO PLAT_SEC_TEST
+
+SMPSAFE

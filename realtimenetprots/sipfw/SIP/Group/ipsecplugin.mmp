@@ -1,0 +1,90 @@
+// Copyright (c) 2006-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name        : ipsecplugin.mmp
+// Part of     : SIP / SIPSec
+// Version     : SIP/5.0
+//
+
+
+
+TARGET        sipipsec.dll
+TARGETTYPE    PLUGIN
+UID           0x10009d8d 0x1020334E
+
+
+SOURCEPATH    ../SIPSec/IpSecPlugin/src
+SOURCE		  dllentry.cpp
+SOURCE		  CSipSecAgreeContext.cpp
+SOURCE		  CSipSecAgreeRecord.cpp
+SOURCE		  CSipSecIpsecMechanism.cpp
+SOURCE		  CSipSecSaDbMsgTransport.cpp
+SOURCE		  CSipSecSaDbMsgSender.cpp
+SOURCE		  CSipSecSaDbMsgReceiver.cpp
+SOURCE		  CIpSecSadbHandler.cpp
+SOURCE        CIpSecPolicyHandler.cpp
+SOURCE		  CState.cpp
+SOURCE        CStateTentative.cpp
+SOURCE        CStatePendingKey.cpp
+SOURCE        CStatePendingSa.cpp
+SOURCE        CStatePendingPolicy.cpp
+SOURCE        CStateTemporal.cpp
+SOURCE        CStateInUse.cpp
+SOURCE        CStateOld.cpp
+SOURCE        CStateDying.cpp
+SOURCE        CStateDeleting.cpp
+SOURCE        CStateClearing.cpp
+
+SOURCEPATH    ../SIPSec/Framework/src
+SOURCE	      TSipSecUtils.cpp
+
+
+USERINCLUDE     ../SIPSec/IpSecPlugin/inc
+USERINCLUDE	    ../SIPSec/Framework/inc
+USERINCLUDE   	../Common/inc
+USERINCLUDE     ../Codec/inc
+USERINCLUDE     ../Codec/api
+USERINCLUDE     ../LightWeightTimer/inc
+USERINCLUDE     ../ConnectionMgr/inc
+USERINCLUDE     ../Logging/inc
+
+
+SOURCEPATH		../SIPSec/IpSecPlugin/resource
+START RESOURCE 	1020334E.rss
+TARGET 			sipipsec.rsc                                          
+END
+
+MW_LAYER_SYSTEMINCLUDE_SYMBIAN
+
+
+LIBRARY       euser.lib
+LIBRARY	      bafl.lib 
+LIBRARY       ecom.lib
+LIBRARY	      sipcodec.lib
+
+LIBRARY       esock.lib 
+LIBRARY       insock.lib
+LIBRARY       commdb.lib
+LIBRARY       flogger.lib
+LIBRARY       charconv.lib
+
+LIBRARY		    lib_pfkey.lib
+LIBRARY       ipsecpolapi.lib
+LIBRARY       efsrv.lib
+
+VENDORID 0x70000001
+
+CAPABILITY ProtServ NetworkControl NetworkServices Location \
+ReadDeviceData WriteDeviceData ReadUserData
+
+SMPSAFE

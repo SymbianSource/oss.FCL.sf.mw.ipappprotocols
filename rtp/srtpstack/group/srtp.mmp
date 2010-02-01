@@ -1,0 +1,80 @@
+/*
+* Copyright (c) 2005 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description:    SRTP (Secure Real-time Transport Protocol) library
+*
+*/
+
+
+
+#include <platform_paths.hrh>
+// write to logfile
+//MACRO SRTP_LOG
+
+
+TARGET          srtp.dll
+TARGETTYPE      dll
+UID             0x1000008d 0x1020E4C9
+VENDORID        VID_DEFAULT
+
+SOURCEPATH      ../src
+
+SOURCE          srtpstream.cpp 
+SOURCE          srtpstreamin.cpp 
+SOURCE          srtpstreamout.cpp 
+SOURCE          srtpsession.cpp 
+SOURCE          srtputils.cpp 
+SOURCE          srtpcryptohandler.cpp 
+SOURCE          srtpcryptohandlersrtp.cpp 
+SOURCE          srtpcryptohandlersrtcp.cpp 
+SOURCE          srtpauthentication_hmac_sha1.cpp
+SOURCE          srtpauthentication_null.cpp
+SOURCE          srtpcipher_aescm128.cpp
+SOURCE          srtpcipher_null.cpp
+SOURCE          srtpkeyderivation_aescm128.cpp
+SOURCE          srtpaesctrcrypto.cpp
+SOURCE          tsrtpstreamstatebase.cpp
+SOURCE          tsrtpstreaminstatebase.cpp
+SOURCE          tsrtpstreaminstateuninit.cpp
+SOURCE          tsrtpstreaminstatelatebind.cpp
+SOURCE          tsrtpstreaminstatenormal.cpp
+SOURCE          tsrtpstreamoutstatebase.cpp
+SOURCE          tsrtpstreamoutstateuninit.cpp
+SOURCE          tsrtpstreamoutstatenormal.cpp
+SOURCE          srtppacket.cpp
+SOURCE          srtppacketrtp.cpp
+SOURCE          srtppacketsrtp.cpp
+SOURCE          srtppacketrtcp.cpp
+SOURCE          srtppacketsrtcp.cpp
+SOURCE			srtpcryptocontext.cpp
+SOURCE          srtpmasterkey.cpp
+SOURCE          srtpmastersalt.cpp
+SOURCE			srtpauthentication_rcc.cpp
+
+USERINCLUDE     ../inc
+
+MW_LAYER_SYSTEMINCLUDE
+
+LIBRARY         euser.lib
+LIBRARY			insock.lib
+LIBRARY			esock.lib
+LIBRARY			commdb.lib
+LIBRARY			efsrv.lib
+LIBRARY			hash.lib
+LIBRARY			cryptography.lib
+
+CAPABILITY      CAP_GENERAL_DLL
+
+//EXPORTUNFROZEN
+
+// End of File

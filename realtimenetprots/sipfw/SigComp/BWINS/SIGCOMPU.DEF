@@ -1,0 +1,23 @@
+EXPORTS
+	??0CSigCompCompressionContext@@IAE@XZ @ 1 NONAME ; CSigCompCompressionContext::CSigCompCompressionContext(void)
+	??1CSigComp@@UAE@XZ @ 2 NONAME ; CSigComp::~CSigComp(void)
+	??1CSigCompCompartment@@UAE@XZ @ 3 NONAME ; CSigCompCompartment::~CSigCompCompartment(void)
+	??1CSigCompCompartmentStatesHolder@@UAE@XZ @ 4 NONAME ; CSigCompCompartmentStatesHolder::~CSigCompCompartmentStatesHolder(void)
+	??1CSigCompCompressionContext@@UAE@XZ @ 5 NONAME ; CSigCompCompressionContext::~CSigCompCompressionContext(void)
+	?AllowL@CSigComp@@QAEXAAVCSigCompCompartment@@@Z @ 6 NONAME ; void CSigComp::AllowL(class CSigCompCompartment &)
+	?CompressL@CSigCompCompartment@@QAEPAVCBufBase@@ABVTDesC8@@H@Z @ 7 NONAME ; class CBufBase * CSigCompCompartment::CompressL(class TDesC8 const &, int)
+	?Context@CSigCompCompressionContext@@QBEPBVCBufBase@@XZ @ 8 NONAME ; class CBufBase const * CSigCompCompressionContext::Context(void) const
+	?DecompressL@CSigComp@@QAEPAVCBufBase@@ABVTDesC8@@AAIH@Z @ 9 NONAME ; class CBufBase * CSigComp::DecompressL(class TDesC8 const &, unsigned int &, int)
+	?Deny@CSigComp@@QAEXXZ @ 10 NONAME ; void CSigComp::Deny(void)
+	?IsCompleteL@CSigComp@@QBEHABVTDesC8@@@Z @ 11 NONAME ; int CSigComp::IsCompleteL(class TDesC8 const &) const
+	?IsSigCompMsg@CSigComp@@QBEHABVTDesC8@@@Z @ 12 NONAME ; int CSigComp::IsSigCompMsg(class TDesC8 const &) const
+	?NewL@CSigComp@@SAPAV1@W4TMemorySize@1@W4TCyclesPerBit@1@0ABVTDesC8@@@Z @ 13 NONAME ; class CSigComp * CSigComp::NewL(enum CSigComp::TMemorySize, enum CSigComp::TCyclesPerBit, enum CSigComp::TMemorySize, class TDesC8 const &)
+	?NewL@CSigComp@@SAPAV1@W4TMemorySize@1@W4TCyclesPerBit@1@0ABVTDesC8@@ABVTSigCompStateItem@@H@Z @ 14 NONAME ; class CSigComp * CSigComp::NewL(enum CSigComp::TMemorySize, enum CSigComp::TCyclesPerBit, enum CSigComp::TMemorySize, class TDesC8 const &, class TSigCompStateItem const &, int)
+	?NewL@CSigCompCompartment@@SAPAV1@ABVCSigComp@@H@Z @ 15 NONAME ; class CSigCompCompartment * CSigCompCompartment::NewL(class CSigComp const &, int)
+	?NewL@CSigCompCompartment@@SAPAV1@ABVCSigComp@@W4TMemorySize@2@H@Z @ 16 NONAME ; class CSigCompCompartment * CSigCompCompartment::NewL(class CSigComp const &, enum CSigComp::TMemorySize, int)
+	?NewLC@CSigComp@@SAPAV1@W4TMemorySize@1@W4TCyclesPerBit@1@0ABVTDesC8@@@Z @ 17 NONAME ; class CSigComp * CSigComp::NewLC(enum CSigComp::TMemorySize, enum CSigComp::TCyclesPerBit, enum CSigComp::TMemorySize, class TDesC8 const &)
+	?NewLC@CSigComp@@SAPAV1@W4TMemorySize@1@W4TCyclesPerBit@1@0ABVTDesC8@@ABVTSigCompStateItem@@H@Z @ 18 NONAME ; class CSigComp * CSigComp::NewLC(enum CSigComp::TMemorySize, enum CSigComp::TCyclesPerBit, enum CSigComp::TMemorySize, class TDesC8 const &, class TSigCompStateItem const &, int)
+	?NewLC@CSigCompCompartment@@SAPAV1@ABVCSigComp@@H@Z @ 19 NONAME ; class CSigCompCompartment * CSigCompCompartment::NewLC(class CSigComp const &, int)
+	?NewLC@CSigCompCompartment@@SAPAV1@ABVCSigComp@@W4TMemorySize@2@H@Z @ 20 NONAME ; class CSigCompCompartment * CSigCompCompartment::NewLC(class CSigComp const &, enum CSigComp::TMemorySize, int)
+	?SetContext@CSigCompCompressionContext@@QAEXPAVCBufBase@@@Z @ 21 NONAME ; void CSigCompCompressionContext::SetContext(class CBufBase *)
+

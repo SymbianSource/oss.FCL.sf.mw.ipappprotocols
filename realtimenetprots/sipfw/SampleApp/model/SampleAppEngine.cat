@@ -1,0 +1,3302 @@
+
+(object Petal
+    version    	45
+    _written   	"Rose 7.6.0109.2314"
+    charSet    	0)
+
+(object Class_Category "Sample Application Engine"
+    is_unit    	TRUE
+    is_loaded  	TRUE
+    quid       	"4073D0AD02EF"
+    visible_categories 	(list visibility_relationship_list
+	(object Visibility_Relationship
+	    quid       	"4073D0E0008F"
+	    supplier   	"Logical View::Sample Application Socket Engine"
+	    quidu      	"4073D0D3030F")
+	(object Visibility_Relationship
+	    quid       	"40875B1201F2"
+	    supplier   	"Logical View::Sample Application SIP Engine"
+	    quidu      	"407D10BC00F9"))
+    exportControl 	"Public"
+    logical_models 	(list unit_reference_list
+	(object Class "MSIPLineEngine"
+	    quid       	"4073D54200FB"
+	    stereotype 	"interface"
+	    used_nodes 	(list uses_relationship_list
+		(object Uses_Relationship
+		    quid       	"407FC9FE01F2"
+		    supplier   	"Logical View::Sample Application Engine::CGameData"
+		    quidu      	"407E644000C2")
+		(object Uses_Relationship
+		    quid       	"407FCA400176"
+		    supplier   	"Logical View::Sample Application UI::MStateViewNotifier"
+		    quidu      	"407D0E6A014F"))
+	    operations 	(list Operations
+		(object Operation "EnableProfileL"
+		    quid       	"408380A60208"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "DisableProfileL"
+		    quid       	"408380B50033"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "InviteL"
+		    quid       	"408380BD0275"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "SendInstantMsgL"
+		    quid       	"4088B12500FD"
+		    parameters 	(list Parameters
+			(object Parameter "iMessage"
+			    quid       	"4088B135016B"
+			    type       	"const TDesC&")
+			(object Parameter "iAddress"
+			    quid       	"4088F6360090"
+			    type       	"const SIPAddress"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "AcceptInvitationL"
+		    quid       	"4088B08E010B"
+		    parameters 	(list Parameters
+			(object Parameter "iAccepted"
+			    quid       	"4088B0A701D7"
+			    type       	"TBool"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "ChangeState"
+		    quid       	"408F554E02B8"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "EndGameL"
+		    quid       	"4088B11E013C"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    language   	"VC++")
+	(object Class "CSIPExEngine"
+	    quid       	"4073D6830341"
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"4073D69101AB"
+		    supplier   	"Logical View::Sample Application Engine::MSIPLineEngine"
+		    quidu      	"4073D54200FB")
+		(object Realize_Relationship
+		    quid       	"4088B2FF0086"
+		    supplier   	"Logical View::Sample Application Engine::MSIPExSocketEngineObserver"
+		    quidu      	"4088B2EE00E4")
+		(object Realize_Relationship
+		    quid       	"4088B6FC020B"
+		    supplier   	"Logical View::Sample Application Engine::MSIPExSIPEngineObserver"
+		    quidu      	"4088B2E50180")
+		(object Realize_Relationship
+		    quid       	"4090EC100024"
+		    supplier   	"Logical View::Sample Application Engine::MSIPExGameEngine"
+		    quidu      	"4090EB1D00EC"))
+	    operations 	(list Operations
+		(object Operation "UpdateState"
+		    quid       	"4088B566032E"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Private"
+		    uid        	0)
+		(object Operation "NewL"
+		    quid       	"4088EE3802C0"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "iStateIdle"
+		    quid       	"408F49EE03A3"
+		    type       	"TSIPExState"
+		    quidu      	"408F4AF802A9")
+		(object ClassAttribute "iStateRegistering"
+		    quid       	"408F4A5701ED"
+		    type       	"TSIPExState"
+		    quidu      	"408F4AF802A9")
+		(object ClassAttribute "iStateRegistered"
+		    quid       	"408F4A6602C8"
+		    type       	"TSIPExState"
+		    quidu      	"408F4AF802A9")
+		(object ClassAttribute "iStateInviting"
+		    quid       	"408F4A6F0047"
+		    type       	"TSIPExState"
+		    quidu      	"408F4AF802A9")
+		(object ClassAttribute "iStateActive"
+		    quid       	"408F4A790067"
+		    type       	"TSIPExState"
+		    quidu      	"408F4AF802A9")
+		(object ClassAttribute "iStateConnecting"
+		    quid       	"408F4A8F0307"
+		    type       	"TSIPExState"
+		    quidu      	"408F4AF802A9")
+		(object ClassAttribute "iStateLocal"
+		    quid       	"408F4AB70364"
+		    type       	"TSIPExState"
+		    quidu      	"408F4AF802A9")
+		(object ClassAttribute "iStateRemote"
+		    quid       	"408F4ABF0299"
+		    type       	"TSIPExState"
+		    quidu      	"408F4AF802A9")
+		(object ClassAttribute "iStateAcceptingUser"
+		    quid       	"408F4AC50151"
+		    type       	"TSIPExState"
+		    quidu      	"408F4AF802A9")
+		(object ClassAttribute "iStateAcceptingSIP"
+		    quid       	"408F4AD802E7"
+		    type       	"TSIPExState"
+		    quidu      	"408F4AF802A9"))
+	    language   	"VC++")
+	(object Class "CGameData"
+	    quid       	"407E644000C2"
+	    operations 	(list Operations
+		(object Operation "CGameData"
+		    quid       	"408FBA4A0372"
+		    parameters 	(list Parameters
+			(object Parameter "aState"
+			    quid       	"408FBA6E01DB"
+			    type       	"const TSIPExState&"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    class_attributes 	(list class_attribute_list
+		(object ClassAttribute "iPeer"
+		    quid       	"40837B9C01AA"
+		    exportControl 	"Public")
+		(object ClassAttribute "iMoves"
+		    quid       	"40837BA5035F"
+		    exportControl 	"Public")
+		(object ClassAttribute "iCursor"
+		    quid       	"40837BD1014C"
+		    exportControl 	"Public")
+		(object ClassAttribute "iBoard"
+		    quid       	"40837BD5036F"
+		    exportControl 	"Public"))
+	    language   	"VC++")
+	(object Class "SIPLineEngineFactory"
+	    quid       	"4088A13B02DD"
+	    used_nodes 	(list uses_relationship_list
+		(object Uses_Relationship
+		    quid       	"4088A20B0233"
+		    label      	"creates"
+		    supplier   	"Logical View::Sample Application Engine::CSIPExEngine"
+		    quidu      	"4073D6830341"))
+	    operations 	(list Operations
+		(object Operation "CreateEngineL"
+		    quid       	"4088EDFF03B9"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    language   	"VC++")
+	(object Class "MSIPExSIPEngineObserver"
+	    quid       	"4088B2E50180"
+	    stereotype 	"interface"
+	    operations 	(list Operations
+		(object Operation "IMReceived"
+		    quid       	"4088B6A50238"
+		    parameters 	(list Parameters
+			(object Parameter "iMessage"
+			    quid       	"4088B6B400B2"
+			    type       	"CSIPMessage"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "ProfileError"
+		    quid       	"408F5046021C"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "ProfileEnabled"
+		    quid       	"408F504B019F"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "ConnectionLost"
+		    quid       	"408F50690113"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "SessionEnded"
+		    quid       	"408F506E03B2"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "CancelFailed"
+		    quid       	"408F507402B8"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "InviteCancelled"
+		    quid       	"408F507A024B"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "InviteAcceptedByUs"
+		    quid       	"408F50840307"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "InviteAcceptedByRemote"
+		    quid       	"408F508900B5"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "InviteReceived"
+		    quid       	"408F508D0335"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    language   	"VC++")
+	(object Class "MSIPExSocketEngineObserver"
+	    quid       	"4088B2EE00E4"
+	    stereotype 	"interface"
+	    operations 	(list Operations
+		(object Operation "SocketStateChanged"
+		    quid       	"4088B33A021D"
+		    parameters 	(list Parameters
+			(object Parameter "iState"
+			    quid       	"4088B3490087"
+			    type       	"CSIPLineSocketEngine::TSocketState"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "SocketDataL"
+		    quid       	"4088B37D02BB"
+		    parameters 	(list Parameters
+			(object Parameter "iMessage"
+			    quid       	"4088B389001B"
+			    type       	"TDes8&"
+			    quidu      	"3A13D9DF03D1"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    language   	"VC++")
+	(object Class "TSIPExState"
+	    quid       	"408F4AF802A9"
+	    stereotype 	"abstract"
+	    realized_interfaces 	(list realize_rel_list
+		(object Realize_Relationship
+		    quid       	"408F53EA01BE"
+		    supplier   	"Logical View::Sample Application Engine::MSIPExSIPEngineObserver"
+		    quidu      	"4088B2E50180"))
+	    operations 	(list Operations
+		(object Operation "DrawCursor"
+		    quid       	"4090FAF10120"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "BoardValue"
+		    quid       	"4090FAFC02F5"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Cursor"
+		    quid       	"4090FAFE0258"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "ChangeState"
+		    quid       	"408F530D01AF"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "CursorPressed"
+		    quid       	"4090FAFA02E5"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "CursorLeft"
+		    quid       	"4090FAF80258"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "CursorRight"
+		    quid       	"4090FAF6018D"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "UpdateState"
+		    quid       	"4090FA92018C"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "AcceptInvitationL"
+		    quid       	"4090FA8F0322"
+		    parameters 	(list Parameters
+			(object Parameter "iAccepted"
+			    quid       	"4090FA8F0323"
+			    type       	"TBool"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "DisableProfileL"
+		    quid       	"408F52F00047"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "EnableProfileL"
+		    quid       	"408F53050067"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "EndGameL"
+		    quid       	"4090FAA902C5"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "DrawBoard"
+		    quid       	"4090FAEF0100"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "InviteL"
+		    quid       	"4090ED530299"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "SendInstantMsgL"
+		    quid       	"4090ED5900B5"
+		    parameters 	(list Parameters
+			(object Parameter "iMessage"
+			    quid       	"4090ED5900B6"
+			    type       	"const TDesC&")
+			(object Parameter "iAddress"
+			    quid       	"4090ED5900B7"
+			    type       	"const SIPAddress"))
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    language   	"VC++")
+	(object Class "TSIPExStateIdle"
+	    quid       	"408F4C410151"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"408F4C7903A3"
+		    supplier   	"Logical View::Sample Application Engine::TSIPExState"
+		    quidu      	"408F4AF802A9"))
+	    language   	"VC++")
+	(object Class "TSIPExStateRegistering"
+	    quid       	"408F4C7C0374"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"408F4DFC0345"
+		    supplier   	"Logical View::Sample Application Engine::TSIPExState"
+		    quidu      	"408F4AF802A9"))
+	    language   	"VC++")
+	(object Class "TSIPExStateRegistered"
+	    quid       	"408F4C8502D8"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"408F4DF90299"
+		    supplier   	"Logical View::Sample Application Engine::TSIPExState"
+		    quidu      	"408F4AF802A9"))
+	    language   	"VC++")
+	(object Class "TSIPExStateInviting"
+	    quid       	"408F4CC80180"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"408F4D9E0180"
+		    supplier   	"Logical View::Sample Application Engine::TSIPExState"
+		    quidu      	"408F4AF802A9"))
+	    language   	"VC++")
+	(object Class "TSIPExStateConnecting"
+	    quid       	"408F4CDF019F"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"408F4E2503A3"
+		    supplier   	"Logical View::Sample Application Engine::TSIPExState"
+		    quidu      	"408F4AF802A9"))
+	    language   	"VC++")
+	(object Class "TSIPExStateLocal"
+	    quid       	"408F4D0502D8"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"408F4E2E0393"
+		    supplier   	"Logical View::Sample Application Engine::TSIPExState"
+		    quidu      	"408F4AF802A9"))
+	    language   	"VC++")
+	(object Class "TSIPExStateRemote"
+	    quid       	"408F4D0E0374"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"408F4E32023B"
+		    supplier   	"Logical View::Sample Application Engine::TSIPExState"
+		    quidu      	"408F4AF802A9"))
+	    language   	"VC++")
+	(object Class "TSIPExStateAcceptingSIP"
+	    quid       	"408F4D21025B"
+	    superclasses 	(list inheritance_relationship_list
+		(object Inheritance_Relationship
+		    quid       	"408F4E2C0047"
+		    supplier   	"Logical View::Sample Application Engine::TSIPExState"
+		    quidu      	"408F4AF802A9"))
+	    language   	"VC++")
+	(object Class "MSIPExGameEngine"
+	    quid       	"4090EB1D00EC"
+	    stereotype 	"interface"
+	    operations 	(list Operations
+		(object Operation "DrawBoard"
+		    quid       	"4090EB3E0215"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "DrawCursor"
+		    quid       	"4090EBA0011C"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "CursorRight"
+		    quid       	"4090EBA601C8"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "CursorLeft"
+		    quid       	"4090EBAC034F"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "CursorPressed"
+		    quid       	"4090EBB3012C"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "BoardValue"
+		    quid       	"4090EBBB015B"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0)
+		(object Operation "Cursor"
+		    quid       	"4090EBE703DC"
+		    concurrency 	"Sequential"
+		    opExportControl 	"Public"
+		    uid        	0))
+	    language   	"VC++")
+	(object Association "iGameData"
+	    quid       	"407E644F021A"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$0"
+		    quid       	"407E645701AD"
+		    supplier   	"Logical View::Sample Application Engine::CGameData"
+		    quidu      	"407E644000C2"
+		    client_cardinality 	(value cardinality "1")
+		    Containment 	"By Value")
+		(object Role "$UNNAMED$1"
+		    quid       	"407E645701AF"
+		    supplier   	"Logical View::Sample Application Engine::CSIPExEngine"
+		    quidu      	"4073D6830341"
+		    client_cardinality 	(value cardinality "1")
+		    is_aggregate 	TRUE)))
+	(object Association "$UNNAMED$2"
+	    quid       	"4088AE21026B"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$3"
+		    quid       	"4088AE220132"
+		    supplier   	"Logical View::Sample Application SIP Engine::SIPExSIPEngineFactory"
+		    quidu      	"4088ADFF024B"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$4"
+		    quid       	"4088AE220134"
+		    supplier   	"Logical View::Sample Application Engine::CSIPExEngine"
+		    quidu      	"4073D6830341")))
+	(object Association "$UNNAMED$5"
+	    quid       	"4088AE240077"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$6"
+		    quid       	"4088AE24025B"
+		    supplier   	"Logical View::Sample Application Socket Engine::SIPExSocketEngineFactory"
+		    quidu      	"4088ADAD0111"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$7"
+		    quid       	"4088AE24026B"
+		    supplier   	"Logical View::Sample Application Engine::CSIPExEngine"
+		    quidu      	"4073D6830341")))
+	(object Association "iSocketEngine"
+	    quid       	"4088AE420171"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$8"
+		    quid       	"4088AE4600E4"
+		    supplier   	"Logical View::Sample Application Socket Engine::MSIPExSocketEngine"
+		    quidu      	"4073D6A902E4"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$9"
+		    quid       	"4088AE4600E6"
+		    supplier   	"Logical View::Sample Application Engine::CSIPExEngine"
+		    quidu      	"4073D6830341")))
+	(object Association "iSIPEngine"
+	    quid       	"4088AE4801A0"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$10"
+		    quid       	"4088AE4C00F4"
+		    supplier   	"Logical View::Sample Application SIP Engine::MSIPExSIPEngine"
+		    quidu      	"407D10DF00EA"
+		    Containment 	"By Value"
+		    is_navigable 	TRUE)
+		(object Role "$UNNAMED$11"
+		    quid       	"4088AE4C00F6"
+		    supplier   	"Logical View::Sample Application Engine::CSIPExEngine"
+		    quidu      	"4073D6830341"
+		    is_aggregate 	TRUE)))
+	(object Association "$UNNAMED$12"
+	    quid       	"408F4B23019F"
+	    roles      	(list role_list
+		(object Role "$UNNAMED$13"
+		    quid       	"408F4B230384"
+		    supplier   	"Logical View::Sample Application Engine::TSIPExState"
+		    quidu      	"408F4AF802A9")
+		(object Role "$UNNAMED$14"
+		    quid       	"408F4B230393"
+		    supplier   	"Logical View::Sample Application Engine::CSIPExEngine"
+		    quidu      	"4073D6830341"
+		    is_aggregate 	TRUE))))
+    statemachine 	(object State_Machine "State/Activity Model"
+	quid       	"408791B50247"
+	states     	(list States
+	    (object State "Application start"
+		quid       	"408791C201AB"
+		transitions 	(list transition_list
+		    (object State_Transition
+			quid       	"4087948501A5"
+			label      	""
+			supplier   	"ERunning"
+			quidu      	"4087933B0327"
+			Event      	(object Event "Application started"
+			    quid       	"4087948501A6")
+			sendEvent  	(object sendEvent
+			    quid       	"4087948501A8")))
+		type       	"StartState")
+	    (object State "ERunning"
+		quid       	"4087933B0327"
+		transitions 	(list transition_list
+		    (object State_Transition
+			quid       	"4087A08500B3"
+			label      	""
+			supplier   	"EActive"
+			quidu      	"4087934401A1"
+			Event      	(object Event "User presses the Enable Profile button"
+			    quid       	"4087A08500B4")
+			sendEvent  	(object sendEvent
+			    quid       	"4087A08500B6")))
+		statemachine 	(object State_Machine "State/Activity Model2"
+		    quid       	"40879DE4006C"
+		    states     	(list States
+			(object State "$UNNAMED$15"
+			    quid       	"40879DE4006D"
+			    type       	"EndState"))
+		    partitions 	(list Partitions)
+		    objects    	(list Objects)
+		    statediagrams 	(list StateDiagrams))
+		type       	"Normal")
+	    (object State "EActive"
+		quid       	"4087934401A1"
+		transitions 	(list transition_list
+		    (object State_Transition
+			quid       	"408794F402A0"
+			label      	""
+			supplier   	"EInviting"
+			quidu      	"4087934E02CA"
+			Event      	(object Event "Invite remote user for game"
+			    quid       	"408794F402A1")
+			sendEvent  	(object sendEvent
+			    quid       	"408794F402A3"))
+		    (object State_Transition
+			quid       	"4087B561029D"
+			label      	""
+			supplier   	"ERunning"
+			quidu      	"4087933B0327"
+			Event      	(object Event "User pressed Disable profile button"
+			    quid       	"4087B561029E")
+			sendEvent  	(object sendEvent
+			    quid       	"4087B56102A0"))
+		    (object State_Transition
+			quid       	"4087B73A0071"
+			label      	""
+			supplier   	"EInvited"
+			quidu      	"4087B73101D8"
+			Event      	(object Event "Asking response to invite from the user"
+			    quid       	"4087B73A0072")
+			sendEvent  	(object sendEvent
+			    quid       	"4087B73A0074")))
+		type       	"Normal")
+	    (object State "EInviting"
+		quid       	"4087934E02CA"
+		transitions 	(list transition_list
+		    (object State_Transition
+			quid       	"4087954A035D"
+			label      	""
+			supplier   	"EConnecting"
+			quidu      	"40879354026C"
+			Event      	(object Event "Remote peer accepts the invitation"
+			    quid       	"4087954A035E")
+			sendEvent  	(object sendEvent
+			    quid       	"4087954A0360"))
+		    (object State_Transition
+			quid       	"40879DC1027F"
+			label      	""
+			supplier   	"ERunning"
+			quidu      	"4087933B0327"
+			Event      	(object Event "Remote user does not accept the invitation"
+			    quid       	"40879DC10280")
+			sendEvent  	(object sendEvent
+			    quid       	"40879DC10282"))
+		    (object State_Transition
+			quid       	"40879EBA00FB"
+			label      	""
+			supplier   	"EActive"
+			quidu      	"4087934401A1"
+			Event      	(object Event "Remote peer does not accept the invitation"
+			    quid       	"40879EBA00FC")
+			sendEvent  	(object sendEvent
+			    quid       	"40879EBA00FE")))
+		type       	"Normal")
+	    (object State "EConnecting"
+		quid       	"40879354026C"
+		transitions 	(list transition_list
+		    (object State_Transition
+			quid       	"40879B2202B4"
+			label      	""
+			supplier   	"ELocal"
+			quidu      	"4087935E0134"
+			Event      	(object Event "Connection established succesfully and the user inviting to game is first to make a move"
+			    quid       	"40879B2202B5")
+			sendEvent  	(object sendEvent
+			    quid       	"40879B2202B7"))
+		    (object State_Transition
+			quid       	"40879E4D01C5"
+			label      	""
+			supplier   	"$UNNAMED$15"
+			quidu      	"40879DE4006D"
+			Event      	(object Event "Connection failed"
+			    quid       	"40879E4D01C6")
+			sendEvent  	(object sendEvent
+			    quid       	"40879E4D01C8"))
+		    (object State_Transition
+			quid       	"40879EC701E6"
+			label      	""
+			supplier   	"EActive"
+			quidu      	"4087934401A1"
+			Event      	(object Event "Connection failed"
+			    quid       	"40879EC701E7")
+			sendEvent  	(object sendEvent
+			    quid       	"40879EC701E9")))
+		type       	"Normal")
+	    (object State "ELocal"
+		quid       	"4087935E0134"
+		transitions 	(list transition_list
+		    (object State_Transition
+			quid       	"40879BD1017E"
+			label      	""
+			supplier   	"ERemote"
+			quidu      	"408793620376"
+			Event      	(object Event "User makes the move and sends it to remote peer."
+			    quid       	"40879BD1017F")
+			sendEvent  	(object sendEvent
+			    quid       	"40879BD10181")))
+		statemachine 	(object State_Machine "State/Activity Model"
+		    quid       	"40879CF3028C"
+		    states     	(list States
+			(object State "$UNNAMED$16"
+			    quid       	"40879CF3028D"
+			    type       	"EndState"))
+		    partitions 	(list Partitions)
+		    objects    	(list Objects)
+		    statediagrams 	(list StateDiagrams))
+		type       	"Normal")
+	    (object State "ERemote"
+		quid       	"408793620376"
+		transitions 	(list transition_list
+		    (object State_Transition
+			quid       	"4087C20F01FB"
+			label      	""
+			supplier   	"ELocal"
+			quidu      	"4087935E0134"
+			Event      	(object Event "Remote user makes the move and the msg is received in local peer."
+			    quid       	"4087C20F01FC")
+			sendEvent  	(object sendEvent
+			    quid       	"4087C20F01FE")))
+		type       	"Normal")
+	    (object State "EOver"
+		quid       	"4087936703A5"
+		type       	"Normal")
+	    (object State "EExiting"
+		quid       	"4087936D01D0"
+		type       	"Normal")
+	    (object State "EIdle"
+		quid       	"4087947403C7"
+		type       	"Normal")
+	    (object State "EInvited"
+		quid       	"4087B73101D8"
+		transitions 	(list transition_list
+		    (object State_Transition
+			quid       	"4087B7620301"
+			label      	""
+			supplier   	"ERemote"
+			quidu      	"408793620376"
+			Event      	(object Event "Sending Accepted response back to remote user."
+			    quid       	"4087B7620302")
+			sendEvent  	(object sendEvent
+			    quid       	"4087B7620304"))
+		    (object State_Transition
+			quid       	"4087B7CD00A1"
+			label      	""
+			supplier   	"ERemote"
+			quidu      	"408793620376"
+			Event      	(object Event "Set listen socket and send response to remote user"
+			    quid       	"4087B7CD00A2")
+			sendEvent  	(object sendEvent
+			    quid       	"4087B7CD00A4")))
+		type       	"Normal"))
+	partitions 	(list Partitions)
+	objects    	(list Objects)
+	statediagrams 	(list StateDiagrams
+	    (object State_Diagram "Invite remote user to game - happy/unhappy"
+		quid       	"408791B50257"
+		title      	"Invite remote user to game - happy/unhappy"
+		documentation 	
+|Inviting remote user to the game. Happy/Unhappy scenario. 
+|
+|Precondition - Enable profile has executed successfully.
+|
+|Postcondition - connection established successfully and waiting local user's move.
+		
+		zoom       	100
+		max_height 	28350
+		max_width  	21600
+		origin_x   	0
+		origin_y   	0
+		items      	(list diagram_item_list
+		    (object StateView "Normal" "EInviting" @1
+			location   	(816, 880)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@1
+			    location   	(816, 869)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	204
+			    justify    	0
+			    label      	"EInviting")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4087934E02CA"
+			autoResize 	TRUE)
+		    (object StateView "Normal" "EConnecting" @2
+			location   	(816, 1312)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@2
+			    location   	(816, 1296)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	260
+			    justify    	0
+			    label      	"EConnecting")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"40879354026C"
+			width      	356
+			height     	144
+			autoResize 	TRUE)
+		    (object StateView "Normal" "ELocal" @3
+			location   	(816, 1760)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@3
+			    location   	(816, 1691)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	252
+			    justify    	0
+			    label      	"ELocal")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4087935E0134"
+			width      	348
+			height     	250
+			autoResize 	TRUE)
+		    (object StateView "EndState" "$UNNAMED$16" @4
+			Parent_View 	@3
+			location   	(816, 1776)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			line_color 	3342489
+			quidu      	"40879CF3028D"
+			autoResize 	TRUE)
+		    (object StateView "Normal" "EActive" @5
+			location   	(816, 416)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@5
+			    location   	(816, 405)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	204
+			    justify    	0
+			    label      	"EActive")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4087934401A1"
+			autoResize 	TRUE)
+		    (object TransView "" @6
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @7
+			    Parent_View 	@6
+			    location   	(846, 1049)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	690
+			    justify    	0
+			    label      	"Remote peer accepts the invitation"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	0)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4087954A035D"
+			client     	@1
+			supplier   	@2
+			line_style 	0
+			x_offset   	FALSE)
+		    (object TransView "" @8
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @9
+			    Parent_View 	@8
+			    location   	(414, 654)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	826
+			    justify    	0
+			    label      	"Remote peer does not accept the invitation"
+			    pctDist    	0.492222
+			    height     	33
+			    orientation 	0)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"40879EBA00FB"
+			client     	@1
+			supplier   	@5
+			vertices   	(list Points
+			    (666, 879)
+			    (447, 878)
+			    (447, 416)
+			    (666, 416))
+			line_style 	0
+			x_offset   	FALSE)
+		    (object TransView "" @10
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @11
+			    Parent_View 	@10
+			    location   	(847, 573)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	498
+			    justify    	0
+			    label      	"Invite remote user for game"
+			    pctDist    	0.272727
+			    height     	31
+			    orientation 	0)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"408794F402A0"
+			client     	@5
+			supplier   	@1
+			line_style 	0
+			x_offset   	FALSE)
+		    (object TransView "" @12
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @13
+			    Parent_View 	@12
+			    location   	(845, 1465)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor_loc 	1
+			    nlines     	3
+			    max_width  	737
+			    justify    	0
+			    label      	"Connection established succesfully and the user inviting to game is first to make a move"
+			    pctDist    	0.498195
+			    height     	45
+			    orientation 	0)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"40879B2202B4"
+			client     	@2
+			supplier   	@3
+			line_style 	0
+			x_offset   	FALSE)
+		    (object TransView "" @14
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @15
+			    Parent_View 	@14
+			    location   	(1373, 848)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	450
+			    justify    	0
+			    label      	"Connection failed"
+			    pctDist    	0.496960
+			    height     	2
+			    orientation 	0)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"40879EC701E6"
+			client     	@2
+			supplier   	@5
+			vertices   	(list Points
+			    (994, 1310)
+			    (1344, 1309)
+			    (1344, 416)
+			    (966, 416))
+			line_style 	0
+			x_offset   	FALSE)))
+	    (object State_Diagram "Enable profile"
+		quid       	"4087A04A0287"
+		title      	"Enable profile"
+		documentation 	
+|The profile enabling with application start. Happy scenario. 
+|
+|Precondition - Application has started successfully
+|
+|Postcondition - The SIP profile has enabled successfully
+		
+		zoom       	100
+		max_height 	28350
+		max_width  	21600
+		origin_x   	0
+		origin_y   	0
+		items      	(list diagram_item_list
+		    (object StateView "Normal" "ERunning" @16
+			location   	(288, 608)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@16
+			    location   	(288, 597)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	204
+			    justify    	0
+			    label      	"ERunning")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4087933B0327"
+			autoResize 	TRUE)
+		    (object StateView "Normal" "EActive" @17
+			location   	(1440, 608)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@17
+			    location   	(1440, 597)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	204
+			    justify    	0
+			    label      	"EActive")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4087934401A1"
+			autoResize 	TRUE)
+		    (object TransView "" @18
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @19
+			    Parent_View 	@18
+			    location   	(894, 564)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	698
+			    justify    	0
+			    label      	"User presses the Enable Profile button"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	0)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4087A08500B3"
+			client     	@16
+			supplier   	@17
+			line_style 	0
+			x_offset   	FALSE)
+		    (object StateView "StartState" "Application start" @20
+			location   	(288, 208)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@20
+			    location   	(330, 178)
+			    nlines     	2
+			    max_width  	600
+			    label      	"Application start")
+			icon_style 	"Icon"
+			line_color 	3342489
+			quidu      	"408791C201AB"
+			autoResize 	TRUE)
+		    (object TransView "" @21
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @22
+			    Parent_View 	@21
+			    location   	(318, 345)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	450
+			    justify    	0
+			    label      	"Application started"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	0)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4087948501A5"
+			client     	@20
+			supplier   	@16
+			line_style 	0
+			x_offset   	FALSE)))
+	    (object State_Diagram "Disable profile"
+		quid       	"4087B4F5021F"
+		title      	"Disable profile"
+		documentation 	
+|The profile disableling. Happy scenario. 
+|
+|Precondition - The profile is activated.
+|
+|Postcondition - The SIP profile has disabled successfully
+		
+		zoom       	100
+		max_height 	28350
+		max_width  	21600
+		origin_x   	0
+		origin_y   	0
+		items      	(list diagram_item_list
+		    (object StateView "Normal" "EActive" @23
+			location   	(320, 224)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@23
+			    location   	(320, 213)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	204
+			    justify    	0
+			    label      	"EActive")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4087934401A1"
+			autoResize 	TRUE)
+		    (object StateView "Normal" "ERunning" @24
+			location   	(320, 688)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@24
+			    location   	(320, 677)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	204
+			    justify    	0
+			    label      	"ERunning")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4087933B0327"
+			autoResize 	TRUE)
+		    (object TransView "" @25
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @26
+			    Parent_View 	@25
+			    location   	(366, 444)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	651
+			    justify    	0
+			    label      	"User pressed Disable profile button"
+			    pctDist    	0.463636
+			    height     	46
+			    orientation 	0)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4087B561029D"
+			client     	@23
+			supplier   	@24
+			line_style 	0
+			x_offset   	FALSE)))
+	    (object State_Diagram "Accept invite"
+		quid       	"4087B65F0139"
+		title      	"Accept invite"
+		zoom       	100
+		max_height 	28350
+		max_width  	21600
+		origin_x   	0
+		origin_y   	0
+		items      	(list diagram_item_list
+		    (object NoteView @27
+			location   	(288, 96)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@27
+			    location   	(60, 30)
+			    fill_color 	13434879
+			    nlines     	2
+			    max_width  	421
+			    label      	"The invite has arrived from the network")
+			line_color 	3342489
+			fill_color 	13434879
+			width      	481
+			height     	144)
+		    (object StateView "Normal" "EActive" @28
+			location   	(288, 528)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@28
+			    location   	(288, 517)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	204
+			    justify    	0
+			    label      	"EActive")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4087934401A1"
+			autoResize 	TRUE)
+		    (object AttachView "" @29
+			stereotype 	TRUE
+			line_color 	3342489
+			client     	@27
+			supplier   	@28
+			line_style 	0)
+		    (object StateView "Normal" "ERemote" @30
+			location   	(1632, 1072)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@30
+			    location   	(1632, 1061)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	204
+			    justify    	0
+			    label      	"ERemote")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"408793620376"
+			autoResize 	TRUE)
+		    (object StateView "Normal" "EInvited" @31
+			location   	(288, 1072)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@31
+			    location   	(288, 1061)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	204
+			    justify    	0
+			    label      	"EInvited")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4087B73101D8"
+			autoResize 	TRUE)
+		    (object TransView "" @32
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @33
+			    Parent_View 	@32
+			    location   	(383, 800)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	736
+			    justify    	0
+			    label      	"Asking response to invite from the user"
+			    pctDist    	0.500000
+			    height     	95
+			    orientation 	0)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4087B73A0071"
+			client     	@28
+			supplier   	@31
+			line_style 	0
+			x_offset   	FALSE)
+		    (object TransView "" @34
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @35
+			    Parent_View 	@34
+			    location   	(990, 1028)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	971
+			    justify    	0
+			    label      	"Set listen socket and send response to remote user"
+			    pctDist    	0.500000
+			    height     	45
+			    orientation 	0)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4087B7CD00A1"
+			client     	@31
+			supplier   	@30
+			line_style 	0
+			x_offset   	FALSE)))
+	    (object State_Diagram "Make move - local/remote"
+		quid       	"4087B80B0100"
+		title      	"Make move - local/remote"
+		zoom       	100
+		max_height 	28350
+		max_width  	21600
+		origin_x   	0
+		origin_y   	0
+		items      	(list diagram_item_list
+		    (object StateView "Normal" "ELocal" @36
+			location   	(1344, 368)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@36
+			    location   	(1344, 357)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	204
+			    justify    	0
+			    label      	"ELocal")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"4087935E0134"
+			autoResize 	TRUE)
+		    (object StateView "Normal" "ERemote" @37
+			location   	(1344, 1040)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object ItemLabel
+			    Parent_View 	@37
+			    location   	(1344, 1029)
+			    fill_color 	13434879
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	204
+			    justify    	0
+			    label      	"ERemote")
+			icon_style 	"Icon"
+			line_color 	3342489
+			fill_color 	13434879
+			quidu      	"408793620376"
+			autoResize 	TRUE)
+		    (object TransView "" @38
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @39
+			    Parent_View 	@38
+			    location   	(691, 703)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor_loc 	1
+			    nlines     	2
+			    max_width  	825
+			    justify    	0
+			    label      	"Remote user makes the move and the msg is received in local peer."
+			    pctDist    	1.632544
+			    height     	351
+			    orientation 	1)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"4087C20F01FB"
+			client     	@37
+			supplier   	@36
+			vertices   	(list Points
+			    (1298, 973)
+			    (1104, 687)
+			    (1293, 435))
+			line_style 	0
+			x_offset   	FALSE)
+		    (object TransView "" @40
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			label      	(object SegLabel @41
+			    Parent_View 	@40
+			    location   	(1959, 676)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    anchor_loc 	1
+			    nlines     	1
+			    max_width  	917
+			    justify    	0
+			    label      	"User makes the move and sends it to remote peer."
+			    pctDist    	1.690159
+			    height     	309
+			    orientation 	1)
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"40879BD1017E"
+			client     	@36
+			supplier   	@37
+			vertices   	(list Points
+			    (1393, 435)
+			    (1582, 687)
+			    (1389, 973))
+			line_style 	0
+			x_offset   	FALSE)))))
+    logical_presentations 	(list unit_reference_list
+	(object ClassDiagram "Main"
+	    quid       	"4073D678019B"
+	    title      	"Main"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Sample Application Socket Engine::CSIPExSocketEngine" @42
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1856, 1504)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@42
+			location   	(1550, 1430)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	612
+			justify    	0
+			label      	"CSIPExSocketEngine")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4073D6BC0390"
+		    width      	630
+		    height     	172
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Sample Application SIP Engine::CSIPExSIPEngine" @43
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1840, 1872)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@43
+			location   	(1556, 1822)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	568
+			justify    	0
+			label      	"CSIPExSIPEngine")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"407D10D7005D"
+		    width      	586
+		    height     	124
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Sample Application Engine::SIPLineEngineFactory" @44
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1424, 96)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@44
+			location   	(1208, 55)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	432
+			justify    	0
+			label      	"SIPLineEngineFactory")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4088A13B02DD"
+		    width      	450
+		    height     	107
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Sample Application Engine::MSIPExGameEngine" @45
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(224, 976)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@45
+			location   	(223, 1084)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	764
+			justify    	0
+			label      	"MSIPExGameEngine")
+		    icon       	"interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4090EB1D00EC"
+		    compartment 	(object Compartment
+			Parent_View 	@45
+			location   	(33, 1125)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			anchor     	2
+			nlines     	7
+			max_width  	378
+			justify    	0)
+		    width      	58
+		    height     	58
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Sample Application UI::MSIPExGameObserver" @46
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1760, 352)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@46
+			location   	(1759, 460)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	587
+			justify    	0
+			label      	"MSIPExGameObserver")
+		    icon       	"interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"407D25B502D4"
+		    compartment 	(object Compartment
+			Parent_View 	@46
+			location   	(1526, 545)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			anchor     	2
+			nlines     	2
+			max_width  	500
+			justify    	0)
+		    width      	58
+		    height     	58
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Sample Application SIP Engine::SIPExSIPEngineFactory" @47
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1840, 864)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@47
+			location   	(1556, 815)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	568
+			justify    	0
+			label      	"SIPExSIPEngineFactory")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4088ADFF024B"
+		    width      	586
+		    height     	122
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object UsesView "intantiates" @48
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@48
+			location   	(2525, 1366)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	192
+			justify    	0
+			label      	"intantiates")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4088AE6300C5"
+		    client     	@47
+		    supplier   	@43
+		    vertices   	(list Points
+			(2133, 863)
+			(2525, 863)
+			(2525, 1870)
+			(2133, 1871))
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Sample Application Socket Engine::SIPExSocketEngineFactory" @49
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1840, 1152)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@49
+			location   	(1534, 1103)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	612
+			justify    	0
+			label      	"SIPExSocketEngineFactory")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4088ADAD0111"
+		    width      	630
+		    height     	122
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object UsesView "instantiates" @50
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@50
+			location   	(2382, 1319)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	208
+			justify    	0
+			label      	"instantiates")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4088AE740143"
+		    client     	@49
+		    supplier   	@42
+		    vertices   	(list Points
+			(2155, 1151)
+			(2382, 1151)
+			(2382, 1504)
+			(2171, 1504))
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Sample Application Socket Engine::MSIPExSocketEngine" @51
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    IncludeAttribute 	TRUE
+		    location   	(1216, 1504)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@51
+			location   	(1215, 1612)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	696
+			justify    	0
+			label      	"MSIPExSocketEngine")
+		    icon       	"interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4073D6A902E4"
+		    width      	58
+		    height     	58
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object RealizeView "" @52
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4073D6CE0380"
+		    client     	@42
+		    supplier   	@51
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Sample Application SIP Engine::MSIPExSIPEngine" @53
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    SuppressOperation 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1216, 1872)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@53
+			location   	(1215, 1980)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	573
+			justify    	0
+			label      	"MSIPExSIPEngine")
+		    icon       	"interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"407D10DF00EA"
+		    width      	58
+		    height     	58
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object RealizeView "" @54
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4088B723015F"
+		    client     	@43
+		    supplier   	@53
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Sample Application UI::MStateViewNotifier" @55
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(912, 112)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@55
+			location   	(911, 220)
+			anchor_loc 	1
+			nlines     	2
+			max_width  	647
+			justify    	0
+			label      	"MStateViewNotifier")
+		    icon       	"interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"407D0E6A014F"
+		    compartment 	(object Compartment
+			Parent_View 	@55
+			location   	(703, 305)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			anchor     	2
+			nlines     	2
+			max_width  	413
+			justify    	0)
+		    width      	58
+		    height     	58
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Sample Application Engine::CSIPExEngine" @56
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(912, 976)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@56
+			location   	(760, 895)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	304
+			justify    	0
+			label      	"CSIPExEngine")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4073D6830341"
+		    compartment 	(object Compartment
+			Parent_View 	@56
+			location   	(760, 956)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	2
+			max_width  	309)
+		    width      	322
+		    height     	186
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "informs" @57
+		    location   	(1288, 697)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @58
+			Parent_View 	@57
+			location   	(1271, 657)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	137
+			justify    	0
+			label      	"informs"
+			pctDist    	0.216667
+			height     	41
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4084FD3E01C7"
+		    roleview_list 	(list RoleViews
+			(object RoleView "" @59
+			    Parent_View 	@57
+			    location   	(584, 361)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @60
+				Parent_View 	@59
+				location   	(1064, 812)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				hidden     	TRUE
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	450
+				justify    	0
+				label      	""
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4084FD44013C"
+			    client     	@57
+			    supplier   	@56
+			    line_style 	0)
+			(object RoleView "" @61
+			    Parent_View 	@57
+			    location   	(584, 361)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @62
+				Parent_View 	@61
+				location   	(1464, 517)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				hidden     	TRUE
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	450
+				justify    	0
+				label      	""
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4084FD44013A"
+			    client     	@57
+			    supplier   	@46
+			    line_style 	0)))
+		(object UsesView "creates" @63
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@63
+			location   	(1180, 515)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	140
+			justify    	0
+			label      	"creates")
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4088A20B0233"
+		    client     	@44
+		    supplier   	@56
+		    line_style 	0)
+		(object AssociationViewNew "$UNNAMED$2" @64
+		    location   	(1309, 927)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4088AE21026B"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$3" @65
+			    Parent_View 	@64
+			    location   	(413, 255)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4088AE220132"
+			    client     	@64
+			    supplier   	@47
+			    line_style 	0)
+			(object RoleView "$UNNAMED$4" @66
+			    Parent_View 	@64
+			    location   	(413, 255)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4088AE220134"
+			    client     	@64
+			    supplier   	@56
+			    line_style 	0)))
+		(object AssociationViewNew "$UNNAMED$5" @67
+		    location   	(1298, 1048)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4088AE240077"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$6" @68
+			    Parent_View 	@67
+			    location   	(402, 376)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4088AE24025B"
+			    client     	@67
+			    supplier   	@49
+			    line_style 	0)
+			(object RoleView "$UNNAMED$7" @69
+			    Parent_View 	@67
+			    location   	(402, 376)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4088AE24026B"
+			    client     	@67
+			    supplier   	@56
+			    line_style 	0)))
+		(object AssociationViewNew "iSocketEngine" @70
+		    location   	(910, 1425)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @71
+			Parent_View 	@70
+			location   	(1055, 1447)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"iSocketEngine"
+			pctDist    	2.916667
+			height     	22
+			orientation 	1)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4088AE420171"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$8" @72
+			    Parent_View 	@70
+			    location   	(14, 753)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4088AE4600E4"
+			    client     	@70
+			    supplier   	@51
+			    vertices   	(list Points
+				(910, 1425)
+				(910, 1504)
+				(1188, 1504))
+			    line_style 	0)
+			(object RoleView "$UNNAMED$9" @73
+			    Parent_View 	@70
+			    location   	(14, 753)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4088AE4600E6"
+			    client     	@70
+			    supplier   	@56
+			    line_style 	0)))
+		(object AssociationViewNew "iSIPEngine" @74
+		    location   	(910, 1608)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @75
+			Parent_View 	@74
+			location   	(1037, 1837)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"iSIPEngine"
+			pctDist    	2.633333
+			height     	229
+			orientation 	1)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4088AE4801A0"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$10" @76
+			    Parent_View 	@74
+			    location   	(14, 936)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4088AE4C00F4"
+			    client     	@74
+			    supplier   	@53
+			    vertices   	(list Points
+				(910, 1608)
+				(910, 1870)
+				(1188, 1869))
+			    line_style 	0)
+			(object RoleView "$UNNAMED$11" @77
+			    Parent_View 	@74
+			    location   	(14, 936)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4088AE4C00F6"
+			    client     	@74
+			    supplier   	@56
+			    line_style 	0)))
+		(object AssociationViewNew "uses" @78
+		    location   	(912, 643)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object SegLabel @79
+			Parent_View 	@78
+			location   	(912, 584)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	TRUE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			anchor     	1
+			anchor_loc 	1
+			nlines     	1
+			max_width  	450
+			justify    	0
+			label      	"uses"
+			pctDist    	0.500000
+			height     	60
+			orientation 	0)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4084FC8301B5"
+		    roleview_list 	(list RoleViews
+			(object RoleView "" @80
+			    Parent_View 	@78
+			    location   	(-688, 387)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @81
+				Parent_View 	@80
+				location   	(871, 833)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				hidden     	TRUE
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	450
+				justify    	0
+				label      	""
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4084FC84009E"
+			    client     	@78
+			    supplier   	@56
+			    line_style 	0)
+			(object RoleView "" @82
+			    Parent_View 	@78
+			    location   	(-688, 387)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @83
+				Parent_View 	@82
+				location   	(871, 453)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				hidden     	TRUE
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	450
+				justify    	0
+				label      	""
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"4084FC84009C"
+			    client     	@78
+			    supplier   	@55
+			    line_style 	0)))
+		(object ClassView "Class" "Logical View::Sample Application Engine::TSIPExState" @84
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(320, 2064)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@84
+			location   	(123, 1680)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	394
+			justify    	0
+			label      	"TSIPExState")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@84
+			location   	(123, 1630)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	394
+			justify    	0
+			label      	"<<abstract>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"408F4AF802A9"
+		    compartment 	(object Compartment
+			Parent_View 	@84
+			location   	(123, 1741)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	15
+			max_width  	400)
+		    width      	412
+		    height     	892
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "$UNNAMED$12" @85
+		    location   	(693, 1376)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"408F4B23019F"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$14" @86
+			    Parent_View 	@85
+			    location   	(-747, 1248)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @87
+				Parent_View 	@86
+				location   	(863, 1152)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				hidden     	TRUE
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	450
+				justify    	0
+				label      	""
+				pctDist    	0.800000
+				height     	42
+				orientation 	1)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"408F4B230393"
+			    client     	@85
+			    supplier   	@56
+			    line_style 	0)
+			(object RoleView "$UNNAMED$13" @88
+			    Parent_View 	@85
+			    location   	(-747, 1248)
+			    font       	(object Font
+				size       	10
+				face       	"Arial"
+				bold       	FALSE
+				italics    	FALSE
+				underline  	FALSE
+				strike     	FALSE
+				color      	0
+				default_color 	TRUE)
+			    label      	(object SegLabel @89
+				Parent_View 	@88
+				location   	(597, 1640)
+				font       	(object Font
+				    size       	10
+				    face       	"Arial"
+				    bold       	FALSE
+				    italics    	FALSE
+				    underline  	FALSE
+				    strike     	FALSE
+				    color      	0
+				    default_color 	TRUE)
+				hidden     	TRUE
+				anchor     	1
+				anchor_loc 	1
+				nlines     	1
+				max_width  	450
+				justify    	0
+				label      	""
+				pctDist    	0.800000
+				height     	42
+				orientation 	0)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"408F4B230384"
+			    client     	@85
+			    supplier   	@84
+			    line_style 	0)))
+		(object RealizeView "" @90
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4090EC100024"
+		    client     	@56
+		    supplier   	@45
+		    line_style 	0)
+		(object ClassView "Class" "Logical View::Sample Application Engine::MSIPLineEngine" @91
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(224, 160)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@91
+			location   	(223, 268)
+			anchor_loc 	1
+			nlines     	1
+			max_width  	678
+			justify    	0
+			label      	"MSIPLineEngine")
+		    icon       	"interface"
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4073D54200FB"
+		    compartment 	(object Compartment
+			Parent_View 	@91
+			location   	(8, 309)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			anchor     	2
+			nlines     	7
+			max_width  	428
+			justify    	0)
+		    width      	58
+		    height     	58
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object RealizeView "" @92
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"4073D69101AB"
+		    client     	@56
+		    supplier   	@91
+		    line_style 	0)))
+	(object ClassDiagram "States"
+	    quid       	"408F497D0096"
+	    title      	"States"
+	    zoom       	100
+	    max_height 	28350
+	    max_width  	21600
+	    origin_x   	0
+	    origin_y   	0
+	    items      	(list diagram_item_list
+		(object ClassView "Class" "Logical View::Sample Application Engine::TSIPExState" @93
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2784, 448)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@93
+			location   	(2587, 64)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	394
+			justify    	0
+			label      	"TSIPExState")
+		    stereotype 	(object ItemLabel
+			Parent_View 	@93
+			location   	(2587, 14)
+			fill_color 	13434879
+			anchor     	10
+			nlines     	1
+			max_width  	394
+			justify    	0
+			label      	"<<abstract>>")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"408F4AF802A9"
+		    compartment 	(object Compartment
+			Parent_View 	@93
+			location   	(2587, 125)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	15
+			max_width  	400)
+		    width      	412
+		    height     	892
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Sample Application Engine::CSIPExEngine" @94
+		    ShowCompartmentStereotypes 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1520, 416)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@94
+			location   	(1172, 60)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	696
+			justify    	0
+			label      	"CSIPExEngine")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"4073D6830341"
+		    compartment 	(object Compartment
+			Parent_View 	@94
+			location   	(1172, 121)
+			font       	(object Font
+			    size       	10
+			    face       	"Arial"
+			    bold       	FALSE
+			    italics    	FALSE
+			    underline  	FALSE
+			    strike     	FALSE
+			    color      	0
+			    default_color 	TRUE)
+			icon_style 	"Icon"
+			fill_color 	13434879
+			anchor     	2
+			nlines     	13
+			max_width  	703)
+		    width      	714
+		    height     	736
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object AssociationViewNew "$UNNAMED$12" @95
+		    location   	(2227, 433)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"408F4B23019F"
+		    roleview_list 	(list RoleViews
+			(object RoleView "$UNNAMED$13" @96
+			    Parent_View 	@95
+			    location   	(1571, -431)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"408F4B230384"
+			    client     	@95
+			    supplier   	@93
+			    line_style 	0)
+			(object RoleView "$UNNAMED$14" @97
+			    Parent_View 	@95
+			    location   	(1571, -431)
+			    stereotype 	TRUE
+			    line_color 	3342489
+			    quidu      	"408F4B230393"
+			    client     	@95
+			    supplier   	@94
+			    line_style 	0)))
+		(object ClassView "Class" "Logical View::Sample Application Engine::TSIPExStateIdle" @98
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(192, 1104)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@98
+			location   	(21, 1053)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	342
+			justify    	0
+			label      	"TSIPExStateIdle")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"408F4C410151"
+		    width      	360
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Sample Application Engine::TSIPExStateRegistering" @99
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(1392, 1104)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@99
+			location   	(1150, 1053)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	484
+			justify    	0
+			label      	"TSIPExStateRegistering")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"408F4C7C0374"
+		    width      	502
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Sample Application Engine::TSIPExStateRegistered" @100
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(800, 1104)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@100
+			location   	(572, 1053)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	456
+			justify    	0
+			label      	"TSIPExStateRegistered")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"408F4C8502D8"
+		    width      	474
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Sample Application Engine::TSIPExStateInviting" @101
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(5600, 1104)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@101
+			location   	(5403, 1053)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	394
+			justify    	0
+			label      	"TSIPExStateInviting")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"408F4CC80180"
+		    width      	412
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Sample Application Engine::TSIPExStateConnecting" @102
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(2592, 1104)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@102
+			location   	(2357, 1053)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	470
+			justify    	0
+			label      	"TSIPExStateConnecting")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"408F4CDF019F"
+		    width      	488
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Sample Application Engine::TSIPExStateLocal" @103
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(4400, 1104)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@103
+			location   	(4215, 1053)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	370
+			justify    	0
+			label      	"TSIPExStateLocal")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"408F4D0502D8"
+		    width      	388
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Sample Application Engine::TSIPExStateRemote" @104
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(4992, 1104)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@104
+			location   	(4790, 1053)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	404
+			justify    	0
+			label      	"TSIPExStateRemote")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"408F4D0E0374"
+		    width      	422
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object ClassView "Class" "Logical View::Sample Application Engine::TSIPExStateAcceptingSIP" @105
+		    ShowCompartmentStereotypes 	TRUE
+		    SuppressAttribute 	TRUE
+		    IncludeAttribute 	TRUE
+		    IncludeOperation 	TRUE
+		    location   	(3792, 1104)
+		    font       	(object Font
+			size       	10
+			face       	"Arial"
+			bold       	FALSE
+			italics    	FALSE
+			underline  	FALSE
+			strike     	FALSE
+			color      	0
+			default_color 	TRUE)
+		    label      	(object ItemLabel
+			Parent_View 	@105
+			location   	(3531, 1053)
+			fill_color 	13434879
+			nlines     	1
+			max_width  	522
+			justify    	0
+			label      	"TSIPExStateAcceptingSIP")
+		    icon_style 	"Icon"
+		    line_color 	3342489
+		    fill_color 	13434879
+		    quidu      	"408F4D21025B"
+		    width      	540
+		    height     	126
+		    annotation 	8
+		    autoResize 	TRUE)
+		(object InheritTreeView "" @106
+		    location   	(2784, 984)
+		    line_color 	3342489
+		    fill_color 	13434879
+		    supplier   	@93
+		    vertices   	(list Points
+			(2784, 984)
+			(2784, 894)))
+		(object InheritView "" @107
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"408F4C7903A3"
+		    client     	@98
+		    supplier   	@93
+		    line_style 	3
+		    origin_attachment 	(337, 1041)
+		    terminal_attachment 	(337, 984)
+		    drawSupplier 	@106)
+		(object InheritView "" @108
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"408F4DF90299"
+		    client     	@100
+		    supplier   	@93
+		    line_style 	3
+		    origin_attachment 	(816, 1041)
+		    terminal_attachment 	(816, 984)
+		    drawSupplier 	@106)
+		(object InheritView "" @109
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"408F4DFC0345"
+		    client     	@99
+		    supplier   	@93
+		    line_style 	3
+		    origin_attachment 	(1408, 1041)
+		    terminal_attachment 	(1408, 984)
+		    drawSupplier 	@106)
+		(object InheritView "" @110
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"408F4E2503A3"
+		    client     	@102
+		    supplier   	@93
+		    line_style 	3
+		    origin_attachment 	(2608, 1041)
+		    terminal_attachment 	(2608, 984)
+		    drawSupplier 	@106)
+		(object InheritView "" @111
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"408F4E2C0047"
+		    client     	@105
+		    supplier   	@93
+		    line_style 	3
+		    origin_attachment 	(3808, 1041)
+		    terminal_attachment 	(3808, 984)
+		    drawSupplier 	@106)
+		(object InheritView "" @112
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"408F4E2E0393"
+		    client     	@103
+		    supplier   	@93
+		    line_style 	3
+		    origin_attachment 	(4416, 1041)
+		    terminal_attachment 	(4416, 984)
+		    drawSupplier 	@106)
+		(object InheritView "" @113
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"408F4E32023B"
+		    client     	@104
+		    supplier   	@93
+		    line_style 	3
+		    origin_attachment 	(5008, 1041)
+		    terminal_attachment 	(5008, 984)
+		    drawSupplier 	@106)
+		(object InheritView "" @114
+		    stereotype 	TRUE
+		    line_color 	3342489
+		    quidu      	"408F4D9E0180"
+		    client     	@101
+		    supplier   	@93
+		    line_style 	3
+		    origin_attachment 	(5441, 1040)
+		    terminal_attachment 	(5441, 984)
+		    drawSupplier 	@106)))))

@@ -1,0 +1,30 @@
+// Copyright (c) 2007-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name     : trtpsocket.iby
+// Part of  : test Component for core rtp unit test cases
+// IBY file for trtpsocket component
+// 
+//
+
+#ifndef __TRTPSOCKET_IBY__
+#define __TRTPSOCKET_IBY__
+
+#include <testexecute.iby>
+
+
+file=ABI_DIR\BUILD_DIR\trtpsocket.exe		System\bin\trtpsocket.exe
+data=EPOCROOT##epoc32\data\z\testData\configs\rtp\rtpcore_unittest.ini		testData\configs\rtp\rtpcore_unittest.ini
+data=EPOCROOT##epoc32\data\z\testData\Scripts\rtp\rtpcore_unittest.script	testData\Scripts\rtp\rtpcore_unittest.script
+
+#endif

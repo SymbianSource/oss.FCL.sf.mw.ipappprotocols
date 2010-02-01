@@ -1,0 +1,55 @@
+
+// Copyright (c) 2004-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+//
+
+
+
+TARGET          sipexsipengine.dll
+TARGETTYPE      dll
+UID             0x1000008d 0xA00001ED
+
+SOURCEPATH      ../src
+SOURCE	        SIPExSIPTerminatingState.cpp
+SOURCE	        SIPExSIPClientEstablishingState.cpp
+SOURCE	        SIPExSIPClientOfferingState.cpp
+SOURCE	        SIPExSIPEngine.cpp
+SOURCE	        SIPExSIPEstablishedState.cpp
+SOURCE	        SIPExSIPIdleState.cpp
+SOURCE	        SIPExSIPServerEstablishingState.cpp
+SOURCE	        SIPExSIPServerOfferingState.cpp
+SOURCE	        SIPExSIPStateBase.cpp
+SOURCE          DllEntry.cpp
+
+USERINCLUDE     ../inc
+
+SYSTEMINCLUDE   /epoc32/include
+
+LIBRARY		    euser.lib
+LIBRARY	    	estor.lib
+LIBRARY		    bafl.lib
+LIBRARY		    insock.lib
+LIBRARY		    sipprofilecli.lib
+LIBRARY		    sipclient.lib
+LIBRARY		    sipcodec.lib
+LIBRARY		    sdpcodec.lib
+LIBRARY         inetprotutil.lib
+
+VENDORID        0
+
+CAPABILITY     NetworkServices LocalServices Location ReadUserData \
+               WriteUserData WriteDeviceData SwEvent ProtServ
+
+
+SMPSAFE

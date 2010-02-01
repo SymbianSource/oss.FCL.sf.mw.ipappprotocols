@@ -1,0 +1,80 @@
+// Copyright (c) 2007-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:
+// Name          : crresolver.mmp
+// Part of       : SIP SIP Client Resolver
+// Version       : SIP/6.0
+//
+
+
+
+TARGET        sipresolver.dll
+TARGETTYPE    dll
+UID           0x1000008d 0x10203351
+
+SOURCEPATH    ../Resolver/src
+SOURCE        CSIPClientResolver.cpp
+SOURCE        CSIPClientResolver2.cpp
+SOURCE        CSipAcceptContactStrategy2.cpp
+SOURCE        CSipAllowEventsStrategy2.cpp
+SOURCE        CSipRequestStrategy.cpp
+SOURCE        CSIPOptionsHandler.cpp
+SOURCE        CSipLaunchingStrategies.cpp
+SOURCE        CSipHeaderStrategyBase.cpp
+SOURCE        CSipContentTypeStrategy.cpp
+SOURCE        CSdpRtpmapStrategy.cpp
+SOURCE        CSdpMLineNameStrategy.cpp
+SOURCE        CSdpMLineMediaStrategy.cpp
+SOURCE        CSdpMLineTransportStrategy.cpp
+SOURCE        CSdpStrategyBase.cpp
+SOURCE        CSdpMLineStrategyBase.cpp
+SOURCE        CSipAcceptContactStrategy.cpp
+SOURCE        CSipAllowEventsStrategy.cpp
+SOURCE        CSIPClientData.cpp
+SOURCE        CSIPClientDataParser.cpp
+SOURCE        CSIPFeatureTag.cpp
+SOURCE        CSIPBooleanFeatureTag.cpp
+SOURCE        CSIPNumericFeatureTag.cpp
+SOURCE        CSIPStringFeatureTag.cpp
+SOURCE        CSIPTokenFeatureTag.cpp
+SOURCE        CSIPFeatureSet.cpp
+SOURCE        CSdpMediaAttributeStrategy.cpp
+SOURCE        sipclientresolverconfig.cpp
+
+USERINCLUDE   ../Resolver/api
+USERINCLUDE   ../Resolver/inc
+USERINCLUDE   ../Resolver/src
+USERINCLUDE   ../common/inc
+USERINCLUDE   ../../SIP/Codec/inc
+
+MW_LAYER_SYSTEMINCLUDE_SYMBIAN
+
+LIBRARY       euser.lib
+LIBRARY       estor.lib
+LIBRARY       insock.lib
+LIBRARY       bafl.lib
+LIBRARY       ecom.lib
+LIBRARY       xmlframework.lib
+LIBRARY       charconv.lib
+LIBRARY       inetprotutil.lib
+LIBRARY       sipcodec.lib
+LIBRARY       sdpcodec.lib
+LIBRARY       centralrepository.lib
+LIBRARY       flogger.lib
+LIBRARY       efsrv.lib
+
+VENDORID 0x70000001
+
+CAPABILITY ProtServ
+
+SMPSAFE

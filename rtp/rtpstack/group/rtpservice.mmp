@@ -1,0 +1,73 @@
+/*
+* Copyright (c) 2002 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description:    RTP (Real-time Transport Protocol) library
+*
+*/
+
+
+
+#include <platform_paths.hrh>
+
+//print to file
+//MACRO RTP_OUTPUT_TO_FILE
+
+TARGET          rtpservice.dll
+TARGETTYPE      dll
+
+// Bigger than default stack size is required because of  
+// heavy logging in debug mode 
+EPOCSTACKSIZE 0x5000
+
+
+UID             0x1000008d 0x101F85CF
+VENDORID        VID_DEFAULT
+
+SOURCEPATH      ../src
+
+SOURCE          rtpapi.cpp 
+SOURCE          rtpmanager.cpp
+SOURCE          rtpsession.cpp
+SOURCE			rtpsessionsrtp.cpp
+SOURCE          rtputil.cpp
+SOURCE          rtptimer.cpp
+SOURCE          rtpsdes.cpp
+SOURCE          rtppacket.cpp
+SOURCE	        localaddrresolver.cpp
+SOURCE          rtppacketparam.cpp
+SOURCE          rtpstream.cpp
+SOURCE          rtprecvstream.cpp
+SOURCE          rtptranstream.cpp
+
+SOURCE          rtpcomm.cpp
+SOURCE          rtpcommsend.cpp
+SOURCE          rtpcommrecv.cpp
+SOURCE			rtpsenditem.cpp
+
+USERINCLUDE     ../inc
+
+MW_LAYER_SYSTEMINCLUDE
+
+LIBRARY         euser.lib     
+LIBRARY			insock.lib
+LIBRARY			esock.lib
+LIBRARY			commdb.lib
+LIBRARY			efsrv.lib
+LIBRARY			srtp.lib 
+LIBRARY			charconv.lib
+
+CAPABILITY      CAP_GENERAL_DLL
+
+// EXPORTUNFROZEN
+
+// End of File
