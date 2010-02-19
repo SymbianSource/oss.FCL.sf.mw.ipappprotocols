@@ -49,6 +49,10 @@
 #include <sipsystemstatemonitor.h>
 #include <random.h>
 
+#include <CommsDatTypesV1_1.h>
+#include <MetaDatabase.h> 
+#include <commsdattypeinfov1_1_internal.h>
+using namespace CommsDat;
 
 // ============================ MEMBER FUNCTIONS ===============================
 
@@ -946,10 +950,10 @@ CSIPConcreteProfile::TStatus CSIPProfileServerCore::DisableProfileL(
 //
 CSIPConcreteProfile::TStatus CSIPProfileServerCore::ForceDisableProfileL(
     TUint32 aProfileId,
-    const MSIPExtendedConcreteProfileObserver& aObserver)
+    const MSIPExtendedConcreteProfileObserver& /* aObserver */)
     {
     CSIPProfileCacheItem* item = ProfileCacheItemL(aProfileId);
-    (void)aObserver;
+    
     //When profile state is not unregistered, 
     //perform cleanup and send event notification
     
@@ -1771,22 +1775,29 @@ CSIPConcreteProfile* CSIPProfileServerCore::FindDefaultProfile() const
 TBool CSIPProfileServerCore::ShouldChangeIap(CSIPConcreteProfile& aProfile, TInt aError) const
 	{
 	PROFILE_DEBUG3("CSIPProfileServerCore::ShouldChangeIap, error", aError)
-	TUint32 dummySnapId(0);	
-	if ( aProfile.ExtensionParameter(KSIPSnapId, dummySnapId) == KErrNone &&
-	     !AnyRegisteredProfileUsesIap(aProfile.IapId()) )
+	TUint32 snapId(0);	
+	if ( aProfile.ExtensionParameter(KSIPSnapId, snapId) == KErrNone 
+	        && !AnyRegisteredProfileUsesIap(aProfile.IapId()) )
 	    {
 		PROFILE_DEBUG1("CSIPProfileServerCore::ShouldChangeIap, snap is in use")
 
 	    // This profile uses a SNAP.
 	    // There are no registered profiles using the same IAP as this profile.
-	    
-        if ( aError == KErrTimedOut ||
-	         aError == KErrSIPResolvingFailure )
-	        {
-			PROFILE_DEBUG1("CSIPProfileServerCore::ShouldChangeIap returns True")
-	        return ETrue;
-	        }
-	    }
+		
+		TUint iapCount(0);
+		TRAPD(err, iapCount = IAPCountL(snapId));
+		if(KErrNone == err)
+			{			
+			if ( (aError == KErrTimedOut ||
+				 aError == KErrSIPResolvingFailure) 
+				 && iapCount > 1)
+				{
+				PROFILE_DEBUG1("CSIPProfileServerCore::ShouldChangeIap returns True")
+				return ETrue;
+				}
+			}
+			
+		}
 	PROFILE_DEBUG1("CSIPProfileServerCore::ShouldChangeIap returns false")
     return EFalse;
 	}
@@ -1839,3 +1850,31 @@ void CSIPProfileServerCore::SendProfileForciblyDisabledEvent(
 						aItem.Profile().Status(), ESipProfileItcOpProfileForciblyDisabled));
             }
     }
+	
+	
+// -----------------------------------------------------------------------------
+// CSIPProfileServerCore::IAPCount
+// -----------------------------------------------------------------------------
+//
+TInt CSIPProfileServerCore::IAPCountL(TUint32 aSnapId) const
+    {
+    const TUint KRecordId = aSnapId;
+	TUint32 count(0);
+	CMDBSession* db = CMDBSession::NewLC( KCDVersion1_2);
+	db->SetAttributeMask( ECDHidden );	
+	
+    //Load the Selection Policy record
+	CCDIAPPrioritySelectionPolicyRecord *selPolRecord = (CCDIAPPrioritySelectionPolicyRecord *)CCDRecordBase::RecordFactoryL(KCDTIdIapPrioritySelectionPolicyRecord);
+	
+	CleanupStack::PushL(selPolRecord);    
+    selPolRecord->SetRecordId(KRecordId);
+	
+    selPolRecord->LoadL( *db ); 
+	count = selPolRecord->iIapCount;
+	PROFILE_DEBUG3("CSIPProfileServerCore::IAPCount, IAP Count", count)
+	      
+    CleanupStack::PopAndDestroy(selPolRecord);
+	CleanupStack::PopAndDestroy( db );
+    return count;
+    }
+	

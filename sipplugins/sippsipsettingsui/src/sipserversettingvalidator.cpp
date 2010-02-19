@@ -19,7 +19,7 @@
 // INCLUDE FILES
 #include    <StringLoader.h>
 #include    <escapeutils.h>
-#include    <aknutils.h>
+#include    <AknUtils.h>
 #include    <sipstrings.h>
 #include    <sipaddress.h>
 #include    <gssipsettingspluginrsc.rsg> //GUI Resource

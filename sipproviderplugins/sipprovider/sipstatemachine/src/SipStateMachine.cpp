@@ -45,51 +45,44 @@ void CSipStateMachine::ConstructL()
 /**
  This Function will startup the state machine with a default
  state
-*/
-	{
-	// Tell the TE there's another StateMachine wishing to speak to it.
-	// Remek: Where do you remove it??? Cos i couldn't find !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	iTe->AddStateMachineL(this);
-	
-	// Initialize booleans
-	iClientStimulus = EFalse;
-	iServerStimulus = EFalse;
-	iServerErrorStimulus = EFalse;
-	iCallTerminateCallback = ETrue;
-	iDeleteMeNow = EFalse;
-	isInviteSM = EFalse;
-	isSubscribeSM = EFalse;
-	
-	iCallTerminateCode.iErrorCode = KErrNone;
-	iCallTerminateCode.iSipCode = KErrNone;
-	
-	// Construct States
-	iStateIdle = CStateIdle::NewL(this);
-	CleanupStack::PushL (iStateIdle);
-	
-	iCommandCntx.iCommandState 		= iStateIdle;
-	iCommandCntx.iClientTx	 		= NULL;
-	iCommandCntx.iCancelClientTx	= NULL;
-	iCommandCntx.iServerTx			= NULL;
-	iCommandCntx.iRegBinding	 	= NULL;
-	iCommandCntx.iDialogAssoc	 	= NULL;
+ */
+    {
+    // Tell the TE there's another StateMachine wishing to speak to it.
+    // Remek: Where do you remove it??? Cos i couldn't find !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    iTe->AddStateMachineL(this);
 
+    // Initialize booleans
+    iClientStimulus = EFalse;
+    iServerStimulus = EFalse;
+    iServerErrorStimulus = EFalse;
+    iCallTerminateCallback = ETrue;
+    iDeleteMeNow = EFalse;
+    isInviteSM = EFalse;
+    isSubscribeSM = EFalse;
+
+    iCallTerminateCode.iErrorCode = KErrNone;
+    iCallTerminateCode.iSipCode = KErrNone;
+
+    // Construct States
+    iStateIdle = CStateIdle::NewL(this);
+
+    iCommandCntx.iCommandState = iStateIdle;
+    iCommandCntx.iClientTx = NULL;
+    iCommandCntx.iCancelClientTx = NULL;
+    iCommandCntx.iServerTx = NULL;
+    iCommandCntx.iRegBinding = NULL;
+    iCommandCntx.iDialogAssoc = NULL;
+
+    iStateSessionInit = CStateSessionInitiation::NewL(this);
+    iStateSessionEstablished = CStateSessionEstablished::NewL(this);
+    iStateSessionTerminate = CStateSessionTerminate::NewL(this);
+
+    iActiveState = iStateIdle;
 	
-	iStateSessionInit = CStateSessionInitiation::NewL(this);
-	CleanupStack::PushL(iStateSessionInit);
-	iStateSessionEstablished = CStateSessionEstablished::NewL(this);
-	CleanupStack::PushL(iStateSessionEstablished);
-	iStateSessionTerminate = CStateSessionTerminate::NewL(this);
-	CleanupStack::PushL(iStateSessionTerminate);
-	
-	iActiveState = iStateIdle;
-	
-	this->Start(&iStatus, NULL) ;
-	// Maithra's fix : For stray signal
- 	MakeActive();
-	// Pop From Cleanup Stack
-	CleanupStack::Pop(4, iStateIdle);
-	}
+    this->Start(&iStatus, NULL);
+    // Maithra's fix : For stray signal
+    MakeActive();
+    }
 	
 CSipStateMachine::CSipStateMachine(CSIPTransitionEngine * aTe, MSIPStateMachineClient* aClient,TBool aSMDirection) 
 :CActive(EPriorityStandard), 
@@ -801,9 +794,8 @@ void CSipStateMachine::SendRegisterMessageL()
     iCommandCntx.iRegBinding 	= CSIPRegistrationBinding::NewL(
     							  *sipConn, to, contact,
     							  refresh,0, remoteUri, from);
-    CleanupStack::PushL(iCommandCntx.iRegBinding);
 	iCommandCntx.iClientTx		= iCommandCntx.iRegBinding->RegisterL();
-	CleanupStack::Pop(6, refresh);
+	CleanupStack::Pop(5, refresh);
 	}
 	
 void CSipStateMachine::SendUnRegisterMessageL()	

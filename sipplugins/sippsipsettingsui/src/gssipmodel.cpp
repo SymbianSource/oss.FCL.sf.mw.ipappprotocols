@@ -195,6 +195,10 @@ CArrayPtr<CSIPManagedProfile>* CGSSIPModel::ProfileArray()
 TBool CGSSIPModel::SaveProfileL()
     {
     __GSLOGSTRING("CGSSIPModel::SaveProfileL" )
+    if( iNewProfile )
+    	{
+    	return EFalse;
+    	}
     TBool modifications = ETrue;
     TInt err( KErrNone );
 
@@ -1199,9 +1203,9 @@ void CGSSIPModel::CheckProfileForDeleteL(
     
     if ( profile )
         {
-        profile->GetParameter( KSIPProfileRegistered, aIsUse );
         profile->GetParameter( KSIPDefaultProfile, aDefault );
         profile->GetParameter( KSIPProfileLocked, aLocked );
+        aIsUse = iEngine->IsInUseL( *profile );
         } 
     __GSLOGSTRING("CGSSIPModel::CheckProfileForDeleteL End" )
     }

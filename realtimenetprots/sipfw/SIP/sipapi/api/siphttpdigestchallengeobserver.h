@@ -38,6 +38,12 @@
 * The user should provide credentials or ignore the challenge
 * using functions defined in TSIPHttpDigest class.
 *
+* MSIPHttpDigestChallengeObserver class is compliant with RFC 2543
+* where Proxy use to forward only one challenge when it receives 
+* multiple challenges on forking the request. Applications are 
+* encouraged to use MSIPHttpDigestChallengeObserver2 class which
+* provides interface to extract multiple challenges.
+* MSIPHttpDigestChallengeObserver2 class is compliant to RFC 3261
 *  @lib n/a
 */
 class MSIPHttpDigestChallengeObserver

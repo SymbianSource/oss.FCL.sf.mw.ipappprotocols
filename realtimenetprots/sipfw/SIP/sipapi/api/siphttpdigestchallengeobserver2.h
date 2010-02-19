@@ -42,6 +42,10 @@ class CSIPRefresh;
 * The user should provide credentials or ignore the challenge
 * using functions defined in CSIPHttpDigest class.
 *
+* Applications are encouraged to use implement below interface which
+* provides functions to extract multiple challenges.
+* MSIPHttpDigestChallengeObserver2 class is compliant to RFC 3261
+*
 *  @lib n/a
 */
 class MSIPHttpDigestChallengeObserver2

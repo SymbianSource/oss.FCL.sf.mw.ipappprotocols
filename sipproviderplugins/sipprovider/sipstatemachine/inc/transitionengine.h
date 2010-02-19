@@ -511,6 +511,8 @@ private:
 	@param aRealm - Realm of the issuer of the challenge
 	*/
 	TBool FindAndSetCredentials(const TDesC8& aRealm);
+
+	void IncomingRequestHandlerL(CSIPServerTransaction* aTransaction);
 	
 private:
 	// For Logging

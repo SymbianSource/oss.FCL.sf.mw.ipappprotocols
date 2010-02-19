@@ -86,6 +86,7 @@ LIBRARY           flogger.lib
 LIBRARY           netmeta.lib
 LIBRARY           centralrepository.lib
 LIBRARY 	  cmmanager.lib
+LIBRARY           commsdat.lib 
 
 VENDORID 0x70000001
 

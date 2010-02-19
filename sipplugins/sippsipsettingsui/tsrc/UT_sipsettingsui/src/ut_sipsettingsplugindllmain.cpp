@@ -19,7 +19,6 @@
 //  USER INCLUDES
 #include "ut_gssipprofileutil.h"
 #include "ut_sipsettingscontainer.h"
-#include "ut_gssiptimer.h"
 #include "ut_sipsettlistsipprofsetcontainer.h"
 #include "ut_sipsettlistsipsrvsetview.h"
 #include "ut_sipSettlistsipprofsetview.h"
@@ -44,9 +43,6 @@ EXPORT_C MEUnitTest* CreateTestSuiteL()
 
     rootSuite->AddL( UT_SIPSettListSIPProfSetContainer::NewLC() );
     CleanupStack::Pop();    
-    
-    rootSuite->AddL( UT_GSSIPTimer::NewLC() );
-    CleanupStack::Pop();
     
     rootSuite->AddL( UT_SIPSettListSIPRegSetView::NewLC() );
     CleanupStack::Pop();

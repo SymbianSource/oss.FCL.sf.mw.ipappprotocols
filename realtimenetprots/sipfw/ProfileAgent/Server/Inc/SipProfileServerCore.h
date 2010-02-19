@@ -676,6 +676,12 @@ class CSIPProfileServerCore : public CBase,
         */
         void AddProfilesInCacheL(RPointerArray<CSIPConcreteProfile>& aProfiles,TBool aNotifyProfileCreation);
         
+		/**
+		* Gets the IAP Count in the Snap
+        * @return number of aIaps in the Snap
+        */
+        TInt IAPCountL(TUint32 aSnapId) const;
+        
 	private: // Data
 	
 		RFs										iFs;

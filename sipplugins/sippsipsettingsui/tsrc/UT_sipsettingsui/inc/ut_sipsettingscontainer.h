@@ -64,16 +64,9 @@ class UT_CSIPSettingsContainer : public CEUnitTestSuiteClass
     private: // Test methods
 		void UT_CSIPSettingsContainer_OfferKeyEventLL();
         void UT_CSIPSettingsContainer_FocusChangedL();
-        void UT_CSIPSettingsContainer_HandleLongTapEventLL();
         void UT_CSIPSettingsContainer_ProcessCommandLL();
-        void UT_CSIPSettingsContainer_HandlePointerEventLL();
-        void UT_CSIPSettingsContainer_IfPointerEventL();
         void UT_CSIPSettingsContainer_SetEmphasisL();
-        void UT_CSIPSettingsContainer_LongPressStatusL();
-        void UT_CSIPSettingsContainer_SetLongPressL();
-        void UT_CSIPSettingsContainer_StylusPopupMenuL();
-        void UT_CSIPSettingsContainer_SetStylusPopupMenuL();
-        void UT_CSIPSettingsContainer_PenEventLocationL();
+
         
     private:    // Data
 

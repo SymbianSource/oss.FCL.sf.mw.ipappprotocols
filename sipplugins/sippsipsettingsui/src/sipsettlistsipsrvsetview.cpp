@@ -20,7 +20,7 @@
 // INCLUDE FILES
 #include    <aknViewAppUi.h>
 #include    <akntitle.h>
-#include    <stringloader.h>
+#include    <StringLoader.h>
 #include    <hlplch.h>
 #include    <featmgr.h>
 #include    <gssipsettingspluginrsc.rsg> //GUI Resource
@@ -217,7 +217,7 @@ void CSIPSettListSIPSrvSetView::DynInitMenuPaneL(
     if( aResourceId == R_GS_SIP_SERVER_SETTING_VIEW_MENU ) 
         {
         // iView might be NULL
-        if( iView && iView->IfPointerEvent() )
+        if( iView )
         	{
         	aMenuPane->SetItemDimmed( EGSCmdAppChange, ETrue );
         	}

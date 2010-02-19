@@ -21,7 +21,7 @@
 
 // INCLUDES
 #include <CWPAdapter.h>
-#include <mwpcontextextension.h>
+#include <MWPContextExtension.h>
 
 // FORWARD DECLARATIONS
 class CWPCharacteristic;

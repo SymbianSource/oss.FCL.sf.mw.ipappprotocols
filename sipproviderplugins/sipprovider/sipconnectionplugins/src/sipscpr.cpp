@@ -127,6 +127,7 @@ ACTIVITY_MAP_END_BASE(SCprActivities, coreSCprActivities)
 CSipSubConnectionProvider::~CSipSubConnectionProvider()
     {
     LOG_NODE_DESTROY(KSipSCprTag, CSipSubConnectionProvider);
+    if(iSipSm != NULL)
     iSipSm->DeleteWhenReady();
     }
 
@@ -348,8 +349,13 @@ void CSipSubConnectionProvider::CallTerminated(TInt aError, TInt aSipCode)
     	  	return;
         	}
     	sipevent->SetResponse(aSipCode);
-    	NotifyClientsL(*sipevent);    		        	    	
-    	}    
+    	TRAP(error, NotifyClientsL(*sipevent));    		        	    	
+    	if (error != KErrNone)
+		    {
+		    __CFLOG_VAR((KSipSCprTag, KSipSCprSubTag, _L8("NotifyClientsL left with the error: [%d]"), error));
+		    return;
+        	}
+		}
     }
 
 /**
@@ -417,7 +423,12 @@ void CSipSubConnectionProvider::CredentialsRequired(const TDesC8 &/* aRealm*/)
     	__CFLOG_VAR((KSipSCprTag, KSipSCprSubTag, _L8("CSubConSIPAuthenticationRequiredEvent::SetRealmL()  left with error [%d]"), error));    	      	
 	    return;
     	}
-     NotifyClientsL(*event); 
+     TRAP(error, NotifyClientsL(*event)); 
+	if (error != KErrNone)
+	{
+	__CFLOG_VAR((KSipSCprTag, KSipSCprSubTag, _L8("NotifyClientsL left with the error: [%d]"), error));
+	return;
+	}
      #endif   
 	}
 
@@ -430,11 +441,21 @@ void CSipSubConnectionProvider::ReceiveNotification(TDesC8 & aNotification)
 	
 	__CFLOG_VAR((KSipSCprTag, KSipSCprSubTag, _L8("CSipSubConnectionProvider::ReceiveNotification")));
 	CSubConSIPNotificationEvent* event = CSubConSIPNotificationEvent::NewL();
-	event->SetNotificationL(aNotification);
+	TRAPD(error, event->SetNotificationL(aNotification));
+	if (error != KErrNone)
+	{
+	__CFLOG_VAR((KSipSCprTag, KSipSCprSubTag, _L8("event->SetNotificationL left with the error: [%d]"), error));
+	return;
+	}
 	
 	TInt32 gId = event->GroupId();
 		
-	NotifyClientsL(*event);      
+	TRAP(error, NotifyClientsL(*event));      
+	if (error != KErrNone)
+	{
+	__CFLOG_VAR((KSipSCprTag, KSipSCprSubTag, _L8("NotifyClientsL left with the error: [%d]"), error));
+	return;
+	}
 	}
 	
 /**

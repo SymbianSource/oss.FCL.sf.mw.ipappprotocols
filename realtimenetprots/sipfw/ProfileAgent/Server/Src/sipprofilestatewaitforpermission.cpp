@@ -255,7 +255,6 @@ void CSIPProfileStateWaitForPermission::MigrationIsAllowedL(
 			{
 			aItem.HandleProfileError(err, aItem.Profile());
 			}
-		User::Leave(err);
 		}
 	}
 
