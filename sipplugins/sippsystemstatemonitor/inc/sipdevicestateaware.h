@@ -49,14 +49,6 @@ class CSipDeviceStateAware: public CActive
          * to stop themselves getting notified for system state changes 
 		 */
         void RemoveObserver( MSipSystemStateObserver& aObserver );
-        
-        /**
-         * In case if profile de-registration could not be completed by
-         * observers, TimerExpiredL will call this function to indicate 
-         * that event processing is complete and further notification will
-         * be given to the System State Manager. 
-         */
-		void EventProcessingCompleted();
 		
 		/**
 		 * In case if the profiles de-registration is completed within the 
@@ -75,6 +67,7 @@ class CSipDeviceStateAware: public CActive
         
         //Destructor
         ~CSipDeviceStateAware();
+        
     private:
         //Default Construtor
         CSipDeviceStateAware();
@@ -90,6 +83,15 @@ class CSipDeviceStateAware: public CActive
          * state of the phone changes
          */
         void NotifyObservers(CSipSystemStateMonitor::TSystemState aState) const;
+        
+        /**
+         * In case if profile de-registration could not be completed by
+         * observers, TimerExpiredL will call this function to indicate 
+         * that event processing is complete and further notification will
+         * be given to the System State Manager. 
+         */
+        void EventProcessingCompleted();
+        
     private:
         
         //List of observers who have opted for system state changes

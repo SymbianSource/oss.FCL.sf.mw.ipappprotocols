@@ -21,6 +21,8 @@
 #include "CSystemStateConnUsagePermissionMonitor.h"
 #include "sipdevicestateaware.h"
 #include "siprfsmonitorao.h"
+#include "sipvpnmonitorao.h"
+#include <featmgr.h>          // for Feature Manager
 
 // -----------------------------------------------------------------------------
 // CSipSystemStateMonitorImpl::NewL
@@ -62,6 +64,13 @@ CSipSystemStateMonitorImpl::CSipSystemStateMonitorImpl()
 //
 CSipSystemStateMonitorImpl::~CSipSystemStateMonitorImpl()
     {
+    // iVpnMonitor is created in StartMonitoringL().
+    if ( FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn ) )
+        {
+        delete iVpnMonitor;
+        iVpnMonitor = NULL;
+        }
+		
     delete iMonitorAo;
     iSnapMonitors.ResetAndDestroy();
     delete iUsagePermissionMonitor;
@@ -116,6 +125,16 @@ void CSipSystemStateMonitorImpl::StartMonitoringL(
         iRfsMonitor = iRfsMonitor?iRfsMonitor:CSipRfsMonitorAo::NewL();
         iRfsMonitor->AddObserverL( aObserver );
         }
+    // CSipVpnMonitorAo is created for P&S key change monitoring.
+    else if ( FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn )
+         && ( aVariable == EVpnState ) )
+        {
+        if ( !iVpnMonitor )
+            {
+            iVpnMonitor = CSipVpnMonitorAo::NewL();
+            }
+        iVpnMonitor->AddObserverL( aObserver );
+        }
     else
         {
         User::Leave( KErrNotSupported );
@@ -155,6 +174,15 @@ void CSipSystemStateMonitorImpl::StopMonitoring(
         if(iRfsMonitor)
             iRfsMonitor->RemoveObserver( aObserver );
         }
+    // Remove the client as an observer when stops VPN P&S key monitoring.
+    else if ( FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn )
+         && ( aVariable == EVpnState ) )
+        {
+        if ( iVpnMonitor )
+            {
+            iVpnMonitor->RemoveObserver( aObserver );
+            }
+        }
     }
 
 // -----------------------------------------------------------------------------
@@ -188,6 +216,15 @@ TInt CSipSystemStateMonitorImpl::CurrentValue(
         if(iRfsMonitor)
             iRfsMonitor->State();
         }
+    else if ( FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn )
+         && ( aVariable == EVpnState ) )
+        {
+        if( iVpnMonitor )
+            {
+            return iVpnMonitor->State();
+            }
+        }
+		
     return KErrNotFound;
     }
 
@@ -207,6 +244,13 @@ void CSipSystemStateMonitorImpl::EventProcessingCompleted(
 	else if ( iSipDeviceAwareObject && aVariable == ESystemState )
         {
         iSipDeviceAwareObject->EventProcessingCompleted(aObserver);
+        }
+    // SIP deregistration for VPN session has been completed. 
+    else if ( FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn )
+         && ( aVariable == EVpnState ) 
+         && iVpnMonitor )
+        {
+        iVpnMonitor->EventProcessingCompleted(aObserver);
         }
     }
 

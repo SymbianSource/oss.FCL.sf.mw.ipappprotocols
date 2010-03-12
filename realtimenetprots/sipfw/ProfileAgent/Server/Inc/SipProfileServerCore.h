@@ -35,6 +35,7 @@
 #include "sipprofileagentobserver.h"
 #include "sipprofileerrorhandler.h"
 #include <sipsystemstateobserver.h>
+#include "sipapnmanager.h"
 #include <e32base.h>
 
 // FORWARD DECLARATIONS
@@ -67,8 +68,29 @@ class CSipSystemStateMonitor;
 class CSIPProfileServerCore : public CBase, 
                               public MSIPProfileAgentObserver,
                               public MSipProfileErrorHandler,
-                              public MSipSystemStateObserver
+                              public MSipSystemStateObserver,
+                              public MSIPApnChangeObserver
 	{
+    
+    public:
+    /*
+     * struct to store ApnSwitchEnabled profiles in the event 
+     * when IAPSettings are not same as required.
+     */
+    struct TStoreSwitchEnabledProfile
+        {
+    public:
+        enum TOperation
+            {
+            Update =1,
+            Enable,
+            Register
+            };
+        CSIPConcreteProfile*                          iProfile;
+        const MSIPExtendedConcreteProfileObserver*    iObserver;
+        TOperation                                    operation;
+        };
+    
 	public: // Constructors and destructor
     
 	    /**
@@ -116,6 +138,10 @@ class CSIPProfileServerCore : public CBase,
             CSipSystemStateMonitor::TSystemVariable aVariable,
     		TInt aObjectId,
     		TInt aValue );
+        
+	public: // MSIPApnChangeObserver
+	    
+        void ApnChanged( const TDesC8& aApn, TUint32 aIapId, TInt aError );
 
     public: // New functions
 
@@ -441,18 +467,41 @@ class CSIPProfileServerCore : public CBase,
 		TUint32 GenerateProfileIdL();
 
 		/**
-		 * Sends forcibly disable profile added event to all clients
-		 * @param aProfileId: Id of the profile being disabled forcibly 
-		 */
+		* Sends forcibly disable profile added event to all clients
+		* @param aProfileId: Id of the profile being disabled forcibly 
+		*/
 		void SendProfileForciblyDisabledEvent(const CSIPProfileCacheItem& aItem) const;
 		
-      /**
-        * Gets cached profile, leave if not found
-        * ownership is not transfered
-        * @param aProfileId id of profile. 
-        * @return profile cache item 
-        */
-        CSIPProfileCacheItem* ProfileCacheItemL(TUint32 aProfileId) const;
+    /**
+    * Gets cached profile, leave if not found
+    * ownership is not transfered
+    * @param aProfileId id of profile. 
+    * @return profile cache item 
+    */
+    CSIPProfileCacheItem* ProfileCacheItemL(TUint32 aProfileId) const;
+
+		/**
+		*Starts timer of type CDeltaTimer, 
+		*which callback is ConnectionCloseTimerExpired function
+		*/
+		void StartConnectionCloseTimer();
+		
+		/**
+		* A callback for CDeltaTimer
+		*/
+		static TInt ConnectionCloseTimerExpired(TAny* aPtr);
+		
+		/**
+		* Notify system state monitor about event processing completion
+		*/
+		void ConfirmSystemstateMonitor(
+			CSipSystemStateMonitor::TSystemVariable aVariable);
+			
+		/*
+         * Checks whether the Update can be performed when the profile
+         * has IAP as modem bearer.
+         */
+        TBool IsUpdateAllowed( CSIPConcreteProfile *aProfile );
 
 	private:
 
@@ -468,9 +517,9 @@ class CSIPProfileServerCore : public CBase,
 		void ConstructL();
 
 		/**
-        * Sends status event to observers of the profile
+    * Sends status event to observers of the profile
 		* @param aItem holds profile and observers
-        */
+    */
 		void SendStatusEventL(CSIPProfileCacheItem& aItem, 
 							  CSIPConcreteProfile::TStatus aStatus) const;
 
@@ -613,32 +662,32 @@ class CSIPProfileServerCore : public CBase,
 		*/
 		void ReserveStorageL(TBool aRestoreOngoing);
 
-	    /**
-        * Cleans up array in case of failure
-        * ownership of aArray is transferred
+	  /**
+    * Cleans up array in case of failure
+    * ownership of aArray is transferred
 		* @param aArray array to be cleaned up
-        */
+    */
 		static void ResetAndDestroy(TAny* aArray);
 
-	    /**
-        * Cleans up array in case of failure
-        * ownership of aArray is transferred
+	  /**
+    * Cleans up array in case of failure
+    * ownership of aArray is transferred
 		* @param aArray array to be cleaned up
-        */
+    */
 		static void ResetAndDestroyInfo(TAny* aArray);
 
-	    /**
-        * Reverts back cache in case of failure      
+	  /**
+    * Reverts back cache in case of failure      
 		* @param aItem cache cleanup item
-        */
+    */
 		static void CrashRevert(TAny* aItem);
 		
 		/**
-        * Handles the errors occured during the profile restore     
+    * Handles the errors occured during the profile restore     
 		* @param aErr
 		* @param fileStore specifies the kind of the file on which 
 		* the storage error has occured
-        */
+    */
 		void HandleProfileStorageErrorL(TInt aErr, TBool fileStore=EFalse);
 
 		/**
@@ -648,10 +697,10 @@ class CSIPProfileServerCore : public CBase,
 		void RemoveProfileItem(TUint32 aProfileId);
 
 		/**
-        * Removes unused migration controllers, except if it uses the specified
-        * SNAP id.
+    * Removes unused migration controllers, except if it uses the specified
+    * SNAP id.
 		* @param aSnapId SNAP id
-        */
+    */
 		void RemoveUnusedMigrationControllers(TUint32 aSnapId);
 
 		void LoadSystemStateMonitorL();
@@ -662,25 +711,60 @@ class CSIPProfileServerCore : public CBase,
 		*/
 		CSIPConcreteProfile* FindDefaultProfile() const;
 
-        TBool ShouldChangeIap(CSIPConcreteProfile& aProfile, TInt aError) const;
+    TBool ShouldChangeIap(CSIPConcreteProfile& aProfile, TInt aError) const;
 
-        /**
-        * @return ETrue if any registered profile is using aIap
-        */
-        TBool AnyRegisteredProfileUsesIap(TUint aIap) const;
+    /**
+    * @return ETrue if any registered profile is using aIap
+    */
+    TBool AnyRegisteredProfileUsesIap(TUint aIap) const;
         
-        /**
-        * Add profiles in Profile Cache
-        * @param aProfiles Array of the profiles to be added
-        * @param aNotifyProfileCreation specifies whether the notification to be sent to the profile clients
-        */
-        void AddProfilesInCacheL(RPointerArray<CSIPConcreteProfile>& aProfiles,TBool aNotifyProfileCreation);
+    /**
+    * Add profiles in Profile Cache
+    * @param aProfiles Array of the profiles to be added
+    * @param aNotifyProfileCreation specifies whether the notification
+    * to be sent to the profile clients
+    */
+    void AddProfilesInCacheL(RPointerArray<CSIPConcreteProfile>& aProfiles,
+    	TBool aNotifyProfileCreation);
         
 		/**
 		* Gets the IAP Count in the Snap
-        * @return number of aIaps in the Snap
-        */
-        TInt IAPCountL(TUint32 aSnapId) const;
+    * @return number of aIaps in the Snap
+    */
+    TInt IAPCountL(TUint32 aSnapId) const;
+	
+	 /*
+         * Checks whether the current seetings are same as 
+         * required seetings for Registeration.
+         * @ returns ETrue when the seetings are correct
+         *      EFalse otherwise
+         */
+        
+        TBool IsRegistrationAllowedWithCurrentApnSettings( TUint32 aIapId );
+        
+        /**
+         ** Selecting Initial Apn for the profile
+         **/
+        void SelectInitialApnL( const CSIPConcreteProfile& aProfile );
+        
+        /**
+         * Checks whether the profile's IAP is switch enabled 
+         * @ returns ETrue when the profile is APN switch enabled
+         *      EFalse otherwise
+         */
+        TBool CheckApnSwitchEnabledL( const CSIPConcreteProfile& aProfile );
+               
+        /**
+         * Checks the IAP settings 
+         * @ returns ETrue when all the settings are correct
+         *      EFalse otherwise 
+         */
+        TBool CheckIapSettings(TUint32 aProfileId);
+        
+        void UsePrimaryApn(TUint32 aIapId);
+
+        void UseBackupApn( TUint32 aIapId, TBool aFatalFailure = ETrue );
+		
         
 	private: // Data
 	
@@ -725,8 +809,17 @@ class CSIPProfileServerCore : public CBase,
 
 		// Owned
 		CSipSystemStateMonitor*				iSystemStateMonitor;
+		//ApnManager
+		CSIPApnManager*                     iApnManager; // iBackupApnSettings;
+		RArray<TStoreSwitchEnabledProfile>                iWaitForApnSettings;
 
 		TBool 								iOfflineEventReceived;
+		
+		TBool									iFeatMgrInitialized;
+		
+		CDeltaTimer* 						iDeltaTimer;
+		TCallBack 							iDeltaTimerCallBack;
+		TDeltaTimerEntry 					iDeltaTimerEntry;
 
 	private: // For testing purposes
 #ifdef CPPUNIT_TEST

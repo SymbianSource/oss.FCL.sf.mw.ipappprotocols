@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2008 Nokia Corporation and/or its subsidiary(-ies).
+* Copyright (c) 2010 Nokia Corporation and/or its subsidiary(-ies).
 * All rights reserved.
 * This component and the accompanying materials are made available
 * under the terms of "Eclipse Public License v1.0"
@@ -11,12 +11,16 @@
 *
 * Contributors:
 *
-* Description:  
+* Description : P&S key monitor for communication between SIP Profile 
+*               server and VPN client
+* Name        : sipvpnmonitorao.cpp
+* Part of     : Sip System State Monitor
+* Version     : 1.0
 *
 */
 
-#ifndef SIPRFSMONITORAO_H
-#define SIPRFSMONITORAO_H
+#ifndef SIPVPNMONITORAO_H
+#define SIPVPNMONITORAO_H
 
 // INCLUDES
 #include <e32base.h>
@@ -25,39 +29,41 @@
 #include <e32cmn.h>
 #include <sipsystemstatemonitor.h>
 
-class CSipRfsMonitorAo : public CActive
+class CSipVpnMonitorAo : public CActive
     {
     public: // Constructors and destructor
-        static CSipRfsMonitorAo* NewL();    
-        ~CSipRfsMonitorAo();
+        static CSipVpnMonitorAo* NewL();    
+        ~CSipVpnMonitorAo();
         
     private: // Constructors
-        CSipRfsMonitorAo();
-        void ConstructL ();
+        CSipVpnMonitorAo();
+        void ConstructL();
         
     public: // New Functions
-        CSipSystemStateMonitor::TRfsState State() const;
+        CSipSystemStateMonitor::TVpnState State() const;
         void AddObserverL( MSipSystemStateObserver& aObserver );
         void RemoveObserver( MSipSystemStateObserver& aObserver );
         void EventProcessingCompleted(MSipSystemStateObserver& aObserver);
         TBool MappedState(TInt aState);
+        static TInt TimerExpired(TAny* aSelf);
         
     private:
         void NotifyObservers();
-        
+        void EventProcessingCompleted();
     private: // From CActive
         void RunL();
         TInt RunError( TInt aError );
         void DoCancel();
 
     private: // Data
-        // Observers not owned
         TInt                                        iCount;
-        RPointerArray<MSipSystemStateObserver>      iObservers;
-        RProperty                                   iProperty;
-        CSipSystemStateMonitor::TRfsState           iState;
-        
+        // Observers not owned
+        RPointerArray<MSipSystemStateObserver> iObservers;
+        RProperty iProperty;
+        CSipSystemStateMonitor::TVpnState iState;
+        CPeriodic* iGuardTimer;
+		        
     private: // For testing purposes  
-        friend class CSipRfsMonitorAoTestApp;
+        friend class CSipVpnMonitorAoTestApp;
     };
-#endif /* SIPRFSMONITORAO_H */
+#endif /* SIPVPNMONITORAO_H */

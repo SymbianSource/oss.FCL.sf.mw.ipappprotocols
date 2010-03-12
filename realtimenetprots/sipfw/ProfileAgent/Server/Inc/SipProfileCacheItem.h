@@ -301,7 +301,43 @@ class CSIPProfileCacheItem : public CBase, public MSipAlrMigrationObserver
 		*         EFalse otherwise
 		*/
 		TBool IsRfsInprogress() const;
+		
+		/**
+		 * VPN session is about to start.
+		 */
+		void VpnInUse(TBool aStatus);
 
+		/**
+		 * Tells if VPN is in use.
+		 * @return ETrue if VPN is in use.
+		 *         EFalse otherwise
+		 */
+		TBool IsVpnInUse() const;
+		
+		/**
+		 * Sets the initial APN for the profile
+		 */
+		void SetApnSelected(TBool aStatus);
+		
+		/**
+		 * Tells if initial Apn is selected or not
+		 * @return ETrue if Initial APN settings are done
+         *         EFalse otherwise
+		 */
+		TBool IsInitialApnSelected() const;
+		
+	    /**
+	     * Tells if Apn can be switched for a given IAP
+	     * @return ETrue if Profile all the switchable parameters
+         *         EFalse otherwise
+	     */
+		TBool IsApnSwitchEnabled() const;
+		
+		/**
+		 * Sets the switch value for the profile
+		 */
+		 void SetApnSwitchStatus(TBool aStatus);
+		        
         /**
         * Checks if profile can be permanently removed
 		* @return ETrue if not used and can be removed
@@ -613,6 +649,9 @@ class CSIPProfileCacheItem : public CBase, public MSipAlrMigrationObserver
 		
 		// ETrue if Rfs has been initiated
 		TBool                       iIsRfsInprogress;
+
+		// ETrue if VPN is in use
+		TBool                       iIsVpnInUse;
 		
 		// Tells if at least one client disallowed migration to a new IAP
 		TBool 						iMigrationDisallowed;
@@ -620,6 +659,12 @@ class CSIPProfileCacheItem : public CBase, public MSipAlrMigrationObserver
 		// ETrue if a new IAP came available, but it was disallowed by the
 		// profile, because new IAP couldn't be handled.
 		TBool						iMustRefreshIAPs;
+		
+		// ETrue when if the initial APN is selcted.
+		TBool                       iInitialApnSelected;
+		
+		// ETrue when APN can be switched for the profile. 
+		TBool                       iApnSwitchEnabled;
 
 		// Not owned. NULL if SNAP is not configured.
 		CSipAlrMigrationController* iMigrationController;

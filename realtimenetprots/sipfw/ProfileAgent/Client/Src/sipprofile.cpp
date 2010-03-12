@@ -313,6 +313,8 @@ EXPORT_C TInt CSIPProfile::GetParameter(TUint32 aServerType,
 		case KSIPOutboundProxy:
 		case KSIPPrivateIdentity:
 		case KSIPSoIpTOS:
+		case KPrimaryAPN:
+		case KSecondaryAPN:
 			{
 			return KErrNotFound;
 			}

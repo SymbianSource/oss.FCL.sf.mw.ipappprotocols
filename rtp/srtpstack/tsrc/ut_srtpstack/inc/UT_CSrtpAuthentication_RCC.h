@@ -94,6 +94,8 @@ NONSHARABLE_CLASS( UT_CSrtpAuthentication_RCC )
          void UT_AuthenticateL_RFC2202_Test7_80L();
          void UT_AuthenticateL_RFC2202_Test7_32L();
          void UT_AuthenticateL_Test8_32L(  );
+         void UT_AuthenticateL_Test_KeyChangedL();
+         
     private:    // Data
 
         CSrtpAuthentication_RCC* iAuthenticator;    

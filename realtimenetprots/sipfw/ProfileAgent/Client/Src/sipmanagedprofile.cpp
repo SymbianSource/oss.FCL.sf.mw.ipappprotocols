@@ -224,6 +224,8 @@ void CSIPManagedProfile::SetParameterL(TUint32 aParam, TUint32 aVal)
 		case KSIPDigestPassword:
 		case KSIPHeaders:
 		case KSIPContactHeaderUser:
+        case KPrimaryAPN:
+        case KSecondaryAPN:
 			User::Leave(KErrNotFound);
 		case KSIPSnapId:
 			__ASSERT_ALWAYS((aVal>0),User::Leave(KErrArgument));
@@ -272,6 +274,8 @@ void CSIPManagedProfile::SetParameterL(TUint32 aParam, TBool aVal)
 		case KSIPContactHeaderUser:
 		case KSIPSoIpTOS:
 		case KSIPSnapId:
+        case KPrimaryAPN:
+        case KSecondaryAPN:
 			User::Leave(KErrNotFound);			
 		default:
 			iSIPProfile->SetExtensionParameterL(aParam, aVal);
@@ -313,6 +317,8 @@ void CSIPManagedProfile::SetParameterL(TUint32 aServerType,
 		case KSIPContactHeaderUser:
 		case KSIPSoIpTOS:	
 		case KSIPSnapId:
+        case KPrimaryAPN:
+        case KSecondaryAPN:
 		User::Leave(KErrNotFound);
 		default:
 			TBuf8<KParameterbufLength> buf;
@@ -358,6 +364,8 @@ void CSIPManagedProfile::SetParameterL(TUint32 aParam,
 		case KSIPContactHeaderUser:
 		case KSIPSoIpTOS: 	
 		case KSIPSnapId:
+        case KPrimaryAPN:
+        case KSecondaryAPN:
 		User::Leave(KErrNotFound);
 		default:
 			iSIPProfile->SetExtensionParameterL(aParam, aVal);

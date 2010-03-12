@@ -46,6 +46,10 @@ SOURCE            sipalrhandler.cpp
 SOURCE            sipalrmigrationcontroller.cpp
 SOURCE            sipalrmigrationobserverinfo.cpp
 
+SOURCEPATH        ../ApnManager/src
+SOURCE            sipapnmanager.cpp
+SOURCE            sipapnconfigurationhandler.cpp
+
 SOURCEPATH        ../Store/Src
 SOURCE            SIPProfileStorageBase.cpp
 SOURCE            SIPProfileStorageIndex.cpp
@@ -69,6 +73,7 @@ USERINCLUDE       ../PluginMgr/api
 USERINCLUDE       ../PluginMgr/Inc
 USERINCLUDE       ../Store/Inc
 USERINCLUDE       ../AlrMonitor/inc
+USERINCLUDE       ../ApnManager/inc
 
 MW_LAYER_SYSTEMINCLUDE
 
@@ -87,10 +92,12 @@ LIBRARY           netmeta.lib
 LIBRARY           centralrepository.lib
 LIBRARY 	  cmmanager.lib
 LIBRARY           commsdat.lib 
+LIBRARY           featmgr.lib
+LIBRARY 	  commdb.lib
 
 VENDORID 0x70000001
 
-CAPABILITY ProtServ NetworkServices ReadDeviceData
+CAPABILITY ProtServ NetworkServices ReadDeviceData WriteDeviceData
 
 // MACRO 	PLAT_SEC_TEST
 

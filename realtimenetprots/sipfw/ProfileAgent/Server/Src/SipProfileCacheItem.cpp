@@ -84,6 +84,9 @@ CSIPProfileCacheItem::CSIPProfileCacheItem(CSIPProfileServerCore& aCore,
 #endif
 	{
 	iIsRfsInprogress = EFalse;
+	iIsVpnInUse = EFalse;
+	iInitialApnSelected = EFalse;
+	iApnSwitchEnabled = EFalse;
 	iDeltaTimerEntry.Set(iDeltaTimerCallBack);
 	}
 
@@ -560,6 +563,61 @@ TBool CSIPProfileCacheItem::IsRfsInprogress() const
     return iIsRfsInprogress;
     }
 
+// -----------------------------------------------------------------------------
+// CSIPProfileCacheItem::VpnInUse
+// -----------------------------------------------------------------------------
+//
+void CSIPProfileCacheItem::VpnInUse(TBool aStatus)
+    {
+    iIsVpnInUse = aStatus;
+    }
+
+// -----------------------------------------------------------------------------
+// CSIPProfileCacheItem::IsVpnInUse
+// -----------------------------------------------------------------------------
+//
+TBool CSIPProfileCacheItem::IsVpnInUse() const
+    {
+    return iIsVpnInUse;
+    }
+
+// -----------------------------------------------------------------------------
+// CSIPProfileCacheItem::SetApnSelected
+// -----------------------------------------------------------------------------
+//
+void CSIPProfileCacheItem::SetApnSelected(TBool aStatus)
+    {
+    iInitialApnSelected = aStatus;
+    }
+
+// -----------------------------------------------------------------------------
+// CSIPProfileCacheItem::IsInitialApnSelected
+// -----------------------------------------------------------------------------
+//
+TBool CSIPProfileCacheItem::IsInitialApnSelected() const
+    {
+    return iInitialApnSelected;
+    }
+
+// -----------------------------------------------------------------------------
+// CSIPProfileCacheItem::SetApnSwitchStatus
+// -----------------------------------------------------------------------------
+//
+void CSIPProfileCacheItem::SetApnSwitchStatus(TBool aStatus)
+    {
+    iApnSwitchEnabled = aStatus;
+    }
+
+// -----------------------------------------------------------------------------
+// CSIPProfileCacheItem::IsApnSwitchEnabled
+// -----------------------------------------------------------------------------
+//
+TBool CSIPProfileCacheItem::IsApnSwitchEnabled() const
+    {
+    return iApnSwitchEnabled;
+    }
+    
+// -----------------------------------------------------------------------------
 // CSIPProfileCacheItem::CanBePermanentlyRemoved
 // -----------------------------------------------------------------------------
 //

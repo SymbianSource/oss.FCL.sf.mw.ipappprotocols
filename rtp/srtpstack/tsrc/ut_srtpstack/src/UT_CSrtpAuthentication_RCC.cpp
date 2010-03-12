@@ -591,6 +591,12 @@ void UT_CSrtpAuthentication_RCC::UT_AuthenticateL_Test8_32L(  )
  	CleanupStack::PopAndDestroy(result); 	
  	}
 
+void UT_CSrtpAuthentication_RCC::UT_AuthenticateL_Test_KeyChangedL()
+{
+    UT_AuthenticateL_RFC2202_Test2_80L();
+    UT_AuthenticateL_RFC2202_Test3_80L();
+}
+
 void UT_CSrtpAuthentication_RCC::Hex(HBufC8& aString)
 {
     TPtr8 ptr=aString.Des();
@@ -722,7 +728,13 @@ EUNIT_TEST(
     "AuthenticateL with Real Packet",
     "FUNCTIONALITY",
     SetupL, UT_AuthenticateL_Test8_32L, Teardown)
-    
+  
+EUNIT_TEST(
+    "AuthenticateL - KeyChanged",
+    "CSrtpAuthentication_RCC",
+    "AuthenticateL",
+    "FUNCTIONALITY",
+    SetupL, UT_AuthenticateL_Test_KeyChangedL, Teardown)
 
 EUNIT_END_TEST_TABLE
 

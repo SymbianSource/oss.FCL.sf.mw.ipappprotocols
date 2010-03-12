@@ -23,6 +23,8 @@
 
 #include "msrtpauthentication.h"
 
+class CHMAC;
+
 class CSrtpAuthentication_RCC : public CBase, public MSRTPAuthentication
     {
     public:
@@ -65,7 +67,13 @@ class CSrtpAuthentication_RCC : public CBase, public MSRTPAuthentication
         */
         CSrtpAuthentication_RCC();  
                 
-        void ConstructL();          
+        void ConstructL();   
+        
+        void CreateHmacL(const TDesC8& aKey);
+        
+    private: // data
+        HBufC8* iKey;
+        CHMAC* iHmac;
     };
 
 #endif //__SRTP_AUTHENTICATION_RCC_H__

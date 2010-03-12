@@ -23,6 +23,7 @@
 
 #include <e32base.h>
 
+class CAESEncryptor;
 
 class CSrtpAESCTRCrypto : public CBase
   	{
@@ -67,6 +68,13 @@ private:
     * @param aIV  Integer Value (IV).
 	*/
 	void IncreaseIV(TDes8& iv);
+	
+	void CreateEncryptorL(const TDesC8& aKey);
+	
+private:
+    
+    HBufC8* iKey;
+    CAESEncryptor* iEncryptor;
 	
 	#ifdef EUNIT_TESTING
         friend class UT_CSrtpAESCTRCrypto;

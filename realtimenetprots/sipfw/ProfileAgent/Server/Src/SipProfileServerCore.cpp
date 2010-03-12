@@ -48,11 +48,15 @@
 #include <siperr.h>
 #include <sipsystemstatemonitor.h>
 #include <random.h>
-
-#include <CommsDatTypesV1_1.h>
-#include <MetaDatabase.h> 
+#include <featmgr.h>         // for Feature Manager
+#include <commsdattypesv1_1.h>
+#include <metadatabase.h> 
 #include <commsdattypeinfov1_1_internal.h>
 using namespace CommsDat;
+
+
+const TInt KMicroSecInSec = 1000000;
+const TInt KIdleTimer = 2;
 
 // ============================ MEMBER FUNCTIONS ===============================
 
@@ -86,7 +90,8 @@ CSIPProfileServerCore* CSIPProfileServerCore::NewLC()
 // -----------------------------------------------------------------------------
 //
 CSIPProfileServerCore::CSIPProfileServerCore() :
-	iBackupInProgress(EFalse)
+	iBackupInProgress(EFalse),
+	iDeltaTimerCallBack(ConnectionCloseTimerExpired, this)
 #ifdef CPPUNIT_TEST
     // Set the array granularity to 1, so they allocate memory for every append    
     , iProfileCache(1),
@@ -94,6 +99,8 @@ CSIPProfileServerCore::CSIPProfileServerCore() :
     iMigrationControllers(1)
 #endif
     {
+		iFeatMgrInitialized = EFalse;
+		iDeltaTimerEntry.Set(iDeltaTimerCallBack);
     }
 
 // -----------------------------------------------------------------------------
@@ -103,6 +110,11 @@ CSIPProfileServerCore::CSIPProfileServerCore() :
 void CSIPProfileServerCore::ConstructL()
     {
     User::LeaveIfError(iFs.Connect());
+    
+    FeatureManager::InitializeLibL();
+    iFeatMgrInitialized = ETrue;
+	
+	iDeltaTimer = CDeltaTimer::NewL(CActive::EPriorityStandard);
 
     iFindEntry = CSIPProfileCacheItem::NewL(*this, iUnregistered);
 
@@ -147,6 +159,8 @@ void CSIPProfileServerCore::ConstructL()
     									   *iUnregInProg,
     									   *iUnregistered);
 	iUnregisteringOldIAP->SetNeighbourStates(*iRegistered, *iUnregInProg);
+	
+	iApnManager = CSIPApnManager::NewL( *this );
 	
 	LoadSystemStateMonitorL();
 	
@@ -201,9 +215,16 @@ CSIPProfileServerCore::~CSIPProfileServerCore()
     delete iWaitForPermission;
     delete iMigratingToNewIAP;
     delete iUnregisteringOldIAP;
-
+	delete iApnManager;
     delete iNotify;
-
+    iWaitForApnSettings.Reset();
+    if(iFeatMgrInitialized)
+        {
+        FeatureManager::UnInitializeLib();
+        }
+	
+	delete iDeltaTimer;
+	
     iFs.Close();
 
     PROFILE_DEBUG1("ProfileServer stopped")
@@ -270,40 +291,39 @@ void CSIPProfileServerCore::SIPProfileStatusEventL(TUint32 aProfileId,
             	}
         		
         	}
-        if (item && item->IsRfsInprogress())
+        TBool eventCompleted = EFalse;
+        if(item && (item->IsRfsInprogress() || iOfflineEventReceived ||
+                (FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn )&& 
+                        item->IsVpnInUse())))
             {
             CSIPConcreteProfile::TStatus status;
             TInt count = iProfileCache.Count();
-            for (TInt i = 0; i < iProfileCache.Count(); i++)
+            for ( TInt i = 0; i < iProfileCache.Count(); i++ )
                 {
-                iPluginDirector->State(status, iProfileCache[i]->UsedProfile());
-                if (status == CSIPConcreteProfile::EUnregistered)
+                iPluginDirector->State( status, iProfileCache[i]->UsedProfile() );
+                if ( status == CSIPConcreteProfile::EUnregistered )
+                    {
                     count--;
+                    }
+                else if (status == CSIPConcreteProfile::ERegistered )
+                    {
+                    iProfileCache[i]->ShutdownInitiated();
+                    }
                 }
-            if (!count)
-                {
-                iSystemStateMonitor->EventProcessingCompleted(
-								CSipSystemStateMonitor::ERfsState, 0, *this);
-                }
+            if ( !count )
+                eventCompleted = ETrue;
             }
-        }
-		
-		if (iOfflineEventReceived)
-        {
-        CSIPConcreteProfile::TStatus status;
-        TInt count = iProfileCache.Count();
-        for (TInt i = 0; i < iProfileCache.Count(); i++)
+        if(eventCompleted)
             {
-            iPluginDirector->State(status, iProfileCache[i]->UsedProfile());
-            if (status == CSIPConcreteProfile::EUnregistered)
-                count--;
-            }
-        if (!count)
-            {
-            iSystemStateMonitor->EventProcessingCompleted(CSipSystemStateMonitor::ESystemState, 0, *this);
-            }
-        }
-		
+            if (item->IsRfsInprogress())
+                StartConnectionCloseTimer();
+            else if(iOfflineEventReceived)
+                ConfirmSystemstateMonitor(CSipSystemStateMonitor::ESystemState);
+            else if((FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn )&& 
+                        item->IsVpnInUse()))
+                ConfirmSystemstateMonitor(CSipSystemStateMonitor::EVpnState);                
+            }       
+        }		
     CheckServerStatus();
     }
 
@@ -434,11 +454,20 @@ void CSIPProfileServerCore::SystemVariableUpdated(
 	     (aValue == CSipSystemStateMonitor::ESystemShuttingDown || 
 	     aValue == CSipSystemStateMonitor::ESystemOffline
 			 ))
-	    {    
+	    {   
+	    TBool waitForDeregistration = EFalse;
         for (TInt i = 0; i < iProfileCache.Count(); i++)
             {
             iProfileCache[i]->ShutdownInitiated();
-            }	    
+            CSIPConcreteProfile::TStatus status;
+            iPluginDirector->State(status, iProfileCache[i]->UsedProfile());
+            if(status != CSIPConcreteProfile::EUnregistered)
+                waitForDeregistration = ETrue;            
+            }
+        if(!waitForDeregistration)
+            {
+            ConfirmSystemstateMonitor(CSipSystemStateMonitor::ESystemState);
+            }
 	    }
 	//If the System State is Online, register all the profiles in always on mode
 	else if(aVariable == CSipSystemStateMonitor::ESystemState && 
@@ -449,7 +478,7 @@ void CSIPProfileServerCore::SystemVariableUpdated(
 		    {
 		    iProfileCache[i]->ResetShutdownvariable();
 		    CSIPProfileCacheItem* item = iProfileCache[i];
-		    if (item->Profile().IsAutoRegistrationEnabled())
+		    if (iProfileCache[i]->IsReferred())
 		        {
                 TRAPD(err, item->StartRegisterL(*iWaitForIAP, *iRegInProg, ETrue));
 		        if (err != KErrNone)
@@ -464,9 +493,18 @@ void CSIPProfileServerCore::SystemVariableUpdated(
 	    if(aValue == CSipSystemStateMonitor::ERfsStarted)
 	        {
 	        PROFILE_DEBUG1("RFS Started, de-registering the profiles")
-	        for (TInt i = 0; i < iProfileCache.Count(); i++)
+	        TBool waitForDeregistration = EFalse;
+	        for (TInt i = 0; i < iProfileCache.Count(); i++)         
 	            {
 	            iProfileCache[i]->RfsInprogress(ETrue);
+	            CSIPConcreteProfile::TStatus status;
+	            iPluginDirector->State(status, iProfileCache[i]->UsedProfile());
+	            if (status != CSIPConcreteProfile::EUnregistered)
+	                waitForDeregistration = ETrue;
+	            }      
+	        if(!waitForDeregistration)
+	            {
+	            ConfirmSystemstateMonitor(CSipSystemStateMonitor::ERfsState);
 	            }
 	        }
 	    else if(aValue == CSipSystemStateMonitor::ERfsFailed)
@@ -496,7 +534,50 @@ void CSIPProfileServerCore::SystemVariableUpdated(
 	            }
 	        }
 	    }
-    }
+    // Perform de/re-registration for VPN.
+    else if( FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn )
+          && ( aVariable == CSipSystemStateMonitor::EVpnState ) )
+        {
+        // If VPN session is about to start, SIP should be deregistered.
+        if( aValue == CSipSystemStateMonitor::EVpnInitiating )
+            {
+            PROFILE_DEBUG1("VPN Initiated , de-registering the profiles")
+            TBool waitForDeregistration = EFalse;
+            for (TInt i = 0; i < iProfileCache.Count(); i++)
+                {
+                iProfileCache[i]->VpnInUse( ETrue );
+                iProfileCache[i]->ShutdownInitiated();
+                CSIPConcreteProfile::TStatus status;
+                iPluginDirector->State(status, iProfileCache[i]->UsedProfile());
+                if (status != CSIPConcreteProfile::EUnregistered)
+                    waitForDeregistration = ETrue;
+                }
+            if (!waitForDeregistration)
+                {
+                ConfirmSystemstateMonitor(CSipSystemStateMonitor::EVpnState);
+                }
+            }
+        // If VPN session ended, SIP should be re-registered.    
+        else if( aValue == CSipSystemStateMonitor::EVpnTerminated )
+            {
+            PROFILE_DEBUG1("VPN Terminated , re-registering the profiles")
+            for (TInt i = 0; i < iProfileCache.Count(); i++)
+                {
+                iProfileCache[i]->VpnInUse(EFalse);
+                if ( iProfileCache[i]->IsReferred() )
+                    {
+                    TRAPD(err, iProfileCache[i]->StartRegisterL(*iWaitForIAP, *iRegInProg, ETrue));
+                    if (err != KErrNone)
+                        {
+                        HandleAsyncError( *iProfileCache[i],
+                                          CSIPConcreteProfile::ERegistrationInProgress,
+                                          err);                            
+                        }
+                    }
+                }
+            }
+        }
+	}
 
 // -----------------------------------------------------------------------------
 // CSIPProfileServerCore::SessionRegisterL
@@ -824,6 +905,11 @@ TBool CSIPProfileServerCore::CanServerStop() const
             return EFalse;
             }
         }
+    if (iApnManager->HasPendingTasks())
+        {
+        PROFILE_DEBUG1("ApnManager has pending tasks, do not stop server yet")
+        return EFalse;
+        }
     return ETrue;
     }
 
@@ -904,14 +990,73 @@ void CSIPProfileServerCore::UpdateRegistrationL(TUint32 aProfileId,
     const MSIPExtendedConcreteProfileObserver& aObserver)
     {
     CSIPProfileCacheItem* item = ProfileCacheItemL(aProfileId);
+    TInt err(KErrNone);
     CSIPConcreteProfile::TStatus
     	status(CSIPConcreteProfile::ERegistrationInProgress);
+    
     if (item->Profile().Status() == CSIPConcreteProfile::ERegistered)
         {
         status = CSIPConcreteProfile::EUnregistrationInProgress;
         }
+    if(FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn))
+        {
+        if(item->LatestProfile().IapId()!= item->UsedProfile().IapId())
+            {
+            item->SetApnSelected(EFalse);
+            }
+        
+        item->SetApnSwitchStatus(EFalse);
+        if(CheckApnSwitchEnabledL(item->LatestProfile()))
+            {
+            const TDesC8* primaryApn( NULL );
+            const TDesC8* secondaryApn( NULL );
+            const TDesC8* latestprimaryApn( NULL );
+            const TDesC8* latestsecondaryApn( NULL );            
+                
+            TInt err1 = item->LatestProfile().ExtensionParameter(KPrimaryAPN,latestprimaryApn);
+            TInt err2 = item->UsedProfile().ExtensionParameter(KPrimaryAPN,primaryApn);            
+                
+            TInt err3 = item->LatestProfile().ExtensionParameter(KSecondaryAPN,latestsecondaryApn);
+            TInt err4 = item->UsedProfile().ExtensionParameter(KSecondaryAPN,secondaryApn);                          
+            if((err1 == KErrNone && err2 == KErrNone && latestprimaryApn->Compare(*primaryApn)!= 0)||
+                 (err3 == KErrNone && err4 == KErrNone &&
+                       latestsecondaryApn->Compare(*secondaryApn)!= 0))
+                {
+                item->SetApnSelected(EFalse);
+                }
+            }
+        }
 
-    TRAPD(err, item->UpdateRegistrationL(aObserver));
+        
+    if(FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn) 
+            && item->IsApnSwitchEnabled())
+        {
+        PROFILE_DEBUG1("CSIPProfileServerCore::UpdateRegistrationL, SwichEnabled")
+        if(CheckIapSettings( item->LatestProfile().Id()))
+            {   
+            PROFILE_DEBUG1("CSIPProfileServerCore::UpdateRegistrationL, Settings are correct")
+            if(IsRegistrationAllowedWithCurrentApnSettings(item->LatestProfile().IapId()))
+                {
+                PROFILE_DEBUG1("CSIPProfileServerCore::UpdateRegistrationL, Registration is allowed")
+                TRAP(err, item->UpdateRegistrationL(aObserver));
+                }
+            else
+                {
+                PROFILE_DEBUG1("CSIPProfileServerCore::UpdateRegistrationL, Appending into Array")
+                TStoreSwitchEnabledProfile updateProfile;
+                updateProfile.iObserver = &aObserver;
+                updateProfile.iProfile = &item->LatestProfile();
+                updateProfile.operation = TStoreSwitchEnabledProfile::Update;
+                iWaitForApnSettings.AppendL(updateProfile);
+                }
+            }
+        else
+            User::LeaveIfError(KErrNotSupported);
+        }
+    else
+        {
+        TRAP(err, item->UpdateRegistrationL(aObserver));
+        }
     if (err != KErrNone)
         {
         HandleAsyncError(*item, status, err);
@@ -927,7 +1072,42 @@ CSIPConcreteProfile::TStatus CSIPProfileServerCore::EnableProfileL(
     const MSIPExtendedConcreteProfileObserver& aObserver)
     {
 	CSIPProfileCacheItem* item = ProfileCacheItemL(aProfileId);
-    iAlrHandler->EnableProfileL(*item, aObserver);
+    TBool isVpnInUse = (FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn )
+                             && item->IsVpnInUse());
+    
+    const CSIPConcreteProfile* profile = Profile(aProfileId);
+    if(FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn ) 
+        && CheckApnSwitchEnabledL( *profile ) && !item->IsRfsInprogress() && !isVpnInUse )
+        {
+        PROFILE_DEBUG1("CSIPProfileServerCore::EnableProfileL, SwichEnabled")
+        if(CheckIapSettings( aProfileId ))
+            {
+            PROFILE_DEBUG1("CSIPProfileServerCore::EnableProfileL, Settings are correct")
+            if(IsRegistrationAllowedWithCurrentApnSettings(item->Profile().IapId()))
+                {
+                PROFILE_DEBUG1("CSIPProfileServerCore::EnableProfileL, Registration is allowed")
+                iAlrHandler->EnableProfileL(*item, aObserver);
+                }
+            else
+                {
+                PROFILE_DEBUG1("CSIPProfileServerCore::EnableProfileL, Appending into Array")
+                TStoreSwitchEnabledProfile enableProfile;
+                enableProfile.iProfile = &item->Profile();
+                enableProfile.iObserver = &aObserver;
+                enableProfile.operation = TStoreSwitchEnabledProfile::Enable;
+                iWaitForApnSettings.AppendL(enableProfile);
+                }
+            }
+        else
+            {
+            User::LeaveIfError(KErrNotSupported);
+            }           
+        }
+    else
+        if (!item->IsRfsInprogress() && !isVpnInUse )
+        {
+        iAlrHandler->EnableProfileL(*item, aObserver);
+        }
     return item->Profile().Status();
     }
 
@@ -988,10 +1168,40 @@ void CSIPProfileServerCore::RegisterProfiles()
     {
     for (TInt i = 0; i < iProfileCache.Count(); i++)
         {
+        TInt err(KErrNone);
         CSIPProfileCacheItem* item = iProfileCache[i];
         if (item->Profile().IsAutoRegistrationEnabled())
             {
-			TRAPD(err, item->StartRegisterL(*iWaitForIAP, *iRegInProg, ETrue));
+            TBool enabled(EFalse);
+            TRAPD(error, enabled = CheckApnSwitchEnabledL(item->Profile()))
+            if(FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn ) 
+                        &&enabled && !error)
+                {
+                PROFILE_DEBUG1("CSIPProfileServerCore::RegisterProfiles, SwichEnabled")
+                if(CheckIapSettings( item->Profile().Id()))
+                    {
+                     PROFILE_DEBUG1("CSIPProfileServerCore::RegisterProfiles, Settings are correct")
+                     if(IsRegistrationAllowedWithCurrentApnSettings(item->Profile().IapId()))
+                         {
+                         PROFILE_DEBUG1("CSIPProfileServerCore::RegisterProfiles, Registration is allowed")
+                         TRAP(err, item->StartRegisterL(*iWaitForIAP, *iRegInProg, ETrue));
+                         }
+                     else
+                         {
+                         PROFILE_DEBUG1("CSIPProfileServerCore::RegisterProfiles, Appending into Array")
+                         TStoreSwitchEnabledProfile registerProfile;
+                         registerProfile.iProfile = &item->Profile();
+                         registerProfile.iObserver = NULL;   
+                         registerProfile.operation = TStoreSwitchEnabledProfile::Register;
+                         TRAP_IGNORE(iWaitForApnSettings.AppendL(registerProfile))
+                         }
+                    }
+                }
+            else                
+                {
+                TRAP(err, item->StartRegisterL(*iWaitForIAP, *iRegInProg, ETrue));
+                }
+            
             if (err != KErrNone)
                 {
                 HandleAsyncError(*item,
@@ -1405,6 +1615,10 @@ void CSIPProfileServerCore::HandleAsyncError(CSIPProfileCacheItem& aItem,
 	        SendErrorEvent(aItem, aStatus, aError);
 	        }
     	}
+    if(aItem.IsApnSwitchEnabled())
+        {
+        UseBackupApn(aItem.Profile().IapId(), ETrue);
+        }
     }
 
 // -----------------------------------------------------------------------------
@@ -1740,6 +1954,13 @@ void CSIPProfileServerCore::LoadSystemStateMonitorL()
   		    CSipSystemStateMonitor::ESystemState, 0, *this);
 		iSystemStateMonitor->StartMonitoringL(
 			CSipSystemStateMonitor::ERfsState, 0, *this);
+
+        if ( FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn ) )
+            {
+	        // Start P&S key monitoring for communication between SIP and VPN.
+            iSystemStateMonitor->StartMonitoringL(
+                    CSipSystemStateMonitor::EVpnState, 0, *this);
+	        }
 	    }
 	CleanupStack::Pop(); // TCleanupItem
 	infoArray.ResetAndDestroy();
@@ -1801,7 +2022,11 @@ TBool CSIPProfileServerCore::ShouldChangeIap(CSIPConcreteProfile& aProfile, TInt
 	PROFILE_DEBUG1("CSIPProfileServerCore::ShouldChangeIap returns false")
     return EFalse;
 	}
- 
+
+// -----------------------------------------------------------------------------
+// CSIPProfileServerCore::AnyRegisteredProfileUsesIap
+// -----------------------------------------------------------------------------
+// 
 TBool CSIPProfileServerCore::AnyRegisteredProfileUsesIap(TUint aIap) const
     {
     
@@ -1877,4 +2102,243 @@ TInt CSIPProfileServerCore::IAPCountL(TUint32 aSnapId) const
 	CleanupStack::PopAndDestroy( db );
     return count;
     }
+
+// -----------------------------------------------------------------------------
+// CSIPProfileServerCore::StartConnectionCloseTimer
+// -----------------------------------------------------------------------------
+//
+void CSIPProfileServerCore::StartConnectionCloseTimer()
+	{
+	PROFILE_DEBUG1("CSIPProfileServerCore::StartConnectionCloseTimer")
+	iDeltaTimer->Remove(iDeltaTimerEntry);
+	TTimeIntervalMicroSeconds32 interval(KMicroSecInSec * KIdleTimer);
+	iDeltaTimer->Queue(interval, iDeltaTimerEntry);
+	}
+
+// -----------------------------------------------------------------------------
+// CSIPProfileServerCore::ConnectionCloseTimerExpired
+// -----------------------------------------------------------------------------
+//
+TInt CSIPProfileServerCore::ConnectionCloseTimerExpired(TAny* aPtr)
+	{
+	PROFILE_DEBUG1("CSIPProfileServerCore::ConnectionCloseTimerExpired")
+	CSIPProfileServerCore* self = reinterpret_cast<CSIPProfileServerCore*>(aPtr);
+  	self->ConfirmSystemstateMonitor(CSipSystemStateMonitor::ERfsState);
+  	return ETrue;
+	}
+
+// -----------------------------------------------------------------------------
+// CSIPProfileServerCore::ConfirmSystemstateMonitor
+// -----------------------------------------------------------------------------
+//
+void CSIPProfileServerCore::ConfirmSystemstateMonitor(
+	CSipSystemStateMonitor::TSystemVariable aVariable)
+	{
+		iSystemStateMonitor->EventProcessingCompleted(
+		        aVariable, 0, *this);
+	}
 	
+// ----------------------------------------------------------------------------
+//CSIPProfileServerCore::ApnChanged
+// ----------------------------------------------------------------------------
+void CSIPProfileServerCore::ApnChanged( const TDesC8& /*aApn*/, TUint32 aIapId, TInt aError )
+    {
+    PROFILE_DEBUG3( "CSIPProfileServerCore::ApnChanged, err:", aError )        
+    // Check if there is any profile waiting for correct Apn settings for IapId aIapId
+            
+    if ( IsRegistrationAllowedWithCurrentApnSettings( aIapId ) || aError != KErrNone )
+        {
+        PROFILE_DEBUG1("CSIPProfileServerCore::ApnChanged, settings are correct")                
+        CSIPConcreteProfile* profile = NULL;
+        TInt count = iWaitForApnSettings.Count();
+        for (TInt i =0; i < count; i++)
+            {
+            TStoreSwitchEnabledProfile switchEnabledProfile = iWaitForApnSettings[i];       
+            if(switchEnabledProfile.iProfile->IapId()==aIapId)
+                {               
+                profile = switchEnabledProfile.iProfile;              
+                iWaitForApnSettings.Remove(i);
+                iWaitForApnSettings.Compress();
+                i--;
+                count = iWaitForApnSettings.Count();
+                PROFILE_DEBUG1("CSIPProfileServerCore::ApnChanged, Profile IapId matches")  
+                
+                TInt err( aError );
+                TInt error(KErrNone);
+                PROFILE_DEBUG3("CSIPProfileServerCore::ApnChanged, Profile Id", profile->Id())
+                CSIPProfileCacheItem* item = ProfileCacheItem(profile->Id());
+                TBool isVpnInUse = (FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn )
+                                             && item->IsVpnInUse());
+                if ( err == KErrNone && CheckIapSettings(profile->Id()))
+                    {
+                    if(switchEnabledProfile.operation == TStoreSwitchEnabledProfile::Update)
+                        {
+                        TRAP(error, item->UpdateRegistrationL(*(switchEnabledProfile.iObserver)));
+                        }
+                    else if(switchEnabledProfile.operation == TStoreSwitchEnabledProfile::Enable && !item->IsRfsInprogress() && !isVpnInUse)                    
+                        {
+                        TRAP(error, iAlrHandler->EnableProfileL(*item, *(switchEnabledProfile.iObserver)));
+                        }
+                    else if(switchEnabledProfile.operation == TStoreSwitchEnabledProfile::Register)
+                        {
+                        TRAP(error, item->StartRegisterL(*iWaitForIAP, *iRegInProg, ETrue));
+                        }
+                    }
+                if ( err != KErrNone || error)
+                    {
+                     PROFILE_DEBUG1("CSIPProfileServerCore::ApnChanged, error handling")
+                     HandleAsyncError(*item, profile->Status(), err);
+                    }
+                }
+            }
+        }
+    PROFILE_DEBUG1("CSIPProfileServerCore::ApnChanged, exit")    
+    }
+
+// -----------------------------------------------------------------------------
+// CSIPProfileServerCore::IsRegistrationAllowedWithCurrentApnSettings
+// -----------------------------------------------------------------------------
+//
+TBool CSIPProfileServerCore::IsRegistrationAllowedWithCurrentApnSettings( TUint32 aIapId )
+    {
+    return ( iApnManager && iApnManager->IsPrimaryApnInUse( aIapId ) );
+    }
+
+// -----------------------------------------------------------------------------
+// CSIPProfileServerCore::SelectInitialApnL
+// -----------------------------------------------------------------------------
+//
+void CSIPProfileServerCore::SelectInitialApnL( const CSIPConcreteProfile& aProfile )
+    {
+    PROFILE_DEBUG1("CSIPProfileServerCore::SelectInitialApnL" )
+    CSIPProfileCacheItem* item = ProfileCacheItem(aProfile.Id());
+    
+    if ( item && !item->IsInitialApnSelected())
+        {        
+        // If profile has stored APNs, use them
+        const TDesC8* primaryApn( NULL );
+        if ( aProfile.ExtensionParameter( KPrimaryAPN, primaryApn ) == KErrNone )
+            {
+            PROFILE_DEBUG1("UpdateApnL ETrue" )
+            iApnManager->UpdateApnL( aProfile.IapId(), ETrue, *primaryApn );
+            }
+        const TDesC8* secondaryApn( NULL );
+        if ( aProfile.ExtensionParameter( KSecondaryAPN, secondaryApn ) == KErrNone )
+            {
+            PROFILE_DEBUG1("UpdateApnL EFalse" )
+            iApnManager->UpdateApnL( aProfile.IapId(), EFalse, *secondaryApn );
+            }
+        
+        PROFILE_DEBUG1("SelectInitialApnL - WriteApnL, Primary APN" )
+        iApnManager->WriteApnL( aProfile.IapId(), ETrue, primaryApn);
+        item->SetApnSelected(ETrue);
+        }
+    }
+
+// -----------------------------------------------------------------------------
+// CSIPProfileServerCore::CheckApnSwitchEnabledL
+// -----------------------------------------------------------------------------
+//
+TBool CSIPProfileServerCore::CheckApnSwitchEnabledL( const CSIPConcreteProfile& aProfile )
+    {
+    PROFILE_DEBUG1("CSIPProfileServerCore::CheckApnSwitchEnabledL" )
+    TUint32 profileId = aProfile.Id();
+    
+    PROFILE_DEBUG3("CSIPProfileServerCore::CheckApnSwitchEnabledL, IapId", profileId )
+    
+    CSIPProfileCacheItem* item = ProfileCacheItem(profileId); 
+    TUint32 snapId;
+    if(item && !item->IsSNAPConfigured( snapId )&& !item->IsApnSwitchEnabled())
+        {
+        // If profile has stored APNs, use them
+        const TDesC8* primaryApn( NULL );
+        const TDesC8* secondaryApn( NULL );
+        TInt err = aProfile.ExtensionParameter( KPrimaryAPN, primaryApn );
+        TInt error = aProfile.ExtensionParameter( KSecondaryAPN, secondaryApn );
+        
+        if(err == KErrNone && error == KErrNone && primaryApn && secondaryApn)
+            {
+            TBool isIapGPRS = iApnManager->IsIapGPRSL( aProfile.IapId() );
+            if (isIapGPRS)
+            item->SetApnSwitchStatus(ETrue); //  Set Switch APN Enabled
+            }
+        } 
+    PROFILE_DEBUG3("CSIPProfileServerCore::CheckApnSwitchEnabledL returns"
+                                                ,item->IsApnSwitchEnabled())
+    return item->IsApnSwitchEnabled(); 
+    }
+
+// -----------------------------------------------------------------------------
+// CSIPProfileServerCore::CheckIapSettings
+// -----------------------------------------------------------------------------
+//
+TBool CSIPProfileServerCore::CheckIapSettings(TUint32 aProfileId)
+    {
+    PROFILE_DEBUG1("CSIPProfileServerCore::CheckIapSettings")
+            
+    const CSIPConcreteProfile* profile = Profile( aProfileId );
+    CSIPProfileCacheItem* item = ProfileCacheItem( aProfileId );
+    TInt err(KErrNone);
+    if(profile && item)
+        {        
+        if(!iApnManager->IsFailed(profile->IapId()))
+            {   
+            TRAP(err, SelectInitialApnL( *profile ));
+            UsePrimaryApn(profile->IapId());
+            PROFILE_DEBUG1("CSIPProfileServerCore::CheckIapSettings returns ETrue")
+            return ETrue;
+            }
+        else 
+            if(err || iApnManager->IsFailed(profile->IapId()) )
+                {
+                PROFILE_DEBUG1("CSIPProfileServerCore::CheckIapSettings returns EFalse")
+                    
+                item->SetApnSelected(ETrue);
+                return EFalse;
+            }
+        }
+    PROFILE_DEBUG1("CSIPProfileServerCore::CheckIapSettings, profile or item is NULL")
+    return EFalse;
+    }
+
+// ----------------------------------------------------------------------------
+// CSIPProfileServerCore::UsePrimaryApn
+// ----------------------------------------------------------------------------
+//
+void CSIPProfileServerCore::UsePrimaryApn(TUint32 aIapId)
+    {
+    PROFILE_DEBUG1("CSIPProfileServerCore::UsePrimaryApn")
+    
+    if (!iApnManager->IsPrimaryApnInUse( aIapId ))
+        {
+        iApnManager->SetFailed( aIapId, EFalse, EFalse );
+        }
+    
+    PROFILE_DEBUG1("CSIPProfileServerCore::UsePrimaryApn, exit")
+    }
+    
+// ----------------------------------------------------------------------------
+// CSIPProfileServerCore::UseBackupApn
+// ----------------------------------------------------------------------------
+//
+void CSIPProfileServerCore::UseBackupApn( TUint32 aIapId, TBool aFatalFailure )
+    {
+    PROFILE_DEBUG1("CSIPProfileServerCore::UseBackupApn")
+    
+    if ( iApnManager->IsFailed( aIapId ) || aFatalFailure )
+        {
+        iApnManager->SetFailed( aIapId, ETrue, aFatalFailure );
+        }
+    
+    PROFILE_DEBUG1("CSIPIMSProfileAgent::UseBackupApn, exit")
+    }
+
+// ----------------------------------------------------------------------------
+// CSIPProfileServerCore::IsUpdateAllowed
+// ----------------------------------------------------------------------------
+//
+TBool CSIPProfileServerCore::IsUpdateAllowed( CSIPConcreteProfile *aProfile )
+    {
+    PROFILE_DEBUG1("CSIPIMSProfileAgent::IsUpdateAllowed, enter")
+    return !(iApnManager->IsFailed(aProfile->IapId()));
+    }

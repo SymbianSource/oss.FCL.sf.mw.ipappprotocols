@@ -82,6 +82,7 @@ class UT_SRTPAuthentication_HMAC_SHA1
          void UT_AuthenticateL_RFC2202_Test7_80L();
          void UT_AuthenticateL_RFC2202_Test7_32L();
          void UT_AuthenticateL_Test8_32L(  );
+         void UT_AuthenticateL_Test_KeyChangedL();
          
          void Hex(HBufC8& aString);                                  
 

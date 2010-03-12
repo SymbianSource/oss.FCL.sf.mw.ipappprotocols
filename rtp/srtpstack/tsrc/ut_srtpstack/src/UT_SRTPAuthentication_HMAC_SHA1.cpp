@@ -630,6 +630,12 @@ void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_Test8_32L(  )
  	CleanupStack::PopAndDestroy(result); 	
  	}
 
+void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_Test_KeyChangedL(  )
+    {
+    UT_AuthenticateL_RFC2202_Test1_80L();
+    UT_AuthenticateL_RFC2202_Test1_32L();
+    }
+
 void UT_SRTPAuthentication_HMAC_SHA1::Hex(HBufC8& aString)
 {
     TPtr8 ptr=aString.Des();
@@ -762,7 +768,13 @@ EUNIT_TEST(
     "FUNCTIONALITY",
     SetupL, UT_AuthenticateL_Test8_32L, Teardown)
     
-
+EUNIT_TEST(
+    "AuthenticateL - KeyChanged",
+    "SRTPAuthentication_HMAC_SHA1",
+    "AuthenticateL",
+    "FUNCTIONALITY",
+    SetupL, UT_AuthenticateL_Test_KeyChangedL, Teardown)
+    
 EUNIT_END_TEST_TABLE
 
 //  END OF FILE

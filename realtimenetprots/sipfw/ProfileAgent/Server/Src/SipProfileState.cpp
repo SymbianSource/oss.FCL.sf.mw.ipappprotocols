@@ -407,3 +407,22 @@ void CSIPProfileState::NoNewIapAvailable(CSIPProfileCacheItem& /*aItem*/)
 	{
 	PROFILE_DEBUG1("CSIPProfileState::NoNewIapAvailable")
 	}
+
+// -----------------------------------------------------------------------------
+// CSIPProfileState::DeregisterWhileRegInProgressL
+// -----------------------------------------------------------------------------
+//
+void CSIPProfileState::DeregisterWhileRegInProgressL(CSIPProfileCacheItem& aItem,
+    CSIPProfileState& aUnregistered)
+    {
+    if ( !iPluginDirector.IsRegisterPending( aItem.UsedProfile() ) )
+        {
+        CSIPConcreteProfile::TStatus status;
+        iPluginDirector.State( status, aItem.UsedProfile() );
+        iPluginDirector.DeregisterL( aItem.UsedProfile() );
+        if ( status == CSIPConcreteProfile::ERegistrationInProgress )
+            {
+            aItem.ChangeStateL( &aUnregistered );
+            }
+        }
+    }

@@ -228,3 +228,14 @@ void CSIPProfileStateRegInProg::IapAvailableL(CSIPProfileCacheItem& aItem,
 	iPluginDirector.TerminateHandling(aItem.Profile());
 	aItem.HandleNewIapL(aSnapId, aNewIapId, EFalse, *iWaitForPermission);
 	}
+
+// -----------------------------------------------------------------------------
+// CSIPProfileStateRegInProg::ShutdownInitiated
+// Initiate de-registration. PluginDirector never has a pending register in
+// registered state.
+// -----------------------------------------------------------------------------
+//
+void CSIPProfileStateRegInProg::ShutdownInitiated( CSIPProfileCacheItem& aItem )
+	{
+      TRAP_IGNORE( DeregisterWhileRegInProgressL( aItem, *iUnregistered) )
+	}

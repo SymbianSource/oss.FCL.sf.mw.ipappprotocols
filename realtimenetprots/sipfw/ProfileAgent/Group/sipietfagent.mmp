@@ -60,6 +60,6 @@ LIBRARY efsrv.lib
 
 VENDORID 0x70000001
 
-CAPABILITY ProtServ NetworkServices ReadDeviceData
+CAPABILITY ProtServ NetworkServices ReadDeviceData WriteDeviceData
 
 SMPSAFE
