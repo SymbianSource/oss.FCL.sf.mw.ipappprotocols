@@ -55,7 +55,6 @@ SOURCE				gssipprofileutil.cpp
 SOURCE				SIPSettListSIPSrvTakeOverCBAKeyPress.cpp
 SOURCE                          SIPSettIntegerSetPage.cpp 
 SOURCE                          SipSettIntegerEditItem.cpp
-SOURCE                          gssiptimer.cpp
 
 USERINCLUDE    		../inc
 USERINCLUDE         ../data

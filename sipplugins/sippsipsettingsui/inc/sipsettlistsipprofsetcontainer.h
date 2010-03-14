@@ -26,7 +26,6 @@
 #include <aknlongtapdetector.h>
 #include <aknstyluspopupmenu.h>
 #include <eikmobs.h>
-#include "gssiptimer.h"
 // FORWARD DECLARATIONS
 
 class CSIPSettListSIPProfSetItemList;
@@ -70,10 +69,6 @@ class CSIPSettListSIPProfSetContainer : public CCoeControl
         */
          virtual void HandlePointerEventL( const TPointerEvent& aPointerEvent );
          
-        /**
-        * Judge whether it is a pointer event
-        */
-         TBool IfPointerEvent( );
     
     public: // New functions
         
@@ -152,8 +147,6 @@ class CSIPSettListSIPProfSetContainer : public CCoeControl
         
         // The item list for changing the attributes of a profile
         CSIPSettListSIPProfSetItemList* iItemList;
-
-        CGSSIPTimer* iTimer;
 
     /**
     * For testing purposes

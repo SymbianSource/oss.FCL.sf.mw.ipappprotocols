@@ -117,8 +117,7 @@ EXPORT_C TInt CSIPManagedProfile::GetParameter(TUint32 aParam, TBool& aVal) cons
 // -----------------------------------------------------------------------------
 //	
 CSIPManagedProfile::CSIPManagedProfile(CSIPManagedProfileRegistry* aRegistry) 
-    :  CSIPProfile( aRegistry ),
-       iProfileReg( aRegistry )
+    :  CSIPProfile( aRegistry )
 	{
 	}
 
@@ -306,8 +305,6 @@ CSIPManagedProfile* CSIPManagedProfile::CloneL() const
     //const CSIPManagedProfile* temp = this;
     //return new (ELeave) CSIPManagedProfile(*this);
     //return this;
-    CSIPManagedProfile* rValue = 
-                    CSIPManagedProfile::NewLC( iProfileReg );
+    return NULL;
 
-    return rValue;
     }

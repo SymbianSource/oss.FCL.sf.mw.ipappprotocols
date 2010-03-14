@@ -23,7 +23,7 @@
 
 #include <e32base.h>
 #include <bamdesca.h>       // MDesCArray
-#include <aknutils.h>       // KMaxColumnDataLength
+#include <AknUtils.h>       // KMaxColumnDataLength
 #include "tsipsettingsdata.h"
 
 // FORWARD DECLARATIONS

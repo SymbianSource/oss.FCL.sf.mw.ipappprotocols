@@ -29,7 +29,7 @@
 #include <es_enum.h>
 #include "TransitionEngineMgr.h"
 
-class TSipMcprProvisionInfo : public CBase, public Meta::SMetaData 
+class TSipMcprProvisionInfo : public Meta::SMetaData 
 /** 
 @internalTechnology
 */
@@ -56,7 +56,7 @@ public:
 	};
 	
 	
-class TSipCprProvisionInfo : public CBase, public Meta::SMetaData
+class TSipCprProvisionInfo : public Meta::SMetaData
 /** 
 @internalTechnology
 */

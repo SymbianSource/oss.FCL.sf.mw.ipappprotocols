@@ -30,7 +30,6 @@ MACRO                   UNIT_TESTING
 SOURCEPATH              ../src
 SOURCE                  ut_sipsettingsplugindllmain.cpp
 SOURCE                  ut_gssipprofileutil.cpp
-SOURCE                  ut_gssiptimer.cpp
 SOURCE                  ut_sipsettlistsipsrvsetview.cpp
 SOURCE                  ut_sipsettListsipprofsetview.cpp
 SOURCE                  ut_sipsettingscontainer.cpp
@@ -51,7 +50,6 @@ SOURCE									sipprofilestub.cpp
 // Tested classes
 SOURCEPATH              ../../../src
 SOURCE					gssipprofileutil.cpp
-SOURCE					gssiptimer.cpp
 SOURCE                                  sipsettlistsipsrvsetview.cpp
 SOURCE                                  sipsettlistsipregsetview.cpp
 SOURCE                                  gssipmodel.cpp

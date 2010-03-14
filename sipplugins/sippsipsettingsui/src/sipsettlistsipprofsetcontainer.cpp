@@ -80,8 +80,6 @@ void CSIPSettListSIPProfSetContainer::ConstructL(
     
     iItemList->ListBox()->SetCurrentItemIndex( Uiindex );    
     DrawNow();
-    
-    iTimer = CGSSIPTimer::NewL( *this, *(iItemList->ListBox()->View()->ItemDrawer()) );
     }
 
 // -----------------------------------------------------------------------------
@@ -113,8 +111,6 @@ CSIPSettListSIPProfSetContainer::~CSIPSettListSIPProfSetContainer()
     {
     __GSLOGSTRING("CSIPSettListSIPProfSetContainer::~CSIPSettListSIPProfSetContainer" )  
     delete iItemList;
-    delete iTimer;
-    iTimer = NULL;
     }
 
 // -----------------------------------------------------------------------------
@@ -205,15 +201,7 @@ TKeyResponse CSIPSettListSIPProfSetContainer::OfferKeyEventL(
     TEventCode aType )
     {
     __GSLOGSTRING("CSIPSettListSIPProfSetContainer::OfferKeyEventL" ) 
-    // Pass the key event to list box
-    if ( aKeyEvent.iCode == EKeyUpArrow || aKeyEvent.iCode == EKeyDownArrow )
-        {
-        iItemList->ListBox()->View()->ItemDrawer()->ClearFlags( CTextListItemDrawer::EDisableHighlight );
-
-        iTimer->StartTimer();
-
-        }
-    
+   
     return iItemList->OfferKeyEventL( aKeyEvent, aType );
     }
     
@@ -230,8 +218,6 @@ void CSIPSettListSIPProfSetContainer::FocusChanged( TDrawNow aDrawNow )
         {
       iItemList->SetFocus( IsFocused(), aDrawNow );
         }
-        iTimer->StopTimer();
-
     }
 
 // ---------------------------------------------------------------------------
@@ -273,20 +259,6 @@ void CSIPSettListSIPProfSetContainer::GetHelpContext(TCoeHelpContext& aContext) 
 void CSIPSettListSIPProfSetContainer::HandlePointerEventL( const TPointerEvent& aPointerEvent )
     {
     __GSLOGSTRING("CSIPSettListSIPProfSetContainer::HandlePointerEventL" )
-     iItemList->ListBox()->View()->ItemDrawer()->ClearFlags( CTextListItemDrawer::EDisableHighlight );
-     DrawNow();    
      CCoeControl::HandlePointerEventL( aPointerEvent );
     }
-
-// -----------------------------------------------------------------------------
-// CSIPSettListSIPProfSetContainer::IfPointerEvent()
-// Check if it is Pointer Event.
-// -----------------------------------------------------------------------------
-//
-TBool CSIPSettListSIPProfSetContainer::IfPointerEvent()
-    {
-     return !( iTimer->IsStarted() );
-    }
-
-//Second
 //  End of File  
