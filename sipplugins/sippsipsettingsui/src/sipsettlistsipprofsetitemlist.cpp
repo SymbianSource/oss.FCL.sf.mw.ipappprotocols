@@ -266,7 +266,8 @@ void CSIPSettListSIPProfSetItemList::HandleListBoxEventL(
             }
         else if ( currentIndex == EGSItemServiceProfile ||
             currentIndex == EGSItemCompression ||
-            currentIndex == EGSItemSecurity )
+            currentIndex == EGSItemSecurity ||
+            currentIndex == EGSItemRegistration )   
             {
             SetNextSettingItemL( currentIndex );
             aListBox->ActivateL();    
@@ -535,6 +536,21 @@ void CSIPSettListSIPProfSetItemList::SetNextSettingItemL( TInt aSettingId )
             iSecurity->LoadL();
             iSecurity->UpdateListBoxTextL();        
             break;
+            
+        case EGSItemRegistration:       
+        	iRegistration->StoreL();
+            if ( iProfileData.iRegistrationMode == EGSWhenNeeded )
+                {
+                iProfileData.iRegistrationMode = EGSAlwaysOn;
+                }
+            else
+                {
+                iProfileData.iRegistrationMode = EGSWhenNeeded;
+                }
+            iRegistration->LoadL();
+            iRegistration->UpdateListBoxTextL();        
+            break;
+            
         default:                    // Other setting items are not supported.
             User::Leave( KErrNotSupported );
             break;
