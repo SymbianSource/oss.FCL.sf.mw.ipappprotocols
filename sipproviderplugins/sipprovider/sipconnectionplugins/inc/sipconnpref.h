@@ -59,7 +59,7 @@ public:
 	/** Gets the default profile ID  **/
 	inline TUint32  GetProfileId() const;
 	/** cast to appropriate SIP connection provider type  **/
-	inline static TSipConnPref& TSipConnPref::Cast(const TConnPref& aPref);
+	inline static TSipConnPref& Cast(const TConnPref& aPref);
 	
 protected:
 	inline SSipConnPref* PrefPtr() const;

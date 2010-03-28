@@ -231,7 +231,7 @@ class CSRTPCryptoHandlerSRTP : public CSRTPCryptoHandler,
 
         void ReKeyCheck();
         
-        TBool CSRTPCryptoHandlerSRTP::IfAddAuthTag();
+        TBool IfAddAuthTag();
         
         CSRTPCryptoHandlerSRTP( CSRTPStream& aStream );
                      
