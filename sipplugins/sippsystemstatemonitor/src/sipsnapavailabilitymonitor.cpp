@@ -25,12 +25,11 @@
 //
 CSipSnapAvailabilityMonitor* CSipSnapAvailabilityMonitor::NewL( 
     TUint32 aSnapId,
-    TBool aPermissionToUseNetwork,
     MSipSystemStateObserver& aObserver )
 	{
 	CSipSnapAvailabilityMonitor* self = 
 	    CSipSnapAvailabilityMonitor::NewLC( 
-	        aSnapId, aPermissionToUseNetwork, aObserver );
+	        aSnapId, aObserver );
 	CleanupStack::Pop( self );
 	return self;
 	}
@@ -41,12 +40,10 @@ CSipSnapAvailabilityMonitor* CSipSnapAvailabilityMonitor::NewL(
 //
 CSipSnapAvailabilityMonitor* CSipSnapAvailabilityMonitor::NewLC( 
     TUint32 aSnapId,
-    TBool aPermissionToUseNetwork,
     MSipSystemStateObserver& aObserver )
 	{
 	CSipSnapAvailabilityMonitor* self = 
-	    new( ELeave ) CSipSnapAvailabilityMonitor( 
-	        aSnapId, aPermissionToUseNetwork );
+	    new( ELeave ) CSipSnapAvailabilityMonitor( aSnapId );
 	CleanupStack::PushL( self );
 	self->ConstructL( aObserver );
 	return self;
@@ -57,11 +54,9 @@ CSipSnapAvailabilityMonitor* CSipSnapAvailabilityMonitor::NewLC(
 // -----------------------------------------------------------------------------
 //
 CSipSnapAvailabilityMonitor::CSipSnapAvailabilityMonitor( 
-    TUint32 aSnapId,
-    TBool aPermissionToUseNetwork )
+    TUint32 aSnapId)
  : CActive( EPriorityStandard ),
    iSnapId( aSnapId ),
-   iPermissionToUseNetwork( aPermissionToUseNetwork ),
    iIsConnected( EFalse )
     {
 	CActiveScheduler::Add( this );
@@ -144,7 +139,7 @@ void CSipSnapAvailabilityMonitor::EventL(
         TBool snapAvailable = 
             IsSnapAvailable( event.SNAPAvailability(), iSnapId );
 
-        if ( SetCurrentState( iPermissionToUseNetwork, snapAvailable ) )
+        if ( SetCurrentState( snapAvailable ) )
             {
             NotifyObservers();
             }
@@ -212,20 +207,6 @@ TBool CSipSnapAvailabilityMonitor::HasObservers() const
     }
 
 // -----------------------------------------------------------------------------
-// CSipSnapAvailabilityMonitor::UsagePermissionChanged
-// -----------------------------------------------------------------------------
-//	
-void CSipSnapAvailabilityMonitor::UsagePermissionChanged( 
-    TBool aPermissionToUse, 
-    TInt /*aError*/ )
-    {
-    if ( SetCurrentState( aPermissionToUse, iSnapAvailable ) )
-        {
-        NotifyObservers();
-        }
-    }
-
-// -----------------------------------------------------------------------------
 // CSipSnapAvailabilityMonitor::NotifyObservers
 // -----------------------------------------------------------------------------
 //
@@ -270,16 +251,10 @@ TBool CSipSnapAvailabilityMonitor::IsSnapAvailable(
 // CSipSnapAvailabilityMonitor::SetCurrentState
 // -----------------------------------------------------------------------------
 //
-TBool CSipSnapAvailabilityMonitor::SetCurrentState(
-    TBool aPermissionToUseNetwork,
+TBool CSipSnapAvailabilityMonitor::SetCurrentState(    
     TBool aSnapAvailable )
     {
     TBool updated( EFalse );
-    if ( aPermissionToUseNetwork != iPermissionToUseNetwork )
-        {
-        iPermissionToUseNetwork = aPermissionToUseNetwork;
-        updated = ETrue;
-        }
     if ( aSnapAvailable != iSnapAvailable )
         {
         iSnapAvailable = aSnapAvailable;
@@ -294,7 +269,7 @@ TBool CSipSnapAvailabilityMonitor::SetCurrentState(
 //
 TBool CSipSnapAvailabilityMonitor::CanSnapBeUsed() const
     {
-    return ( iSnapAvailable && iPermissionToUseNetwork ); 
+    return ( iSnapAvailable ); 
     }
    
 // End of File

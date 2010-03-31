@@ -440,7 +440,9 @@ TBool CSIPIetfProfileContext::RetryRegister(
 	    AgentObserver().ProceedRegistration(*iProfile, aError) &&
 	    (CurrentState() == MSIPProfileContext::ERegistrationInProgress ||
 	     CurrentState() == MSIPProfileContext::ERegistered) &&
-		(aError == KErrSIPOutboundProxyNotResponding || 
+		(aError == K408TimeOut ||
+		 aError == K500ServerInternalError ||
+		 aError == KErrSIPOutboundProxyNotResponding || 
 		 aError == KErrSIPResolvingFailure || 
 		 aError == KErrTimedOut || 
 		 aError == KErrSIPTransportFailure ||
@@ -490,6 +492,8 @@ TBool CSIPIetfProfileContext::RetryRegister(
 TBool CSIPIetfProfileContext::ShouldRetryRegistration( TInt aError )
 	{
 	return (aError == K503ServiceUnavailable || 
+	        aError == K408TimeOut ||
+	        aError == K500ServerInternalError ||
 		    aError == KErrSIPOutboundProxyNotResponding || 
 		    aError == KErrTimedOut ||
 		    ((aError == KErrSIPResolvingFailure || 
@@ -548,38 +552,55 @@ void CSIPIetfProfileContext::UpdateL(
 // -----------------------------------------------------------------------------
 //
 void CSIPIetfProfileContext::IncomingResponse(
-	CSIPClientTransaction& aTransaction,
-	CSIPRegistrationBinding& aRegistration,
-	TBool& aHandled)
-	{
-	if (iClientTx && iRegistration && 
-		aTransaction==*iClientTx && aRegistration==*iRegistration)
-		{
-		PROFILE_DEBUG3("SIPIetfProfileContext::IncomingResponse", ProfileId())
-		aHandled = ETrue;
-		const CSIPResponseElements* response = aTransaction.ResponseElements();
-		if (response)
-		    {
-		    TUint responseCode = response->StatusCode();
-		    if (responseCode >= K300MultipleChoices)
-		        {
-		        PROFILE_DEBUG1("IETFProfileContext: registration failed")
-                RetryPossible(responseCode);
-		        }
-		    else
-		        {
-			    if (responseCode >= K200Ok)
-				    {
-				    PROFILE_DEBUG1("IETFProfileContext: registration complete")
-				    iRetryCounter = 0;
-				    iRetryCounterSum = 0;
-				    Received2XXRegisterResponse();
-		            }
-		        }
-		    }
-        iCurrentState->ResponseReceived(*this, aTransaction);
-		}
-	}
+    CSIPClientTransaction& aTransaction,
+    CSIPRegistrationBinding& aRegistration,
+    TBool& aHandled)
+    {
+    if (iClientTx && iRegistration && 
+        aTransaction==*iClientTx && aRegistration==*iRegistration)
+        {
+        PROFILE_DEBUG3("SIPIetfProfileContext::IncomingResponse", ProfileId())
+        aHandled = ETrue;
+        const CSIPResponseElements* response = aTransaction.ResponseElements();
+        TUint responseCode = response->StatusCode();
+        TBool retry = EFalse;
+        if (response)
+            {
+                retry = RetryRegister( &aTransaction,  responseCode);
+                if( retry )
+                {
+                iCurrentState->ErrorOccured(*this, responseCode);
+                }
+                else
+                {
+                    if (responseCode >= K300MultipleChoices)
+                    {
+                    PROFILE_DEBUG1("IETFProfileContext: registration failed")
+                    RetryPossible(responseCode);
+                    }
+                    else
+                    {
+                        if (responseCode >= K200Ok)
+                        {
+                        PROFILE_DEBUG1("IETFProfileContext: registration complete")
+                        iRetryCounter = 0;
+                        iRetryCounterSum = 0;
+                        Received2XXRegisterResponse();
+                        }
+                    }
+                }
+            }
+        
+            if( retry )
+            {
+            iCurrentState->ErrorOccured(*this, responseCode);
+            }
+            else
+            {
+            iCurrentState->ResponseReceived(*this, aTransaction);
+            }
+        }
+    }
 
 // -----------------------------------------------------------------------------
 // CSIPIetfProfileContext::RandomPercent()

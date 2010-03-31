@@ -366,32 +366,38 @@ void CSIPIetfConnectionContext::ConnectionStateChanged(
 // -----------------------------------------------------------------------------
 //
 void CSIPIetfConnectionContext::IncomingResponse(
-	CSIPClientTransaction& aTransaction,
-	CSIPRegistrationBinding& aRegistration)
-	{
-	PROFILE_DEBUG1("CSIPIetfConnectionContext::IncomingResponse")
-	TBool handled = EFalse;
+    CSIPClientTransaction& aTransaction,
+    CSIPRegistrationBinding& aRegistration)
+    {
+    PROFILE_DEBUG1("CSIPIetfConnectionContext::IncomingResponse")
+    TBool handled = EFalse;
 
-	CleanIdleContexts();
+    CleanIdleContexts();
 
-	for (TInt i=0; i<iContexts.Count() && !handled; i++)
-		{
-		const CSIPResponseElements* response = aTransaction.ResponseElements();
-		if (response)
-		    {
-    		TBool isErrorResponse = (response->StatusCode() >= 300);
-    		TInt contextCountBefore = iContexts.Count();
-    		
-    		iContexts[i]->IncomingResponse(aTransaction, aRegistration, handled);
-    		
-    		TBool contextRemoved = (iContexts.Count() != contextCountBefore);	
-    		if (handled && !contextRemoved && isErrorResponse)
-    			{
-                iContexts[i]->RetryRegistration();
-    			}
-		    }
-		}
-	}
+    for (TInt i=0; i<iContexts.Count() && !handled; i++)
+        {
+        const CSIPResponseElements* response = aTransaction.ResponseElements();
+        if (response)
+            {
+            TInt contextCountBefore = iContexts.Count();
+            TBool isErrorResponse = (response->StatusCode() >= 300);
+            TInt statusCode = response->StatusCode();
+            iContexts[i]->IncomingResponse(aTransaction, aRegistration, handled);
+            TBool contextRemoved = (iContexts.Count() != contextCountBefore);
+            if (handled && !contextRemoved && isErrorResponse)
+                {
+                if ( iContexts[i]->RetryTimerInUse() )
+                    {
+                    iContexts[i]->RetryDeltaTimer(iContexts[i]->DelayTime(), statusCode );
+                    }
+                else
+                    {
+                    iContexts[i]->RetryRegistration();
+                    }
+               }    
+            }
+        }
+    }
 
 // -----------------------------------------------------------------------------
 // CSIPIetfConnectionContext::ErrorOccured

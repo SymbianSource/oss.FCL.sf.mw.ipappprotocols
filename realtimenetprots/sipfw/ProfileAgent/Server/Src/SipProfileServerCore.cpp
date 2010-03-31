@@ -998,7 +998,7 @@ void CSIPProfileServerCore::UpdateRegistrationL(TUint32 aProfileId,
         {
         status = CSIPConcreteProfile::EUnregistrationInProgress;
         }
-    if(FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn))
+    if(FeatureManager::FeatureSupported( KFeatureIdFfSipApnSwitching))
         {
         if(item->LatestProfile().IapId()!= item->UsedProfile().IapId())
             {
@@ -1028,7 +1028,7 @@ void CSIPProfileServerCore::UpdateRegistrationL(TUint32 aProfileId,
         }
 
         
-    if(FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn) 
+    if(FeatureManager::FeatureSupported( KFeatureIdFfSipApnSwitching) 
             && item->IsApnSwitchEnabled())
         {
         PROFILE_DEBUG1("CSIPProfileServerCore::UpdateRegistrationL, SwichEnabled")
@@ -1076,7 +1076,7 @@ CSIPConcreteProfile::TStatus CSIPProfileServerCore::EnableProfileL(
                              && item->IsVpnInUse());
     
     const CSIPConcreteProfile* profile = Profile(aProfileId);
-    if(FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn ) 
+    if(FeatureManager::FeatureSupported( KFeatureIdFfSipApnSwitching ) 
         && CheckApnSwitchEnabledL( *profile ) && !item->IsRfsInprogress() && !isVpnInUse )
         {
         PROFILE_DEBUG1("CSIPProfileServerCore::EnableProfileL, SwichEnabled")
@@ -1174,7 +1174,7 @@ void CSIPProfileServerCore::RegisterProfiles()
             {
             TBool enabled(EFalse);
             TRAPD(error, enabled = CheckApnSwitchEnabledL(item->Profile()))
-            if(FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn ) 
+            if(FeatureManager::FeatureSupported( KFeatureIdFfSipApnSwitching ) 
                         &&enabled && !error)
                 {
                 PROFILE_DEBUG1("CSIPProfileServerCore::RegisterProfiles, SwichEnabled")

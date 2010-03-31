@@ -18,7 +18,6 @@
 
 //  INCLUDE FILES
 #include "sipsystemstatemonitorimpl.h"
-#include "CSystemStateConnUsagePermissionMonitor.h"
 #include "sipdevicestateaware.h"
 #include "siprfsmonitorao.h"
 #include "sipvpnmonitorao.h"
@@ -45,8 +44,6 @@ CSipSystemStateMonitorImpl* CSipSystemStateMonitorImpl::NewL()
 void CSipSystemStateMonitorImpl::ConstructL()
     {
     iMonitorAo = CSipSystemStateMonitorAo::NewL();
-    iUsagePermissionMonitor = 
-        CSystemStateConnUsagePermissionMonitor::NewL();
     iSipDeviceAwareObject = CSipDeviceStateAware::NewL();
     }
 
@@ -73,7 +70,6 @@ CSipSystemStateMonitorImpl::~CSipSystemStateMonitorImpl()
 		
     delete iMonitorAo;
     iSnapMonitors.ResetAndDestroy();
-    delete iUsagePermissionMonitor;
     delete iRfsMonitor;
 	delete iSipDeviceAwareObject;
     }
@@ -106,12 +102,8 @@ void CSipSystemStateMonitorImpl::StartMonitoringL(
         CSipSnapAvailabilityMonitor* monitor = FindSnapMonitorById( aObjectId );
         if ( !monitor )
             {
-            TInt permissionToUseNetwork = 
-                iUsagePermissionMonitor->CurrentUsagePermission();
-            User::LeaveIfError( permissionToUseNetwork ); 
             monitor = CSipSnapAvailabilityMonitor::NewLC( 
-                aObjectId, permissionToUseNetwork, aObserver );
-            iUsagePermissionMonitor->AddObserverL( *monitor );
+                aObjectId, aObserver );
             iSnapMonitors.AppendL( monitor );
             CleanupStack::Pop( monitor );
             }
@@ -159,8 +151,7 @@ void CSipSystemStateMonitorImpl::StopMonitoring(
         {
         CSipSnapAvailabilityMonitor* monitor = FindSnapMonitorById( aObjectId );
         if ( monitor )
-            {
-            iUsagePermissionMonitor->RemoveObserver( *monitor );
+            {            
             monitor->RemoveObserver( aObserver );
             if ( !monitor->HasObservers() )
                 {
@@ -200,16 +191,8 @@ TInt CSipSystemStateMonitorImpl::CurrentValue(
     else if ( aVariable == ESnapAvailability )
         {
         CSipSnapAvailabilityMonitor* monitor = FindSnapMonitorById( aObjectId );
-        if ( monitor )
-            {
-            TInt permissionToUseNetwork = 
-                iUsagePermissionMonitor->CurrentUsagePermission();
-            if ( permissionToUseNetwork < 0 )
-                {
-                return permissionToUseNetwork;
-                }        
-            return permissionToUseNetwork && monitor->SnapAvailability();
-            }
+        if ( monitor )        
+            return monitor->SnapAvailability();
         }
     else if ( aVariable == ERfsState )
         {

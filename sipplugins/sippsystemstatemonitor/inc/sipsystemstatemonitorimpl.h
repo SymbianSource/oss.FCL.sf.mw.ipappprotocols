@@ -21,12 +21,10 @@
 // INCLUDES
 #include "sipsystemstatemonitorao.h"
 #include "sipsnapavailabilitymonitor.h"
-#include "MSystemStateConnUsagePermissionObserver.h"
 #include <sipsystemstateobserver.h>
 #include <sipsystemstatemonitor.h>
 
 // FORWARD DECLARATIONS
-class CSystemStateConnUsagePermissionMonitor;
 class CSipDeviceStateAware;
 class CSipRfsMonitorAo;
 class CSipVpnMonitorAo;
@@ -77,7 +75,6 @@ class CSipSystemStateMonitorImpl : public CSipSystemStateMonitor
     
         CSipSystemStateMonitorAo* iMonitorAo;
         RPointerArray<CSipSnapAvailabilityMonitor> iSnapMonitors;
-        CSystemStateConnUsagePermissionMonitor* iUsagePermissionMonitor;
         CSipRfsMonitorAo* iRfsMonitor;
 		CSipDeviceStateAware* iSipDeviceAwareObject;
 		

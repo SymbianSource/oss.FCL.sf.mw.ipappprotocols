@@ -489,8 +489,8 @@ void CSipAlrSnapMonitor::NotifyObservers( TUint aIapId )
 void CSipAlrSnapMonitor::NotifyInitializedObservers( 
     TUint32 aIapId,
     MSipAlrObserver::TEvent aEvent )
-	{
-	for ( TInt i = 0; i < iObservers.Count(); i++ )
+	{	
+	for (TInt i = iObservers.Count() - 1; i >= 0; --i) 
 		{
 		if ( iObservers[i].iInitialEventDone )
 			{
@@ -508,7 +508,7 @@ void CSipAlrSnapMonitor::NotifyInitializedObservers(
 //
 void CSipAlrSnapMonitor::NotifyNewObservers( TUint32 aIapId )
 	{
-	for ( TInt i = 0; i < iObservers.Count(); i++ )
+	for ( TInt i = iObservers.Count() - 1; i >= 0; --i )
 		{
 		if ( !iObservers[i].iInitialEventDone )
 			{

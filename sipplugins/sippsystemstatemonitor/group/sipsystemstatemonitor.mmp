@@ -26,7 +26,6 @@ SOURCE          implementationproxy.cpp
 SOURCE	        sipsystemstatemonitorimpl.cpp
 SOURCE          sipsystemstatemonitorao.cpp
 SOURCE          sipsnapavailabilitymonitor.cpp
-SOURCE          CSystemStateConnUsagePermissionMonitor.cpp
 SOURCE 		siprfsmonitorao.cpp
 SOURCE		sipdevicestateaware.cpp
 SOURCE          sipvpnmonitorao.cpp
