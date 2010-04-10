@@ -81,7 +81,7 @@ public:
 	/** Gets Content field of the SIP header. **/
 	inline const TPtrC8 GetContent() const;
 	
-	/** Setters for SIP header. 
+	/** Setters for SIP header. */
 	/** Sets Request URI field of the SIP header. **/
 	inline void   SetRequestUriL(const TPtrC8 & aReqUri);
 	/** Sets From field of the SIP header. **/	

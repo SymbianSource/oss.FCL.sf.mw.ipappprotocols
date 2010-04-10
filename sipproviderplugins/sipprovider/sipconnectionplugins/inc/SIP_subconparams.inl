@@ -140,7 +140,7 @@ inline void	CSubConSIPInviteParamSet::SetContentL(const TPtrC8& aContent)
 /
 / CSubConSIPSubscribeParamSet
 /
-/*-=========================================================*/
+/--=========================================================*/
 inline CSubConSIPSubscribeParamSet* CSubConSIPSubscribeParamSet::NewL(CSubConParameterFamily& aFamily, CSubConParameterFamily::TParameterSetType aType)
 	{
 	CSubConSIPSubscribeParamSet* obj = NewL();
@@ -270,7 +270,7 @@ inline void CSubConSIPSubscribeParamSet::SetAutoRefresh(TBool aAutoRefresh)
 /
 / CSubConSIPAuthenticateParamSet
 /
-/*-=========================================================*/
+/--=========================================================*/
 inline CSubConSIPAuthenticateParamSet* CSubConSIPAuthenticateParamSet::NewL(CSubConParameterFamily& aFamily, CSubConParameterFamily::TParameterSetType aType)
 	{
 	CSubConSIPAuthenticateParamSet* obj = NewL();
