@@ -389,6 +389,16 @@ TInt CSIPSettingsContainer::CurrentFeatureId( )
     }
 
 // ---------------------------------------------------------------------------
+// CSIPSettingsContainer::DrawerFlags()
+//
+// ---------------------------------------------------------------------------
+//
+TInt CSIPSettingsContainer::DrawerFlags()
+	{
+	return iListBox->View()->ItemDrawer()->Flags();
+	}
+	
+// ---------------------------------------------------------------------------
 // Sets observer for MSK label updations.
 // ---------------------------------------------------------------------------
 //

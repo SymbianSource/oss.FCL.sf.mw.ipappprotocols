@@ -138,6 +138,13 @@ HBufC8* CSmlDmCallback_stub::GetLuidAllocL( const TDesC8& /*aURI*/ )
         }
     return iLUID2;
     }
+
+TInt CSmlDmCallback_stub::RemoveMappingL( TUint32 /*aAdapterId*/, 
+                                          const TDesC8& /*aURI*/, 
+                                          TBool /*aChildAlso*/ )
+    {
+    return KErrNone;
+    }
     
 void CSmlDmCallback_stub::ConstructL()
     {

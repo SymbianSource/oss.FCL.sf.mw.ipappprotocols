@@ -331,6 +331,9 @@ class CGSSIPModel
         
         //Index of new profile in the list
         TInt iAddedProfileIndex;
+        
+        //indicate the registering status
+        TBool iIsRegistering;
     };
 
 #endif      // GS_SIP_MODEL_H   

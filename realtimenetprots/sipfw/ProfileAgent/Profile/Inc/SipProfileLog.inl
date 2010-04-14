@@ -21,9 +21,7 @@
 */
 
 
-#if !defined(__FLOG_ACTIVE)
 #include <flogger.h>
-#endif
 
 #include <e32base.h>
 #include <bautils.h>

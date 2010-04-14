@@ -62,7 +62,5 @@ LIBRARY                 InetProtUtil.lib
 LIBRARY                 nsmldmiapmatcher.lib
 LIBRARY                 sysutil.lib
 LIBRARY                 efsrv.lib
-LIBRARY                 apengine.lib
-LIBRARY                 commdb.lib
 
 // End of file

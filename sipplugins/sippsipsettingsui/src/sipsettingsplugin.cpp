@@ -496,30 +496,40 @@ void CSIPSettingsPlugin::HandleListBoxEventL(
 void CSIPSettingsPlugin::ChangeDefaultProfileL()
     {
     __GSLOGSTRING("CSIPSettingsPlugin::ChangeDefaultProfileL Start " )
-    TInt selectedIndex = iModel->DefaultProfileIndex();  
-    TInt oldProfileIndex = selectedIndex;  
-    
-    // Get the array of the profile names, ownership changes
-    CDesCArray* array = iModel->ListOfProfileNamesL();    
-    CleanupStack::PushL( array );
-    
-    // Create and display the pop-up list
-    CAknRadioButtonSettingPage* defaultPopUp = 
-        new ( ELeave ) CAknRadioButtonSettingPage( 
-            R_SIP_PROFILE_LIST_VIEW_DEFAULT_SETTING_PAGE,
-            selectedIndex,
-            array );
-    if ( defaultPopUp->ExecuteLD( CAknSettingPage::EUpdateWhenChanged ) )
-        {
-        if ( selectedIndex != oldProfileIndex )
-            {
-            // User has changed the default profile, set new setting
-            // to persistent storage
-            iModel->SetDefaultProfileL( selectedIndex );
-            }
-        }
+    		
+    TInt aFlage = iContainer->DrawerFlags();	
+    if( aFlage & CTextListItemDrawer::EDisableMarquee )
+    	{
+		TInt selectedIndex = iContainer->CurrentIndex();
+		iModel->SetDefaultProfileL( selectedIndex );
+    	}
+    else 
+    	{		
+		TInt selectedIndex = iModel->DefaultProfileIndex();  
+		TInt oldProfileIndex = selectedIndex;  
+		
+		// Get the array of the profile names, ownership changes
+		CDesCArray* array = iModel->ListOfProfileNamesL();    
+		CleanupStack::PushL( array );
+		
+		// Create and display the pop-up list
+		CAknRadioButtonSettingPage* defaultPopUp = 
+			new ( ELeave ) CAknRadioButtonSettingPage( 
+				R_SIP_PROFILE_LIST_VIEW_DEFAULT_SETTING_PAGE,
+				selectedIndex,
+				array );
+		if ( defaultPopUp->ExecuteLD( CAknSettingPage::EUpdateWhenChanged ) )
+			{
+			if ( selectedIndex != oldProfileIndex )
+				{
+				// User has changed the default profile, set new setting
+				// to persistent storage
+				iModel->SetDefaultProfileL( selectedIndex );
+				}
+			}
 
     CleanupStack::PopAndDestroy( array );  // array
+    	}
     __GSLOGSTRING("CSIPSettingsPlugin::ChangeDefaultProfileL End" )
     }
 

@@ -69,6 +69,15 @@ const TUint32 KSIPAllowIMSRegistration = 503;
 * The value is of type TBool. */
 const TUint32 KSIPProfileLocked = 504;
 
+/**
+* Defines how autoregistration profile behaves on home network/roaming
+* situations. If value is ETrue, automatic registration is not allowed
+* while roaming.
+* The value is of type TBool 
+* This constant will have no effect from Symbian ^ 3 onwards.
+* Registrations in Roaming network can be controlled using "Data Use When Roaming" setting. */
+const TUint32 KSIPAllowAutoRegistrationOnlyOnHomeNetwork = 505;
+
 // FORWARD DECLARATIONS
 
 class CSIPManagedProfileRegistry;

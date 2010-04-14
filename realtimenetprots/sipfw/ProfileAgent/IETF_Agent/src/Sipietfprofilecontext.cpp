@@ -567,11 +567,7 @@ void CSIPIetfProfileContext::IncomingResponse(
         if (response)
             {
                 retry = RetryRegister( &aTransaction,  responseCode);
-                if( retry )
-                {
-                iCurrentState->ErrorOccured(*this, responseCode);
-                }
-                else
+                if( !retry )
                 {
                     if (responseCode >= K300MultipleChoices)
                     {

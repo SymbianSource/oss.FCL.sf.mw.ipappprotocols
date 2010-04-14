@@ -166,7 +166,7 @@ class CSIPMessageElements : public CBase
         TBool iHeaderLookupOpen;
 
 	private: // For testing purposes
-#ifdef CPPUNIt_TEST
+#ifdef CPPUNIT_TEST
 	    friend class CSIPMessageElementsTest;
 #endif
 	};
