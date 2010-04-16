@@ -20,7 +20,7 @@
 // INCLUDE FILES
 
 #include    <aknview.h>
-#include    <csxhelp/cp.hlp.hrh>
+#include    <cshelp/conset.hlp.hrh>
 #include    <gsfwviewuids.h>
 #include    <gssipsettingspluginrsc.rsg> //GUI Resource
 #include    "sipsettlistsipsrvsetcontainer.h"
@@ -75,7 +75,6 @@ void CSIPSettListSIPSrvSetContainer::ConstructL(
     // Set limits to the view & activate it
     SetRect( aRect );    
     ActivateL();
-    iTimer = CGSSIPTimer::NewL( *this, *(iItemList->ListBox()->View()->ItemDrawer()) );
     __GSLOGSTRING("CSIPSettListSIPSrvSetContainer::ConstructL End" )  
     }
 
@@ -108,8 +107,6 @@ CSIPSettListSIPSrvSetContainer::~CSIPSettListSIPSrvSetContainer()
     {    
     __GSLOGSTRING("CSIPSettListSIPSrvSetContainer::~CSIPSettListSIPSrvSetContainer" )
     delete iItemList;
-    delete iTimer;
-    iTimer = NULL;
     }
 
 // -----------------------------------------------------------------------------
@@ -192,13 +189,7 @@ TKeyResponse CSIPSettListSIPSrvSetContainer::OfferKeyEventL(
     {
     __GSLOGSTRING("CSIPSettListSIPSrvSetContainer::OfferKeyEventL" )
     // Pass the key event to list box
-    if ( aKeyEvent.iCode == EKeyUpArrow || aKeyEvent.iCode == EKeyDownArrow )
-        {
-        iItemList->ListBox()->View()->ItemDrawer()->ClearFlags( CTextListItemDrawer::EDisableHighlight );
-        DrawNow();
-        iTimer->StartTimer();
 
-        }
     return iItemList->OfferKeyEventL( aKeyEvent, aType );    
     }
 
@@ -215,7 +206,6 @@ void CSIPSettListSIPSrvSetContainer::FocusChanged( TDrawNow aDrawNow )
         iItemList->SetFocus( IsFocused(), aDrawNow );
         }
     
-            iTimer->StopTimer();
      
         CCoeControl::FocusChanged( aDrawNow );
     
@@ -267,8 +257,6 @@ void CSIPSettListSIPSrvSetContainer::GetHelpContext(TCoeHelpContext& aContext) c
 void CSIPSettListSIPSrvSetContainer::HandlePointerEventL( const TPointerEvent& aPointerEvent )
     {
     __GSLOGSTRING("CSIPSettListSIPSrvSetContainer::HandlePointerEventL" ) 
-     iItemList->ListBox()->View()->ItemDrawer()->ClearFlags( CTextListItemDrawer::EDisableHighlight );
-     DrawNow();
      CCoeControl::HandlePointerEventL( aPointerEvent );
     }
 
@@ -277,10 +265,7 @@ void CSIPSettListSIPSrvSetContainer::HandlePointerEventL( const TPointerEvent& a
 // Check if it is Pointer Event.
 // -----------------------------------------------------------------------------
 //
-TBool CSIPSettListSIPSrvSetContainer::IfPointerEvent()
-    {
-    return !( iTimer->IsStarted() );
-    }
+
 
 //Third
 //  End of File  

@@ -123,6 +123,9 @@ void UT_CRtpStream::Teardown(  )
     {
     delete iRecvStream;
     delete iTranStream;
+	
+	iRecvStream = NULL;
+    iTranStream = NULL;
     }
 
 void UT_CRtpStream::UT_CRtpStream_ResetStreamStatL(  )
@@ -885,7 +888,7 @@ void UT_CRtpStream::UT_CRtpStream_RtpStreamCreateRtcpReportSectionL(  )
     CleanupStack::PopAndDestroy( packet );
     }
     
-void UT_CRtpStream::UT_CRtpStream_UpdateParam()
+void UT_CRtpStream::UT_CRtpStream_UpdateParamL()
     {
   
     // "Test description: Test update of statistics" ) );
@@ -964,7 +967,7 @@ void UT_CRtpStream::UT_CRtpStream_UpdateParam()
     EUNIT_ASSERT(ETrue);
     }    
 
-void UT_CRtpStream::UT_CRtpStream_RtpByeAppMethods()
+void UT_CRtpStream::UT_CRtpStream_RtpByeAppMethodsL()
     {
     //"") );
     // "Test description: Test creating a BYE packet" ) );
@@ -1023,7 +1026,7 @@ void UT_CRtpStream::UT_CRtpStream_RtpByeAppMethods()
   	EUNIT_ASSERT(ETrue);
     }
  
-void UT_CRtpStream::UT_CRtpStream_TestRtpSRMethods()
+void UT_CRtpStream::UT_CRtpStream_TestRtpSRMethodsL()
     {
     //"") );
     // "Test description: Test creating and parsing an SR packet" ) );
@@ -1106,7 +1109,7 @@ void UT_CRtpStream::UT_CRtpStream_TestRtpSRMethods()
     EUNIT_ASSERT(ETrue);
     }  
     
-void UT_CRtpStream::UT_CRtpStream_TestRtpRRMethods()
+void UT_CRtpStream::UT_CRtpStream_TestRtpRRMethodsL()
     {
     //"") );
     // "Test description: Test creating and parsing an RR packet" ) );
@@ -1314,7 +1317,7 @@ void UT_CRtpStream::UT_CRtpStream_TestStreamStatAndSdesMethods()
     EUNIT_ASSERT(ETrue);
     }
 
-void UT_CRtpStream::UT_CRtpStream_RtpStreamProcessRtpPacket()
+void UT_CRtpStream::UT_CRtpStream_RtpStreamProcessRtpPacketL()
 	{
 	TInt result(KErrNone);
 	TInt error(KErrNone);
@@ -1542,27 +1545,27 @@ EUNIT_TEST(
     "CRtpStream",
     "UT_CRtpStream_UpdateParam",
     "FUNCTIONALITY",
-    SetupL, UT_CRtpStream_UpdateParam, Teardown)    
+    SetupL, UT_CRtpStream_UpdateParamL, Teardown)    
 EUNIT_TEST(
     "RtpByeAppMethods",
     "CRtpStream",
     "RtpByeAppMethods",
     "FUNCTIONALITY",
-    SetupL, UT_CRtpStream_RtpByeAppMethods, Teardown)     
+    SetupL, UT_CRtpStream_RtpByeAppMethodsL, Teardown)     
 
 EUNIT_TEST(
     "TestRtpSRMethods",
     "CRtpStream",
     "TestRtpSRMethods",
     "FUNCTIONALITY",
-    SetupL, UT_CRtpStream_TestRtpSRMethods, Teardown)    
+    SetupL, UT_CRtpStream_TestRtpSRMethodsL, Teardown)    
 
 EUNIT_TEST(
     "TestRtpRRMethods",
     "CRtpStream",
     "TestRtpRRMethods",
     "FUNCTIONALITY",
-    SetupL, UT_CRtpStream_TestRtpRRMethods, Teardown)   
+    SetupL, UT_CRtpStream_TestRtpRRMethodsL, Teardown)   
 
 EUNIT_TEST(
     "TestRtpRRMethods",
@@ -1575,7 +1578,7 @@ EUNIT_TEST(
     "CRtpStream",
     "RtpStreamProcessRtpPacket",
     "FUNCTIONALITY",
-    SetupL, UT_CRtpStream_RtpStreamProcessRtpPacket, Teardown)      
+    SetupL, UT_CRtpStream_RtpStreamProcessRtpPacketL, Teardown)      
     
 
 

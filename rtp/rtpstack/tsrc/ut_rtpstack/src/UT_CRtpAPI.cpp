@@ -140,10 +140,12 @@ void UT_CRtpAPI::Teardown(  )
     {
     iRtpAPI->Close();
     delete iRtpAPI;
+	iRtpAPI = NULL;
 
     iStpAPI->Close();
     delete iStpAPI;
-    }
+    iStpAPI = NULL;
+	}
 
 void UT_CRtpAPI::UT_CRtpAPI_NewLL(  )
     {
@@ -194,7 +196,7 @@ void UT_CRtpAPI::UT_CRtpAPI_StartConnectionL(  )
 	iRtpAPI->CancelStart();
     }
 
-void UT_CRtpAPI::UT_CRtpAPI_StartConnection_1L(  )
+void UT_CRtpAPI::UT_CRtpAPI_StartConnection_OneL(  )
     {
     //Synchronize
     TInt result(KErrNone);
@@ -980,7 +982,7 @@ void UT_CRtpAPI::UT_CRtpAPI_SendRtpPacketL(  )
     EUNIT_ASSERT( KErrNone == status.Int() );
 	}
 
-void UT_CRtpAPI::UT_CRtpAPI_SendRtpPacket_3L()
+void UT_CRtpAPI::UT_CRtpAPI_SendRtpPacket_ThreeL()
     {
     TInt result(KErrNone);
     TRtpSdesParams params;
@@ -1502,7 +1504,7 @@ EUNIT_TEST(
     "CRtpAPI",
     "StartConnection",
     "FUNCTIONALITY",
-    SetupL, UT_CRtpAPI_StartConnection_1L, Teardown)
+    SetupL, UT_CRtpAPI_StartConnection_OneL, Teardown)
 
 EUNIT_TEST(
     "CancelStart - test ",
@@ -1656,7 +1658,7 @@ EUNIT_TEST(
     "CRtpAPI",
     "SendRtpPacket",
     "FUNCTIONALITY",
-    SetupL, UT_CRtpAPI_SendRtpPacket_3L, Teardown)
+    SetupL, UT_CRtpAPI_SendRtpPacket_ThreeL, Teardown)
 
 EUNIT_TEST(
     "SendDataL - test ",

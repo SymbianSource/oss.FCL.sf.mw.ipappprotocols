@@ -18,7 +18,7 @@
 
 
 // INCLUDE FILES
-
+#include    <aknnotewrappers.h>
 #include    <e32std.h>
 #include    <escapeutils.h>
 #include    <StringLoader.h>
@@ -111,7 +111,18 @@ void CSIPSettingsModel::SetDefaultProfileL(
     TInt aIndex )
     {
     __GSLOGSTRING1("CSIPSettingsModel::SetDefaultProfileL index: %d", aIndex)
-	iHandler->SetDefaultProfileL( aIndex );
+    TRAPD(err, iHandler->SetDefaultProfileL( aIndex ));		
+      if ( err == KErrInUse )
+    	  {
+          HBufC* txtErr = StringLoader::LoadLC( R_QTN_SIP_ERROR_PROFILE_USED );
+          CAknErrorNote* note = new ( ELeave ) CAknErrorNote( ETrue );
+          note->ExecuteLD( txtErr->Des() );
+          CleanupStack::PopAndDestroy( txtErr );
+    	  }
+      else
+    	  {
+          User::Leave( err );
+    	  }
     }
 
 // -----------------------------------------------------------------------------

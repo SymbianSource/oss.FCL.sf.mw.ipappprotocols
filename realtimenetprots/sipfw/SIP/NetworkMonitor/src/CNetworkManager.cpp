@@ -410,7 +410,8 @@ TInt CNetworkManager::GetServiceTypeAndObjectNameL(
         aObjectName.AppendNum( static_cast<TInt64>( realIapId ) );
         }        
 #endif
-
+	__SIP_INT_LOG1( "CNetworkManager::GetServiceTypeAndObjectNameL end realIapID =", realIapId )	
+	
     return realIapId;
 	}
 
@@ -436,37 +437,39 @@ TInt CNetworkManager::HandleVPNServiceL(
     
     CCDVPNServiceRecord* serviceRecord = 
         static_cast<CCDVPNServiceRecord*>( aIapRecord.iService.iLinkedRecord );
-    
-    serviceRecord->iServiceIAP.LoadL( aCommsDat );
-    
-    // It is valid to have 0 for iServiceIAP when the SNAP is configured for VPN IAP. 
-    // So treat this is a valid configuaration and fill the aServiceType to NULL which usually contains the IAP service type(like LAN Service, Outgoing GPRS etc )     
-    if (serviceRecord->iServiceIAP == 0)
-    	{    	
-   		aServiceType.Copy(_L8("")); 
-    	return (serviceRecord->iServiceIAP);
-    	}
-    
-    if ( !serviceRecord->iServiceIAP.iLinkedRecord )
-        {
-        // Ownership of created record is transferred
-        serviceRecord->iServiceIAP.iLinkedRecord = 
-            static_cast<CCDIAPRecord*>(
-                CCDRecordBase::RecordFactoryL( KCDTIdIAPRecord ) );
-        serviceRecord->iServiceIAP.iLinkedRecord->SetRecordId( 
-            serviceRecord->iServiceIAP );
-            
-        serviceRecord->iServiceIAP.iLinkedRecord->LoadL( aCommsDat );
-        }
 
-    CCDIAPRecord* iapRecord = 
-        static_cast<CCDIAPRecord*>( serviceRecord->iServiceIAP.iLinkedRecord );
-    
-    // We need service type info of the "real" iap
-    GetServiceTypeL( *iapRecord, aServiceType );
-       
-    return iapRecord->RecordId();
-    }
+	TRAPD(err,serviceRecord->iServiceIAP.LoadL( aCommsDat ));
+	if(KErrNone != err )
+		{
+		//Its valid to not have iServiceIAP record, due to introduction of ServiceSNAP for the VPN with Snap
+		__SIP_INT_LOG1( "CNetworkManager::HandleVPNServiceL CCDVPNServiceRecord->iServiceIAP LoadL failed with error=", err)
+		aServiceType.Copy(_L8("")); 
+		return 0;
+		
+		}
+	else
+		{
+	    	if ( !serviceRecord->iServiceIAP.iLinkedRecord )
+	        {
+			// Ownership of created record is transferred
+	        serviceRecord->iServiceIAP.iLinkedRecord = 
+	            static_cast<CCDIAPRecord*>(
+	                CCDRecordBase::RecordFactoryL( KCDTIdIAPRecord ) );
+	        serviceRecord->iServiceIAP.iLinkedRecord->SetRecordId( 
+	            serviceRecord->iServiceIAP );
+	            
+	        serviceRecord->iServiceIAP.iLinkedRecord->LoadL( aCommsDat );
+			}
+		
+
+	    	CCDIAPRecord* iapRecord = 
+	        	static_cast<CCDIAPRecord*>( serviceRecord->iServiceIAP.iLinkedRecord );
+	    
+	    	// We need service type info of the "real" iap
+	    	GetServiceTypeL( *iapRecord, aServiceType );
+	       	return iapRecord->RecordId();
+		}
+	}
 
 // -----------------------------------------------------------------------------
 // CNetworkManager::GetServiceTypeL

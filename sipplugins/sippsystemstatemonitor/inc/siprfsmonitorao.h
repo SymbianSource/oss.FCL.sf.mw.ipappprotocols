@@ -41,8 +41,6 @@ class CSipRfsMonitorAo : public CActive
         void RemoveObserver( MSipSystemStateObserver& aObserver );
         void EventProcessingCompleted(MSipSystemStateObserver& aObserver);
         TBool MappedState(TInt aState);
-		void EventProcessingCompleted();
-        static TInt TimerExpired(TAny* aSelf);
         
     private:
         void NotifyObservers();
@@ -58,7 +56,6 @@ class CSipRfsMonitorAo : public CActive
         RPointerArray<MSipSystemStateObserver>      iObservers;
         RProperty                                   iProperty;
         CSipSystemStateMonitor::TRfsState           iState;
-        CPeriodic*                                  iGuardTimer;
         
     private: // For testing purposes  
         friend class CSipRfsMonitorAoTestApp;

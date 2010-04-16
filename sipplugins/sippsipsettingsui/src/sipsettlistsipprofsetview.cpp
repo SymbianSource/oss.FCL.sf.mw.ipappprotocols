@@ -24,7 +24,7 @@
 #include    <akntitle.h>
 #include    <hlplch.h>
 #include    <featmgr.h>
-#include    <stringloader.h>
+#include    <StringLoader.h>
 #include    "sipsettlistsipprofsetview.h"
 #include    "sipsettlistsipprofsetcontainer.h"
 #include    "sipsettlistsipprofsetmodel.h"
@@ -292,7 +292,7 @@ void CSIPSettListSIPProfSetView::DynInitMenuPaneL(
     if( aResourceId == R_GS_SIP_PROFILE_SETTING_VIEW_MENU ) 
         {
         // iView might be NULL
-        if( iView && iView->IfPointerEvent() )
+        if( iView )
             {
             aMenuPane->SetItemDimmed( EGSCmdAppChange, ETrue );
             }

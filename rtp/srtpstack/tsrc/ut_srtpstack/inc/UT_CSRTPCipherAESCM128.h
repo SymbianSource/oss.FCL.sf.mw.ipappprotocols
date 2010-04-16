@@ -71,6 +71,8 @@ class UT_CSRTPCipherAESCM128
          void UT_EncryptL_EncryptData3L();
 
          void UT_EncryptL_EncryptData4L();
+         
+         void UT_EncryptL_EncryptDataKeyChangesL();
 
          void UT_EncryptL_DecryptDataL();
          
@@ -79,6 +81,8 @@ class UT_CSRTPCipherAESCM128
          void UT_EncryptL_DecryptData3L();
          
          void UT_EncryptL_DecryptData4L();
+         
+         void UT_EncryptL_DecryptDataKeyChangesL();
 
          void UT_EncryptL_ErrorTest1L();
                   

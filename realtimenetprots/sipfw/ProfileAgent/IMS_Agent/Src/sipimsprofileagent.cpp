@@ -886,7 +886,7 @@ void CSIPIMSProfileAgent::DeleteAllProfilesInWaitingQue()
 	PROFILE_DEBUG1("CSIPIMSProfileAgent::DeleteAllProfilesInWaitingQue")
 	
 	CSIPConcreteProfile* profile = NULL;
-	for (TInt i=0; i< iWaitForRegisteringArray.Count();i++)
+	for (TInt i = iWaitForRegisteringArray.Count() -1; i >= 0; --i)
 		{
 		profile = iWaitForRegisteringArray[i];
 		if (profile)
@@ -1345,7 +1345,7 @@ CSIPConcreteProfile* CSIPIMSProfileAgent::RemoveProfileFromWaitingQueue(
 	{
 	TBool found = EFalse;
     CSIPConcreteProfile* profile = NULL;
-	for (TInt i=0; i< aProfileArray.Count() && !found; i++)
+	for (TInt i= aProfileArray.Count() -1; i >= 0 && !found; --i)
 		{
 		CSIPConcreteProfile* tmp = aProfileArray[ i ];
 		found = ( tmp->Id() == aSIPConcreteProfile.Id() );

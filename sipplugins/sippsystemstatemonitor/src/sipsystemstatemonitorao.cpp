@@ -180,5 +180,7 @@ TBool CSipSystemStateMonitorAo::IsSystemReady( TInt aSystemState ) const
     {
     return ( aSystemState == ESwStateNormalRfOn ||
              aSystemState == ESwStateNormalRfOff ||
-             aSystemState == ESwStateNormalBTSap );
+             aSystemState == ESwStateNormalBTSap ||
+	         aSystemState == ESwStateEmergencyCallsOnly ||
+             aSystemState == ESwStateSecurityCheck);
     }

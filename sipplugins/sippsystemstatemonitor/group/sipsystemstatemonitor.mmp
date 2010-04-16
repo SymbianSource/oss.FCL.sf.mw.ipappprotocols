@@ -26,9 +26,9 @@ SOURCE          implementationproxy.cpp
 SOURCE	        sipsystemstatemonitorimpl.cpp
 SOURCE          sipsystemstatemonitorao.cpp
 SOURCE          sipsnapavailabilitymonitor.cpp
-SOURCE          CSystemStateConnUsagePermissionMonitor.cpp
 SOURCE 		siprfsmonitorao.cpp
 SOURCE		sipdevicestateaware.cpp
+SOURCE          sipvpnmonitorao.cpp
 
 SOURCEPATH      ../data
 START RESOURCE 10283311.rss 
@@ -46,6 +46,7 @@ LIBRARY     flogger.lib
 LIBRARY     connmon.lib
 LIBRARY     centralrepository.lib
 LIBRARY	    ssmcmn.lib
+LIBRARY     featmgr.lib
 
 VENDORID VID_DEFAULT
 

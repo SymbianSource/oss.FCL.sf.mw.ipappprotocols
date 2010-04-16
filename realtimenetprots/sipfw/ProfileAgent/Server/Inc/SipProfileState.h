@@ -333,6 +333,14 @@ class CSIPProfileState: public CBase
 			CSIPProfileState& aUnregInProg,
 			CSIPProfileState& aUnregistered) const;
 
+        /**
+        * Deregister profiles while registration is is progress
+        * @param aItem profile cache item
+        * @param aItem aUnregistered "Unregister" state
+        */
+        void DeregisterWhileRegInProgressL(CSIPProfileCacheItem& aItem,
+            CSIPProfileState& aUnregistered);
+
 	protected: // Data
 
 		CSIPPluginDirector& iPluginDirector;

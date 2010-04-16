@@ -23,6 +23,8 @@
 
 #include "msrtpauthentication.h"
 
+class CHMAC;
+
 class CSRTPAuthentication_HMAC_SHA1 : public CBase, public MSRTPAuthentication
     {
     public:
@@ -64,7 +66,13 @@ class CSRTPAuthentication_HMAC_SHA1 : public CBase, public MSRTPAuthentication
         */
         CSRTPAuthentication_HMAC_SHA1();  
                 
-        void ConstructL();          
+        void ConstructL();  
+        
+        void CreateHmacL(const TDesC8& aKey);
+        
+    private: // data
+        HBufC8* iKey;
+        CHMAC* iHmac;
     };
 
 #endif // __SRTP_AUTHENTICATION_HMAC_SHA1_H__

@@ -41,6 +41,8 @@ EXPORT_C CSrtpAESCTRCrypto* CSrtpAESCTRCrypto::NewL()
 //
 CSrtpAESCTRCrypto::~CSrtpAESCTRCrypto()
 	{
+	delete iEncryptor;
+	delete iKey;
 	}
 
 
@@ -162,7 +164,6 @@ EXPORT_C HBufC8* CSrtpAESCTRCrypto::EncryptL(const TDesC8& aKey,
 	    TBuf8<16> msg; //for a 128-bit piece of a message
 	    TInt count=0; // how many full 128-bit pieces can be made of a source
 	    
-	    CAESEncryptor* encryptor = NULL;
 	    SRTP_DEBUG_TINT_VALUE( "EncryptL, Check aBitLengh ==16 and the length is", 
 	                aKey.Length()  );
 	      
@@ -214,7 +215,10 @@ EXPORT_C HBufC8* CSrtpAESCTRCrypto::EncryptL(const TDesC8& aKey,
 	    	User::Leave(KErrArgument);
 	    	}
 
-	    encryptor = CAESEncryptor::NewLC(aKey);
+	    if ( !iEncryptor || !iKey || (*iKey != aKey) )
+	        {
+	        CreateEncryptorL(aKey);
+            }
 	                   
 	    for(int x = 0; x < count; x++)
 	    	{
@@ -222,7 +226,7 @@ EXPORT_C HBufC8* CSrtpAESCTRCrypto::EncryptL(const TDesC8& aKey,
 	    	
 	    	data.Copy(iv);
 	    	   	
-	    	encryptor->Transform(data);
+	    	iEncryptor->Transform(data);
 
 	    	IncreaseIV(iv);
 	    	    	
@@ -244,7 +248,7 @@ EXPORT_C HBufC8* CSrtpAESCTRCrypto::EncryptL(const TDesC8& aKey,
 	    	
 	    	msg.Copy(aSrc.Mid(count*16, bytesleft));
 	    	data.Copy(iv);
-	    	encryptor->Transform(data);
+	    	iEncryptor->Transform(data);
 	    		
 		    // XOR last piece of message with encrypted IV
 		    for(int i = 0; i < bytesleft; i++)
@@ -256,7 +260,6 @@ EXPORT_C HBufC8* CSrtpAESCTRCrypto::EncryptL(const TDesC8& aKey,
 			    		
 	    	}
 		
-		CleanupStack::PopAndDestroy(encryptor);
 	    CleanupStack::Pop(outputBuff);    	    
 	    
 	    return outputBuff;
@@ -302,4 +305,16 @@ void CSrtpAESCTRCrypto::IncreaseIV(TDes8& iv)
 
 	} 
 
-
+// ---------------------------------------------------------------------------
+// CSrtpAESCTRCrypto::CreateEncryptorL
+// ---------------------------------------------------------------------------
+//
+void CSrtpAESCTRCrypto::CreateEncryptorL(const TDesC8& aKey)
+    {
+    delete iEncryptor;
+    iEncryptor = 0;
+    delete iKey;
+    iKey = 0;
+    iKey = aKey.AllocL();
+    iEncryptor = CAESEncryptor::NewL(*iKey);
+    }

@@ -98,13 +98,18 @@ void UT_SRTPAuthentication_NULL::SetupL(  )
 void UT_SRTPAuthentication_NULL::Teardown(  )
     {
     delete iAuthenticator;
-    
+    iAuthenticator = NULL;
+	
 	delete iRFC2202_Test1_Key_160bits;
 	delete iRFC2202_Test1_Data_16bits;
 	delete iRFC2202_Test1_Tag_80bits;
+	
+    iRFC2202_Test1_Key_160bits = NULL;
+	iRFC2202_Test1_Data_16bits = NULL;
+	iRFC2202_Test1_Tag_80bits = NULL;
     }
 
-void UT_SRTPAuthentication_NULL::UT_AuthenticateL_RFC2202_Test1_80L(  )
+void UT_SRTPAuthentication_NULL::UT_AuthenticateL_RFC2202_Test1_EightyL(  )
     {
  	HBufC8* result = iAuthenticator->AuthenticateL(80, *iRFC2202_Test1_Key_160bits, 
  	                                         *iRFC2202_Test1_Data_16bits,
@@ -150,7 +155,7 @@ EUNIT_TEST(
     "SRTPAuthentication_NULL",
     "AuthenticateL",
     "FUNCTIONALITY",
-    SetupL, UT_AuthenticateL_RFC2202_Test1_80L, Teardown)
+    SetupL, UT_AuthenticateL_RFC2202_Test1_EightyL, Teardown)
 
 
 EUNIT_END_TEST_TABLE

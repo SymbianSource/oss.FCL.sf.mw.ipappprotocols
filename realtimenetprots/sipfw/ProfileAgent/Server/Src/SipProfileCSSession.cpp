@@ -249,13 +249,21 @@ void CSIPProfileCSSession::UpdateProfileL(const RMessage2& aMessage)
     {
 	HBufC8* profileBuf = iHelper.ReadLC(ESipProfileItcArgProfile,aMessage);
 	CSIPConcreteProfile* profile = InternalizeProfileLC(*profileBuf);
-    TBool canProceed = iCore.UpdateProfileToStoreL(profile, *this);
-    CleanupStack::Pop(profile);
-    CleanupStack::PopAndDestroy(profileBuf);
-    if (canProceed)
-    	{
-    	iCore.UpdateRegistrationL(profile->Id(), *this);
-    	}
+	TBool updateAllowed = iCore.IsUpdateAllowed(profile);
+	if(updateAllowed)
+	    {
+        TBool canProceed = iCore.UpdateProfileToStoreL(profile, *this);
+        CleanupStack::Pop(profile);
+        CleanupStack::PopAndDestroy(profileBuf);
+        if (canProceed)
+            {
+            iCore.UpdateRegistrationL(profile->Id(), *this);
+            }
+	    }
+	else
+	    {
+	    User::Leave(KErrNotSupported);
+	    }
     }
 
 // -----------------------------------------------------------------------------

@@ -25,7 +25,6 @@
 #include <aknlongtapdetector.h>
 #include <aknstyluspopupmenu.h>
 #include <eikmobs.h>
-#include "gssiptimer.h"
 // FORWARD DECLARATIONS
 
 class CSIPSettListSIPSrvSetItemList;
@@ -68,11 +67,6 @@ class CSIPSettListSIPSrvSetContainer : public CCoeControl
         */
         virtual void HandlePointerEventL( const TPointerEvent& aPointerEvent );
         
-        /**
-        * Judge whether it is a pointer event
-        */
-        TBool IfPointerEvent();
-       
         /**
         * Opens the pop-up list to modify the selected list items
         * @param aCommand ID of the command to respond to
@@ -150,9 +144,7 @@ class CSIPSettListSIPSrvSetContainer : public CCoeControl
         
         // Type of server view.
         TBool iProxyServerView;     
-
-        CGSSIPTimer* iTimer;
-          
+         
     };
 
 #endif      // SIP_SETT_LIST_SIP_SRV_SET_CONTAINER_H

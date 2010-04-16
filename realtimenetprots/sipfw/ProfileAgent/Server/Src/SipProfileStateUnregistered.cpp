@@ -27,6 +27,7 @@
 #include "sipplugindirector.h"
 #include "sipalrmonitor.h"
 #include "SipProfileLog.h"
+#include <featmgr.h>
 
 // ============================ MEMBER FUNCTIONS ===============================
 
@@ -110,16 +111,19 @@ CSIPProfileStateUnregistered::EnterL(CSIPProfileCacheItem& aItem,
 	if (aItem.IsActiveState())
 		{
 		aItem.SendUnregisteredStatusEventL();
-
-		if (aItem.IsReferred() && !aItem.IsShutdownInitiated() && !aItem.IsRfsInprogress())
-			{
-			aItem.ClearOldProfile();
-			aItem.StartRegisterL(*iWaitForIAP, *iRegInProg, getIap);
-			// CSIPProfileCacheItem::MonitorSnapL stops ALR monitor later if
-			// updating SNAP.			
-			return;
-			}
-		}
+		TBool isVpnInUse = (FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn )
+                                && aItem.IsVpnInUse());
+		
+        if ( aItem.IsReferred() && !aItem.IsShutdownInitiated() &&
+                !aItem.IsRfsInprogress() && !isVpnInUse)
+            {
+            aItem.ClearOldProfile();
+            aItem.StartRegisterL(*iWaitForIAP, *iRegInProg, getIap);
+            // CSIPProfileCacheItem::MonitorSnapL stops ALR monitor later if
+            // updating SNAP.           
+            return;
+            }
+        }
 	// Stay unregistered, no need to monitor SNAP
 	aItem.StopSnapMonitoring();
 	iPluginDirector.TerminateHandling(aItem.UsedProfile());
@@ -228,12 +232,15 @@ void CSIPProfileStateUnregistered::UpdateRegistrationL(
 	__ASSERT_ALWAYS(
 		iPluginDirector.State(state, aItem.Profile()) == KErrNotFound ||
 		state == CSIPConcreteProfile::EUnregistered, User::Leave(KErrArgument));
-
-	if (aItem.IsReferred() && !aItem.IsShutdownInitiated())
-		{
-		aItem.StartRegisterL(*iWaitForIAP, *iRegInProg, ETrue);
-		}
-	}
+        TBool isVpnInUse = (FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn )
+                             && aItem.IsVpnInUse());
+        
+        if (aItem.IsReferred() && !aItem.IsShutdownInitiated() 
+                      && !aItem.IsRfsInprogress() && !isVpnInUse)
+            {
+            aItem.StartRegisterL(*iWaitForIAP, *iRegInProg, ETrue);
+            }	
+        }
 
 // -----------------------------------------------------------------------------
 // CSIPProfileStateUnregistered::ErrorOccurred

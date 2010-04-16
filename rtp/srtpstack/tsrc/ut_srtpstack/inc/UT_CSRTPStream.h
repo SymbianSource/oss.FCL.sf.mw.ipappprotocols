@@ -101,8 +101,8 @@ class UT_CSRTPStream
          void UT_CSRTPStream_GetCryptoContextL();
          void UT_CSRTPStream_SetSSRCL(  );
          void Hex(HBufC8& aString);    
-         void UT_CSRTPStream_ReKeyNeeded_1L(  );
-         void UT_CSRTPStream_ReKeyNeeded_2L(  );
+         void UT_CSRTPStream_ReKeyNeeded_OneL(  );
+         void UT_CSRTPStream_ReKeyNeeded_TwoL(  );
          void UT_CSRTPStream_TestNewL(  );
          void UT_CSRTPStream_IsContextSetL();
 

@@ -127,16 +127,19 @@ RESOURCE MENU_PANE r_gs_sip_profile_list_view_menu
             {
             command = EGSCmdAppEdit;
             txt = qtn_sip_edit;
+            flags = EEikMenuItemAction;
             },
 		MENU_ITEM
             {
             command = EGSCmdAppDelete;
             txt = qtn_sip_delete;
+            flags = EEikMenuItemSpecific;
             },
         MENU_ITEM
             {
             command = EGSCmdAppDefault;
             txt = qtn_sip_set_def_profile;
+            flags = EEikMenuItemSpecific;
             },
 #ifdef __SERIES60_HELP
         MENU_ITEM

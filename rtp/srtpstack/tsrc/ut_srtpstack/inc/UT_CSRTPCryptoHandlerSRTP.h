@@ -109,7 +109,7 @@ class UT_CSRTPCryptoHandlerSRTP
          HBufC8* BuildPacketL(TBool aSrtp, TPayloadDetails& details);
                   
                   
-         void UT_DeriveSessionKeysL_1L();
+         void UT_DeriveSessionKeysL_OneL();
          
 
          void UT_UpdateROCL();         

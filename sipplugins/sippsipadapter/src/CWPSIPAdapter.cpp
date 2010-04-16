@@ -19,11 +19,11 @@
 // INCLUDE FILES
 #include <e32base.h>
 #include <CWPAdapter.h>
-#include <cwpcharacteristic.h>
-#include <cwpparameter.h>
+#include <CWPCharacteristic.h>
+#include <CWPParameter.h>
 #include <wpsipadapter.rsg>
 #include <utf.h>           // Unicode conversion
-#include <wpadapterutil.h>
+#include <WPAdapterUtil.h>
 #include <sipmanagedprofileregistry.h>
 #include <sipmanagedprofile.h>
 #include <mmf/common/mmfcontrollerpluginresolver.h>

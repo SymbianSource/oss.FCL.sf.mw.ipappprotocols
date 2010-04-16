@@ -19,7 +19,6 @@
 #define CSIPSNAPAVAILABILITYMONITOR_H
 
 // INCLUDES
-#include "MSystemStateConnUsagePermissionObserver.h"
 #include <sipsystemstatemonitor.h>
 #include <rconnmon.h>
 #include <e32base.h>
@@ -33,8 +32,7 @@ class MSipSystemStateObserver;
 */
 class CSipSnapAvailabilityMonitor : 
     public CActive, 
-    public MConnectionMonitorObserver,
-    public MSystemStateConnUsagePermissionObserver
+    public MConnectionMonitorObserver
     {
     public:    // Constructors and destructor
 
@@ -47,7 +45,6 @@ class CSipSnapAvailabilityMonitor :
         */
         static CSipSnapAvailabilityMonitor* NewL( 
             TUint32 aSnapId,
-            TBool aPermissionToUseNetwork,
             MSipSystemStateObserver& aObserver );
 
         /**
@@ -58,8 +55,7 @@ class CSipSnapAvailabilityMonitor :
         * @return An initialized instance of this class.
         */
         static CSipSnapAvailabilityMonitor* NewLC( 
-            TUint32 aSnapId,
-            TBool aPermissionToUseNetwork,
+            TUint32 aSnapId,           
             MSipSystemStateObserver& aObserver );
 
         /// Destructor
@@ -73,12 +69,8 @@ class CSipSnapAvailabilityMonitor :
 
     public: // From MConnectionMonitorObserver
 
-        void EventL( const CConnMonEventBase &aConnMonEvent );
-
-    public: // from MSystemStateConnUsagePermissionObserver
-    
-        void UsagePermissionChanged( TBool aPermissionToUse, TInt aError );
-        
+        void EventL( const CConnMonEventBase &aConnMonEvent ); 
+         
     public: // New functions
     
         TUint32 SnapId() const;
@@ -93,9 +85,7 @@ class CSipSnapAvailabilityMonitor :
 
     private: // Constructors
 
-        CSipSnapAvailabilityMonitor( 
-            TUint32 aSnapId,
-            TBool aPermissionToUseNetwork );
+        CSipSnapAvailabilityMonitor( TUint32 aSnapId );
             
         void ConstructL( MSipSystemStateObserver& aObserver );
         
@@ -107,16 +97,13 @@ class CSipSnapAvailabilityMonitor :
             
         void NotifyObservers() const;
         
-        TBool SetCurrentState( 
-            TBool aPermissionToUseNetwork,
-            TBool aSnapAvailable );        
+        TBool SetCurrentState( TBool aSnapAvailable );        
 
         TBool CanSnapBeUsed() const;
 
     private: // Data
 
         TUint32 iSnapId;
-        TBool iPermissionToUseNetwork;
         TBool iSnapAvailable;
         // Observers not owned
         RPointerArray<MSipSystemStateObserver> iObservers; 

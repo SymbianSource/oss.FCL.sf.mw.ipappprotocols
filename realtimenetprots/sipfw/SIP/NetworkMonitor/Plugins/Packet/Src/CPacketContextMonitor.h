@@ -132,6 +132,10 @@ class CPacketContextMonitor : public CBase
 		TUint32 iRetryAfter;
 		
 		TInt iOtherMonitoringRetryCount;
+		
+#ifdef CPPUNIT_TEST 
+        friend class CPacketContextMonitorTest;
+#endif
 
 	};
 	

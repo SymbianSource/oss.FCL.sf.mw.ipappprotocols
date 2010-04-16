@@ -21,9 +21,3 @@ PRJ_MMPFILES
 #include "../sipconnectionplugins/group/bld.inf"
 #include "../sipdummyprt/group/bld.inf"
 #include "../sipstatemachine/group/bld.inf"
-
-
-PRJ_TESTMMPFILES
-#include "../Test/ResolverPlugin/Group/bld.inf"
-#include "../Test/tsip/bld.inf"
-#include "../Test/profilegenerator/bld.inf"

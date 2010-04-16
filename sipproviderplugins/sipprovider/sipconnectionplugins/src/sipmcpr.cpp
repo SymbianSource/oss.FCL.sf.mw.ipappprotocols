@@ -148,19 +148,19 @@ void CSipMetaConnectionProvider::ConstructL(const ESock::TProviderInfo& aProvide
 
 void CSipMetaConnectionProvider::SetConfigL()
 	{
-	TSipMcprProvisionInfo*	iProvisionInfo = new (ELeave) TSipMcprProvisionInfo();	
-	iProvisionInfo->iAppUid = iAppUid;
-	iProvisionInfo->iProfileId = iProfileId;		
-	iProvisionInfo->iTransitionEngineMgr = iTransitionEngineMgr;
+	TSipMcprProvisionInfo*	ProvisionInfo = new (ELeave) TSipMcprProvisionInfo();
+	ProvisionInfo->iAppUid = iAppUid;
+	ProvisionInfo->iProfileId = iProfileId;
+	ProvisionInfo->iTransitionEngineMgr = iTransitionEngineMgr;
 
 	// Append the above three to the accesspointconfig and send to CPR in ProvisionConfig message
-	
+
 	RMetaExtensionContainer mec;
 	mec.Open(AccessPointConfig());
 	CleanupClosePushL(mec);
-	CleanupStack::PushL(iProvisionInfo);
-	mec.AppendExtensionL(iProvisionInfo);
-	CleanupStack::Pop(iProvisionInfo);
+	CleanupStack::PushL(ProvisionInfo);
+	mec.AppendExtensionL(ProvisionInfo);
+	CleanupStack::Pop(ProvisionInfo);
 	AccessPointConfig().Close();
 	AccessPointConfig().Open(mec);
 	CleanupStack::PopAndDestroy(&mec);

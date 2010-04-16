@@ -28,7 +28,6 @@
 #include <aknlongtapdetector.h>
 #include <aknstyluspopupmenu.h>
 #include <eikmobs.h>
-#include "gssiptimer.h"
 // FORWARD DECLARATIONS
 
 class CSIPSettingsModel;
@@ -43,7 +42,6 @@ class UT_CSIPSettingsContainer;
 *  container class for SIP Profiles view
 */
 class CSIPSettingsContainer : public CCoeControl,
-                              public MAknLongTapDetectorCallBack, 
                               public MEikMenuObserver
     {
     public:  // Constructors and destructor
@@ -57,26 +55,6 @@ class CSIPSettingsContainer : public CCoeControl,
          * Process command
          */
          void ProcessCommandL( TInt aCommandId );
-         
-         /**
-         * Handle long type event
-         */ 
-         virtual void HandleLongTapEventL( const TPoint& aPenEventLocation, const TPoint& aPenEventScreenLocation );
-         
-         /**
-         * Handle pointer event
-         */
-         virtual void HandlePointerEventL( const TPointerEvent& aPointerEvent );
-         
-        /**
-        * Judge whether it is a pointer event
-        */
-         TBool IfPointerEvent();
-         
-        /**
-        * Get PenEventLocation
-        */
-         TPoint PenEventLocation();
          
         /**
         * C++ default constructor.        
@@ -186,15 +164,6 @@ class CSIPSettingsContainer : public CCoeControl,
         // The list box for showing the profiles and the status of each profile
         CListBox* iListBox;
         
-        //Get long press status
-        TBool LongPressStatus();
-        
-        // set long press
-        void SetLongPress( TBool aLongPress = ETrue );
-        
-        CAknLongTapDetector* LongTapDetector();
-        
-        TPointerEvent PointerEvent();
 
     protected: // Data
         TBool iLongPress;
@@ -206,19 +175,6 @@ class CSIPSettingsContainer : public CCoeControl,
         */
         MGsFWMSKObserver* iMSKObserver;  
         
-        // Long tap detector object for deciding whether showing stylus pop up menu.
-        CAknLongTapDetector* iLongTapDetector;    
-        
-        // stylus popup menu object for showing popup menu
-        CAknStylusPopUpMenu* iStylusPopupMenu;   
-        
-        //Timer 
-        CGSSIPTimer* iTimer;
-        
-        //Get pen event location
-        TPoint iPoint;
-
-        TPointerEvent iPointerEvent;
     };
 
 #endif      // SIP_SETTINGS_CONTAINER_H

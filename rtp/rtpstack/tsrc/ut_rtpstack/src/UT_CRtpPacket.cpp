@@ -172,7 +172,12 @@ void UT_CRtpPacket::Teardown(  )
 	delete iPktSnd;
     delete iPktRtcpSnd;
     delete iTooLongData;
-    }
+    
+	iPktSnd = NULL;
+	iPktRtcpSnd = NULL;
+	iTooLongData = NULL;
+	
+	}
 
 void UT_CRtpPacket::UT_CRtpPacket_NewLL(  )
     {

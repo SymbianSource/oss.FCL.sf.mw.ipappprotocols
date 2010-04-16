@@ -79,7 +79,7 @@ CSIPSettingsPlugin::~CSIPSettingsPlugin()
     iResourceLoader.Close();
     
     delete iModel;
-       delete iHandler;
+    delete iHandler;
     }
 
 // -----------------------------------------------------------------------------
@@ -481,21 +481,11 @@ void CSIPSettingsPlugin::HandleListBoxEventL(
     {
     __GSLOGSTRING("CSIPSettingsPlugin::HandleListBoxEventL " )
     __GSLOGSTRING1("CSIPSettingsPlugin::HandleListBoxEventL aEventType: %d", aEventType)
-     
-    if( EEventPenDownOnItem == aEventType )
-        {
-        iContainer->LongTapDetector()->PointerEventL( iContainer->PointerEvent() );
-        return;
-        }
     if( EEventItemSingleClicked == aEventType ||
     		  EEventEnterKeyPressed == aEventType )
 	    {
-    	if ( !iContainer->LongPressStatus() )
-    	    {
     	    EditProfileL();
-    	    }
 	    }
-	    iContainer ->SetLongPress( EFalse );
     }
 
 // -----------------------------------------------------------------------------
@@ -718,18 +708,11 @@ void CSIPSettingsPlugin::DynInitMenuPaneL(
     {    
     __GSLOGSTRING("CSIPSettingsPlugin::DynInitMenuPaneL" )
     // Delete Help item if feature is not supported
-    if( aResourceId == R_GS_SIP_PROFILE_LIST_VIEW_MENU ) 
+    if( aResourceId == R_GS_SIP_PROFILE_LIST_VIEW_MENU && 
+		!FeatureManager::FeatureSupported( KFeatureIdHelp ) ) 
         {
-        if ( iContainer->IfPointerEvent() )
-            {
-            aMenuPane->SetItemDimmed( EGSCmdAppEdit, ETrue );
-            aMenuPane->SetItemDimmed( EGSCmdAppDelete, ETrue );
-            aMenuPane->SetItemDimmed( EGSCmdAppDefault, ETrue );
-            }
-        if( !FeatureManager::FeatureSupported( KFeatureIdHelp ) )
-            {
+
             aMenuPane->DeleteMenuItem( EAknCmdHelp );
-            }
         }    
         
     if ( aResourceId == R_GS_SIP_PROFILE_LIST_VIEW_MENU && 

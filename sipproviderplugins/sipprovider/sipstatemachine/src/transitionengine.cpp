@@ -52,10 +52,8 @@ void CSIPTransitionEngine::ConstructL()
 
 	__FLOG_1(_L("CSIPTransitionEngine %08x:\tInstantiating CSIPProfileRegistry - may leave"), this);
 	iProfileRegistry = CSIPProfileRegistry::NewL(iSIP, *this);
-	CleanupStack::PushL(iProfileRegistry);
 	__FLOG_1(_L("CSIPTransitionEngine %08x:\tInstantiating CSIPHttpDigest - may leave"), this);
 	iDigest = CSIPHttpDigest::NewL(iSIP, *this );
-	CleanupStack::PushL(iDigest);
 	__FLOG_1(_L("CSIPTransitionEngine %08x:\tInstantiating CSIPConnection - may leave"), this);
     iConnection = CSIPConnection::NewL(iSIP, iIapId, *this );
 
@@ -66,7 +64,6 @@ void CSIPTransitionEngine::ConstructL()
 		}
 		
 	__FLOG_1(_L("CSIPTransitionEngine %08x:\tConstructL successful"), this);		
-    CleanupStack::Pop(2);
 	}
 	
 CSIPTransitionEngine::CSIPTransitionEngine(CSIP& aSip, TInt aIapId)
@@ -148,51 +145,11 @@ Incoming request recieved outside a dialog
 */	
 	{
 	__FLOG_1(_L("[TransitionEngine]: CSIPTransitionEngine[%x]::IncomingRequest() <<Recieved Outside of a Dialog>>"),this);
-	CleanupStack::PushL(aTransaction); //we're take over the ownership.
-	
-	RStringF method = aTransaction->RequestElements()->Method();
-	if(method == SIPStrings::StringF(SipStrConsts::EInvite))
+	TRAPD(err,IncomingRequestHandlerL(aTransaction));	
+	if(err != KErrNone)
 		{
-		__FLOG_1(_L("[TransitionEngine]: CSIPTransitionEngine[%x]::IncomingRequest() <<Received Request Invite>>"),this);
-		TSipMsgBundle	msgBundle;
-		// Create a dialog Association and set server transaction
-		CSIPInviteDialogAssoc*	dialogassoc = CSIPInviteDialogAssoc::NewL(*aTransaction);
-		CleanupStack::PushL(dialogassoc);
-		msgBundle.iRequest = TSipHLConsts::ERequestInvite;
-		msgBundle.iDialog = dialogassoc;
-		msgBundle.iServTransaction = aTransaction;
-		// Look For the state machine which is responsible for handling 
-	 	// this particular request
-	 	CSipStateMachine*	smPtr = FindSMForIncomingCall();
-	 	if(smPtr)
-	 		{
-	 		__FLOG_1(_L("[TransitionEngine]: CSIPTransitionEngine[%x]::IncomingRequest() <<Found State Machine to Handle the Request>>"),this);
-	 		smPtr->IncomingRequestOutsideDialog(msgBundle);	
-	 		CleanupStack::Pop(dialogassoc);
-	 		CleanupStack::Pop(aTransaction);
-	 		}
-	 	else
-	 		{// return NotFound
-	 		__FLOG_1(_L("[TransitionEngine]: CSIPTransitionEngine[%x]::IncomingRequest() <<No State Machine found to Handle the Request>>"),this);
-	 		__FLOG_0(_L("[TransitionEngine]: CSIPTransitionEngine[%x]::IncomingRequest() <<sending 404>>"));
-	 		CSIPResponseElements *ResElem = CSIPResponseElements::NewLC(
-							404, SIPStrings::StringF(SipStrConsts::EPhraseNotFound));
-			aTransaction->SendResponseL(ResElem);
-			CleanupStack::Pop(ResElem);		
-			CleanupStack::PopAndDestroy(aTransaction);
-			CleanupStack::PopAndDestroy(dialogassoc);
-	 		}
+		return;
 		}
-	 else
-	 	{ // bad request , not supported here
-	 	__FLOG_1(_L("[TransitionEngine]: CSIPTransitionEngine[%x]::IncomingRequest() <<Received Request other than Invite>>"),this);
-	 	__FLOG_0(_L("[TransitionEngine]: CSIPTransitionEngine[%x]::IncomingRequest() <<sending 404>>"));
-	 	CSIPResponseElements *ResElem = CSIPResponseElements::NewLC(
-							400, SIPStrings::StringF(SipStrConsts::EPhraseBadRequest));
-		aTransaction->SendResponseL(ResElem);
-		CleanupStack::Pop(ResElem);		
-		CleanupStack::PopAndDestroy(aTransaction);
-	 	}		
 	}
 	
 void CSIPTransitionEngine::IncomingRequest( CSIPServerTransaction* aTransaction, CSIPDialog& aDialog )
@@ -1090,3 +1047,53 @@ TBool CSIPTransitionEngine::FindAndSetCredentials(const TDesC8& aRealm)
 		}
 	return EFalse;
 	}
+
+void CSIPTransitionEngine::IncomingRequestHandlerL(CSIPServerTransaction* aTransaction)
+{
+	__FLOG_1(_L("[TransitionEngine]: CSIPTransitionEngine[%x]::IncomingRequestL() <<Recieved Outside of a Dialog>>"),this);
+	CleanupStack::PushL(aTransaction); //we're take over the ownership.
+	
+	RStringF method = aTransaction->RequestElements()->Method();
+	if(method == SIPStrings::StringF(SipStrConsts::EInvite))
+		{
+		__FLOG_1(_L("[TransitionEngine]: CSIPTransitionEngine[%x]::IncomingRequestL() <<Received Request Invite>>"),this);
+		TSipMsgBundle	msgBundle;
+		// Create a dialog Association and set server transaction
+		CSIPInviteDialogAssoc*	dialogassoc = CSIPInviteDialogAssoc::NewL(*aTransaction);
+		CleanupStack::PushL(dialogassoc);
+		msgBundle.iRequest = TSipHLConsts::ERequestInvite;
+		msgBundle.iDialog = dialogassoc;
+		msgBundle.iServTransaction = aTransaction;
+		// Look For the state machine which is responsible for handling 
+	 	// this particular request
+	 	CSipStateMachine*	smPtr = FindSMForIncomingCall();
+	 	if(smPtr)
+	 		{
+	 		__FLOG_1(_L("[TransitionEngine]: CSIPTransitionEngine[%x]::IncomingRequestL() <<Found State Machine to Handle the Request>>"),this);
+	 		smPtr->IncomingRequestOutsideDialog(msgBundle);	
+	 		CleanupStack::Pop(dialogassoc);
+	 		CleanupStack::Pop(aTransaction);
+	 		}
+	 	else
+	 		{// return NotFound
+	 		__FLOG_1(_L("[TransitionEngine]: CSIPTransitionEngine[%x]::IncomingRequestL() <<No State Machine found to Handle the Request>>"),this);
+	 		__FLOG_0(_L("[TransitionEngine]: CSIPTransitionEngine[%x]::IncomingRequestL() <<sending 404>>"));
+	 		CSIPResponseElements *ResElem = CSIPResponseElements::NewLC(
+							404, SIPStrings::StringF(SipStrConsts::EPhraseNotFound));
+			aTransaction->SendResponseL(ResElem);
+			CleanupStack::Pop(ResElem);		
+			CleanupStack::PopAndDestroy(aTransaction);
+			CleanupStack::PopAndDestroy(dialogassoc);
+	 		}
+		}
+	 else
+	 	{ // bad request , not supported here
+	 	__FLOG_1(_L("[TransitionEngine]: CSIPTransitionEngine[%x]::IncomingRequestL() <<Received Request other than Invite>>"),this);
+	 	__FLOG_0(_L("[TransitionEngine]: CSIPTransitionEngine[%x]::IncomingRequestL() <<sending 404>>"));
+	 	CSIPResponseElements *ResElem = CSIPResponseElements::NewLC(
+							400, SIPStrings::StringF(SipStrConsts::EPhraseBadRequest));
+		aTransaction->SendResponseL(ResElem);
+		CleanupStack::Pop(ResElem);		
+		CleanupStack::PopAndDestroy(aTransaction);
+	 	}
+}

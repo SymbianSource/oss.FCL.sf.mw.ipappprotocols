@@ -89,6 +89,10 @@ class CSIPProfileStateRegInProg: public CSIPProfileState
 		void IapAvailableL(CSIPProfileCacheItem& aItem,
 					       TUint32 aSnapId,
 						   TUint32 aNewIapId);
+						   
+		// Newly added to handle unregistration request in
+		// RegInProg state.
+		void ShutdownInitiated( CSIPProfileCacheItem& aItem );
 
 	public: // New functions
 

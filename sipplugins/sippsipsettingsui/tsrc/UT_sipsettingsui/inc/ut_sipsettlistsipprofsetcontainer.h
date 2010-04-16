@@ -74,8 +74,6 @@ class UT_SIPSettListSIPProfSetContainer : public CEUnitTestSuiteClass
         void TestOfferKeyEventL();
         void TestHandleResourceChange();
         void TestGetHelpContext();
-        void TestHandlePointerEventL();
-        void TestIfPointerEvent();
         void TestFocusChanged();
         
     private:    // Data

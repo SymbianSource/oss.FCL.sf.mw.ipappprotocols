@@ -23,6 +23,7 @@
 
 //  EXTERNAL INCLUDES
 #include <digia/eunit/eunitmacros.h>
+#include <e32debug.h>
 
 //  INTERNAL INCLUDES
 #include "srtpcipher_aescm128.h"
@@ -212,7 +213,7 @@ void UT_CSRTPCipherAESCM128::UT_EncryptL_EncryptData2L(  )
     EUNIT_ASSERT( result->Compare(*iRFC3686_TestCipherT256bits) == 0);
 
  	CleanupStack::Pop(result); 	
- 	delete result;    
+ 	delete result;
     }
 
 void UT_CSRTPCipherAESCM128::UT_EncryptL_EncryptData3L(  )
@@ -243,6 +244,12 @@ void UT_CSRTPCipherAESCM128::UT_EncryptL_EncryptData4L(  )
  	delete result;    
     }
 
+void UT_CSRTPCipherAESCM128::UT_EncryptL_EncryptDataKeyChangesL(  )
+    {
+    UT_EncryptL_EncryptDataL();
+    UT_EncryptL_EncryptData2L();
+    }
+
 void UT_CSRTPCipherAESCM128::UT_EncryptL_DecryptDataL(  )
     {
  	HBufC8* result = iEncryptor->TransformL(*iRFC3686_TestKey128bits, 
@@ -254,7 +261,7 @@ void UT_CSRTPCipherAESCM128::UT_EncryptL_DecryptDataL(  )
     EUNIT_ASSERT( result->Compare(*iRFC3686_TestPlainT128bits) == 0);
 
  	CleanupStack::Pop(result); 	
- 	delete result;    
+ 	delete result; 
     }
 
 void UT_CSRTPCipherAESCM128::UT_EncryptL_DecryptData2L(  )
@@ -297,6 +304,12 @@ void UT_CSRTPCipherAESCM128::UT_EncryptL_DecryptData4L(  )
 
  	CleanupStack::Pop(result); 	
  	delete result;    
+    }
+
+void UT_CSRTPCipherAESCM128::UT_EncryptL_DecryptDataKeyChangesL(  )
+    {
+    UT_EncryptL_DecryptDataL();
+    UT_EncryptL_DecryptData2L();
     }
 
 void UT_CSRTPCipherAESCM128::UT_EncryptL_ErrorTest1L(  )
@@ -417,6 +430,13 @@ EUNIT_TEST(
     SetupL, UT_EncryptL_EncryptData4L, Teardown)
 
 EUNIT_TEST(
+    "EncryptL encrypt data, key changes",
+    "CSRTPCipherAESCM128",
+    "EncryptL",
+    "FUNCTIONALITY",
+    SetupL, UT_EncryptL_EncryptDataKeyChangesL, Teardown)
+    
+EUNIT_TEST(
     "EncryptL decrypt data",
     "CSRTPCipherAESCM128",
     "EncryptL",
@@ -443,6 +463,13 @@ EUNIT_TEST(
     "EncryptL",
     "FUNCTIONALITY",
     SetupL, UT_EncryptL_DecryptData4L, Teardown)
+    
+EUNIT_TEST(
+    "EncryptL decrypt data, key changes",
+    "CSRTPCipherAESCM128",
+    "EncryptL",
+    "FUNCTIONALITY",
+    SetupL, UT_EncryptL_DecryptDataKeyChangesL, Teardown)
 
 EUNIT_TEST(
     "EncryptL error 1",

@@ -23,9 +23,6 @@
 
 _LIT_SECURITY_POLICY_PASS( KSIPRfsAlwaysPass );
 
-static const TInt KMicroSecondsInSecond = 1000000;
-static const TInt KGuardTimerSeconds = 20;
-
 // -----------------------------------------------------------------------------
 // CSipRfsMonitorAo::NewL
 // -----------------------------------------------------------------------------
@@ -45,7 +42,6 @@ CSipRfsMonitorAo* CSipRfsMonitorAo::NewL()
 //
 void CSipRfsMonitorAo::ConstructL ()
     {
-    iGuardTimer = CPeriodic::NewL( EPriorityNormal );
     TInt err = iProperty.Define( KPSSipRfsUid, KSipRfsState, RProperty::EInt,
 				   KSIPRfsAlwaysPass, KSIPRfsAlwaysPass);
     if ( KErrNone != err && KErrAlreadyExists != err && 
@@ -76,12 +72,6 @@ CSipRfsMonitorAo::CSipRfsMonitorAo():
 //
 CSipRfsMonitorAo::~CSipRfsMonitorAo()
     {
-	if(iGuardTimer)
-		{
-    	iGuardTimer->Cancel();
-    	delete iGuardTimer;
-		iGuardTimer = NULL;
-		}
     CActive::Cancel();
     iProperty.Close();
 	iProperty.Delete(KPSSipRfsUid,KSipRfsState);
@@ -124,16 +114,7 @@ void CSipRfsMonitorAo::NotifyObservers()
             CSipSystemStateMonitor::ERfsState, 
             0,
             iState);
-        }
-    if(iObservers.Count() && iState == CSipSystemStateMonitor::ERfsStarted)
-        {
-        iGuardTimer->Cancel();
-        iGuardTimer->Start(
-			TTimeIntervalMicroSeconds32( KGuardTimerSeconds * KMicroSecondsInSecond ),
-            TTimeIntervalMicroSeconds32( KGuardTimerSeconds * KMicroSecondsInSecond ),
-            TCallBack( TimerExpired, this ) );
-        }
-            
+        }           
     }
 
 // -----------------------------------------------------------------------------
@@ -150,30 +131,21 @@ CSipSystemStateMonitor::TRfsState CSipRfsMonitorAo::State() const
 // -----------------------------------------------------------------------------
 //
 void CSipRfsMonitorAo::EventProcessingCompleted(
-        MSipSystemStateObserver& /*aObserver*/ )
+        MSipSystemStateObserver& aObserver )
     {
-    }
-
-// -----------------------------------------------------------------------------
-// CSipRfsMonitorAo::EventProcessingCompleted
-// -----------------------------------------------------------------------------
-//
-void CSipRfsMonitorAo::EventProcessingCompleted()
-    {
-    iGuardTimer->Cancel();
-    iProperty.Set(KPSSipRfsUid, KSipRfsState, ESipRfsEventProcessingCompleted );
-    iCount = 0;
-    }
-
-// -----------------------------------------------------------------------------
-// CSipRfsMonitorAo::TimerExpired
-// -----------------------------------------------------------------------------
-//
-TInt CSipRfsMonitorAo::TimerExpired(TAny* aSelf)
-    {
-    CSipRfsMonitorAo* self = reinterpret_cast<CSipRfsMonitorAo*>(aSelf);
-    self->EventProcessingCompleted();
-    return ETrue;
+    if (iState == CSipSystemStateMonitor::ERfsStarted)
+        {
+            TInt index = iObservers.Find( &aObserver );
+            if ( index >= 0 )
+            {
+                iCount++;
+                if( iObservers.Count() == iCount)
+                {
+                    iProperty.Set(KPSSipRfsUid, KSipRfsState, ESipRfsEventProcessingCompleted );
+                    iCount = 0;
+                }
+            }
+        }
     }
 
 // -----------------------------------------------------------------------------

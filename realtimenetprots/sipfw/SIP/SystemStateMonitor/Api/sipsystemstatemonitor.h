@@ -53,7 +53,9 @@ class CSipSystemStateMonitor : public CBase
             /** SNAP availability event */
             ESnapAvailability,
             /** RFS State */
-            ERfsState
+            ERfsState,
+            /** VPN State */
+            EVpnState
             };    
     
         /** System states */
@@ -91,6 +93,14 @@ class CSipSystemStateMonitor : public CBase
             ERfsCompleted
             };
 
+        enum TVpnState
+            {
+            /** Vpn is about to be started */
+            EVpnInitiating = 0,                
+            /** Vpn ended */
+            EVpnTerminated
+            };
+        
     public: // Constructors and destructor
     
         /**

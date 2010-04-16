@@ -329,9 +329,14 @@ CSipAlrMigrationController::SendMigrationResult(TUint32 aIapId, TBool aAllowed)
 	PROFILE_DEBUG5("CSipAlrMigrCtrl::SendMigrationResult iap,allow,obsCount",
 				   aIapId,
 				   aAllowed,
-				   iObservers.Count())	
-
-	for (TInt i = 0; i < iObservers.Count(); ++i)
+				   iObservers.Count())
+	    
+		// It may be possible that Profile Could not be registered (if migration is allowed). In such cases error handling
+        // for profile will be done, which will move Profile into Un-registered State
+        // As the profile moves into Un-registered state, profile is detached from
+        // the list of Observer which AlrMigrationController maintains. This dynamically
+        // changes the Observer count.
+	    for (TInt i = iObservers.Count() -1; i >= 0; --i)
 		{
 		MSipAlrMigrationObserver& obs = iObservers[i].iObserver;
 		TRAPD(err, if (aAllowed)

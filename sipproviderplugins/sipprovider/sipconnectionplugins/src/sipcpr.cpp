@@ -152,11 +152,11 @@ Frees the memory for the transition engine
 CSipConnectionProvider::~CSipConnectionProvider()
     {
     __CFLOG_VAR((KSipCprTag, KSipCprSubTag, _L8("CSipConnectionProvider:\t ~CSipConnectionProvider()")));
-    LOG_NODE_DESTROY(KSipCprTag, CSipConnectionProvider); 
-	if(iTransitionEngine)
-    iTransitionEngineMgr->Detach(iTransitionEngine);    
-	//delete 	iProvisionInfo;	
-	iProvisionInfo = NULL;	
+    LOG_NODE_DESTROY(KSipCprTag, CSipConnectionProvider);
+	if(iTransitionEngine != NULL && iTransitionEngineMgr != NULL)
+    iTransitionEngineMgr->Detach(iTransitionEngine);
+	//delete 	iProvisionInfo;
+	iProvisionInfo = NULL;
     }
 
 CSipConnectionProvider::CSipConnectionProvider(ESock::CConnectionProviderFactoryBase& aFactory)

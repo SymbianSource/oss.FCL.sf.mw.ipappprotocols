@@ -18,16 +18,16 @@
 
 // INCLUDE FILES
 #include    <aknlists.h>
-#include    <csxhelp/cp.hlp.hrh>
+#include    <cshelp/conset.hlp.hrh>
 #include    <gsfwviewuids.h>
 #include    <gssipsettingspluginrsc.rsg>
 #include    <gssipsettingsplugin.mbg>
 #include    <AknIconArray.h>
-#include    <aknsutils.h>     //for loading icons
+#include    <AknsUtils.h>     //for loading icons
 #include    <akntitle.h>
 #include    <eikspane.h>
 #include     <aknnavi.h>
-#include    <stringloader.h>
+#include    <StringLoader.h>
 #include    "sipsettingscontainer.h"
 #include    "sipsettingsmodel.h"
 #include    "sipsettingsplugin.h"
@@ -243,10 +243,6 @@ void CSIPSettingsContainer::ConstructL(
     naviContainer->PushDefaultL();
 
     CreateWindowL();
-    iLongTapDetector = CAknLongTapDetector::NewL( this );
-    
-    SetLongPress( EFalse );
-
     // Initialize list box outlook    
     iListBox = new ( ELeave ) CListBox;
     iListBox->SetContainerWindowL( *this );
@@ -311,9 +307,6 @@ void CSIPSettingsContainer::ConstructL(
         iListBox->SetCurrentItemIndex( aActiveIndex );
         }
 
-    iTimer = CGSSIPTimer::NewL( *this, *(iListBox->View()->ItemDrawer()) );
-    
-    iStylusPopupMenu = NULL;
     
     DrawNow();
     __GSLOGSTRING("CSIPSettingsContainer::ConstructL End" )
@@ -328,12 +321,6 @@ CSIPSettingsContainer::~CSIPSettingsContainer()
     {
     __GSLOGSTRING("CSIPSettingsContainer::~CSIPSettingsContainer" )
     delete iListBox;    
-    delete iLongTapDetector;
-    iLongTapDetector = NULL;
-    delete iStylusPopupMenu;
-    iStylusPopupMenu = NULL;
-    delete iTimer;
-    iTimer = NULL;
     }
 
 // -----------------------------------------------------------------------------
@@ -463,14 +450,6 @@ TKeyResponse CSIPSettingsContainer::OfferKeyEventL(
     TEventCode aType )
     {   
     __GSLOGSTRING("CSIPSettingsContainer::OfferKeyEventL" )
-    if ( aKeyEvent.iCode == EKeyUpArrow || aKeyEvent.iCode == EKeyDownArrow )
-        {
-        iListBox->View()->ItemDrawer()->ClearFlags( CTextListItemDrawer::EDisableHighlight );
-
-        iTimer->StartTimer();
-
-        }
-
     if ( aType == EEventKey && aKeyEvent.iCode == EKeyBackspace )
         {
          iObs->HandleCommandL( EGSCmdAppDelete );
@@ -494,8 +473,6 @@ void CSIPSettingsContainer::FocusChanged( TDrawNow aDrawNow )
         {
         iListBox->SetFocus( IsFocused(), aDrawNow );
         }
-       iTimer -> StopTimer();
-          
     }
 
 // ---------------------------------------------------------------------------
@@ -532,41 +509,6 @@ void CSIPSettingsContainer::GetHelpContext(
     }  
 
 // -----------------------------------------------------------------------------
-// CSIPSettingsContainer::HandleLongTapEventL()
-// Responds to Long Tap Event
-// -----------------------------------------------------------------------------
-//
-void CSIPSettingsContainer::HandleLongTapEventL( const TPoint& aPenEventLocation, const TPoint& /*aPenEventScreenLocation*/ )
-    {
-     __GSLOGSTRING("CSIPSettingsContainer::HandleLongTapEventL" )
-   
-    iPoint = aPenEventLocation;
-        
-    delete iStylusPopupMenu;
-    iStylusPopupMenu = NULL;
-         
-    iStylusPopupMenu = CAknStylusPopUpMenu::NewL( this , PenEventLocation() ); 
-    TResourceReader reader;  
-    iCoeEnv->CreateResourceReaderLC( reader, R_STYLUS_POPUP_MENU ); 
-    iStylusPopupMenu->ConstructFromResourceL( reader );  
-    CleanupStack::PopAndDestroy(); 
- 
-    iStylusPopupMenu->ShowMenu();  
-    iStylusPopupMenu->SetPosition( PenEventLocation() );
-    SetLongPress( ETrue );
-    }
-
-// -----------------------------------------------------------------------------
-// CSIPSettingsContainer::HandleLongTapEventL()
-// Responds to Long Tap Event
-// -----------------------------------------------------------------------------
-//
-TPoint CSIPSettingsContainer::PenEventLocation()
-    {
-     return iPoint;
-    }
-
-// -----------------------------------------------------------------------------
 // CSIPSettingsContainer::ProcessCommandL()
 // Handle ProcessCommandL
 // -----------------------------------------------------------------------------
@@ -576,10 +518,6 @@ void CSIPSettingsContainer::ProcessCommandL( TInt aCommand )
     __GSLOGSTRING1("CSIPSettingsContainer::ProcessCommandL aCommand: %d", aCommand)
     switch( aCommand )    
         {
-        case EGSCmdAppEdit:
-            iObs->EditProfileL();
-        break;
-        
         case EGSCmdAppDelete:
             iObs->DeleteProfileL();
         break;
@@ -590,70 +528,9 @@ void CSIPSettingsContainer::ProcessCommandL( TInt aCommand )
         break;
         }
     }
-
-// -----------------------------------------------------------------------------
-// CSIPSettingsContainer::HandlePointerEventL()
-// Responds to a Pointer Event.
-// -----------------------------------------------------------------------------
-//
-void CSIPSettingsContainer::HandlePointerEventL( const TPointerEvent& aPointerEvent )
-    {
-    __GSLOGSTRING("CSIPSettingsContainer::HandlePointerEventL" )
-      iListBox->View()->ItemDrawer()->ClearFlags( CTextListItemDrawer::EDisableHighlight );
-      DrawNow();   
-      iPointerEvent = aPointerEvent;
-      CCoeControl::HandlePointerEventL( aPointerEvent );
-    }
-
-// -----------------------------------------------------------------------------
-// CSIPSettingsContainer::IfPointerEvent()
-// Check if it is Pointer Event.
-// -----------------------------------------------------------------------------
-//
-TBool CSIPSettingsContainer::IfPointerEvent()
-    {
-    __GSLOGSTRING("CSIPSettingsContainer::IfPointerEvent" )
-     return !( iTimer->IsStarted() );
-    }
-
 void CSIPSettingsContainer::SetEmphasis( CCoeControl* /*aMenuControl*/, TBool /*aEmphasis*/ )
     {
      
     }
-
-
-// -----------------------------------------------------------------------------
-// CSIPSettingsContainer::LongPressStatus()
-// Check if Long Press happen.
-// -----------------------------------------------------------------------------
-//
-TBool CSIPSettingsContainer::LongPressStatus()
-    {
-    return iLongPress;
-    }
-
-// -----------------------------------------------------------------------------
-// CSIPSettingsContainer::SetLongPress()
-// Set Long Press.
-// -----------------------------------------------------------------------------
-//
-void CSIPSettingsContainer::SetLongPress(TBool aLongPress )
-    {
-    __GSLOGSTRING("CSIPSettingsContainer::SetLongPress" )
-    this->iLongPress = aLongPress;
-    }
-
-
-CAknLongTapDetector* CSIPSettingsContainer::LongTapDetector()
-	{
-	return iLongTapDetector;
-	}
-
-
-TPointerEvent CSIPSettingsContainer::PointerEvent()
-	{
-	return iPointerEvent;
-	}
-
 
 //  End of File  

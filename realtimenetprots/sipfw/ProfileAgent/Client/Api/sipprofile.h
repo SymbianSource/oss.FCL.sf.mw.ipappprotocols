@@ -185,6 +185,17 @@ const TUint32 KSIPDigestRealm = 151;
 */
 const TUint32 KSIPServerAddress = 152;
 
+/** 
+* PrimaryAPN is of type TDesC8
+*/
+const TUint32 KPrimaryAPN = 20;
+
+/** 
+* SecondaryAPN is of type TDesC8
+*/
+const TUint32 KSecondaryAPN = 21;
+
+
 // CLASS DECLARATION
 /**
 * @publishedAll

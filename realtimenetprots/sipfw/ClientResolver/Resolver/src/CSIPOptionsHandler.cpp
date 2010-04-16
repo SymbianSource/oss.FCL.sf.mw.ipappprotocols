@@ -216,6 +216,25 @@ CSIPResponse* CSIPOptionsHandler::CreateResponseL( RArray<TUid>& aUids,
         CleanupStack::PopAndDestroy(sdpBuf);
         }
     AddAcceptToResponseL( *response, aUids, aSipClients, aClientResolver2 );
+	
+	
+	//Add ClientSpecificHeaders for OPTIONS here
+	for (TInt i=0; i < aClientResolver2.Clients().Count(); i++)
+        {
+        CSIPResolvedClient2* client = aClientResolver2.Clients()[i];
+        if ( client )
+            {
+			RPointerArray<CSIPHeaderBase> headers ;
+			CSIPHeaderBase::PushLC(&headers);
+            client->AddClientSpecificHeadersForOptionsResponseL(headers);
+			for (TInt i=0; i<headers.Count(); i++)
+				{
+				response->AddHeaderL(headers[i]);
+				}
+			CleanupStack::Pop(1); //headers
+            }
+        }   	
+        
     CleanupStack::Pop(response);
     return response;
     }

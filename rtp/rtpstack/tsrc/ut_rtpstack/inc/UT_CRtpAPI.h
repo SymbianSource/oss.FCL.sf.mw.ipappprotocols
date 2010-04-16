@@ -119,7 +119,7 @@ NONSHARABLE_CLASS( UT_CRtpAPI )
          void UT_CRtpAPI_StartConnectionL();
         
         
-         void UT_CRtpAPI_StartConnection_1L();
+         void UT_CRtpAPI_StartConnection_OneL();
         
         
          void UT_CRtpAPI_CancelStartL();
@@ -180,7 +180,7 @@ NONSHARABLE_CLASS( UT_CRtpAPI )
         
          void UT_CRtpAPI_SendRtpPacket_2L();
         
-         void UT_CRtpAPI_SendRtpPacket_3L();	
+         void UT_CRtpAPI_SendRtpPacket_ThreeL();	
         
          void UT_CRtpAPI_SendDataLL();
         

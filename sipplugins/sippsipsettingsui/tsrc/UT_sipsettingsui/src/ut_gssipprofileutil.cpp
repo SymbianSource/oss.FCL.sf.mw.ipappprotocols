@@ -150,7 +150,6 @@ void UT_GSSIPProfileUtil::UT_GSSIPProfileUtil_ProfileModificationsLL()
 		settingsData.iSNAPIndex = KDefaultSNAP;
 		settingsData.iAPIndex = KAccessPointIdValue;
 		settingsData.iCompression = KSigCompValue;
-		settingsData.iRegistrationMode = EGSAlwaysOnHome;
 		settingsData.iSecurity = KSecurityNegotiationValue;
 		settingsData.iServiceProfile.iSIPProfileName = KProviderNameValue;
 		settingsData.iServiceProfile.iSIPProfileClass = 
@@ -182,7 +181,6 @@ void UT_GSSIPProfileUtil::UT_GSSIPProfileUtil_ProfileModificationsLL()
 		settingsData.iSNAPIndex = KSnapIdValue;
 		settingsData.iAPIndex = KAccessPointIdValue + 1;
 		settingsData.iCompression = KSigCompValue;
-		settingsData.iRegistrationMode = EGSAlwaysOnHome;
 		settingsData.iSecurity = KSecurityNegotiationValue;
 		settingsData.iServiceProfile.iSIPProfileName = KProviderNameValue;
 		settingsData.iServiceProfile.iSIPProfileClass = 
@@ -212,7 +210,6 @@ void UT_GSSIPProfileUtil::UT_GSSIPProfileUtil_ProfileModificationsLL()
 		settingsData.iSNAPIndex = KDefaultSNAP;
 		settingsData.iAPIndex = KAccessPointIdValue + 1;
 		settingsData.iCompression = KSigCompValue;
-		settingsData.iRegistrationMode = EGSAlwaysOnHome;
 		settingsData.iSecurity = KSecurityNegotiationValue;
 		settingsData.iServiceProfile.iSIPProfileName = KProviderNameValue;
 		settingsData.iServiceProfile.iSIPProfileClass = TSIPProfileTypeInfo::EInternet;
@@ -241,7 +238,6 @@ void UT_GSSIPProfileUtil::UT_GSSIPProfileUtil_ProfileModificationsLL()
 		settingsData.iSNAPIndex = KSnapIdValue + 1;
 		settingsData.iAPIndex = KAccessPointIdValue + 1;
 		settingsData.iCompression = KSigCompValue;
-		settingsData.iRegistrationMode = EGSAlwaysOnHome;
 		settingsData.iSecurity = KSecurityNegotiationValue;
 		settingsData.iServiceProfile.iSIPProfileName = KProviderNameValue;
 		settingsData.iServiceProfile.iSIPProfileClass = TSIPProfileTypeInfo::EInternet;

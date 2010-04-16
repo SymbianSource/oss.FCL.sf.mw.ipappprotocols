@@ -77,11 +77,11 @@ HBufC8* CSRTPAuthentication_HMAC_SHA1::AuthenticateL(TUint aBitLength,
 	
     CleanupStack::PushL(result);
 
-    CSHA1* sha1 = CSHA1::NewL(); 
-    CleanupStack::PushL(sha1);
+    if ( !iHmac || !iKey || (*iKey != aKey) )
+        {
+        CreateHmacL(aKey);
+        }
     
-    CHMAC *hmac = CHMAC::NewL(aKey, sha1);        
-    CleanupStack::Pop(sha1);
     CleanupStack::Pop(result);
     
     SRTP_DEBUG_TINT_VALUE( "HMAC INPUT and INPUT Length is ", aAuthPortion.Length() );
@@ -90,17 +90,15 @@ HBufC8* CSRTPAuthentication_HMAC_SHA1::AuthenticateL(TUint aBitLength,
     
     if(aRoc.Length())
     	{
-  		hmac->Update(DES_AS_8_BIT(aAuthPortion));
-    	buf.Copy(hmac->Final(DES_AS_8_BIT(aRoc))); 	
+  		iHmac->Update(DES_AS_8_BIT(aAuthPortion));
+    	buf.Copy(iHmac->Final(DES_AS_8_BIT(aRoc))); 	
     	}
     else
     	{
-    	buf.Copy(hmac->Final(DES_AS_8_BIT(aAuthPortion)));
+    	buf.Copy(iHmac->Final(DES_AS_8_BIT(aAuthPortion)));
     	}
     *result = buf;    
     ptrOutputBuff.SetLength(aBitLength/8);
-    
-    delete hmac;
     
    	SRTP_DEBUG_DETAIL( "HMAC caculated Authentication tag");
     SRTP_DEBUG_PACKET( *result );    
@@ -124,7 +122,9 @@ void CSRTPAuthentication_HMAC_SHA1::ConstructL()
 // ---------------------------------------------------------------------------
 //
 CSRTPAuthentication_HMAC_SHA1::~CSRTPAuthentication_HMAC_SHA1()
-    {    
+    {   
+    delete iHmac;
+    delete iKey;
     }
 
 // ---------------------------------------------------------------------------
@@ -136,3 +136,19 @@ CSRTPAuthentication_HMAC_SHA1::CSRTPAuthentication_HMAC_SHA1()
         
     }
 
+// ---------------------------------------------------------------------------
+// CSRTPAuthentication_HMAC_SHA1::CreateHmacL
+// ---------------------------------------------------------------------------
+//
+void CSRTPAuthentication_HMAC_SHA1::CreateHmacL(const TDesC8& aKey)
+    {
+    delete iHmac;
+    iHmac = 0;
+    delete iKey;
+    iKey = 0;
+    iKey = aKey.AllocL();
+    CSHA1* sha1 = CSHA1::NewL(); 
+    CleanupStack::PushL(sha1);
+    iHmac = CHMAC::NewL(*iKey, sha1);        
+    CleanupStack::Pop(sha1);
+    }

@@ -31,7 +31,6 @@
 #include "SIPSettListSIPProfSetModel.h"
 #include "SIPSettListSIPProfSetView.h"
 #include "gssipmodel.h"
-#include "gssiptimer.h"
 
 // -----------------------------------------------------------------------------
 //
@@ -231,30 +230,6 @@ void UT_SIPSettListSIPProfSetContainer::TestGetHelpContext()
     
     }
 
-// -----------------------------------------------------------------------------
-// TestHandlePointerEventL()
-// -----------------------------------------------------------------------------
-//
-void UT_SIPSettListSIPProfSetContainer::TestHandlePointerEventL()
-    {
-//    TPointerEvent event;
-//    event.iType = TPointerEvent::EButton1Down;
-//    iSipProfContainer->HandlePointerEventL( event );
-    }
-
-// -----------------------------------------------------------------------------
-// TestIfPointerEvent()
-// -----------------------------------------------------------------------------
-//
-void UT_SIPSettListSIPProfSetContainer::TestIfPointerEvent()
-    {
-//    iSipProfContainer->iTimer->iIfStart = ETrue;
-//	EUNIT_ASSERT_EQUALS( iSipProfContainer->IfPointerEvent(), EFalse ); 
-//
-//	iSipProfContainer->iTimer->iIfStart = EFalse;
-//	EUNIT_ASSERT_EQUALS( iSipProfContainer->IfPointerEvent(), ETrue ); 
-    }
-
 
 //  TEST TABLE
 
@@ -325,20 +300,6 @@ EUNIT_TEST(
     "GetHelpContext",
     "FUNCTIONALITY",
     SetupL, TestGetHelpContext, Teardown)
-    
-EUNIT_TEST(
-    "HandlePointerEventL - test ",
-    "SIPSettListSIPProfSetContainer",
-    "HandlePointerEventL",
-    "FUNCTIONALITY",
-    SetupL, TestHandlePointerEventL, Teardown)
-    
-EUNIT_TEST(
-    "IfPointerEvent - test ",
-    "SIPSettListSIPProfSetContainer",
-    "IfPointerEvent",
-    "FUNCTIONALITY",
-    SetupL, TestIfPointerEvent, Teardown)
     
 EUNIT_TEST(
     "FocusChanged - test ",
