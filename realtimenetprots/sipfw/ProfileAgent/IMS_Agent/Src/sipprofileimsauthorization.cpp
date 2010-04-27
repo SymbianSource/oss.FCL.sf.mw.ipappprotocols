@@ -60,9 +60,13 @@ CSIPProfileIMSAuthorization::CSIPProfileIMSAuthorization(
 //
 CSIPProfileIMSAuthorization::~CSIPProfileIMSAuthorization()
     {
+    PROFILE_DEBUG1("CSIPProfileIMSAuthorization::~CSIPProfileIMSAuthorization")   
+    
     Cancel();
     delete iData;
     delete iRetriever;
+    
+    PROFILE_DEBUG1("CSIPProfileIMSAuthorization::~CSIPProfileIMSAuthorization, exit") 
     }
 
 // ----------------------------------------------------------------------------
@@ -71,8 +75,12 @@ CSIPProfileIMSAuthorization::~CSIPProfileIMSAuthorization()
 //
 void CSIPProfileIMSAuthorization::ConstructL()
     {	
+    PROFILE_DEBUG1("CSIPProfileIMSAuthorization::ConstructL")   
+    
+    iIMSAuthorizationNotSupported = EFalse; 
     iData = RMobilePhone::CImsAuthorizationInfoV5::NewL();
     CActiveScheduler::Add( this );    
+	    PROFILE_DEBUG1("CSIPProfileIMSAuthorization::ConstructL, exit") 
     }
 
 // ----------------------------------------------------------------------------
@@ -112,14 +120,24 @@ RMobilePhone::CImsAuthorizationInfoV5& CSIPProfileIMSAuthorization::Response()
 //
 void CSIPProfileIMSAuthorization::RunL()
     {
-	if ( iStatus.Int() == KErrNone && iRetriever->AuthInfoValid())
+    PROFILE_DEBUG3( "CSIPProfileIMSAuthorization::RunL, status:", iStatus.Int() )
+    
+    TInt status( iStatus.Int() );
+    if ( status != KErrNone )
+        {
+        iIMSAuthorizationNotSupported = ETrue;
+        }
+    
+    if ( status == KErrNone && iRetriever->AuthInfoValid() )
         {
       iObserver.AuthorizedL();
         }
     else
         {      	
-        User::LeaveIfError(iStatus.Int());
-        }    
+        User::LeaveIfError( iStatus.Int() );
+        } 
+        
+   	PROFILE_DEBUG1( "CSIPProfileIMSAuthorization::RunL, exit")   
     }
         
  // ----------------------------------------------------------------------------
@@ -128,6 +146,8 @@ void CSIPProfileIMSAuthorization::RunL()
 //
 TInt CSIPProfileIMSAuthorization::RunError(TInt aError)
     {
+    PROFILE_DEBUG3( "CSIPProfileIMSAuthorization::RunError, err:", aError )
+    
     iObserver.AuthorizationFailed();
   	if(aError == KErrNoMemory)
   		{
@@ -144,6 +164,24 @@ void CSIPProfileIMSAuthorization::DoCancel()
     {
     delete iRetriever;
     iRetriever = NULL;
+    }
+
+// ----------------------------------------------------------------------------
+// CSIPProfileIMSAuthorization::ResetImsAuthorizationAllowed
+// ----------------------------------------------------------------------------
+//
+void CSIPProfileIMSAuthorization::ResetImsAuthorizationAllowed(TBool aStatus)
+    {
+    iIMSAuthorizationNotSupported = aStatus;
+    }
+
+// ----------------------------------------------------------------------------
+// CSIPProfileIMSAuthorization::IsImsAuthorizationSupported
+// ----------------------------------------------------------------------------
+//
+TBool CSIPProfileIMSAuthorization::IsImsAuthorizationAllowed()
+    {
+    return !iIMSAuthorizationNotSupported;
     }
 
 // End of File

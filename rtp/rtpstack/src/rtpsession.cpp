@@ -3036,6 +3036,7 @@ void CRtpSession::OnReceptionError( TPortType aPort, TInt aError )
     switch ( aError )
         {
         case KErrDisconnected:
+        case KErrConnectionTerminated:
             
             RTP_DEBUG_DETAIL( "Socket Disconnected" );
             

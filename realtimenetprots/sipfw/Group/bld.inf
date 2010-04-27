@@ -43,7 +43,7 @@ PRJ_EXPORTS
 ../conf/sipframework_101f413c.crml   MW_LAYER_EXPORTS_CRML(sipframework_101f413c.crml)
 ../conf/sipframework_101fed88.crml   MW_LAYER_EXPORTS_CRML(sipframework_101fed88.crml)
 ../conf/sipframework_10282ee7.crml   MW_LAYER_EXPORTS_CRML(sipframework_10282ee7.crml)
-// Note: sipframework_2001f889.crml cannot be created yet until spec revision
+../conf/sipframework_2001f889.crml   MW_LAYER_EXPORTS_CRML(sipframework_2001f889.crml)
 
 // SIP iby-files
 ../rom/sipsw.iby /epoc32/rom/include/sipsw.iby

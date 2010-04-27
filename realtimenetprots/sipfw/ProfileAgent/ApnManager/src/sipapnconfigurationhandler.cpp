@@ -210,7 +210,7 @@ HBufC8* CSIPApnConfigurationHandler::ReadCurrentApnL()
 //
 TBool CSIPApnConfigurationHandler::HasPendingTasks() const
     {
-    return MonitoringState() != EMonitoringIdle;
+    return (MonitoringState() != EMonitoringIdle || IsFailed());
     }
 
 // -----------------------------------------------------------------------------
@@ -306,6 +306,8 @@ CSIPApnConfigurationHandler::CSIPApnConfigurationHandler(
 	{
 	CActiveScheduler::Add( this );
 	iIapId = aIapId;
+	iIsFailed = EFalse;
+	iIsFatalFailure = EFalse; 
 	}
 
 // -----------------------------------------------------------------------------
@@ -798,7 +800,7 @@ void CSIPApnConfigurationHandler::SendApnChangedNotificationL(
 //
 TBool CSIPApnConfigurationHandler::IsFailed() const
     {
-    return iIsFailed;
+    return iIsFatalFailure;
     }
 
 // -----------------------------------------------------------------------------

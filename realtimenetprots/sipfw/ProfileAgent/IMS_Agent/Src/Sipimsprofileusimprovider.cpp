@@ -73,20 +73,18 @@ void CSIPProfileUsimProvider::ConstructL(
     
     User::LeaveIfError( iPhone.Open( aTelServer, aPhoneInfo.iName ) );
 
-	TUint32 caps;
+	TUint32 caps(0);
 	User::LeaveIfError(iPhone.GetIccAccessCaps(caps));
 	if(caps & RMobilePhone::KCapsSimAccessSupported)
 		{
+		PROFILE_DEBUG1("CSIPProfileUsimProvider::ConstructL, sim supported")
 		iSIMSupported = ETrue;
-		}
-	
-	if(caps & RMobilePhone::KCapsRUimAccessSupported)
-		{
 		}
 	
 	//usim supported
 	if(caps & RMobilePhone::KCapsUSimAccessSupported)
-		{			
+		{	
+		PROFILE_DEBUG1("CSIPProfileUsimProvider::ConstructL, usim supported")		
 		iUSimSupported = ETrue;
 		}
 	
@@ -116,6 +114,8 @@ void CSIPProfileUsimProvider::ConstructL(
 		{
 		User::Leave(KErrNotSupported);	
 		}
+		
+    PROFILE_DEBUG1("CSIPProfileUsimProvider::ConstructL, exit")
     }
 
 // ----------------------------------------------------------------------------
@@ -153,34 +153,56 @@ CSIPProfileUsimProvider::~CSIPProfileUsimProvider()
 // CSIPProfileUsimProvider::RequestL
 // ----------------------------------------------------------------------------
 //
-void CSIPProfileUsimProvider::RequestL(TBool /*aUseSIM*/)
+TBool CSIPProfileUsimProvider::RequestL(TBool aUseUSIM)
     {
-    TBool requestmade = EFalse;
-    if (!iProfileSIMRecord.SIMPrivateIdentity().Length())
-  		{
-  		if (iAuthorizationSIM)
-  			{
-  			iAuthorizationSIM->RequestL();
-  			requestmade = ETrue;
-  			}
-		else
-			{
-			User::Leave(KErrArgument);
-			}
-  		}
-  		
-  	if (IsUsimSupported())
+    
+    TBool requestFailed = EFalse;
+    TBool credentialsExists = EFalse;
+   	
+  	if ( aUseUSIM )
 		{
-  		if (!iProfileSIMRecord.PrivateIdentity().Length())
-  			{   
-    		iAuthorization->RequestL();
-    		requestmade = ETrue;
-  			}
+  		if (!iProfileSIMRecord.PrivateIdentity().Length())    
+  		    {
+            if(iAuthorization->IsImsAuthorizationAllowed())
+                {
+                iAuthorization->RequestL();
+                }
+            else
+                {
+                requestFailed = ETrue;
+                }
+  		    }
+  		else
+  		    {
+            credentialsExists = ETrue;
+  		    }
 		}
-    if (!requestmade)
+  	
+  	else 
+  	    {
+        if (!iProfileSIMRecord.SIMPrivateIdentity().Length())
+  	        { 	
+            if(iAuthorizationSIM->IsSIMAuthorizationAllowed())
+                {
+                iAuthorizationSIM->RequestL();
+                }
+            else
+                {
+                requestFailed = ETrue;
+                } 
+  	        }
+        else
+            {
+            credentialsExists = ETrue;
+            }
+  	    }
+  	
+    if (credentialsExists)
     	{
     	iObserver.AsyncDeltaTimer();
     	}
+    
+    return requestFailed;
     }   
             
 // ----------------------------------------------------------------------------
@@ -209,10 +231,15 @@ void CSIPProfileUsimProvider::Cancel()
 //
 void CSIPProfileUsimProvider::AuthorizedL()
     {
+    PROFILE_DEBUG1("CSIPProfileUsimProvider::AuthorizedL")
+    
     if (iAuthorization)
     	{
     	RMobilePhone::CImsAuthorizationInfoV5& authorization = 
                                             iAuthorization->Response();
+
+       	PROFILE_DEBUG3( "CSIPProfileUsimProvider::AuthorizedL, datasource:",
+    	               authorization.iAuthenticationDataSource )
 
     	iProfileSIMRecord.SetPrivateIdL(authorization.iIMPI);
     	iProfileSIMRecord.SetFirstPublicUserNameL(authorization.iIMPUArray[0]);
@@ -223,6 +250,8 @@ void CSIPProfileUsimProvider::AuthorizedL()
     	
     	iObserver.AuthorizedL();
     	}
+    	
+    PROFILE_DEBUG1("CSIPProfileUsimProvider::AuthorizedL, exit")
     }    
 
 // ----------------------------------------------------------------------------
@@ -249,6 +278,8 @@ void CSIPProfileUsimProvider::AuthorizedHomeNetworkIdL()
 //
 void CSIPProfileUsimProvider::DeriveValuesL()
     {    
+    PROFILE_DEBUG1("CSIPProfileUsimProvider::DeriveValuesL")
+    
     _LIT8(Kimsmnc, "ims.mnc");
     _LIT8(Kmcc, ".mcc");
     _LIT8(K3gppnetwork, ".3gppnetwork.org");
@@ -327,7 +358,9 @@ void CSIPProfileUsimProvider::DeriveValuesL()
     delete temp;
     temp = NULL;
     iObserver.AuthorizedL();
-     }    
+    
+    PROFILE_DEBUG1("CSIPProfileUsimProvider::DeriveValuesL, exit")
+    }    
 
 // ----------------------------------------------------------------------------
 // CSIPProfileUsimProvider::AuthorizationFailed
@@ -358,6 +391,14 @@ void CSIPProfileUsimProvider::AuthorizationSIMFailed()
 void CSIPProfileUsimProvider::AuthInfoUpdatedL()
 	{
 	iProfileSIMRecord.ResetISIMValuesL();
+	if(iAuthorizationSIM)
+	    {
+        iAuthorizationSIM->ResetSIMAuthorizationAllowed(EFalse);
+	    }
+	if(iAuthorization)
+	    {
+        iAuthorization->ResetImsAuthorizationAllowed(EFalse);
+	    }
 	iObserver.UpdateRegistrationsL();
   	if (!iProfileSIMRecord.PrivateIdentity().Length())
   		{   

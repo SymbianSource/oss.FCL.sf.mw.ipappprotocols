@@ -183,7 +183,7 @@ void CSIPProfileCacheItem::RefreshIAPsFailed()
 	{
 	iProfile->SetLastRegistrationError(KErrNoMemory);
 	iCurrentState->RefreshIAPsFailed(*this);
-	SwitchToUnregisteredState();
+	SwitchToUnregisteredState(EFalse);
 	PassAlrErrorToClient(KErrNoMemory, Profile().IapId());
 	}
 
@@ -764,9 +764,12 @@ TBool CSIPProfileCacheItem::HandleError(TInt aError)
 	if (iCurrentState->ErrorOccurred(*this, aError))
 		{
 		PROFILE_DEBUG1("ProfileCacheItem::HandleError go unregistered")
-
-		SwitchToUnregisteredState();
-
+		        
+        if(SwitchToUnregisteredState(ETrue))
+            {
+            return EFalse;
+            }		
+		
 		if (aError != KErrNone)
 			{
 			iProfile->SetLastRegistrationError(aError);
@@ -1279,16 +1282,29 @@ TInt CSIPProfileCacheItem::DoNewIapFailed(TAny* aPtr)
 // would register again (if auto-registration on).
 // -----------------------------------------------------------------------------
 //
-void CSIPProfileCacheItem::SwitchToUnregisteredState()
+TBool CSIPProfileCacheItem::SwitchToUnregisteredState(TBool aResume)
 	{
 	CSIPProfileState& unregistered = iServerCore.UnregisteredState();
 	iProfile->SetStatus(unregistered.Name());
 	iCurrentState = &unregistered;
-	SetSnapRetryCounter(0);
-
+	
+    if(iQueuedProfile)
+        {
+        if(aResume)
+            {
+            TRAPD(err, ResumeL());
+            if(KErrNone == err)
+                return ETrue;
+            }
+        delete iProfile;
+        iProfile = iQueuedProfile;
+        iQueuedProfile = NULL;            
+        }
 	// No need to monitor SNAP anymore.
+    SetSnapRetryCounter(0);
 	StopSnapMonitoring();
 	RemoveAllUsers();
+	return EFalse;
 	}
 
 // -----------------------------------------------------------------------------

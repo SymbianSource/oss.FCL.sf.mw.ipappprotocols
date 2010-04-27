@@ -47,7 +47,6 @@ CGSSIPModel::CGSSIPModel()
     {
     __GSLOGSTRING("CGSSIPModel::CGSSIPModel" )
     iQuitAfterSave = EFalse;
-    iIsRegistering = EFalse;
     }
 
 // -----------------------------------------------------------------------------
@@ -124,7 +123,7 @@ TBool CGSSIPModel::EditProfileL( TInt aIndex )
     CSIPManagedProfile* profile = 
         static_cast<CSIPManagedProfile*>( iProfiles->At( aIndex ) );
 
-    if ( iEngine->IsInUseL( *profile ) || iIsRegistering )
+    if ( iEngine->IsInUseL( *profile ) )
         {
         HBufC* errorTxt = StringLoader::LoadLC( R_QTN_SIP_ERROR_PROFILE_USED );
         CAknErrorNote* note = new ( ELeave ) CAknErrorNote( ETrue );
@@ -433,12 +432,6 @@ TBool CGSSIPModel::ErrorInRegistration( TInt aIndex )
     {    
     __GSLOGSTRING("CGSSIPModel::ErrorInRegistration" )
     __GSLOGSTRING1("CGSSIPModel::ErrorInRegistration aIndex: %d", aIndex)
-    
-    if(iEngine->LastRegistrationError( 
-            *( iProfiles->At( aIndex ) ) ) != KErrNone)
-    	{
-            iIsRegistering = EFalse;
-    	}
     return ( iEngine->LastRegistrationError( 
         *( iProfiles->At( aIndex ) ) ) != KErrNone );
     }
@@ -464,11 +457,8 @@ void CGSSIPModel::ProfileRegistryEventOccurred(
             break;
         case EProfileRegistered:						
         case EProfileDeregistered:
-        	{
-            iIsRegistering = EFalse;
             ProfileRegistrationStatusChanged( aSIPProfileId );
             break;
-        	}
         case EProfileDestroyed:
             ProfileDestroyed( aSIPProfileId );
             break;
@@ -760,8 +750,6 @@ void CGSSIPModel::ReadArrayFromEngineL()
             {
             CSIPManagedProfile* profile = 
                 static_cast<CSIPManagedProfile*>( profilePointerArray[j] );
-             iIsRegistering = EFalse;
-            
             iProfiles->AppendL( profile );
             profilePointerArray.Remove( j );
             }                    
@@ -954,10 +942,6 @@ CSIPManagedProfile* CGSSIPModel::CopyDataToProfileL()
         }
     
     GSSIPProfileUtil::CopyProfileAttributesL( profile, iProfileData );
-    if(iProfileData.iRegistrationMode == EGSAlwaysOn)
-    	{
-        iIsRegistering = ETrue;
-    	}
     GSSIPProfileUtil::CopyServerAttributesL( 
         profile, KSIPOutboundProxy, iProfileData.iProxy );
     GSSIPProfileUtil::CopyServerAttributesL( 

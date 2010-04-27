@@ -546,7 +546,7 @@ class CSIPProfileCacheItem : public CBase, public MSipAlrMigrationObserver
 		/**
         * Switches state machine to unregistered state
         */
-		void SwitchToUnregisteredState(); 	
+		TBool SwitchToUnregisteredState(TBool aResume); 	
 		
 		/**
 		* Handles Errors caused by faulty profiles

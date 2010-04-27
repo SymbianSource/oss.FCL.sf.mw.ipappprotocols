@@ -135,6 +135,8 @@ void CSIPIMSProfileAgent::ConstructL()
         }
     __ASSERT_ALWAYS(found, User::Leave(KErrNotFound));     
     
+    PROFILE_DEBUG1("CSIPIMSProfileAgent::ConstructL, etel ok")     
+    
     iXMLParser = CSIPNotifyXmlBodyParser::NewL();
 	iInit = CSIPPrflInitState::NewL(*this);
 	iResolvingProxies = CSIPPrflResolvingProxiesState::NewL(*this);
@@ -155,6 +157,8 @@ void CSIPIMSProfileAgent::ConstructL()
 	iDeregInProgress->LinkStates(*iInit);
 	iRegDelayRequested->LinkStates(*iInit);
 	
+	PROFILE_DEBUG1("CSIPIMSProfileAgent::ConstructL, states ok")   
+	
 	iSIMRecord = CSIPProfileSIMRecord::NewL();	
 	iProfileQueueHandling = CSIPProfileQueueHandling::NewL(*this);
 	TRAPD(err, iUsimProvider = 
@@ -164,7 +168,10 @@ void CSIPIMSProfileAgent::ConstructL()
 		{
 		User::Leave(err);
 		}
+	
+	PROFILE_DEBUG1("CSIPIMSProfileAgent::ConstructL, sim ok") 
 	iConfigExtension = NULL;
+	PROFILE_DEBUG1("CSIPIMSProfileAgent::ConstructL, exit")
     }
 
 // -----------------------------------------------------------------------------
@@ -200,6 +207,7 @@ CSIPIMSProfileAgent::~CSIPIMSProfileAgent()
 	delete iHttpDigest;
 	delete iSIP;
 	SIPStrings::Close();	
+	PROFILE_DEBUG1("CSIPIMSProfileAgent::~CSIPIMSProfileAgent, exit")
 	}
 
 // -----------------------------------------------------------------------------
@@ -386,15 +394,24 @@ void CSIPIMSProfileAgent::RegisterL(
 	if (iUsimProvider && 
 	    !CSIPIMSProfileContext::IsHttpDigestSettingsConfigured(aSIPConcreteProfile))
 	    {
+        TBool requestFailed = EFalse;
 	   	if (!iUsimProvider->IsUsimSupported())
     		{
     		iSIMWaitForAuthorizedArray.AppendL(&aSIPConcreteProfile);
-    		iUsimProvider->RequestL(ETrue);
+    		requestFailed = iUsimProvider->RequestL(EFalse);
+    		if(requestFailed)
+    		    {
+                AuthorizationSIMFailed();
+    		    }
     		}
 	    else
 			{
 			iUSimWaitForAuthorizedArray.AppendL(&aSIPConcreteProfile);
-			iUsimProvider->RequestL();
+			requestFailed = iUsimProvider->RequestL(ETrue);
+			if(requestFailed)
+			    {
+                AuthorizationUSIMFailed();
+			    }
 			}
 	    }
     else
@@ -1116,7 +1133,8 @@ void CSIPIMSProfileAgent::AuthorizedL()
 		
 			if (RegAllowedWithUSIMorISIML(*profile))
 				{
-				if (profile->IsSecurityNegotiationEnabled() &&
+                 PROFILE_DEBUG1("CSIPIMSProfileAgent::AuthorizedL ISIM Registration Allowed")
+				 if (profile->IsSecurityNegotiationEnabled() &&
 	 				!CSIPIMSProfileContext::IsHttpDigestSettingsConfigured(
 	 									*profile))
 					{	
@@ -1208,7 +1226,7 @@ void CSIPIMSProfileAgent::AuthorizationFailed()
 	TInt error = 0;
 	//function called after async call to request for authorization info
 	CSIPConcreteProfile* profile = NULL;
-	while (iUSimWaitForAuthorizedArray.Count() > 0)
+	for(TUint i = iUSimWaitForAuthorizedArray.Count(); i>0; i--)
 		{
 		profile = RemoveFirstProfileFromArray( 
 									iUSimWaitForAuthorizedArray );
@@ -1221,14 +1239,15 @@ void CSIPIMSProfileAgent::AuthorizationFailed()
 			TerminateAndErrorEvent( *profile, KErrNotSupported );
 			}
 		}
-	if (!error)
+	TBool requestFailed = EFalse;
+	if ( iSIMWaitForAuthorizedArray.Count() > 0 && !error )
 		{
-		TRAP(error, iUsimProvider->RequestL());
+		TRAP(error, requestFailed = iUsimProvider->RequestL(EFalse));
 		}
-	if(error)
+	
+	if(error || requestFailed)
 		{
 		AuthorizationSIMFailed();
-		AuthorizationUSIMFailed();
 		}
 	}	
 
