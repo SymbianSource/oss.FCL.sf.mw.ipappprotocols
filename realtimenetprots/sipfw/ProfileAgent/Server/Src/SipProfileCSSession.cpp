@@ -250,11 +250,33 @@ void CSIPProfileCSSession::UpdateProfileL(const RMessage2& aMessage)
 	HBufC8* profileBuf = iHelper.ReadLC(ESipProfileItcArgProfile,aMessage);
 	CSIPConcreteProfile* profile = InternalizeProfileLC(*profileBuf);
 	TBool updateAllowed = iCore.IsUpdateAllowed(profile);
+	
+	//Save the dynamic Data before UpdateProfile happens
+	TBool isProfile = EFalse;
+	const CSIPConcreteProfile* aProfile = iCore.Profile(profile->Id());
+	CDesC8ArrayFlat* aRegisteredAORs = NULL;
+	HBufC8* aNegotiatedSecurityMechanism = NULL;
+	CSIPConcreteProfile::TStatus status = CSIPConcreteProfile::EUnregistered;
+	if(aProfile)
+	    {
+        isProfile = ETrue;
+        status = aProfile->Status();
+        //Copy registeredAors
+        const MDesC8Array& aArray = aProfile->RegisteredAORs();
+        aRegisteredAORs = new (ELeave) CDesC8ArrayFlat(1);
+        CleanupStack::PushL(aRegisteredAORs);
+        for (TInt i = 0; i < aArray.MdcaCount(); i++)
+            {
+            aRegisteredAORs->AppendL(aArray.MdcaPoint(i));
+            }    
+        //Copy NegotiatedSecurityMechanism
+        aNegotiatedSecurityMechanism = aProfile->NegotiatedSecurityMechanism().AllocL();    
+        CleanupStack::PushL(aNegotiatedSecurityMechanism);
+	    }
+	
 	if(updateAllowed)
 	    {
-        TBool canProceed = iCore.UpdateProfileToStoreL(profile, *this);
-        CleanupStack::Pop(profile);
-        CleanupStack::PopAndDestroy(profileBuf);
+        TBool canProceed = iCore.UpdateProfileToStoreL(profile, *this);        
         if (canProceed)
             {
             iCore.UpdateRegistrationL(profile->Id(), *this);
@@ -264,6 +286,27 @@ void CSIPProfileCSSession::UpdateProfileL(const RMessage2& aMessage)
 	    {
 	    User::Leave(KErrNotSupported);
 	    }
+
+    //If UpdateProfile has not resulted into deregistration and reregistration
+	//copy the dynamic data extraced from previous copy of concrete profile to new copy
+    //of concrete profile so that dynamic information is not lost.
+	CSIPConcreteProfile* aUpdatedProfile = iCore.Profile(profile->Id());    
+    if(aUpdatedProfile && (status == aUpdatedProfile->Status()))
+       {
+       if(0 == aUpdatedProfile->RegisteredAORs().MdcaCount() && aRegisteredAORs)           
+           aUpdatedProfile->SetRegisteredAORsL(*aRegisteredAORs);
+       if(0 == aUpdatedProfile->NegotiatedSecurityMechanism().Length() && aNegotiatedSecurityMechanism)
+           aUpdatedProfile->SetNegotiatedSecurityMechanismL(*aNegotiatedSecurityMechanism);
+       }
+    
+    if(isProfile)
+        {
+        CleanupStack::PopAndDestroy(aNegotiatedSecurityMechanism);
+        CleanupStack::PopAndDestroy(aRegisteredAORs);
+        }
+    
+    CleanupStack::Pop(profile);
+    CleanupStack::PopAndDestroy(profileBuf);
     }
 
 // -----------------------------------------------------------------------------

@@ -56,21 +56,23 @@ TVersion RSIPProfile::Version(void) const
 TInt RSIPProfile::Connect()
 	{
 	TBool stopTrying(EFalse);
-    TInt err(KErrNone);
+    TInt sessionConnectErr(KErrNone);
+    TInt serverStartErr(KErrNone);
     const TInt KMaxRetries(10);
     TInt retryCount(0);
     
     while (!stopTrying && retryCount < KMaxRetries)
         {
-        err = CreateSession(KSipProfileServerName,Version());
-        if ((err != KErrNotFound) && (err != KErrServerTerminated))
+        sessionConnectErr = CreateSession(KSipProfileServerName,Version());
+        if ((sessionConnectErr != KErrNotFound) 
+                && (sessionConnectErr != KErrServerTerminated))
             {
             stopTrying = ETrue;
             }
         else
             {
-            err = TSIPProfileServerStarter::Start();
-            if ((err != KErrNone) && (err != KErrAlreadyExists))
+            serverStartErr = TSIPProfileServerStarter::Start();
+            if ((serverStartErr != KErrNone) && (serverStartErr != KErrAlreadyExists))
                 {
                 stopTrying = ETrue;
                 }
@@ -78,8 +80,8 @@ TInt RSIPProfile::Connect()
         retryCount++;
 	    }
 	    
-    iConnected = (err == KErrNone);
-    return err;
+    iConnected = (sessionConnectErr == KErrNone);
+    return sessionConnectErr;
 	}
 
 // -----------------------------------------------------------------------------

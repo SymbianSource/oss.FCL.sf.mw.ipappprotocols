@@ -243,7 +243,16 @@ class CSIPProfileServerCore : public CBase,
 		*		  transferred.
         */
 		const CSIPConcreteProfile* Profile(TUint32 aProfileId) const;
-
+		
+		/**
+        * Gets modifiable profile object pointer
+		* This method should only be used when you need to update profile.
+		* @param aProfileId a required profile id
+		* @return Found profile, or NULL if not found. Ownership is not
+		*		  transferred.
+        */
+		CSIPConcreteProfile* Profile(TUint32 aProfileId);
+		
 	    /**
         * Gets default profile
 		* Ownership is not transferred.

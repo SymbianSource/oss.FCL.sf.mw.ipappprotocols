@@ -70,7 +70,17 @@ public://new methods
     void RequestL();
    
     RMobilePhone::TMobilePhoneSubscriberId& IMSI();
-
+    
+    /*
+     * Quires whether SIM Authorization is allowed
+     */
+    TBool IsSIMAuthorizationAllowed();
+    
+    /*
+     * Resets SIM Authorization value
+     */
+    void ResetSIMAuthorizationAllowed(TBool aStatus);
+    
 public: //From CActive
     
     /**
@@ -111,6 +121,8 @@ private:
     */
     MSIPProfileIMSAuthorizationDataObserver& iObserver; 
     RMobilePhone& iPhone;
+    TBool iSIMAuthorizationNotSupported;
+    
 private: //For testing  purpose
 #ifdef CPPUNIT_TEST	
     friend class CSIPProfileSIMAuthorizationStub;

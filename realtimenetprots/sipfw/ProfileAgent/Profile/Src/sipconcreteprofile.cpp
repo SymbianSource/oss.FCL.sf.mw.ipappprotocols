@@ -14,7 +14,7 @@
 // Name        : sipconcreteprofile.cpp
 // Part of     : SIP / SIP Profile Agent / SIP Concrete Profile
 // Implementation
-// Version     : %version: 3.1.1 %
+// Version     : %version: 3.1.2 %
 //
 
 
@@ -195,7 +195,6 @@ CSIPConcreteProfile* CSIPConcreteProfile::CloneL(TBool aWithDynamicValues) const
 		newCopy->SetId(Id());
 		newCopy->SetStatus(Status());
 		newCopy->SetContextId(ContextId());
-		newCopy->SetDefault(IsDefault());
 		newCopy->SetLastRegistrationError(LastRegistrationError());				
 		}
 	else

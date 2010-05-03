@@ -35,13 +35,15 @@ PRJ_EXPORTS
 ../Data/101F413C.txt z:/private/10202be9/101f413c.txt
 // ProfileAgent's cenrep configuration file for expiry duration
 ../Data/2001F889.txt z:/private/10202be9/2001f889.txt
+// ProfileAgent's default cre file
+../Data/101f413c.cre z:/private/10202be9/101f413c.cre
 
 // ConfML files
 ../conf/sipframework.confml          MW_LAYER_EXPORTS_CONFML(sipframework.confml)
 ../conf/sipframework_101f413c.crml   MW_LAYER_EXPORTS_CRML(sipframework_101f413c.crml)
 ../conf/sipframework_101fed88.crml   MW_LAYER_EXPORTS_CRML(sipframework_101fed88.crml)
 ../conf/sipframework_10282ee7.crml   MW_LAYER_EXPORTS_CRML(sipframework_10282ee7.crml)
-// Note: sipframework_2001f889.crml cannot be created yet until spec revision
+../conf/sipframework_2001f889.crml   MW_LAYER_EXPORTS_CRML(sipframework_2001f889.crml)
 
 // SIP iby-files
 ../rom/sipsw.iby /epoc32/rom/include/sipsw.iby

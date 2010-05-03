@@ -107,8 +107,9 @@ ECOM_PLUGIN(sipimsagnt.dll,sipimsagnt.rsc)
 
 /* Resources - XML for secure profile backup*/
 data=ZPRIVATE\101F413C\backup_registration.xml private\101F413C\backup_registration.xml
-data=DATAZ_\private\10202be9\2001F889.txt private\10202be9\2001F889.txt
 
+// ProfileAgent's default cre file
+data=DATAZ_\private\10202be9\101f413c.cre private\10202be9\101f413c.cre
 
 #endif /* SYMBIAN_EXCLUDE_SIP*/
 

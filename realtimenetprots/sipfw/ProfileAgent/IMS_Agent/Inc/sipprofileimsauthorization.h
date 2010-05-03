@@ -71,7 +71,17 @@ public://new methods
     * Get 
     */
     RMobilePhone::CImsAuthorizationInfoV5& Response();
-
+    
+    /**
+     * Checks whether IMSAuthorization is supported  
+     */
+    TBool IsImsAuthorizationAllowed();
+    
+    /*
+     * Resets IMS Authorization value
+     */
+    void ResetImsAuthorizationAllowed(TBool aStatus);
+    
 public: //From CActive
     
     /**
@@ -110,6 +120,7 @@ private:
     
     MSIPProfileIMSAuthorizationDataObserver& iObserver; 
     RMobilePhone& iPhone;
+    TBool iIMSAuthorizationNotSupported;
     };
 
 #endif // end of SIPPROFILEIMSAUTHORIZATION_H

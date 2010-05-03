@@ -14,7 +14,7 @@
 // Name        : sipprflregisteredstate.cpp
 // Part of     : sip profile fsm
 // implementation
-// Version     : %version: 2.1.1 %
+// Version     : %version: 2.1.2 %
 //
 
 
@@ -289,7 +289,7 @@ void CSIPPrflRegisteredState::UpdateL(
         {
         aContext.SetProfile(&aNewProfile);
         }
-	else if((&aNewProfile)->IsDefault() != (oldProfile)->IsDefault())
+	else if((&aNewProfile)->IsDefault() && !(oldProfile)->IsDefault())
 		{
 		aContext.SetProfile(&aNewProfile);
 		}        

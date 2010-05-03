@@ -90,7 +90,6 @@ class CSIPApnManager : public CBase
 	
 	    MSIPApnChangeObserver&                     iObserver;
 	    RPointerArray<CSIPApnConfigurationHandler> iHandlers;
-	    TBool                                      iInitialApnChangeFailed;
 	    
 #ifdef CPPUNIT_TEST	
 	    friend class CSIPApnManagerTest;

@@ -75,6 +75,9 @@ class CSmlDmCallback_stub : public MSmlDmCallback
                                  MSmlDmAdapter::TError& aStatus);
 
         HBufC8* GetLuidAllocL(const TDesC8& aURI);
+
+        TInt RemoveMappingL(TUint32 aAdapterId, const TDesC8& aURI, TBool aChildAlso);
+
         
     private:
     

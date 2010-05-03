@@ -760,7 +760,7 @@ TBool CSIPProfileServerCore::UpdateProfileToStoreL(
         {
         CSIPConcreteProfile* defaultProfile = FindDefaultProfile();
         
-        if ( defaultProfile && defaultProfile != aProfile )
+        if ( defaultProfile && defaultProfile->Id() != aProfile->Id() )
         	{
         	defaultProfile->SetDefault( EFalse );
         	}
@@ -785,6 +785,22 @@ CSIPProfileServerCore::Profile(TUint32 aProfileId) const
         }
     return NULL;
     }
+
+// ----------------------------------------------------------------------------------
+// CSIPProfileServerCore::Profile. Returns modifiable ConcreteProfile object pointer
+// ----------------------------------------------------------------------------------
+//
+CSIPConcreteProfile*
+CSIPProfileServerCore::Profile(TUint32 aProfileId)
+    {
+    CSIPProfileCacheItem* item = ProfileCacheItem(aProfileId);
+    if (item)
+        {
+        return &item->Profile();
+        }
+    return NULL;
+    }
+
 
 // -----------------------------------------------------------------------------
 // CSIPProfileServerCore::ProfileDefaultL
@@ -1076,7 +1092,7 @@ CSIPConcreteProfile::TStatus CSIPProfileServerCore::EnableProfileL(
                              && item->IsVpnInUse());
     
     const CSIPConcreteProfile* profile = Profile(aProfileId);
-    if(FeatureManager::FeatureSupported( KFeatureIdFfSipApnSwitching ) 
+    if(profile && FeatureManager::FeatureSupported( KFeatureIdFfSipApnSwitching ) 
         && CheckApnSwitchEnabledL( *profile ) && !item->IsRfsInprogress() && !isVpnInUse )
         {
         PROFILE_DEBUG1("CSIPProfileServerCore::EnableProfileL, SwichEnabled")
@@ -1140,7 +1156,7 @@ CSIPConcreteProfile::TStatus CSIPProfileServerCore::ForceDisableProfileL(
     if(CSIPConcreteProfile::EUnregistered != item->UsedProfile().Status())
     	{
     	PROFILE_DEBUG3("CSIPProfileServerCore::ForceDisableProfileL, Forcibly disabling profile", aProfileId);
-    	item->SwitchToUnregisteredState();
+    	item->SwitchToUnregisteredState(EFalse);
     	iPluginDirector->TerminateHandling(item->UsedProfile());
     	item->ClearMigrationProfiles();
     	iPluginDirector->StartTimerForCleanup();
@@ -2167,27 +2183,30 @@ void CSIPProfileServerCore::ApnChanged( const TDesC8& /*aApn*/, TUint32 aIapId, 
                 TInt error(KErrNone);
                 PROFILE_DEBUG3("CSIPProfileServerCore::ApnChanged, Profile Id", profile->Id())
                 CSIPProfileCacheItem* item = ProfileCacheItem(profile->Id());
-                TBool isVpnInUse = (FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn )
-                                             && item->IsVpnInUse());
-                if ( err == KErrNone && CheckIapSettings(profile->Id()))
+                if(item)
                     {
-                    if(switchEnabledProfile.operation == TStoreSwitchEnabledProfile::Update)
-                        {
-                        TRAP(error, item->UpdateRegistrationL(*(switchEnabledProfile.iObserver)));
-                        }
-                    else if(switchEnabledProfile.operation == TStoreSwitchEnabledProfile::Enable && !item->IsRfsInprogress() && !isVpnInUse)                    
-                        {
-                        TRAP(error, iAlrHandler->EnableProfileL(*item, *(switchEnabledProfile.iObserver)));
-                        }
-                    else if(switchEnabledProfile.operation == TStoreSwitchEnabledProfile::Register)
-                        {
-                        TRAP(error, item->StartRegisterL(*iWaitForIAP, *iRegInProg, ETrue));
-                        }
-                    }
-                if ( err != KErrNone || error)
-                    {
-                     PROFILE_DEBUG1("CSIPProfileServerCore::ApnChanged, error handling")
-                     HandleAsyncError(*item, profile->Status(), err);
+	                TBool isVpnInUse = (FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn )
+	                                             && item->IsVpnInUse());
+	                if ( err == KErrNone && CheckIapSettings(profile->Id()))
+	                    {
+	                    if(switchEnabledProfile.operation == TStoreSwitchEnabledProfile::Update)
+	                        {
+	                        TRAP(error, item->UpdateRegistrationL(*(switchEnabledProfile.iObserver)));
+	                        }
+	                    else if(switchEnabledProfile.operation == TStoreSwitchEnabledProfile::Enable && !item->IsRfsInprogress() && !isVpnInUse)                    
+	                        {
+	                        TRAP(error, iAlrHandler->EnableProfileL(*item, *(switchEnabledProfile.iObserver)));
+	                        }
+	                    else if(switchEnabledProfile.operation == TStoreSwitchEnabledProfile::Register)
+	                        {
+	                        TRAP(error, item->StartRegisterL(*iWaitForIAP, *iRegInProg, ETrue));
+	                        }
+	                    }
+	                if ( err != KErrNone || error)
+	                    {
+	                     PROFILE_DEBUG1("CSIPProfileServerCore::ApnChanged, error handling")
+	                     HandleAsyncError(*item, profile->Status(), err);
+	                    }
                     }
                 }
             }

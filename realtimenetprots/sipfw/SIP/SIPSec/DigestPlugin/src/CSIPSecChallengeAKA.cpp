@@ -26,7 +26,7 @@
 #include "sipsecdigestcontext.h"
 #include "sipstrings.h"
 #include "sipstrconsts.h"
-#include <imcvcodc.h>
+#include <tconvbase64.h>
 
 // ============================ MEMBER FUNCTIONS ===============================
 
@@ -132,8 +132,8 @@ TBool CSIPSecChallengeAKA::ProcessResponseL( TSIPSecDigestCtxSetup& aContext,
 			HBufC8* auts = HBufC8::NewLC( KBase64EncodedAutsLength );
 			TPtr8 autsPtr( auts->Des() );
 
-		    TImCodecB64 encoder;
-		    User::LeaveIfError( encoder.Encode( userData.AUTS(), autsPtr ) );
+			TBase64 encoder;
+			User::LeaveIfError( encoder.Encode( userData.AUTS(), autsPtr ) );
             aContext.SetParamValueL( SipStrConsts::EAuts, *auts );
 
             CleanupStack::PopAndDestroy( auts );

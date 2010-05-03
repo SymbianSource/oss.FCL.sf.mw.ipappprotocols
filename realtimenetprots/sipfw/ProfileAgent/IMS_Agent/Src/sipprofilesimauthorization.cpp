@@ -61,8 +61,12 @@ CSIPProfileSIMAuthorization::CSIPProfileSIMAuthorization(
 //
 CSIPProfileSIMAuthorization::~CSIPProfileSIMAuthorization()
     {
+    PROFILE_DEBUG1("CSIPProfileSIMAuthorization::~CSIPProfileSIMAuthorization")  
+    
     Cancel();
     iIMSI.Zero();
+    
+    PROFILE_DEBUG1("CSIPProfileSIMAuthorization::~CSIPProfileSIMAuthorization, exit")  
     }
 
 // ----------------------------------------------------------------------------
@@ -71,6 +75,9 @@ CSIPProfileSIMAuthorization::~CSIPProfileSIMAuthorization()
 //
 void CSIPProfileSIMAuthorization::ConstructL()
     {	
+    PROFILE_DEBUG1("CSIPProfileSIMAuthorization::ConstructL")  
+    
+    iSIMAuthorizationNotSupported = EFalse;
     TUint32 caps(0);    
     User::LeaveIfError(iPhone.GetIdentityCaps(caps));
     if(!(caps & RMobilePhone::KCapsGetSubscriberId))
@@ -78,6 +85,8 @@ void CSIPProfileSIMAuthorization::ConstructL()
 	  	User::Leave(KErrNotSupported);
     	}
     CActiveScheduler::Add( this );    
+    
+    PROFILE_DEBUG1("CSIPProfileSIMAuthorization::ConstructL, exit")  
     }
 
 // ----------------------------------------------------------------------------
@@ -108,14 +117,19 @@ RMobilePhone::TMobilePhoneSubscriberId& CSIPProfileSIMAuthorization::IMSI()
 //
 void CSIPProfileSIMAuthorization::RunL()
     {
+    PROFILE_DEBUG3("CSIPProfileSIMAuthorization::RunL, status:", iStatus.Int() )
+    
 	if ( iStatus.Int() == KErrNone)
         {
         iObserver.AuthorizedSubscriberIdL();
         }
     else
-        {        	
+        { 
+        iSIMAuthorizationNotSupported = ETrue;
         User::LeaveIfError(iStatus.Int());
         }    
+        
+    PROFILE_DEBUG1("CSIPProfileSIMAuthorization::RunL, exit")   
     }
         
 // ----------------------------------------------------------------------------
@@ -131,7 +145,25 @@ TInt CSIPProfileSIMAuthorization::RunError(TInt aError)
   		}
   	return KErrNone;
     }  
-       
+
+// ----------------------------------------------------------------------------
+// CSIPProfileSIMAuthorization::IsImsAuthorizationSupported
+// ----------------------------------------------------------------------------
+//
+TBool CSIPProfileSIMAuthorization::IsSIMAuthorizationAllowed()
+    {
+    return !iSIMAuthorizationNotSupported;
+    }
+
+// ----------------------------------------------------------------------------
+// CSIPProfileSIMAuthorization::ResetSIMAuthorizationAllowed
+// ----------------------------------------------------------------------------
+//
+void CSIPProfileSIMAuthorization::ResetSIMAuthorizationAllowed(TBool aStatus)
+    {
+    iSIMAuthorizationNotSupported = aStatus;
+    }
+
 // ----------------------------------------------------------------------------
 // CSIPProfileSIMAuthorization::DoCancel
 // ----------------------------------------------------------------------------

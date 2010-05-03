@@ -22,6 +22,8 @@
 #include <bldvariant.hrh>
 
 ECOM_PLUGIN(sipsystemstatemonitor.dll,sipsystemstatemonitor.rsc)
-/* patchdata ssmcmn.dll@KSsmGracefulOffline 0xFFFFFFFF */
+#ifdef FF_IMS_DEREGISTRATION_IN_OFFLINE
+patchdata ssmcmn.dll@KSsmGracefulOffline 0xFFFFFFFF
+#endif
 
 #endif /* SIPSYSTEMSTATEMONTOR_IBY */

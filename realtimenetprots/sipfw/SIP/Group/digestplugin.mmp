@@ -83,7 +83,6 @@ LIBRARY       etelmm.lib
 LIBRARY       commsdat.lib
 LIBRARY       flogger.lib
 LIBRARY       charconv.lib
-LIBRARY       imut.lib
 LIBRARY       centralrepository.lib
 LIBRARY       efsrv.lib
 

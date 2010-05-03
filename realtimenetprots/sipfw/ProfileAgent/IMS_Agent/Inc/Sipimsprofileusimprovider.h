@@ -77,8 +77,9 @@ public:
 
     /**
     * Starts the retrieving of authorization information
+    * @return ETrue if request was made
     */		
-    void RequestL(TBool aUseSIM=EFalse);
+    TBool RequestL(TBool aUseUSIM=EFalse);
     
     /**
     * Cancels pending operations
