@@ -622,7 +622,12 @@ const CSIPProfilePlugins& CSIPProfileServerCore::ProfilePluginsL()
             CImplementationInformation* ecomInfo = infoArray[i];
             TSIPProfileTypeInfo info;
             ConvertTypeInfoL(*ecomInfo, info);
-            array.AppendL(info);
+            TIdentityRelation<TSIPProfileTypeInfo> identityRelation(CSIPProfileServerCore::Compare);
+            TInt alreadyExits = array.Find(info,identityRelation);
+            if(alreadyExits == KErrNotFound)
+                {
+                array.AppendL(info);
+                }
             }
         }
     CleanupStack::Pop(&infoArray);
@@ -1067,7 +1072,15 @@ void CSIPProfileServerCore::UpdateRegistrationL(TUint32 aProfileId,
                 }
             }
         else
-            User::LeaveIfError(KErrNotSupported);
+            {
+            // At this point the registration has failed fatally already and profile will be in 
+            // unregistered state. Since we cann't do any regisrtation related activity and 
+            // not to lose user's updated data we are doing this.
+            if(item->UsedProfile().Status() == CSIPConcreteProfile::EUnregistered)
+                {
+                item->ClearOldProfile();
+                }
+            }
         }
     else
         {
@@ -2353,11 +2366,34 @@ void CSIPProfileServerCore::UseBackupApn( TUint32 aIapId, TBool aFatalFailure )
     }
 
 // ----------------------------------------------------------------------------
+// CSIPProfileServerCore::Compare
+// ----------------------------------------------------------------------------
+//
+TBool CSIPProfileServerCore::Compare(const TSIPProfileTypeInfo& first,
+        const TSIPProfileTypeInfo& second)
+    {
+    TInt result = first.iSIPProfileName.Compare(second.iSIPProfileName);
+    return ( 0 == result && first.iSIPProfileClass == second.iSIPProfileClass);
+    }
+
+// ----------------------------------------------------------------------------
 // CSIPProfileServerCore::IsUpdateAllowed
 // ----------------------------------------------------------------------------
 //
 TBool CSIPProfileServerCore::IsUpdateAllowed( CSIPConcreteProfile *aProfile )
     {
-    PROFILE_DEBUG1("CSIPIMSProfileAgent::IsUpdateAllowed, enter")
-    return !(iApnManager->IsFailed(aProfile->IapId()));
+    PROFILE_DEBUG1("CSIPProfileServerCore::IsUpdateAllowed, enter")
+    TBool allowed(ETrue);     
+    CSIPProfileCacheItem* item = ProfileCacheItem(aProfile->Id());
+    if(item)
+        {
+        CSIPConcreteProfile& profile = item->LatestProfile();
+        TBool iapIdChange(profile.IapId()!=aProfile->IapId());
+        if(iapIdChange && 
+            (iApnManager->IsFailed(aProfile->IapId()) || iApnManager->IsFailed(profile.IapId())))
+            {
+            allowed = EFalse;
+            }
+        }
+    return allowed;
     }

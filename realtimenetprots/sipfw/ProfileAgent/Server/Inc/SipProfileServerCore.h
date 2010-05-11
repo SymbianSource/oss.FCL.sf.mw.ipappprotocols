@@ -770,9 +770,23 @@ class CSIPProfileServerCore : public CBase,
          */
         TBool CheckIapSettings(TUint32 aProfileId);
         
+        /**
+         * Issues the change of APN to PrimaryAPN 
+         */
         void UsePrimaryApn(TUint32 aIapId);
-
+        
+        /**
+         * Issues the change of APN to SecondaryAPN
+         */
         void UseBackupApn( TUint32 aIapId, TBool aFatalFailure = ETrue );
+        
+        /**
+         * Compares the two plugin typr info
+         * @returns ETrue if the match completely
+         * EFalse otherwise
+         */ 
+        static TBool Compare(const TSIPProfileTypeInfo& first,
+                        const TSIPProfileTypeInfo& second);
 		
         
 	private: // Data
