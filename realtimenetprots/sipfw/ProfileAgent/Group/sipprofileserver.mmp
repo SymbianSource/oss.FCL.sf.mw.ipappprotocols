@@ -97,7 +97,7 @@ LIBRARY 	  commdb.lib
 
 VENDORID 0x70000001
 
-CAPABILITY ProtServ NetworkServices ReadDeviceData WriteDeviceData
+CAPABILITY ProtServ NetworkServices ReadDeviceData WriteDeviceData NetworkControl
 
 // MACRO 	PLAT_SEC_TEST
 

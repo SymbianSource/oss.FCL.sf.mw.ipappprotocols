@@ -610,7 +610,12 @@ void CTransport::HandleClientRequestL(
 				// Sent-by is now set for the first time, must set the port too
 				if ( receivePort == 0 )
 		            {
-		            receivePort = KDefaultSipPort;
+                    //If the Transport in the outgoing request is TLS and port value = 0
+                    //provide 5061 for TLS and 5060 for UDP/TCP
+                    if(SIPStrings::StringF(SipStrConsts::ETLS) == viaHeader->Transport())
+                        receivePort = KDefaultSipsPort;
+                    else
+                        receivePort = KDefaultSipPort;
 		            }
 	        	}
 	        if ( receivePort )

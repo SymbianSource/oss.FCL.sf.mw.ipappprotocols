@@ -57,6 +57,7 @@ using namespace CommsDat;
 
 const TInt KMicroSecInSec = 1000000;
 const TInt KIdleTimer = 2;
+const TInt KOfflineTimer = 5;
 
 // ============================ MEMBER FUNCTIONS ===============================
 
@@ -171,8 +172,6 @@ void CSIPProfileServerCore::ConstructL()
     iNotify = CSIPProfileStorageSecureBackup::NewL(this);
     
     iServer = CSIPProfileCSServer::NewL(*this);
-	
-	iOfflineEventReceived = EFalse;
     
     PROFILE_DEBUG1("ProfileServer started")
     }
@@ -291,8 +290,11 @@ void CSIPProfileServerCore::SIPProfileStatusEventL(TUint32 aProfileId,
             	}
         		
         	}
+        
+        //For Profiles which were in RegInProgress and has moved to Registered State,
+        //needs to be deregistered if Offline or RFs or Vpn if in Use has been triggered.
         TBool eventCompleted = EFalse;
-        if(item && (item->IsRfsInprogress() || iOfflineEventReceived ||
+        if(item && (item->IsRfsInprogress() || item->IsOfflineInitiated()  ||
                 (FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn )&& 
                         item->IsVpnInUse())))
             {
@@ -305,19 +307,30 @@ void CSIPProfileServerCore::SIPProfileStatusEventL(TUint32 aProfileId,
                     {
                     count--;
                     }
-                else if (status == CSIPConcreteProfile::ERegistered )
+                else if (status == CSIPConcreteProfile::ERegistered)
                     {
-                    iProfileCache[i]->ShutdownInitiated();
-                    }
-                }
+                    if(item->IsOfflineInitiated())
+                        {                        
+                        //Don't do anything. If the ProfileStatusEvent = Registered in Offline, it
+                        //will only be for WLAN so don't deregister it. If ProfileStatusEvent = Deregistered
+                        //means application triggered deregistration so ProfileAgent should not attempt registering it.
+                        }
+                    else
+                        {
+                        iProfileCache[i]->ShutdownInitiated();
+                        }
+                    } //end if unregistered
             if ( !count )
                 eventCompleted = ETrue;
-            }
+                } //end for
+            } //end outer if
+        
+        
         if(eventCompleted)
             {
             if (item->IsRfsInprogress())
-                StartConnectionCloseTimer();
-            else if(iOfflineEventReceived)
+                StartConnectionCloseTimer(KIdleTimer);
+            else if(item->IsOfflineInitiated() )
                 ConfirmSystemstateMonitor(CSipSystemStateMonitor::ESystemState);
             else if((FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn )&& 
                         item->IsVpnInUse()))
@@ -444,50 +457,56 @@ void CSIPProfileServerCore::SystemVariableUpdated(
     {
     PROFILE_DEBUG3("CSIPProfileServerCore::SystemVariableUpdated System State changed to value", aValue)
     
-    //If the SystemState is Offline, turn the boolean variable to true so that Profile-Server
-    //can indicate System State monitor that event processing is completed, provided all the 
-    //profiles have got deregistered
-    if (CSipSystemStateMonitor::ESystemOffline == aValue)
-        iOfflineEventReceived = ETrue;
-    
-	if ( aVariable == CSipSystemStateMonitor::ESystemState &&
-	     (aValue == CSipSystemStateMonitor::ESystemShuttingDown || 
-	     aValue == CSipSystemStateMonitor::ESystemOffline
-			 ))
+	if ( aVariable == CSipSystemStateMonitor::ESystemState )
 	    {   
-	    TBool waitForDeregistration = EFalse;
-        for (TInt i = 0; i < iProfileCache.Count(); i++)
-            {
-            iProfileCache[i]->ShutdownInitiated();
-            CSIPConcreteProfile::TStatus status;
-            iPluginDirector->State(status, iProfileCache[i]->UsedProfile());
-            if(status != CSIPConcreteProfile::EUnregistered)
-                waitForDeregistration = ETrue;            
-            }
-        if(!waitForDeregistration)
-            {
-            ConfirmSystemstateMonitor(CSipSystemStateMonitor::ESystemState);
-            }
-	    }
-	//If the System State is Online, register all the profiles in always on mode
-	else if(aVariable == CSipSystemStateMonitor::ESystemState && 
-		aValue == CSipSystemStateMonitor::ESystemOnline)
-		{
-		iOfflineEventReceived = EFalse;
-		for (TInt i = 0; i < iProfileCache.Count(); i++)
-		    {
-		    iProfileCache[i]->ResetShutdownvariable();
-		    CSIPProfileCacheItem* item = iProfileCache[i];
-		    if (iProfileCache[i]->IsReferred())
-		        {
-                TRAPD(err, item->StartRegisterL(*iWaitForIAP, *iRegInProg, ETrue));
-		        if (err != KErrNone)
-		            {
-		            HandleAsyncError(*item,CSIPConcreteProfile::ERegistrationInProgress,err);
-		            }
-				}
-			}
-		}
+            // If the System is Shutting down
+            if(aValue == CSipSystemStateMonitor::ESystemShuttingDown)
+                {                
+                for (TInt i = 0; i < iProfileCache.Count(); i++)
+                    {
+                    iProfileCache[i]->ShutdownInitiated();                                
+                    }                
+                } //end if Shutdown
+            
+            //If the System receives Offline event
+            if(aValue == CSipSystemStateMonitor::ESystemOffline)
+                {                
+                StartConnectionCloseTimer(KOfflineTimer);
+                TBool waitForDeregistration = EFalse;
+                for (TInt i = 0; i < iProfileCache.Count(); i++)
+                    {
+                    iProfileCache[i]->OfflineInitiated(ETrue);
+                    CSIPConcreteProfile::TStatus status;
+                    iPluginDirector->State(status, iProfileCache[i]->UsedProfile());
+                    if(status != CSIPConcreteProfile::EUnregistered)
+                        waitForDeregistration = ETrue;            
+                    }
+                if(!waitForDeregistration)
+                    {
+                    ConfirmSystemstateMonitor(CSipSystemStateMonitor::ESystemState);
+                    }
+                } //end if Offline
+            
+            //If the System receives Online event
+            if(aValue == CSipSystemStateMonitor::ESystemOnline)
+                {                
+                for (TInt i = 0; i < iProfileCache.Count(); i++)
+                    {
+                    CSIPProfileCacheItem* item = iProfileCache[i];
+                    item->OfflineInitiated(EFalse);                    
+                    CSIPConcreteProfile::TStatus status;
+                    iPluginDirector->State(status, item->UsedProfile());
+                    if (item->IsReferred() && status == CSIPConcreteProfile::EUnregistered)
+                        {
+                        TRAPD(err, item->StartRegisterL(*iWaitForIAP, *iRegInProg, ETrue));
+                        if (err != KErrNone)
+                            {
+                            HandleAsyncError(*item,CSIPConcreteProfile::ERegistrationInProgress,err);
+                            }
+                        }
+                    }
+                } //end if Online           
+	    } //end if SystemState    
 	else if(aVariable == CSipSystemStateMonitor::ERfsState)
 	    {
 	    if(aValue == CSipSystemStateMonitor::ERfsStarted)
@@ -622,7 +641,12 @@ const CSIPProfilePlugins& CSIPProfileServerCore::ProfilePluginsL()
             CImplementationInformation* ecomInfo = infoArray[i];
             TSIPProfileTypeInfo info;
             ConvertTypeInfoL(*ecomInfo, info);
-            array.AppendL(info);
+            TIdentityRelation<TSIPProfileTypeInfo> identityRelation(CSIPProfileServerCore::Compare);
+            TInt alreadyExits = array.Find(info,identityRelation);
+            if(alreadyExits == KErrNotFound)
+                {
+                array.AppendL(info);
+                }
             }
         }
     CleanupStack::Pop(&infoArray);
@@ -1067,7 +1091,15 @@ void CSIPProfileServerCore::UpdateRegistrationL(TUint32 aProfileId,
                 }
             }
         else
-            User::LeaveIfError(KErrNotSupported);
+            {
+            // At this point the registration has failed fatally already and profile will be in 
+            // unregistered state. Since we cann't do any regisrtation related activity and 
+            // not to lose user's updated data we are doing this.
+            if(item->UsedProfile().Status() == CSIPConcreteProfile::EUnregistered)
+                {
+                item->ClearOldProfile();
+                }
+            }
         }
     else
         {
@@ -2123,11 +2155,11 @@ TInt CSIPProfileServerCore::IAPCountL(TUint32 aSnapId) const
 // CSIPProfileServerCore::StartConnectionCloseTimer
 // -----------------------------------------------------------------------------
 //
-void CSIPProfileServerCore::StartConnectionCloseTimer()
+void CSIPProfileServerCore::StartConnectionCloseTimer(TInt aValue)
 	{
 	PROFILE_DEBUG1("CSIPProfileServerCore::StartConnectionCloseTimer")
 	iDeltaTimer->Remove(iDeltaTimerEntry);
-	TTimeIntervalMicroSeconds32 interval(KMicroSecInSec * KIdleTimer);
+	TTimeIntervalMicroSeconds32 interval(KMicroSecInSec * aValue);
 	iDeltaTimer->Queue(interval, iDeltaTimerEntry);
 	}
 
@@ -2139,7 +2171,33 @@ TInt CSIPProfileServerCore::ConnectionCloseTimerExpired(TAny* aPtr)
 	{
 	PROFILE_DEBUG1("CSIPProfileServerCore::ConnectionCloseTimerExpired")
 	CSIPProfileServerCore* self = reinterpret_cast<CSIPProfileServerCore*>(aPtr);
-  	self->ConfirmSystemstateMonitor(CSipSystemStateMonitor::ERfsState);
+	
+	TBool IsOffline = self->iProfileCache[0]->IsOfflineInitiated();
+	if(IsOffline)
+	    {
+	    self->ConfirmSystemstateMonitor(CSipSystemStateMonitor::ESystemState);	    	        
+        for (TInt i = 0; i < self->iProfileCache.Count(); i++)
+            {            
+            CSIPProfileCacheItem* item = self->iProfileCache[i];
+            CSIPConcreteProfile::TStatus status;
+            self->iPluginDirector->State( status, self->iProfileCache[i]->UsedProfile() );
+            item->OfflineInitiated(EFalse);
+            if (item->IsReferred() && (!self->iApnManager->IsIapGPRSL(item->Profile().IapId())) 
+                    && status == CSIPConcreteProfile::EUnregistered) 
+                {                
+                TRAPD(err, item->StartRegisterL(*(self->iWaitForIAP), *(self->iRegInProg), ETrue));
+                if (err != KErrNone)
+                    {
+                    self->HandleAsyncError(*item,CSIPConcreteProfile::ERegistrationInProgress,err);
+                    }                  
+                }
+            else
+                {}           
+            } //end for	    	    
+	    }//end Outer If
+	else
+	    self->ConfirmSystemstateMonitor(CSipSystemStateMonitor::ERfsState);
+	
   	return ETrue;
 	}
 
@@ -2149,9 +2207,8 @@ TInt CSIPProfileServerCore::ConnectionCloseTimerExpired(TAny* aPtr)
 //
 void CSIPProfileServerCore::ConfirmSystemstateMonitor(
 	CSipSystemStateMonitor::TSystemVariable aVariable)
-	{
-		iSystemStateMonitor->EventProcessingCompleted(
-		        aVariable, 0, *this);
+	{    
+        iSystemStateMonitor->EventProcessingCompleted(aVariable, 0, *this);
 	}
 	
 // ----------------------------------------------------------------------------
@@ -2353,11 +2410,34 @@ void CSIPProfileServerCore::UseBackupApn( TUint32 aIapId, TBool aFatalFailure )
     }
 
 // ----------------------------------------------------------------------------
+// CSIPProfileServerCore::Compare
+// ----------------------------------------------------------------------------
+//
+TBool CSIPProfileServerCore::Compare(const TSIPProfileTypeInfo& first,
+        const TSIPProfileTypeInfo& second)
+    {
+    TInt result = first.iSIPProfileName.Compare(second.iSIPProfileName);
+    return ( 0 == result && first.iSIPProfileClass == second.iSIPProfileClass);
+    }
+
+// ----------------------------------------------------------------------------
 // CSIPProfileServerCore::IsUpdateAllowed
 // ----------------------------------------------------------------------------
 //
 TBool CSIPProfileServerCore::IsUpdateAllowed( CSIPConcreteProfile *aProfile )
     {
-    PROFILE_DEBUG1("CSIPIMSProfileAgent::IsUpdateAllowed, enter")
-    return !(iApnManager->IsFailed(aProfile->IapId()));
+    PROFILE_DEBUG1("CSIPProfileServerCore::IsUpdateAllowed, enter")
+    TBool allowed(ETrue);     
+    CSIPProfileCacheItem* item = ProfileCacheItem(aProfile->Id());
+    if(item)
+        {
+        CSIPConcreteProfile& profile = item->LatestProfile();
+        TBool iapIdChange(profile.IapId()!=aProfile->IapId());
+        if(iapIdChange && 
+            (iApnManager->IsFailed(aProfile->IapId()) || iApnManager->IsFailed(profile.IapId())))
+            {
+            allowed = EFalse;
+            }
+        }
+    return allowed;
     }

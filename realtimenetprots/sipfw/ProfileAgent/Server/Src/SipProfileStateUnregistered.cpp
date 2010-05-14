@@ -114,7 +114,7 @@ CSIPProfileStateUnregistered::EnterL(CSIPProfileCacheItem& aItem,
 		TBool isVpnInUse = (FeatureManager::FeatureSupported( KFeatureIdFfImsDeregistrationInVpn )
                                 && aItem.IsVpnInUse());
 		
-        if ( aItem.IsReferred() && !aItem.IsShutdownInitiated() &&
+        if ( aItem.IsReferred() && !aItem.IsShutdownInitiated() && !aItem.IsOfflineInitiated() &&
                 !aItem.IsRfsInprogress() && !isVpnInUse)
             {
             aItem.ClearOldProfile();
