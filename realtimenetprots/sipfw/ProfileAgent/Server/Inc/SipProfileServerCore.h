@@ -493,7 +493,7 @@ class CSIPProfileServerCore : public CBase,
 		*Starts timer of type CDeltaTimer, 
 		*which callback is ConnectionCloseTimerExpired function
 		*/
-		void StartConnectionCloseTimer();
+		void StartConnectionCloseTimer(TInt aValue);
 		
 		/**
 		* A callback for CDeltaTimer
@@ -835,8 +835,6 @@ class CSIPProfileServerCore : public CBase,
 		//ApnManager
 		CSIPApnManager*                     iApnManager; // iBackupApnSettings;
 		RArray<TStoreSwitchEnabledProfile>                iWaitForApnSettings;
-
-		TBool 								iOfflineEventReceived;
 		
 		TBool									iFeatMgrInitialized;
 		

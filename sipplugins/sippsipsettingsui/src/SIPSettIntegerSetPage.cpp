@@ -27,7 +27,6 @@
 #include    "gssippluginlogger.h"
 
 _LIT( NULLString,"" );
-_LIT16( ZeroString,"-1" );
 // ============================ MEMBER FUNCTIONS ===============================
 
 // -----------------------------------------------------------------------------
@@ -72,23 +71,18 @@ TBool CSIPSettIntegerSetPage::OkToExitL( TBool aAccept )
         }
        TextControl()->GetText( intText );
        lex.Assign( intText.Ptr() );
-       lex.Val( value );
-       if( value >= 0 && value <= 65535 || intText == NULLString )
-    	   {
-           if( intText == NULLString )
-    	       {
-               TextControl()->SetTextL(&ZeroString);
-    	       }
-           UpdateSettingL();  
+       lex.Val( value );   	   
+       if( intText == NULLString )
+	       {
+           TextControl()->SetTextL(&NULLString);
+	       }
+       UpdateSettingL();  
             
-           // Everything OK, save setting and exit page
-           AcceptSettingL();	   
-    	   ret = ETrue;
-    	   }
-       else
-    	   {
-    	   ret = EFalse;
-    	   }
+       // Everything OK, save setting and exit page
+       AcceptSettingL();	   
+	   ret = ETrue;
+    	   
+      
         
         return ret;    
     }
