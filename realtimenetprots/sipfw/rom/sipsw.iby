@@ -77,7 +77,7 @@ ECOM_PLUGIN(sipdigest.dll,sipdigest.rsc)
 
 ECOM_PLUGIN(siptls.dll,siptls.rsc)
 
-#ifdef SYMBIAN_EXCLUDE_IPSEC
+#ifndef __IPSEC
 REM Feature IPSEC not included in this rom
 #else
 ECOM_PLUGIN(sipipsec.dll,sipipsec.rsc)
@@ -103,13 +103,12 @@ file=ABI_DIR\BUILD_DIR\sipprofilesrv.exe PROGRAMS_DIR\sipprofilesrv.exe
 
 ECOM_PLUGIN(sipietfagnt.dll,sipietfagnt.rsc) 
 
+#ifndef FF_EXCLUDE_STANDARD_IMSAGENT 
 ECOM_PLUGIN(sipimsagnt.dll,sipimsagnt.rsc)
+#endif
 
 /* Resources - XML for secure profile backup*/
 data=ZPRIVATE\101F413C\backup_registration.xml private\101F413C\backup_registration.xml
-
-// ProfileAgent's default cre file
-data=DATAZ_\private\10202be9\101f413c.cre private\10202be9\101f413c.cre
 
 #endif /* SYMBIAN_EXCLUDE_SIP*/
 

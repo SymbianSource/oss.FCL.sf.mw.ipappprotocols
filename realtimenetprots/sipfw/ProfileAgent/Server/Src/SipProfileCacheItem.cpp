@@ -87,6 +87,7 @@ CSIPProfileCacheItem::CSIPProfileCacheItem(CSIPProfileServerCore& aCore,
 	iIsVpnInUse = EFalse;
 	iInitialApnSelected = EFalse;
 	iApnSwitchEnabled = EFalse;
+	iIsOfflineInitiated = EFalse;
 	iDeltaTimerEntry.Set(iDeltaTimerCallBack);
 	}
 
@@ -1357,14 +1358,6 @@ void CSIPProfileCacheItem::OfferedIapRejected()
 	iServerCore.SendErrorEvent(
 		*this, CSIPConcreteProfile::ERegistrationInProgress, KErrCancel );
 	}
-// -----------------------------------------------------------------------------
-// CSIPProfileCacheItem::ResetShutdownvariable
-// -----------------------------------------------------------------------------
-//
-void CSIPProfileCacheItem::ResetShutdownvariable()
-    {    
-    iIsShutdownInitiated = EFalse;
-    }
 
 // -----------------------------------------------------------------------------
 // CSIPProfileCacheItem::DefaultSNAPL
@@ -1384,3 +1377,28 @@ void CSIPProfileCacheItem::DefaultSNAPL(TUint32& aSnapId) const
 		PROFILE_DEBUG3("CSIPProfileCacheItem::DefaultSNAPL with Value: ", aSnapId)
 		CleanupStack::PopAndDestroy();
 	}
+
+// -----------------------------------------------------------------------------
+// CSIPProfileCacheItem::OfflineInitiated
+// -----------------------------------------------------------------------------
+//
+void CSIPProfileCacheItem::OfflineInitiated(TBool aOfflineInitiated)
+    {
+    if(aOfflineInitiated)
+        {
+        iIsOfflineInitiated = ETrue;
+        iCurrentState->ShutdownInitiated(*this);
+        }
+    else
+        iIsOfflineInitiated = EFalse;    
+    }
+
+// -----------------------------------------------------------------------------
+// CSIPProfileCacheItem::IsOfflineInitiated
+// -----------------------------------------------------------------------------
+//
+TBool CSIPProfileCacheItem::IsOfflineInitiated() const
+    {
+    return iIsOfflineInitiated;
+    }
+
