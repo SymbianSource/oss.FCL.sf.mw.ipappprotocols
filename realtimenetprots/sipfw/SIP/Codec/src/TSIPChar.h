@@ -45,7 +45,7 @@ public:
 	inline TBool IsReserved() const;
 	inline TBool IsUnreserved() const;
 	inline TBool IsMark() const;
-	inline TBool IsTokenChar() const;
+	inline TBool IsTokenChar(RArray<TSIPChar>* aArray = NULL) const;
 	inline TBool IsSeparator() const;
 	inline TBool IsWordChar() const;
 	inline TBool IsQuotedPairChar() const;

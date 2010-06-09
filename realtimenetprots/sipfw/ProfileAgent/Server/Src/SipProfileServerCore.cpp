@@ -475,11 +475,11 @@ void CSIPProfileServerCore::SystemVariableUpdated(
                 TBool waitForDeregistration = EFalse;
                 for (TInt i = 0; i < iProfileCache.Count(); i++)
                     {
-                    iProfileCache[i]->OfflineInitiated(ETrue);
                     CSIPConcreteProfile::TStatus status;
                     iPluginDirector->State(status, iProfileCache[i]->UsedProfile());
                     if(status != CSIPConcreteProfile::EUnregistered)
-                        waitForDeregistration = ETrue;            
+                        waitForDeregistration = ETrue;   
+                    iProfileCache[i]->OfflineInitiated(ETrue);
                     }
                 if(!waitForDeregistration)
                     {
@@ -515,11 +515,11 @@ void CSIPProfileServerCore::SystemVariableUpdated(
 	        TBool waitForDeregistration = EFalse;
 	        for (TInt i = 0; i < iProfileCache.Count(); i++)         
 	            {
-	            iProfileCache[i]->RfsInprogress(ETrue);
 	            CSIPConcreteProfile::TStatus status;
 	            iPluginDirector->State(status, iProfileCache[i]->UsedProfile());
 	            if (status != CSIPConcreteProfile::EUnregistered)
 	                waitForDeregistration = ETrue;
+	            iProfileCache[i]->RfsInprogress(ETrue);
 	            }      
 	        if(!waitForDeregistration)
 	            {
@@ -564,12 +564,11 @@ void CSIPProfileServerCore::SystemVariableUpdated(
             TBool waitForDeregistration = EFalse;
             for (TInt i = 0; i < iProfileCache.Count(); i++)
                 {
-                iProfileCache[i]->VpnInUse( ETrue );
-                iProfileCache[i]->ShutdownInitiated();
                 CSIPConcreteProfile::TStatus status;
                 iPluginDirector->State(status, iProfileCache[i]->UsedProfile());
                 if (status != CSIPConcreteProfile::EUnregistered)
                     waitForDeregistration = ETrue;
+                iProfileCache[i]->VpnInUse( ETrue );
                 }
             if (!waitForDeregistration)
                 {

@@ -135,7 +135,8 @@ LIBRARY       bafl.lib
 LIBRARY       estor.lib
 LIBRARY       charconv.lib
 LIBRARY       inetprotutil.lib
-
+LIBRARY       featdiscovery.lib
+ 
 VENDORID 0x70000001
 
 CAPABILITY All -Tcb
