@@ -1459,11 +1459,23 @@ void CTransport::UpdateContactHeadersL(
                 if ( Protocol() == KProtocolTls )
                     {
                     RStringF tls = SIPStrings::StringF( SipStrConsts::ETLS );
-                    // SIP-URI with transport=TLS must not use sips scheme
-                    uri.SIPURI()->SetSIPS( transportParam != tls );
+                    // SIP Scheme in Contact header should be same as From Header
+                    CURIContainer& FromUri = (((aMessage->From())->SIPAddress()).URI());
+                    if(FromUri.IsSIPURI())
+                        {
+                        CSIPURI* FromSIPUri =FromUri.SIPURI();
+                        if(FromSIPUri->IsSIPSURI())
+                            {
+                            uri.SIPURI()->SetSIPS( ETrue );
+                            }
+                        else
+                            {
+                            uri.SIPURI()->SetSIPS( EFalse );
+                            }
+                        }                    
                     if(transportParam == tls)
                         {
-                        uri.SIPURI()->SetSIPS(EFalse);
+                        //uri.SIPURI()->SetSIPS(EFalse);
                         //Delete the param transport=tls from the URI as it is deprecated in RFC 3261
                         uri.SIPURI()->DeleteParam(SIPStrings::StringF( SipStrConsts::ETransport ));
                         }

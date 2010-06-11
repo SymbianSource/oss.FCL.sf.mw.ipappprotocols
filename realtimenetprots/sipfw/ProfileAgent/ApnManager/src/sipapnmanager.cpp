@@ -216,7 +216,7 @@ TBool CSIPApnManager::IsIapGPRSL( TUint32 aIapId )
     {
     TBool isIapGPRS(EFalse);          
     using namespace CommsDat;        
-    CMDBSession* db = CMDBSession::NewL( CMDBSession::LatestVersion() );
+    CMDBSession* db = CMDBSession::NewL( KCDVersion1_1 );
     CleanupStack::PushL( db );
     // Set any attributes if any
     db->SetAttributeMask( ECDHidden );    
