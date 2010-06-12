@@ -1,0 +1,63 @@
+/*
+* Copyright (c) 2009-2010 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html."
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+* Contributors:
+*
+* Description:
+* MSRP Implementation
+*
+*/
+
+TARGET			msrpheader.dll
+TARGETTYPE      dll
+UID             0x1000008d 0x2002B59D
+
+VENDORID        0x101FB657
+
+CAPABILITY      All -Tcb
+
+SOURCEPATH		../src
+SOURCE		CMSRPContentTypeHeader.cpp
+SOURCE		CMSRPFailureReportHeader.cpp
+SOURCE		CMSRPFromPathHeader.cpp
+SOURCE		CMSRPFromToHeaderBase.cpp
+SOURCE		CMSRPHeaderBase.cpp
+SOURCE		CMSRPMessage.cpp
+SOURCE		CMSRPResponse.cpp
+SOURCE		CMSRPSuccessReportHeader.cpp
+SOURCE		CMSRPToPathHeader.cpp
+SOURCE		CMSRPStrings.cpp
+SOURCE      CMSRPMessageIdHeader.cpp
+SOURCE      CMSRPByteRangeHeader.cpp
+SOURCE      MSRPStrings.cpp
+SOURCE      CMSRPTlsPtrs.cpp
+SOURCE      TMSRPHeaderUtil.cpp
+SOURCE      CMSRPMessageBase.cpp
+
+
+START STRINGTABLE ../strings/MSRPStrConsts.st
+EXPORTPATH		MW_LAYER_PLATFORM_EXPORT_PATH(.)
+END
+
+USERINCLUDE       ../inc
+USERINCLUDE       ../../inc 
+
+OS_LAYER_SYSTEMINCLUDE
+MW_LAYER_SYSTEMINCLUDE
+
+LIBRARY           inetprotutil.lib
+LIBRARY           apmime.lib
+LIBRARY           estor.lib
+LIBRARY           bafl.lib
+LIBRARY           euser.lib
+LIBRARY 		  efsrv.lib
+DEBUGLIBRARY      flogger.lib
+
+EXPORTUNFROZEN
+
