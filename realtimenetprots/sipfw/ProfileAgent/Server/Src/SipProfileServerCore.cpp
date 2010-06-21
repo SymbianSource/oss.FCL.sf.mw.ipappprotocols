@@ -242,6 +242,15 @@ void CSIPProfileServerCore::SIPProfileStatusEvent(CSIPConcreteProfile& aProfile,
 												  TUint32 aContextId)
     {
     CSIPProfileCacheItem* item = ProfileCacheItem(aProfile.Id());
+    
+    if(aContextId == 0 && item)
+        {
+        if(item->IsApnSwitchEnabled())
+            {
+            UsePrimaryApn(aProfile.IapId());
+            }
+        }
+    
     TRAPD(err, SIPProfileStatusEventL(aProfile.Id(), aContextId));
 
     if (err != KErrNone)
@@ -336,7 +345,20 @@ void CSIPProfileServerCore::SIPProfileStatusEventL(TUint32 aProfileId,
                         item->IsVpnInUse()))
                 ConfirmSystemstateMonitor(CSipSystemStateMonitor::EVpnState);                
             }       
-        }		
+        
+        if(FeatureManager::FeatureSupported( KFeatureIdFfSipApnSwitching))
+            {
+            if(item && item->IsApnSwitchEnabled() && aContextId)
+                {
+                CSIPConcreteProfile::TStatus status;
+                iPluginDirector->State( status, item->Profile() );
+                if(status == CSIPConcreteProfile::EUnregistered)
+                    {
+                    UseBackupApn(item->Profile().IapId(), EFalse);
+                    }
+                }
+            }
+        }
     CheckServerStatus();
     }
 
@@ -1645,26 +1667,33 @@ void CSIPProfileServerCore::HandleAsyncError(CSIPProfileCacheItem& aItem,
 	CSIPConcreteProfile::TStatus aStatus,
     TInt aError)
     {
-    TInt err(aError);
-    if (aStatus == CSIPConcreteProfile::EUnregistrationInProgress)
+    PROFILE_DEBUG3("CSIPProfileServerCore::HandleAsyncError, error", aError)
+    TBool isFatal(EFalse);
+    if(aError != KErrSIPApnSwitchNonFatalFailure)
         {
-        err = KErrNone;
-        }
+        TInt err(aError);
+        if (aStatus == CSIPConcreteProfile::EUnregistrationInProgress)
+            {
+            err = KErrNone;
+            }
 
-    if (HandleProfileError(aItem, err))
-    	{
-	    if (err == KErrTotalLossOfPrecision)
-	        {
-	        TRAP_IGNORE(SendUnregisteredStatusEventL(aItem))
-	        }
-	    else
-	        {
-	        SendErrorEvent(aItem, aStatus, aError);
-	        }
-    	}
+        if (HandleProfileError(aItem, err))
+            {
+            if (err == KErrTotalLossOfPrecision)
+                {
+                TRAP_IGNORE(SendUnregisteredStatusEventL(aItem))
+                }
+            else
+                {
+                SendErrorEvent(aItem, aStatus, aError);
+                isFatal = ETrue;
+                }
+            }
+        }
+    
     if(aItem.IsApnSwitchEnabled())
         {
-        UseBackupApn(aItem.Profile().IapId(), ETrue);
+        UseBackupApn(aItem.Profile().IapId(), isFatal);
         }
     }
 
@@ -2400,7 +2429,7 @@ void CSIPProfileServerCore::UseBackupApn( TUint32 aIapId, TBool aFatalFailure )
     {
     PROFILE_DEBUG1("CSIPProfileServerCore::UseBackupApn")
     
-    if ( iApnManager->IsFailed( aIapId ) || aFatalFailure )
+    if ( !iApnManager->IsFailed( aIapId ) || aFatalFailure )
         {
         iApnManager->SetFailed( aIapId, ETrue, aFatalFailure );
         }

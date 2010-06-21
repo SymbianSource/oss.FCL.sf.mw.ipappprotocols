@@ -274,7 +274,7 @@ void CTransport::RouteL( CSIPMessage* aMessage, const TInetAddr& aRemoteAddr )
 				if ( IsConnectedTransport() )
 					{
 					TResponseRoute route( id, aRemoteAddr );
-					iIDArray.Append( route );
+					iIDArray.AppendL( route );
 					}
 				TRAP( leaveValue,
 					  receiver->ReceiveL( static_cast<CSIPRequest*>( aMessage ) ) );
