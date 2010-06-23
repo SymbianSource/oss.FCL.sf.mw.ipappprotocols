@@ -126,7 +126,7 @@ TBool CSIPApnConfigurationHandler::IsPrimaryApnUsed()
 // CSIPApnConfigurationHandler::ReadCurrentApnL
 // -----------------------------------------------------------------------------
 //
-HBufC8* CSIPApnConfigurationHandler::ReadCurrentApnL()
+void CSIPApnConfigurationHandler::ReadCurrentApnL()
 	{
 	HBufC8* apn(NULL);
 		
@@ -193,15 +193,13 @@ HBufC8* CSIPApnConfigurationHandler::ReadCurrentApnL()
 		
 		delete iCurrentApn;
 		iCurrentApn = NULL;
-		iCurrentApn = apn->AllocL();
+		iCurrentApn = apn;
         }
     
     db->ClearAttributeMask( ECDHidden );
     
     CleanupStack::PopAndDestroy( iapRecord );
     CleanupStack::PopAndDestroy( db );
-    
-    return apn;
 	}
 
 // -----------------------------------------------------------------------------
@@ -327,6 +325,7 @@ void CSIPApnConfigurationHandler::ConstructL()
 	
 	User::LeaveIfError( iSocketSrv.Connect() );
 	iRepository = CRepository::NewL( KCRUidCmManager );
+	ReadCurrentApnL();
 	PROFILE_DEBUG1( 
 	        "CSIPApnConfigurationHandler::ConstructL() exit" )
 	}
@@ -478,15 +477,11 @@ TBool CSIPApnConfigurationHandler::ApnChangeNeededL( const TDesC8& aApn )
             "CSIPApnConfigurationHandler::ApnChangeNeededL()" )
 
  	TBool apnChangeNeeded( EFalse );
- 	HBufC8* currentApn = ReadCurrentApnL();
-
-	if ( currentApn && currentApn->Compare( aApn ) != 0 )
+	if ( iCurrentApn && iCurrentApn->Compare( aApn ) != 0 )
         {
         // Apn is not the same as wanted
         apnChangeNeeded = ETrue;
         }
-
-	delete currentApn;
 
 	PROFILE_DEBUG3( 
 	        "CSIPApnConfigurationHandler::ApnChangeNeededL(), apnChangeNeeded",
@@ -796,13 +791,12 @@ void CSIPApnConfigurationHandler::SendApnChangedNotificationL(
     const TDesC8& aNewApn, 
     TInt aError )
     {
-    if ( !IsPrimaryApnUsed() )
+    HBufC8* currentApn = aNewApn.AllocL();
+    delete iCurrentApn;
+    iCurrentApn = NULL;
+    iCurrentApn = currentApn;
+    if ( IsPrimaryApnUsed() )
         {
-        HBufC8* currentApn = aNewApn.AllocL();
-        delete iCurrentApn;
-        iCurrentApn = NULL;
-        iCurrentApn = currentApn;
-        
         iObserver.ApnChanged( *iCurrentApn, iIapId, aError );
         }
     }

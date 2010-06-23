@@ -219,8 +219,11 @@ void CSipDeviceStateAware::EventProcessingCompleted(
     if( iObservers.Count() == iCount)
         {
         iGuardTimer->Cancel();
-        iStateAwareSession.AcknowledgeStateNotification(KErrNone);        
-        iCount = 0;        
+        if(iState == CSipSystemStateMonitor::ESystemOffline)
+            {
+            iStateAwareSession.AcknowledgeStateNotification(KErrNone);        
+            iCount = 0;
+            }
         }	
     }
 
@@ -231,7 +234,10 @@ void CSipDeviceStateAware::EventProcessingCompleted(
 void CSipDeviceStateAware::EventProcessingCompleted()
     {
     iGuardTimer->Cancel();
-    iStateAwareSession.AcknowledgeStateNotification(KErrNone);   
-    iCount = 0;
+    if(iState == CSipSystemStateMonitor::ESystemOffline)
+        {
+        iStateAwareSession.AcknowledgeStateNotification(KErrNone);   
+        iCount = 0;
+        }
     }
 

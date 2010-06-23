@@ -20,7 +20,6 @@
 
 
 #include "SIPSyntaxCheck.h"
-#include "TSIPChar.h"
 #include "sipcodecerr.h"
 #include <uriutils.h>
 
@@ -31,8 +30,9 @@ _LIT8(KTwoDots, "..");
 // SIPSyntaxCheck::Token
 // -----------------------------------------------------------------------------
 //
-TBool SIPSyntaxCheck::Token (const TDesC8& aValue)
+TBool SIPSyntaxCheck::Token (const TDesC8& aValue, RArray<TSIPChar>* aArray)
 	{
+	
 	if (aValue.Length() == 0) 
 		{
 		return EFalse;
@@ -41,7 +41,7 @@ TBool SIPSyntaxCheck::Token (const TDesC8& aValue)
 	TSIPChar sipChr = lex.Get();
 	while (sipChr)
 		{
-		if (!sipChr.IsTokenChar()) 
+		if (!sipChr.IsTokenChar( aArray ) )
 			{
 			return EFalse;
 			}

@@ -93,4 +93,7 @@ const TInt KErrSIPInvalidURIType = -17717;
 /** ICMP error has occured */
 const TInt KErrSIPICMPFailure = -17718;
 
+/** Error code to indicate switching to secondary APN on non fatal error  */
+const TInt KErrSIPApnSwitchNonFatalFailure = -17719;
+
 #endif //SIPERR_H

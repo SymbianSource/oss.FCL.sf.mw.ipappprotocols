@@ -252,7 +252,10 @@ void CSipCSSession::DoServiceL (TInt aFunction, const RMessage2& aMessage)
             {
             TInt handle = 0;
             ITC().ReadL(aMessage,handle,ESipItcArgSubSessionHandle);
-            CloseSubSession (handle);
+			if(iSubSessionIndex->AtL(handle))
+	            CloseSubSession (handle);
+			else
+				{}
             } 
             break;
 

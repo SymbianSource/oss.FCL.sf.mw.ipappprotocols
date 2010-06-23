@@ -28,6 +28,7 @@
 #include "sipstrconsts.h"
 #include "sipcodecutils.h"
 #include "_sipcodecdefs.h"
+#include <featdiscovery.h>
 
 
 // ----------------------------------------------------------------------------
@@ -161,10 +162,19 @@ EXPORT_C void CSIPAcceptEncodingHeader::SetCodingsL(const TDesC8& aCodings)
 	{
 	HBufC8* tmp = aCodings.AllocLC();
 	tmp->Des().Trim();
-	if (tmp->Length() > 0 && !SIPSyntaxCheck::Token(*tmp))
+	//Allowing '/' token for interoperability issues
+	RArray<TSIPChar> array;
+	if(CFeatureDiscovery::IsFeatureSupportedL(TUid::Uid(KFeatureIdFfSipApnSwitching)))
+	    {
+        array.Append('/');
+	    }
+	
+	if (tmp->Length() > 0 && !SIPSyntaxCheck::Token(*tmp,&array))
         {
+        array.Close();
         User::Leave(KErrSipCodecAcceptEncodingHeader);
 	    }
+	array.Close();
 	CleanupStack::Pop(tmp);
 	delete iCodings;
 	iCodings = tmp;

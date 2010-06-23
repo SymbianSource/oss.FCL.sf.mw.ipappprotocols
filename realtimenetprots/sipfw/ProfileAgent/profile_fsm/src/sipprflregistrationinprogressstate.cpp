@@ -14,7 +14,7 @@
 // Name        : sipprflregistrationinprogressstate.cpp
 // Part of     : sip profile fsm
 // implementation
-// Version     : %version: 2.1.1 %
+// Version     : %version: 2.1.2 %
 //
 
 
@@ -174,7 +174,8 @@ void CSIPPrflRegistrationInProgressState::ErrorOccured(
 		}
 	else if ((aError == KErrSIPTransportFailure || 
 	     aError == KErrSIPResolvingFailure ||
-		 aError == KErrSIPICMPFailure) && 
+		 aError == KErrSIPICMPFailure ||
+		 aError == KErrSIPOutboundProxyNotResponding ) && 
 	    aContext.Connection().State()==CSIPConnection::ESuspended)
 		{
 		//registration failed due to the suspended connection, re-try later

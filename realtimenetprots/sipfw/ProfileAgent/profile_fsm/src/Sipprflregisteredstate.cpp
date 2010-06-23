@@ -14,7 +14,7 @@
 // Name        : sipprflregisteredstate.cpp
 // Part of     : sip profile fsm
 // implementation
-// Version     : %version: 2.1.2 %
+// Version     : %version: 2.1.3 %
 //
 
 
@@ -370,7 +370,8 @@ void CSIPPrflRegisteredState::ErrorOccured(
         }
     else if ((aError == KErrSIPTransportFailure || 
          aError == KErrSIPResolvingFailure ||
-		 aError == KErrSIPICMPFailure) && 
+		 aError == KErrSIPICMPFailure ||
+		 aError == KErrSIPOutboundProxyNotResponding ) && 
         aContext.Connection().State() == CSIPConnection::ESuspended)
         {
         //registration was dropped due to the expired 
