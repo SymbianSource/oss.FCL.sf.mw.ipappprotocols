@@ -187,7 +187,8 @@ TInt CRtpTranStream::BuildRtpPacket( const TRtpSendHeader& aHeaderInfo,
                                      const TDesC8& aPayloadData,
                                      TRtpSequence aSeqNum,
                                      TBool aSetSeqNum,
-                                     CRtpPacket* aPktSnd )
+                                     CRtpPacket* aPktSnd,
+                                     const TArray<TRtpCSRC> *aCsrcList)
     {
     TRtpPacketStreamParam streamParam;
     TRtpPacketIOParam inParam;
@@ -234,6 +235,21 @@ TInt CRtpTranStream::BuildRtpPacket( const TRtpSendHeader& aHeaderInfo,
 
     inParam.TRTP.payloadData = const_cast<TUint8*>( aPayloadData.Ptr() );
     inParam.TRTP.payloadDataLen = aPayloadData.Length();
+    
+    if(aCsrcList && aCsrcList->Count())
+        {
+        // Maxm 15 CSRC identifiers will be supported
+        if( aCsrcList->Count() <= KMaxCsrcIdentifiers )
+            {
+            inParam.TRTP.numCSRC = (TUint8)aCsrcList->Count();
+            }
+        else
+            {
+            inParam.TRTP.numCSRC = KMaxCsrcIdentifiers;
+            }
+        
+        inParam.TRTP.iCsrcList = aCsrcList;
+        }
 
     streamParam.TRTP.payload = aHeaderInfo.iPayloadType;
 

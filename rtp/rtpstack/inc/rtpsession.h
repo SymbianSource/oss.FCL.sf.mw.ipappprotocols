@@ -108,16 +108,20 @@ class CRtpSession :
 
         TInt RegisterRtpObserver( MRtpObserver& aObserver );
         void UnregisterRtpObserver();
+        
+        TInt RegisterRtpPostProcessingObserver( MRtpPostProcessingObserver& aObserver );
+        void UnregisterRtpPostProcessingObserver();
 
         TInt SetNonRTPDataObserver( MNonRTPDataObserver* aNonRTPDataObserver );
 
         TInt SendRtpPacket( TRtpId aTranStreamId, const TRtpSendHeader& aHeaderInfo, 
-                            const TDesC8& aPayloadData );
+                            const TDesC8& aPayloadData, const TArray<TRtpCSRC> *aCsrcList = NULL );
 
         TInt SendRtpPacket( TRtpId aTranStreamId,
                             const TRtpSendHeader& aHeaderInfo,
                             const TDesC8& aPayloadData,
-                            TRequestStatus& aStatus );
+                            TRequestStatus& aStatus,
+                            const TArray<TRtpCSRC> *aCsrcList = NULL );
 
         TInt SendRtpPacket( const TRtpSendHeader& aHeaderInfo, const TDesC8& aPayloadData );
 
@@ -128,7 +132,8 @@ class CRtpSession :
                             TRtpSequence aSequenceNum,
                             const TRtpSendHeader& aHeaderInfo,
                             const TDesC8& aPayloadData,
-                            TRequestStatus& aStatus );
+                            TRequestStatus& aStatus,
+                            const TArray<TRtpCSRC> *aCsrcList = NULL );
 
         void SendData( TBool aUseRTPSocket,
                             const TDesC8& aData, 
@@ -162,6 +167,8 @@ class CRtpSession :
         * disabled; system wide error code otherwise
         */
         TInt IsRtcpSendingSuspended( TBool& aAutoSending );
+        
+        void ReadyToSendRtpPacket(TRtpId aTranStreamId);
 
     public: // from MSsrcCheckCallback
         /**
@@ -454,6 +461,7 @@ class CRtpSession :
         MNonRTPDataObserver* iNonRTPDataObserver;
         MRtpErrNotify& iErrNotify;
         MRtpAsignUniqueID& iAssignUniqueID;
+        MRtpPostProcessingObserver* iRtpPacketObserver;
         
         
         TBool iSessionStarted;

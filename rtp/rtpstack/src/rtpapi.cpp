@@ -389,6 +389,56 @@ EXPORT_C TInt CRtpAPI::SendRtpPacket( TRtpId aTranStreamId,
     {
     return iManager->SendRtpPacket( aTranStreamId, aHeaderInfo, aPayloadData, aStatus );
     }
+	
+
+// ---------------------------------------------------------------------------
+// TInt CRtpAPI::RegisterRtpPostProcessingObserver()
+// 
+// ---------------------------------------------------------------------------
+//
+EXPORT_C TInt CRtpAPI::RegisterRtpPostProcessingObserver( TRtpId aSessionId,
+                                    MRtpPostProcessingObserver& aRtpPacketObserver )
+    {
+    return iManager->RegisterRtpPostProcessingObserver( aSessionId, aRtpPacketObserver );
+    }
+
+
+// ---------------------------------------------------------------------------
+// CRtpAPI::UnregisterRtpPostProcessingObserver()
+// 
+// ---------------------------------------------------------------------------
+//
+EXPORT_C void CRtpAPI::UnregisterRtpPostProcessingObserver( TRtpId aSessionId )
+    {
+    iManager->UnregisterRtpPostProcessingObserver( aSessionId );
+    }   
+
+
+// ---------------------------------------------------------------------------
+// TInt CRtpAPI::SendRtpPacket()
+// 
+// ---------------------------------------------------------------------------
+//
+EXPORT_C TInt CRtpAPI::SendRtpPacket(const TRtpSendPktParams& aSendPktParam , TArray<TRtpCSRC> aCSRCList)
+    {
+    if(!aSendPktParam.iStatus)
+        {
+		//SYNC Version
+        return iManager->SendRtpPacket( aSendPktParam.iTranStreamId, aSendPktParam.iHeaderInfo, 
+                                              aSendPktParam.iPayloadData, &aCSRCList );
+        }
+    else if (!aSendPktParam.iSequenceNum) //ASYNC Versions With and Without SEQ Number
+        {
+        return iManager->SendRtpPacket( aSendPktParam.iTranStreamId, aSendPktParam.iHeaderInfo, 
+                                              aSendPktParam.iPayloadData, *aSendPktParam.iStatus, &aCSRCList  );
+        }
+    else
+        {
+        return iManager->SendRtpPacket( aSendPktParam.iTranStreamId, *aSendPktParam.iSequenceNum, aSendPktParam.iHeaderInfo, 
+                                              aSendPktParam.iPayloadData, *aSendPktParam.iStatus, &aCSRCList );
+        }
+    }
+
 
 // ---------------------------------------------------------------------------
 // TInt CRtpAPI::SendData()

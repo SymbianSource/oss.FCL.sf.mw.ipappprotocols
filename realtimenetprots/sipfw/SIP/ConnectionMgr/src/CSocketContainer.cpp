@@ -192,5 +192,14 @@ RSocket& CSocketContainer::Socket()
 CSocketContainer::CSocketContainer( RSocket& aSocket ) : iSocket( aSocket )
     {
     }
-    
+
+// -----------------------------------------------------------------------------
+// CSocketContainer::CancelAll
+// -----------------------------------------------------------------------------
+//                             
+void CSocketContainer::CancelAll()
+    {
+    iSocket.CancelAll();
+    }
+
 // End of file

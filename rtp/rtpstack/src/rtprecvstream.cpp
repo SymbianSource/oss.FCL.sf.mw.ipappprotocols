@@ -241,6 +241,11 @@ TInt CRtpRecvStream::RtpStreamProcessRtpPacketL( CRtpPacket* aPktRcv, TBool aAss
     iHdr.iPadding = extractParam.TRTP.padding;
     iHdr.iExtension = extractParam.TRTP.fHeaderExtension;
     iHdr.iCsrcCount = extractParam.TRTP.numCSRC;
+    
+    if ( iHdr.iCsrcCount )
+        {
+        iHdr.iCsrcList = extractParam.TRTP.CSRCarray;
+        }
 
     iHdr.iMarker = extractParam.TRTP.marker;
     iHdr.iTimestamp = streamParam.TRTP.timeStamp;

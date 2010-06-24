@@ -184,6 +184,7 @@ class TRtpPacketIOParam
                 TUint32* CSRCarray;
                 TUint8* payloadData;
                 TInt payloadDataLen;
+                const TArray<TRtpCSRC> *iCsrcList;
              
              public://Nested class
                /**
