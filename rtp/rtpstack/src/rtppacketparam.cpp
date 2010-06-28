@@ -115,7 +115,6 @@ TRtpPacketIOParam::TRtpIOHeaderField::TRtpIOHeaderField():
     CSRCarray( NULL ),
     payloadData( NULL ),
     payloadDataLen( 0 ),
-	iCsrcList(0),
     extension()
     {
     }

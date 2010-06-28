@@ -117,8 +117,7 @@ CRtpSessionSrtp::~CRtpSessionSrtp()
             
 TInt CRtpSessionSrtp::SendRtpPacket( TRtpId aTranStreamId, 
 						const TRtpSendHeader& aHeaderInfo, 
-                        const TDesC8& aPayloadData,
-                        const TArray<TRtpCSRC> *aCsrcList )
+                        const TDesC8& aPayloadData )
 	{
     if ( static_cast<TUint> (aPayloadData.Size()) > iCommNet->MaxSocketSize() )
     	{
@@ -133,7 +132,7 @@ TInt CRtpSessionSrtp::SendRtpPacket( TRtpId aTranStreamId,
         {
         CRtpTranStream* tempStream = ( CRtpTranStream* ) streamAddress;
         tempStream->BuildRtpPacket( aHeaderInfo, aPayloadData, 0, EFalse,
-                                    iPktSnd, aCsrcList );
+                                    iPktSnd );
  
 		if(iSndPacket)
 			{
@@ -160,8 +159,7 @@ TInt CRtpSessionSrtp::SendRtpPacket( TRtpId aTranStreamId,
 TInt CRtpSessionSrtp::SendRtpPacket( TRtpId aTranStreamId,
                             const TRtpSendHeader& aHeaderInfo,
                             const TDesC8& aPayloadData,
-                            TRequestStatus& aStatus,
-                            const TArray<TRtpCSRC> *aCsrcList )
+                            TRequestStatus& aStatus )
 	{
 	if ( static_cast<TUint> (aPayloadData.Size()) > iCommNet->MaxSocketSize() )
     	{
@@ -176,7 +174,7 @@ TInt CRtpSessionSrtp::SendRtpPacket( TRtpId aTranStreamId,
         {
         CRtpTranStream* tempStream = ( CRtpTranStream* ) streamAddress;
         tempStream->BuildRtpPacket( aHeaderInfo, aPayloadData, 0, EFalse,
-                                    iPktSnd, aCsrcList );
+                                    iPktSnd );
         if(iSndPacket)
         	{
         	delete iSndPacket;
@@ -204,8 +202,7 @@ TInt CRtpSessionSrtp::SendRtpPacket( TRtpId aTranStreamId,
                             TRtpSequence aSequenceNum,
                             const TRtpSendHeader& aHeaderInfo,
                             const TDesC8& aPayloadData,
-                            TRequestStatus& aStatus,
-                            const TArray<TRtpCSRC> *aCsrcList )
+                            TRequestStatus& aStatus )
 	{
     if ( static_cast<TUint>( aPayloadData.Size() ) > iCommNet->MaxSocketSize() )
     	{
@@ -221,7 +218,7 @@ TInt CRtpSessionSrtp::SendRtpPacket( TRtpId aTranStreamId,
         CRtpTranStream* tempStream =
             reinterpret_cast<CRtpTranStream*>( streamAddress );
         tempStream->BuildRtpPacket( aHeaderInfo, aPayloadData, aSequenceNum,
-                                    ETrue, iPktSnd, aCsrcList );
+                                    ETrue, iPktSnd );
         if(iSndPacket)
         	{
         	delete iSndPacket;

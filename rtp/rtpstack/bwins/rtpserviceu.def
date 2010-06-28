@@ -44,7 +44,4 @@ EXPORTS
 	?UnregisterRtpObserver@CRtpAPI@@QAEXK@Z @ 43 NONAME ; void CRtpAPI::UnregisterRtpObserver(unsigned long)
 	?Version@CRtpAPI@@QBE?AVTVersion@@XZ @ 44 NONAME ; class TVersion CRtpAPI::Version(void) const
 	?CreateSessionL@CRtpAPI@@QAEKABVTCreateSessionParams@@AAIHPBVTRtcpParams@@AAVCSRTPSession@@@Z @ 45 NONAME ; unsigned long CRtpAPI::CreateSessionL(class TCreateSessionParams const &, unsigned int &, int, class TRtcpParams const *, class CSRTPSession &)
-	?SendRtpPacket@CRtpAPI@@QAEHABVTRtpSendPktParams@@V?$TArray@K@@@Z @ 46 NONAME ; int CRtpAPI::SendRtpPacket(class TRtpSendPktParams const &, class TArray<unsigned long>)
-	?RegisterRtpPostProcessingObserver@CRtpAPI@@QAEHKAAVMRtpPostProcessingObserver@@@Z @ 47 NONAME ; int CRtpAPI::RegisterRtpPostProcessingObserver(unsigned long, class MRtpPostProcessingObserver &)
-	?UnregisterRtpPostProcessingObserver@CRtpAPI@@QAEXK@Z @ 48 NONAME ; void CRtpAPI::UnregisterRtpPostProcessingObserver(unsigned long)
 

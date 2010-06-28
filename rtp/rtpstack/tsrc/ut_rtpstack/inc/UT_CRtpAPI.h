@@ -65,8 +65,7 @@ NONSHARABLE_CLASS( UT_CRtpAPI )
      public MRtpObserver,
      public MNonRTPDataObserver,
      public MRtcpObserver,
-     public MSRTPReKeyingObserver,
-     public MRtpPostProcessingObserver
+      public MSRTPReKeyingObserver
     {
     public:     // Constructors and destructors
 
@@ -103,8 +102,6 @@ NONSHARABLE_CLASS( UT_CRtpAPI )
 
 		void SRTPMasterKeyStaleEvent(const CSRTPSession&  aSession);
 		void SRTPMasterKeyStaleEvent(const CSRTPStream&  aStream);
-		
-        void ReadyToSendRtpPacket( TRtpId aTranStreamId, TPtr8 &aPacket );
 		
     private:    // New methods
 
@@ -243,12 +240,7 @@ NONSHARABLE_CLASS( UT_CRtpAPI )
         
         
          void UT_CRtpAPI_VersionL();
-         
-         void UT_CRtpAPI_RegisterRtpPostProcessingObserverL();
-         
-         void UT_CRtpAPI_SendRtpPacketWithCSRCL();
-         
-         void UT_CRtpAPI_UnregisterRtpPostProcessingObserverL();
+        
 
     private:    // Data
 
@@ -264,9 +256,8 @@ NONSHARABLE_CLASS( UT_CRtpAPI )
 		TBuf8<32>       iMKI;
 		TBuf8<32> iRFC3711_TestMasterKey128bits;	     
 	    TBuf8<32> iRFC3711_TestMasterSalt112bits;
-	    TBuf8<32>       iSalt;
+	           TBuf8<32>       iSalt;
         TBuf8<32>       iKey;
-        TBool iIsCallBackReceived;
     };
 
 #endif      //  __UT_CRTPAPI_H__
