@@ -312,6 +312,7 @@ CSIPApnConfigurationHandler::CSIPApnConfigurationHandler(
 	iIsFailed = EFalse;
 	iIsFatalFailure = EFalse;
 	iCellularDataBlocked = EFalse;
+	iApnUseSecureAuthProposal = EFalse;
 	}
 
 // -----------------------------------------------------------------------------
@@ -829,7 +830,7 @@ void CSIPApnConfigurationHandler::SetFailed( TBool aIsFailed, TBool aIsFatalFail
             if ( aIsFailed )
                 {
                 TRAP( err, SetApnL( 
-                    SecondaryApn(), ETrue, ETrue) );
+                    SecondaryApn(), EFalse, ETrue) );
                 }
             else if ( !iIsFatalFailure )
                 {

@@ -749,11 +749,11 @@ TBool CSIPIMSProfileContext::RetryRegister(
 			 aError == K500ServerInternalError || 
 			 aError == K504ServerTimeOut || 
 			 aError == KErrTimedOut ||
-			 aError == KErrSIPOutboundProxyNotResponding || 
+			 ((aError == KErrSIPOutboundProxyNotResponding || 
 			 aError == KErrSIPResolvingFailure ||
 			 aError == KErrSIPTransportFailure ||
-			 aError == KErrSIPICMPFailure && 
-			 iConnection.State() != CSIPConnection::ESuspended)
+			 aError == KErrSIPICMPFailure  )&&
+			 iConnection.State() != CSIPConnection::ESuspended))
 			{
 			SetRetryPossible(ETrue);
 			iRetriedRegister = ETrue;

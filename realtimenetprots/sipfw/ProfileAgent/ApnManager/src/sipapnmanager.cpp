@@ -109,7 +109,6 @@ TBool CSIPApnManager::IsPrimaryApnInUse( TUint32 aIapId )
 void CSIPApnManager::WriteApnL( TUint32 aIapId, TBool aIsPrimaryApn, const TDesC8* aApn )
 	{
 	PROFILE_DEBUG3( "CSIPApnManager::WriteApnL isPrimary", aIsPrimaryApn )
-	TBool useSecureAuth = aIsPrimaryApn ? EFalse : ETrue;
 
 	CSIPApnConfigurationHandler* handler = FindIapIdHandler( aIapId );
 	    if (!handler)
@@ -118,7 +117,7 @@ void CSIPApnManager::WriteApnL( TUint32 aIapId, TBool aIsPrimaryApn, const TDesC
 	        handler = FindIapIdHandler(aIapId);
 	        }
 	    
-	    handler->SetApnL( *aApn, useSecureAuth, ETrue);
+	    handler->SetApnL( *aApn, EFalse, ETrue);
 	}
 
 // ----------------------------------------------------------------------------

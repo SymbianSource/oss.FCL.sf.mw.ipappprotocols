@@ -442,12 +442,12 @@ TBool CSIPIetfProfileContext::RetryRegister(
 	     CurrentState() == MSIPProfileContext::ERegistered) &&
 		(aError == K408TimeOut ||
 		 aError == K500ServerInternalError ||
-		 aError == KErrSIPOutboundProxyNotResponding || 
-		 aError == KErrSIPResolvingFailure || 
 		 aError == KErrTimedOut || 
+		 (( aError == KErrSIPOutboundProxyNotResponding || 
+		 aError == KErrSIPResolvingFailure || 
 		 aError == KErrSIPTransportFailure ||
-		 aError == KErrSIPICMPFailure  && 
-		 iConnection.State() != CSIPConnection::ESuspended))		
+		 aError == KErrSIPICMPFailure ) && 
+		 iConnection.State() != CSIPConnection::ESuspended)))		
 	    {
 		if ( iRetryCounterSum + 1 < KMaxRetryForOneAddress &&
 		     iRetryCounter < KMaxRetryForOneAddress )

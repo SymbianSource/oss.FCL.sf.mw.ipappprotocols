@@ -20,7 +20,9 @@
 
 #include "../ipappprotocols_plat/group/bld.inf"
 #include "../rtp/group/bld.inf"
+#include "../realtimenetprots/rtp/group/bld.inf"
 #include "../realtimenetprots/sipfw/Group/bld.inf"
 #include "../sipplugins/group/bld.inf"
+#include "../sipproviderplugins/sipprovider/group/bld.inf"
 
 
