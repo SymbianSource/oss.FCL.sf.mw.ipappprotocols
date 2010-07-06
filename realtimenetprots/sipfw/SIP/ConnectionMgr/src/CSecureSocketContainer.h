@@ -66,6 +66,8 @@ class CSecureSocketContainer : public CSocketContainer
         
         void CancelConnect();
         
+        void CancelAll();
+        
         void RemoteName( TSockAddr& aAddr );
         
         TInt SetOpt( TUint aOptionName, TUint aOptionLevel, const TDesC8& aOption );

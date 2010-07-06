@@ -149,8 +149,8 @@ void CReceiverTcp::DoCancel()
 		iContext.SocketContainer().CancelRecv();
 		}
 	else
-		{
-		iContext.SocketContainer().Socket().CancelAll();
+		{        
+		iContext.SocketContainer().CancelAll();        
 		}
 	RemoveReceived();
 	}
