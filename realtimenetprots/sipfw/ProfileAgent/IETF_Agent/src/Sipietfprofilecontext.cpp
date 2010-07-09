@@ -442,12 +442,12 @@ TBool CSIPIetfProfileContext::RetryRegister(
 	     CurrentState() == MSIPProfileContext::ERegistered) &&
 		(aError == K408TimeOut ||
 		 aError == K500ServerInternalError ||
-		 aError == KErrSIPOutboundProxyNotResponding || 
-		 aError == KErrSIPResolvingFailure || 
 		 aError == KErrTimedOut || 
+		 (( aError == KErrSIPOutboundProxyNotResponding || 
+		 aError == KErrSIPResolvingFailure || 
 		 aError == KErrSIPTransportFailure ||
-		 aError == KErrSIPICMPFailure  && 
-		 iConnection.State() != CSIPConnection::ESuspended))		
+		 aError == KErrSIPICMPFailure ) && 
+		 iConnection.State() != CSIPConnection::ESuspended)))		
 	    {
 		if ( iRetryCounterSum + 1 < KMaxRetryForOneAddress &&
 		     iRetryCounter < KMaxRetryForOneAddress )
@@ -494,11 +494,11 @@ TBool CSIPIetfProfileContext::ShouldRetryRegistration( TInt aError )
 	return (aError == K503ServiceUnavailable || 
 	        aError == K408TimeOut ||
 	        aError == K500ServerInternalError ||
-		    aError == KErrSIPOutboundProxyNotResponding || 
 		    aError == KErrTimedOut ||
 		    ((aError == KErrSIPResolvingFailure || 
 		      aError == KErrSIPTransportFailure ||
-		      aError == KErrSIPICMPFailure) && 
+		      aError == KErrSIPICMPFailure ||
+		      aError == KErrSIPOutboundProxyNotResponding ) && 
 			 iConnection.State() != CSIPConnection::ESuspended));
 	}
 

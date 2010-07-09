@@ -191,9 +191,11 @@ void CSipVpnMonitorAo::EventProcessingCompleted()
     // SIP deregistration has been completed. Stop the guard timer and tell
     // the VPN client about it.
     iGuardTimer->Cancel();
-
-    iProperty.Set( KPSVpnSipUid, KVpnSipState, ESipDeregisterCompleted );
-    iCount = 0;
+    if (iState == CSipSystemStateMonitor::EVpnInitiating)
+        {
+        iProperty.Set( KPSVpnSipUid, KVpnSipState, ESipDeregisterCompleted );
+        iCount = 0;
+        }
     }
 
 // -----------------------------------------------------------------------------

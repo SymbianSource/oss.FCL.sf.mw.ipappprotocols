@@ -571,6 +571,7 @@ TBool CSIPProfileCacheItem::IsRfsInprogress() const
 void CSIPProfileCacheItem::VpnInUse(TBool aStatus)
     {
     iIsVpnInUse = aStatus;
+    iCurrentState->ShutdownInitiated(*this);
     }
 
 // -----------------------------------------------------------------------------

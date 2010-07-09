@@ -112,20 +112,33 @@ inline TBool TSIPChar::IsMark () const
 // TSIPChar::IsTokenChar
 // -----------------------------------------------------------------------------
 //
-inline TBool TSIPChar::IsTokenChar () const
+inline TBool TSIPChar::IsTokenChar (RArray<TSIPChar>* aArray) const
 	{
 	if (IsAlphaDigit()) 
 		{
 		return ETrue;
 		}
-	TSIPChar val = *this;
-	if (val == '-' || val == '.' || val == '!' || val == '%' || val == '*' ||
+	   TInt length= 0;
+	   TSIPChar val = *this;
+	   //Allowing '/' token for interoperability issues
+	   if (aArray)
+	       length = aArray->Count();   
+	   if(length)
+	       {
+	       for (TInt i =0; i<length;i++)
+	           {
+	           if(val == aArray->operator [](i))
+	           return ETrue;
+	           }
+	       } 
+	   if (val == '-' || val == '.' || val == '!' || val == '%' || val == '*' ||
 		val == '_' || val == '+' || val == '\'' || val == '~' || val == '`')
-		{
-		return ETrue;
-		}
-	return EFalse;
-	}
+	       {
+	       return ETrue;
+	       }
+	  
+	   return EFalse;
+	 }
 
 // -----------------------------------------------------------------------------
 // TSIPChar::IsSeparator

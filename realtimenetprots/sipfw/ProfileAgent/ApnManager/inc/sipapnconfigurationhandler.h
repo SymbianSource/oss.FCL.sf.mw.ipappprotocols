@@ -140,10 +140,8 @@ class CSIPApnConfigurationHandler : public CActive
         
         /**
         * Reads the APN of specified IAP.
-        * @param aIapId IAP id
-        * @return APN or NULL if not found. Ownership is transferred.
         */
-        HBufC8* ReadCurrentApnL();
+        void ReadCurrentApnL();
         
 
 	private: // Constructors

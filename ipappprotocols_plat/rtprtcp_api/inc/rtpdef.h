@@ -34,6 +34,7 @@ const TInt KMaxRtcpReason = 255; // max of RTCP APP packet in bytes
 const TUint KMaxSdesItemSize = 255;
 const TUint KSocketBufSize = 4096;
 const TInt KMinRtpHeaderSize = 12; // 96 bits in header, 96/8 = 12
+const TInt KMaxCsrcIdentifiers = 15;
 
 // DATA TYPES
 
@@ -41,6 +42,7 @@ typedef TUint32 TRtpId;
 const TRtpId KNullId = 0xffffffff;
 
 typedef TUint32 TRtpSSRC;       //
+typedef TUint32 TRtpCSRC;       //
 typedef TUint8 TRtpPayloadType; // payload type of the RTP packet
 typedef TUint16 TRtpSequence;   // sequence number of the RTP packet
 typedef TUint32 TRtpTimeStamp;  // timestamp of the RTP packet
@@ -55,6 +57,7 @@ typedef TInt TRtcpAppSubType;   // subtype ID under the same name
 // FORWARD DECLARATIONS
 class TRtpSendHeader;
 class TRtpRecvHeader;
+class TRtpSendPktParams;
 
 // CLASS DECLARATION
 
@@ -206,6 +209,30 @@ class TTimeStamps
     };
 
 
+/**
+*  Header class for sending RTP Packets
+*
+*  @lib RtpService.dll
+*/
+class TRtpSendPktParams
+    {
+public:
+    
+    TRtpSendPktParams(TRtpSendHeader &aHeaderInfo);
+
+    TRtpId iTranStreamId;           // Transtream Id
+    TRtpSendHeader  &iHeaderInfo;   // Standard fixed header of RTP packet to send.
+    TPtrC8 iPayloadData;            // Payload
+    TRequestStatus *iStatus;
+    TRtpSequence *iSequenceNum;     // Sequence Number
+    };
+
+inline TRtpSendPktParams::TRtpSendPktParams(TRtpSendHeader &aHeaderInfo) : iTranStreamId( 0 ), 
+                                                  iHeaderInfo( aHeaderInfo ),
+                                                  iStatus( 0 ),
+                                                  iSequenceNum( 0 )
+    {
+    };
 
 /**
  * An interface to the callback functions for asynchronous event
@@ -315,6 +342,25 @@ class MNonRTPDataObserver
         * @return None
         */
         virtual void NonRTPDataReceived( TUint aPort, TBool aRTPport, const TDesC8& aNonRTPData ) = 0;
+
+    };
+
+
+/**
+*  callback functions for Send RTP packets. 
+*
+*  @lib RtpService.dll
+*/
+class MRtpPostProcessingObserver
+    {
+    public:
+        /**
+        * Callback function to receive a handle to RTP packet which is ready to send.
+        * @param TRtpId aTranStreamId - Transimission stream id
+        * @param TPtr8 &aPacket -  RTP packet Ready to send
+        * @return None
+        */
+        virtual void ReadyToSendRtpPacket( TRtpId aTranStreamId, TPtr8 &aPacket ) = 0;
 
     };
 

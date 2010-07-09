@@ -135,24 +135,31 @@ class CRtpManager : public CBase,
         TInt RegisterRtpObserver( TRtpId aSessionId, MRtpObserver& aObserver );
 
         void UnregisterRtpObserver( TRtpId aSessionId );
+        
+        TInt RegisterRtpPostProcessingObserver( TRtpId aSessionId, MRtpPostProcessingObserver& aRtpObserver );
+
+        void UnregisterRtpPostProcessingObserver( TRtpId aSessionId );
 
         TInt SetNonRTPDataObserver( TRtpId aSessionId, 
                                     MNonRTPDataObserver* aNonRTPDataObserver );
         
         TInt SendRtpPacket( TRtpId aTranStreamId, 
                             const TRtpSendHeader& aHeaderInfo, 
-                            const TDesC8& aPayloadData );
+                            const TDesC8& aPayloadData,
+                            const TArray<TRtpCSRC> *aCsrcList = NULL );
 
         TInt SendRtpPacket( TRtpId aTranStreamId,
                             const TRtpSendHeader& aHeaderInfo,
                             const TDesC8& aPayloadData,
-                            TRequestStatus& aStatus );
+                            TRequestStatus& aStatus,
+                            const TArray<TRtpCSRC> *aCsrcList = NULL );
 
         TInt SendRtpPacket( TRtpId aTranStreamId,
                             TRtpSequence aSequenceNum,
                             const TRtpSendHeader& aHeaderInfo,
                             const TDesC8& aPayloadData,
-                            TRequestStatus& aStatus );
+                            TRequestStatus& aStatus,
+                            const TArray<TRtpCSRC> *aCsrcList = NULL );
 
         void SendDataL( TRtpId aSessionId,
                        TBool aUseRTPSocket,

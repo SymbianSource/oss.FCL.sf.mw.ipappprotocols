@@ -123,8 +123,8 @@ TInt CRtpPacket::RtpPacketBuildRtp( TRtpPacketStreamParam* aStreamParam,
      *                          *
      *    2 bit = version       *
      *    1 bit = padding       *
-     *    1 bit = CRSRC Count   *
-     *    4 bit = extension     *
+     *    1 bit = extension     *
+     *    4 bit = CRSRC Count   *
      ****************************/
     
     //version (2 bit)
@@ -143,13 +143,17 @@ TInt CRtpPacket::RtpPacketBuildRtp( TRtpPacketStreamParam* aStreamParam,
         dataP[0] |= ( 1 << 4 );
         }
 
-    // CC = 0 (1 bit)
+    // CC 4 bit)
+    if( aInitParam->TRTP.numCSRC)
+        {
+        dataP[0] |= aInitParam->TRTP.numCSRC;
+        }
     
     /****************************
      * dataP[1] = 8 bit         *
      *                          *
      *    1 bit = marker        *
-     *    1 bit = payload type  *
+     *    7 bits = payload type  *
      ****************************/
     
     // marker (1 bit)
@@ -182,6 +186,15 @@ TInt CRtpPacket::RtpPacketBuildRtp( TRtpPacketStreamParam* aStreamParam,
 
     //set the pointer to point to the first bit after SSRC
     dataP += 4;
+    
+    
+    //Set CSRC if Present
+    for(TInt count = 0; count<aInitParam->TRTP.numCSRC; count++)
+        {
+        Write32( dataP, (*aInitParam->TRTP.iCsrcList)[count]);
+        dataP += 4;
+        }
+    
 
     if ( aInitParam->TRTP.fHeaderExtension )
         {
@@ -675,7 +688,7 @@ TRtpRtcpEnum CRtpPacket::RtpPacketProcessRtpL(
         // Originally Allocate memory for all CSRC:s
         //it will have memeory resouce problem so only allocate when
         // CSRC<2
-        if ( aExtractParam->TRTP.numCSRC < KCSRCListMax )
+        if ( aExtractParam->TRTP.numCSRC <= KCSRCListMax )
         	{
         	if ( !aExtractParam->TRTP.CSRCarray )
 	        	{

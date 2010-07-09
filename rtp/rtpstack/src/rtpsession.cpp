@@ -573,6 +573,23 @@ void CRtpSession::ResetTxStreamStats()
             }
     }
 
+
+// ---------------------------------------------------------------------------
+// TInt CRtpSession::ReadyToSendRtpPacket()
+// 
+// ---------------------------------------------------------------------------
+//
+void CRtpSession::ReadyToSendRtpPacket(TRtpId aTranStreamId)
+    {
+    if ( iRtpPacketObserver )
+        {
+        RTP_DEBUG_DETAIL("Giving ReadyToSendRtpPacket() Call Back " );
+        TPtr8 pktPtr(iPktSnd->Data(), iPktSnd->Size(), iPktSnd->Size());
+        iRtpPacketObserver->ReadyToSendRtpPacket( aTranStreamId , pktPtr );
+        }   
+    }
+
+
 // ---------------------------------------------------------------------------
 // TInt CRtpSession::SendRtpPacket()
 // 
@@ -580,7 +597,8 @@ void CRtpSession::ResetTxStreamStats()
 //
 TInt CRtpSession::SendRtpPacket( TRtpId aTranStreamId,
                                  const TRtpSendHeader& aHeaderInfo, 
-                                 const TDesC8& aPayloadData )
+                                 const TDesC8& aPayloadData,
+                                 const TArray<TRtpCSRC> *aCsrcList )
     {
     if ( static_cast<TUint> (aPayloadData.Size()) > iCommNet->MaxSocketSize() )
     	{
@@ -595,11 +613,15 @@ TInt CRtpSession::SendRtpPacket( TRtpId aTranStreamId,
         {
         CRtpTranStream* tempStream = ( CRtpTranStream* ) streamAddress;
         tempStream->BuildRtpPacket( aHeaderInfo, aPayloadData, 0, EFalse,
-                                    iPktSnd );
+                                    iPktSnd, aCsrcList );
+        
+        ReadyToSendRtpPacket(aTranStreamId);
+        
         ret = iCommNet->Send( ERTPPort, iPktSnd->Des() );
         }
     return ret;
     }
+
 
 // ---------------------------------------------------------------------------
 // TInt CRtpSession::SendRtpPacket()
@@ -609,7 +631,8 @@ TInt CRtpSession::SendRtpPacket( TRtpId aTranStreamId,
 TInt CRtpSession::SendRtpPacket( TRtpId aTranStreamId,
                                  const TRtpSendHeader& aHeaderInfo,
                                  const TDesC8& aPayloadData,
-                                 TRequestStatus& aStatus )
+                                 TRequestStatus& aStatus,
+                                 const TArray<TRtpCSRC> *aCsrcList )
     {
     if ( static_cast<TUint>( aPayloadData.Size() ) > iCommNet->MaxSocketSize() )
     	{
@@ -625,7 +648,10 @@ TInt CRtpSession::SendRtpPacket( TRtpId aTranStreamId,
         CRtpTranStream* tempStream =
             reinterpret_cast<CRtpTranStream*>( streamAddress );
         tempStream->BuildRtpPacket( aHeaderInfo, aPayloadData, 0, EFalse,
-                                    iPktSnd );
+                                    iPktSnd, aCsrcList );
+									
+        ReadyToSendRtpPacket(aTranStreamId);
+			
         iCommNet->Send( ERTPPort, iPktSnd->Des(), aStatus );
         }
     return ret;
@@ -707,7 +733,8 @@ TInt CRtpSession::SendRtpPacket( TRtpId aTranStreamId,
                                  TRtpSequence aSequenceNum,
                                  const TRtpSendHeader& aHeaderInfo,
                                  const TDesC8& aPayloadData,
-                                 TRequestStatus& aStatus )
+                                 TRequestStatus& aStatus,
+                                 const TArray<TRtpCSRC> *aCsrcList )
     {
     if ( static_cast<TUint>( aPayloadData.Size() ) > iCommNet->MaxSocketSize() )
     	{
@@ -723,7 +750,10 @@ TInt CRtpSession::SendRtpPacket( TRtpId aTranStreamId,
         CRtpTranStream* tempStream =
             reinterpret_cast<CRtpTranStream*>( streamAddress );
         tempStream->BuildRtpPacket( aHeaderInfo, aPayloadData, aSequenceNum,
-                                    ETrue, iPktSnd );
+                                    ETrue, iPktSnd, aCsrcList );
+        
+        ReadyToSendRtpPacket(aTranStreamId);								
+									
         iCommNet->Send( ERTPPort, iPktSnd->Des(), aStatus );
         }
     return ret;
@@ -1144,6 +1174,29 @@ void CRtpSession::UnregisterRtpObserver()
                      ( iStreamRxArray->At( index ).GetStreamAddress() );
         tempStream->UnRegisterRtpObserver();    
         }                   
+    }
+
+
+// ---------------------------------------------------------------------------
+// TInt CRtpSession::RegisterRtpPostProcessingObserver()
+// 
+// ---------------------------------------------------------------------------
+//
+TInt CRtpSession::RegisterRtpPostProcessingObserver( MRtpPostProcessingObserver& aRTPPacketObserver )
+    {
+    iRtpPacketObserver = &aRTPPacketObserver;  
+    
+    return KErrNone;
+    }
+
+// ---------------------------------------------------------------------------
+// CRtpSession::UnregisterRtpPostProcessingObserver()
+// 
+// ---------------------------------------------------------------------------
+//
+void CRtpSession::UnregisterRtpPostProcessingObserver()
+    {
+    iRtpPacketObserver = NULL;
     }
 
 // ---------------------------------------------------------------------------

@@ -22,8 +22,10 @@
 #include "TTlsTransTlsConnecting.h"
 #include "MTlsTransStateOwner.h"
 
-
-const TInt KConnectTLSTimeout = 10000; // 10 seconds
+// SIP layer waits 30 seconds for TLS Handshake to happen, if the timer
+// fires and negotiation does not happen, it cancels the handshake assuming
+// some problem while handshaking.
+const TInt KConnectTLSTimeout = 30000; // 30 seconds
 
 // -----------------------------------------------------------------------------
 // TTlsTransTlsConnecting::EnterL
