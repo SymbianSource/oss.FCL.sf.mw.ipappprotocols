@@ -237,5 +237,21 @@ CSecureSocketContainer::CSecureSocketContainer( RSocket& aSocket ) :
     CSocketContainer( aSocket )
     {
     }
-    
+
+// -----------------------------------------------------------------------------
+// CSecureSocketContainer::CancelAll
+// -----------------------------------------------------------------------------
+// 
+void CSecureSocketContainer::CancelAll()
+    {
+    if ( HasSecureSocket() )
+        {        
+        iSecureSocket->CancelAll();
+        }
+    else
+        {
+        CSocketContainer::CancelAll();
+        }
+    }
+
 // End of file

@@ -96,7 +96,7 @@ TServerProtocolDesc* CRtpFlowFactory::DoCreateFlowDescriptionL(TInt aProtocol)
              protocolDescription->iServiceInfo     = KSIConnectionLess | KSIDatagram |
                                      KSIGracefulClose | KSIPeekData |
                                      KSIRequiresOwnerInfo;
-             protocolDescription->iNamingServices      = KNSNameResolution | KNSRequiresConnectionStartup;
+             protocolDescription->iNamingServices      = 0;
              protocolDescription->iSecurity    = KSocketNoSecurity;
              protocolDescription->iMessageSize     = 65536-128; /*KSocketMessageSizeUndefined;*/
              protocolDescription->iServiceTypeInfo  = ESocketSupport | ETransport |
@@ -116,7 +116,7 @@ TServerProtocolDesc* CRtpFlowFactory::DoCreateFlowDescriptionL(TInt aProtocol)
              protocolDescription->iServiceInfo     = KSIConnectionLess | KSIDatagram |
                                      KSIGracefulClose | KSIPeekData |
                                      KSIRequiresOwnerInfo;
-             protocolDescription->iNamingServices      = KNSNameResolution | KNSRequiresConnectionStartup;
+             protocolDescription->iNamingServices      = 0;
              protocolDescription->iSecurity    = KSocketNoSecurity;
              protocolDescription->iMessageSize     = 65536-128; /*KSocketMessageSizeUndefined;*/
              protocolDescription->iServiceTypeInfo  = ESocketSupport | ETransport |
