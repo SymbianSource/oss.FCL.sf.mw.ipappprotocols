@@ -785,12 +785,12 @@ TBool CSIPIMSProfileContext::ShouldRetryRegistration( TInt aError )
 	        aError == K408TimeOut ||
 	        aError == K480TemporarilyUnavailable ||
 	        aError == K500ServerInternalError ||
-	        aError == K504ServerTimeOut ||
-		    aError == KErrSIPOutboundProxyNotResponding || 
+	        aError == K504ServerTimeOut || 
 		    aError == KErrTimedOut ||
 		    ((aError == KErrSIPResolvingFailure || 
 		      aError == KErrSIPTransportFailure ||
-		      aError == KErrSIPICMPFailure) && 
+		      aError == KErrSIPICMPFailure ||
+		      aError == KErrSIPOutboundProxyNotResponding ) && 
 			 iConnection.State() != CSIPConnection::ESuspended));
 	}
 

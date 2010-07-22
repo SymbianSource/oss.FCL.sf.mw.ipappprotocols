@@ -19,6 +19,8 @@
 #include <commsdattypesv1_1.h>
 #include <commdb.h>
 #include <commsdat.h>
+#include <cmgenconnsettings.h>
+#include <cmmanagerkeys.h>
 #include "sipapnconfigurationhandler.h"
 #include "SipProfileLog.h"
 
@@ -58,17 +60,15 @@ CSIPApnConfigurationHandler::~CSIPApnConfigurationHandler()
 	{
 	PROFILE_DEBUG1( 
 	        "CSIPApnConfigurationHandler::~CSIPApnConfigurationHandler()" )
-	
+	        
 	Cancel();
 	iConnection.Close();
 	iSocketSrv.Close();
-	
 	delete iApnProposal;
 	delete iCurrentApn;
-	
     delete iPrimaryApn;
     delete iSecondaryApn;
-    
+    delete iRepository;
 	delete iCommsDatabase;
 	
 	PROFILE_DEBUG1( 
@@ -105,7 +105,7 @@ void CSIPApnConfigurationHandler::SetApnL(
         return;
         }
     
-    iMonitoringRetryCount = 0;
+    iDBMonitoringRetryCount = 0;
     
     ChangeApnIfNotInUseL( aAllowAsync );
         
@@ -126,7 +126,7 @@ TBool CSIPApnConfigurationHandler::IsPrimaryApnUsed()
 // CSIPApnConfigurationHandler::ReadCurrentApnL
 // -----------------------------------------------------------------------------
 //
-HBufC8* CSIPApnConfigurationHandler::ReadCurrentApnL()
+void CSIPApnConfigurationHandler::ReadCurrentApnL()
 	{
 	HBufC8* apn(NULL);
 		
@@ -193,15 +193,13 @@ HBufC8* CSIPApnConfigurationHandler::ReadCurrentApnL()
 		
 		delete iCurrentApn;
 		iCurrentApn = NULL;
-		iCurrentApn = apn->AllocL();
+		iCurrentApn = apn;
         }
     
     db->ClearAttributeMask( ECDHidden );
     
     CleanupStack::PopAndDestroy( iapRecord );
     CleanupStack::PopAndDestroy( db );
-    
-    return apn;
 	}
 
 // -----------------------------------------------------------------------------
@@ -285,6 +283,11 @@ TInt CSIPApnConfigurationHandler::RunError( TInt aError )
     PROFILE_DEBUG3( 
             "CSIPApnConfigurationHandler::RunError() err", aError );
     
+    if(iCellularDataBlocked)
+        {
+        AllowCellularDataUsage();
+        }
+    
     if ( aError != KErrNoMemory && aError != KErrNone )
         {
         iObserver.ApnChanged( *iApnProposal, iIapId, aError );
@@ -307,7 +310,8 @@ CSIPApnConfigurationHandler::CSIPApnConfigurationHandler(
 	CActiveScheduler::Add( this );
 	iIapId = aIapId;
 	iIsFailed = EFalse;
-	iIsFatalFailure = EFalse; 
+	iIsFatalFailure = EFalse;
+	iCellularDataBlocked = EFalse;
 	}
 
 // -----------------------------------------------------------------------------
@@ -320,7 +324,8 @@ void CSIPApnConfigurationHandler::ConstructL()
 	        "CSIPApnConfigurationHandler::ConstructL()" )
 	
 	User::LeaveIfError( iSocketSrv.Connect() );
-	
+	iRepository = CRepository::NewL( KCRUidCmManager );
+	ReadCurrentApnL();
 	PROFILE_DEBUG1( 
 	        "CSIPApnConfigurationHandler::ConstructL() exit" )
 	}
@@ -426,7 +431,7 @@ void CSIPApnConfigurationHandler::WatchConnectionStatusChange()
 // CSIPApnConfigurationHandler::WatchDatabaseStatusChangeL
 // -----------------------------------------------------------------------------
 //	
-void CSIPApnConfigurationHandler::WatchDatabaseStatusChangeL( TUint32 aIapId )
+void CSIPApnConfigurationHandler::WatchDatabaseStatusChangeL()
     {
     PROFILE_DEBUG1( 
             "CSIPApnConfigurationHandler::WatchDatabaseStatusChangeL()" )
@@ -436,22 +441,26 @@ void CSIPApnConfigurationHandler::WatchDatabaseStatusChangeL( TUint32 aIapId )
     if ( !iCommsDatabase )
         {
         PROFILE_DEBUG1( 
-                "CSIPApnConfigurationHandler::   create commsdb" )
+                "CSIPApnConfigurationHandler::WatchDatabaseStatusChangeL create commsdb" )
         iCommsDatabase = CCommsDatabase::NewL();
         }
     
     PROFILE_DEBUG1( 
-            "CSIPApnConfigurationHandler::   request notification" )
+            "CSIPApnConfigurationHandler::WatchDatabaseStatusChangeL request notification" )
     
     // Start monitoring for db events, there will be lots of them pouring in
     // as there's no filtering feature. We are interested only in
     // unlocked events.    
+
+    if(iDBMonitoringRetryCount > KDBMaxRetryCount)
+        {
+        PROFILE_DEBUG1("CSIPApnConfigurationHandler::WatchDatabaseStatusChangeL max retries reached!" )       
+        User::Leave( KErrAbort );
+        }
+    
     User::LeaveIfError( iCommsDatabase->RequestNotification( iStatus ) );
-    
     SetActive();
-    
-    iIapId = aIapId;
-        
+          
     SetMonitoringState( EMonitoringDatabase );
     
     PROFILE_DEBUG1( 
@@ -468,15 +477,11 @@ TBool CSIPApnConfigurationHandler::ApnChangeNeededL( const TDesC8& aApn )
             "CSIPApnConfigurationHandler::ApnChangeNeededL()" )
 
  	TBool apnChangeNeeded( EFalse );
- 	HBufC8* currentApn = ReadCurrentApnL();
-
-	if ( currentApn && currentApn->Compare( aApn ) != 0 )
+	if ( iCurrentApn && iCurrentApn->Compare( aApn ) != 0 )
         {
         // Apn is not the same as wanted
         apnChangeNeeded = ETrue;
         }
-
-	delete currentApn;
 
 	PROFILE_DEBUG3( 
 	        "CSIPApnConfigurationHandler::ApnChangeNeededL(), apnChangeNeeded",
@@ -542,7 +547,7 @@ TBool CSIPApnConfigurationHandler::IssueApnChangeL(
         
             __ASSERT_ALWAYS( aAllowAsync, User::Leave( KErrInUse ) );
         
-            WatchDatabaseStatusChangeL( iIapId );
+            WatchDatabaseStatusChangeL();
             }
         else 
             {
@@ -570,8 +575,12 @@ void CSIPApnConfigurationHandler::ChangeApnL(
     
    	using namespace CommsDat;
 	
-	CMDBSession* db = CMDBSession::NewL( CMDBSession::LatestVersion() );
+	CMDBSession* db = CMDBSession::NewL( KCDVersion1_1 );
     CleanupStack::PushL( db );
+    
+	db->OpenTransactionL();
+    CleanupStack::PushL(TCleanupItem(RollBackDBTransaction, db));
+    
     // Set attributes so that also protected iaps can be accessed
     db->SetAttributeMask( ECDHidden | ECDProtectedWrite ); 
 
@@ -647,9 +656,19 @@ void CSIPApnConfigurationHandler::ChangeApnL(
     db->ClearAttributeMask( ECDHidden | ECDProtectedWrite );
     
     CleanupStack::PopAndDestroy( iapRecord );
+    
+    db->CommitTransactionL();
+    
+	CleanupStack::Pop(); //cleanup item
+	
     CleanupStack::PopAndDestroy( db );
     
-    SendApnChangedNotificationL( aApn );
+    if (iCellularDataBlocked)
+        {
+        AllowCellularDataUsage();
+        }  
+    
+    SendApnChangedNotificationL( aApn );        
     
     PROFILE_DEBUG1( 
             "CSIPApnConfigurationHandler::ChangeApnL(), exit" )
@@ -701,10 +720,10 @@ CSIPApnConfigurationHandler::TSipApnMonitoringState
 void CSIPApnConfigurationHandler::ConnectionMonitoringCompletedL( TInt aError )
     {
 	PROFILE_DEBUG3( 
-	        "CSIPApnConfigurationHandler::   progress.err",
+	        "CSIPApnConfigurationHandler::ConnectionMonitoringCompletedL   progress.err",
 	        iProgress().iError );
 	PROFILE_DEBUG3( 
-	        "CSIPApnConfigurationHandler::   progress.stage",
+	        "CSIPApnConfigurationHandler::ConnectionMonitoringCompletedL   progress.stage",
 	        iProgress().iStage );
 	                
     if ( !aError )
@@ -748,30 +767,19 @@ void CSIPApnConfigurationHandler::DatabaseMonitoringCompletedL( TInt aError )
         {
         // Changing may be now possible, if not, db notifications or connection
         // monitoring is re-enabled inside following method
+        PROFILE_DEBUG1("DatabaseMonitoringCompletedL::DatabaseMonitoringCompletedL BlockCellularDataUsageL" );
+        BlockCellularDataUsageL();
         apnChanged = ChangeApnIfNotInUseL();
         }
     else
         {
-        WatchDatabaseStatusChangeL( iIapId );
+        iDBMonitoringRetryCount++;
+        WatchDatabaseStatusChangeL();        
         }
     
-    // Have some safety limit for monitoring as it's not guaranteed that
-    // db lock is ever released -> avoid unnecessary battery consumption    
-    if ( !apnChanged )
+    if(apnChanged)
         {
-        iMonitoringRetryCount++;
-        PROFILE_DEBUG3( 
-                "DatabaseMonitoringCompletedL::   retrycount",
-                iMonitoringRetryCount );
-        
-        if ( iMonitoringRetryCount > KSecondaryApnMaxRetryCount )
-            {
-            PROFILE_DEBUG1( 
-                "CSIPApnConfigurationHandler::   max retries reached!" )
-            Cancel();
-            
-            User::Leave( KErrAbort );
-            }
+        iDBMonitoringRetryCount = 0;
         }
     }
 
@@ -783,13 +791,12 @@ void CSIPApnConfigurationHandler::SendApnChangedNotificationL(
     const TDesC8& aNewApn, 
     TInt aError )
     {
-    if ( !IsPrimaryApnUsed() )
+    HBufC8* currentApn = aNewApn.AllocL();
+    delete iCurrentApn;
+    iCurrentApn = NULL;
+    iCurrentApn = currentApn;
+    if ( IsPrimaryApnUsed() )
         {
-        HBufC8* currentApn = aNewApn.AllocL();
-        delete iCurrentApn;
-        iCurrentApn = NULL;
-        iCurrentApn = currentApn;
-        
         iObserver.ApnChanged( *iCurrentApn, iIapId, aError );
         }
     }
@@ -900,6 +907,42 @@ PROFILE_DEBUG3(
         delete iSecondaryApn;
         iSecondaryApn = newApn;
         }
+    }
+
+// -----------------------------------------------------------------------------
+// CSIPApnConfigurationHandler::BlockCellularDataUsageL
+// -----------------------------------------------------------------------------
+//
+void CSIPApnConfigurationHandler::BlockCellularDataUsageL()
+    {
+    PROFILE_DEBUG1("DatabaseMonitoringCompletedL::BlockCellularDataUsageL Enter" );
+    //Current Usage Status;
+    iRepository->Get( KCurrentCellularDataUsage, iCurrentUsageStatus );
+    iRepository->Set( KCurrentCellularDataUsage, ECmCellularDataUsageDisabled );
+    iCellularDataBlocked = ETrue;
+    PROFILE_DEBUG1("DatabaseMonitoringCompletedL::BlockCellularDataUsageL Exit" );
+    }
+// -----------------------------------------------------------------------------
+// CSIPApnConfigurationHandler::AllowCellularDataUsage
+// -----------------------------------------------------------------------------
+//
+void CSIPApnConfigurationHandler::AllowCellularDataUsage()
+    {
+    PROFILE_DEBUG1("DatabaseMonitoringCompletedL::AllowCellularDataUsage Enter" );
+    iRepository->Set( KCurrentCellularDataUsage, iCurrentUsageStatus );
+    iDBMonitoringRetryCount = 0;
+    iCellularDataBlocked = EFalse;
+    PROFILE_DEBUG1("DatabaseMonitoringCompletedL::AllowCellularDataUsage Exit" );
+    }
+
+// -----------------------------------------------------------------------------
+// CSIPApnConfigurationHandler::RollBackDBTransaction
+// -----------------------------------------------------------------------------
+//
+void CSIPApnConfigurationHandler::RollBackDBTransaction(TAny* aDb)
+    {
+    CMDBSession* db = static_cast<CMDBSession*>(aDb);
+    TRAP_IGNORE(db->RollbackTransactionL());
     }
 
 // End of file

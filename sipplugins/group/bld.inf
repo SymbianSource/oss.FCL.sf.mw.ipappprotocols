@@ -19,7 +19,6 @@
 
 
 #include "../sippwlanplugin/group/bld.inf"
-#include "../sippsipsettingsui/group/bld.inf"
 #include "../sippdevmgmtsipadapter/group/bld.inf"
 #include "../sippsystemstatemonitor/group/bld.inf"
 #include "../sippsipadapter/group/bld.inf"

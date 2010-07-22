@@ -290,6 +290,18 @@ class CSIPProfileCacheItem : public CBase, public MSipAlrMigrationObserver
         */
 		TBool IsShutdownInitiated() const;
 		
+      /**
+        * System is about to go in Offline Mode
+        */
+        void OfflineInitiated(TBool aOfflineInitiated);
+
+        /**
+        * Tells if system is about to be Offline.
+        * @return ETrue if system Offline has been initiated
+        *         EFalse otherwise
+        */
+        TBool IsOfflineInitiated() const;
+		
 		/**
         * System is about to be shut down.
         */
@@ -554,11 +566,7 @@ class CSIPProfileCacheItem : public CBase, public MSipAlrMigrationObserver
 		* @param aStatus Status of the profile
 		*/
 		void HandleProfileError(TInt aError, 
-			CSIPConcreteProfile& aProfile);
-		/**
-		 * Function resets the boolean variable iIsShutdownInitiated
-		 */
-		void ResetShutdownvariable();
+			CSIPConcreteProfile& aProfile);		
 
 	private:
 
@@ -646,6 +654,9 @@ class CSIPProfileCacheItem : public CBase, public MSipAlrMigrationObserver
 		
 		// ETrue if system shutdown has been initiated
 		TBool 						iIsShutdownInitiated;
+		
+		//ETrue if system offline has been initiated
+		TBool                       iIsOfflineInitiated;                    
 		
 		// ETrue if Rfs has been initiated
 		TBool                       iIsRfsInprogress;

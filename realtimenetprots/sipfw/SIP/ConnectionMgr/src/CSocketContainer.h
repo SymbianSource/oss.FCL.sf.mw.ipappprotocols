@@ -72,6 +72,8 @@ class CSocketContainer : public CBase
         
         virtual void CancelConnect();
         
+        virtual void CancelAll();
+        
         virtual void RemoteName( TSockAddr& aAddr );
         
         virtual TInt SetOpt( TUint aOptionName, 

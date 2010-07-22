@@ -116,4 +116,5 @@ EXPORTS
 	_ZN20RRtpSession_Internal36SetPrePostProcessingRegisterCallbackEP26MPrePostProcessingCallback @ 115 NONAME
 	_ZN20RRtpSession_Internal5OpenLER11RSocketServR9TSockAddrS3_iR14RSubConnectioniRK6TDesC8 @ 116 NONAME
 	_ZN14RRtpSendPacket5CloseEv @ 117 NONAME
+	_ZNK11RRtcpRRItem10SenderSSRCEv @ 118 NONAME
 

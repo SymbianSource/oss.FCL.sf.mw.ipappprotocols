@@ -31,6 +31,7 @@
 #define SIPSYNTAXCHECK_H
 
 #include "siphostport.h"
+#include "TSIPChar.h"
 #include <e32std.h>
 
 
@@ -39,7 +40,7 @@ class SIPSyntaxCheck
 	{
 public:
 
-	static TBool Token (const TDesC8& aValue);
+	static TBool Token (const TDesC8& aValue , RArray<TSIPChar>* aArray = NULL );
 	static TBool AlphaMaxSize8 (const TDesC8& aValue);
 	static TBool Host (const TDesC8& aValue);
 	static TBool Word (const TDesC8& aValue);

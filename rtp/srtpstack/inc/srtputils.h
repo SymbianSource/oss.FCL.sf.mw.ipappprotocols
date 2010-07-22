@@ -29,6 +29,7 @@
 
 #include <e32std.h>
 #include <f32file.h>
+#include <e32hal.h>
 
 #ifdef SRTP_UNIT_TEST_COVERAGE
 

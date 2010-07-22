@@ -21,13 +21,13 @@
 */
 
 PRJ_EXPORTS
-../group/SIPDummyPRT.iby   /epoc32/rom/include/sipdummyprt.iby
+../group/SIPDummyPRT.iby   CORE_MW_LAYER_IBY_EXPORT_PATH(sipdummyprt.iby)
 ../data/sip.providers.esk  z:/private/101f7989/esock/sip.providers.esk
 
 
 #ifndef SYMBIAN_NON_SEAMLESS_NETWORK_BEARER_MOBILITY
 
-../group/siphlapi.iby      /epoc32/rom/include/siphlapi.iby
+../group/siphlapi.iby      CORE_MW_LAYER_IBY_EXPORT_PATH(siphlapi.iby)
 ../data/esock_sip.cmi      z:/private/101f7988/esock_sip.cmi
 
 #endif // SYMBIAN_NON_SEAMLESS_NETWORK_BEARER_MOBILITY

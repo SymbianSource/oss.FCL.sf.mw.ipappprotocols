@@ -70,6 +70,12 @@ EXPORT_C TUint RRtcpRRItem::DelaySinceLastSR() const
 	return iPtr->dlsr;
 	}
 
+EXPORT_C TUint RRtcpRRItem::SenderSSRC() const
+	{
+	__RTP_LOG(_L("RRtcpSRItem::SenderSSRC() ... "));
+	return AboutSSRC();
+	}
+	
 
 /******/
 EXPORT_C RRtcpRRPart::RRtcpRRPart(TRtcpRRPart& aRR) :iRRPart(aRR)

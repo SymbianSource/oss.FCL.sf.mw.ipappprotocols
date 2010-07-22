@@ -24,10 +24,11 @@
 #include <etelpckt.h>
 #include <es_enum.h>
 #include <es_enum_partner.h>
+#include <centralrepository.h>
 #include "sipapnmanager.h"
 
 // CONSTANTS
-const TInt KSecondaryApnMaxRetryCount = 100;
+const TInt KDBMaxRetryCount = 100;
 
 // FORWARD DECLARATIONS
 class CCommsDatabase;
@@ -107,7 +108,7 @@ class CSIPApnConfigurationHandler : public CActive
         
         void WatchConnectionStatusChange();
         
-        void WatchDatabaseStatusChangeL( TUint32 aIapId );
+        void WatchDatabaseStatusChangeL();
         
         TBool ApnChangeNeededL( const TDesC8& aApn );
         
@@ -139,10 +140,8 @@ class CSIPApnConfigurationHandler : public CActive
         
         /**
         * Reads the APN of specified IAP.
-        * @param aIapId IAP id
-        * @return APN or NULL if not found. Ownership is transferred.
         */
-        HBufC8* ReadCurrentApnL();
+        void ReadCurrentApnL();
         
 
 	private: // Constructors
@@ -153,39 +152,39 @@ class CSIPApnConfigurationHandler : public CActive
 
 		/// 2nd phase constructor
 		void ConstructL();
+		
+		void BlockCellularDataUsageL();
+		
+		void AllowCellularDataUsage();
+
+		
+	    /**
+	    * Rollsback db in case of failure      
+	        * @param aDb 
+	    */
+	    static void RollBackDBTransaction(TAny* aDb);
 
 	private: // Data
 	
-		MSIPApnChangeObserver& iObserver;
-	    
-	    TSipApnMonitoringState iMonitoringState;
-
-		RSocketServ iSocketSrv;
-		
-		RConnection iConnection;
-		
-		TPckgBuf<TConnectionInfo> iConnectionInfo;
-        
-        TNifProgressBuf iProgress;
-        
-        HBufC8* iApnProposal;
-        
-        TUint32 iIapId;
-        
-        CCommsDatabase* iCommsDatabase;
-        
-        TInt iMonitoringRetryCount;
-        
-        HBufC8* iCurrentApn;
-        
-        TBool iApnUseSecureAuthProposal;
-        
-        TBool iIsFailed;
-        
-        TBool iIsFatalFailure;
-        
-        HBufC8* iPrimaryApn;
-        HBufC8* iSecondaryApn;
+		MSIPApnChangeObserver&          iObserver;    
+	    TSipApnMonitoringState          iMonitoringState;
+		RSocketServ                     iSocketSrv;
+		RConnection                     iConnection;
+		TPckgBuf<TConnectionInfo>       iConnectionInfo;
+        TNifProgressBuf                 iProgress;
+        HBufC8*                         iApnProposal;
+        TUint32                         iIapId;
+        CCommsDatabase*                 iCommsDatabase;
+        TInt                            iDBMonitoringRetryCount;
+        HBufC8*                         iCurrentApn;
+        TBool                           iApnUseSecureAuthProposal;
+        TBool                           iIsFailed;
+        TBool                           iIsFatalFailure;
+        HBufC8*                         iPrimaryApn;
+        HBufC8*                         iSecondaryApn;
+        CRepository*                    iRepository;
+        TInt                            iCurrentUsageStatus;
+        TBool                           iCellularDataBlocked;
         
 #ifdef CPPUNIT_TEST	
 	    friend class CSIPApnManagerTest;

@@ -274,7 +274,7 @@ void CTransport::RouteL( CSIPMessage* aMessage, const TInetAddr& aRemoteAddr )
 				if ( IsConnectedTransport() )
 					{
 					TResponseRoute route( id, aRemoteAddr );
-					iIDArray.Append( route );
+					iIDArray.AppendL( route );
 					}
 				TRAP( leaveValue,
 					  receiver->ReceiveL( static_cast<CSIPRequest*>( aMessage ) ) );
@@ -610,7 +610,12 @@ void CTransport::HandleClientRequestL(
 				// Sent-by is now set for the first time, must set the port too
 				if ( receivePort == 0 )
 		            {
-		            receivePort = KDefaultSipPort;
+                    //If the Transport in the outgoing request is TLS and port value = 0
+                    //provide 5061 for TLS and 5060 for UDP/TCP
+                    if(SIPStrings::StringF(SipStrConsts::ETLS) == viaHeader->Transport())
+                        receivePort = KDefaultSipsPort;
+                    else
+                        receivePort = KDefaultSipPort;
 		            }
 	        	}
 	        if ( receivePort )
@@ -1450,27 +1455,44 @@ void CTransport::UpdateContactHeadersL(
                 RStringF transportParam =
                     uri.SIPURI()->ParamValue(
                         SIPStrings::StringF( SipStrConsts::ETransport ) );
-
-                if ( Protocol() == KProtocolTls )
+                
+                RStringF tls = SIPStrings::StringF( SipStrConsts::ETLS ); 
+                //If the Contact header has parameter transport=tls, remove it
+                //as it is deprecated in RFC 3261
+                if(transportParam == tls)
                     {
-                    RStringF tls = SIPStrings::StringF( SipStrConsts::ETLS );
-                    // SIP-URI with transport=TLS must not use sips scheme
-                    uri.SIPURI()->SetSIPS( transportParam != tls );
-                    if(transportParam == tls)
-                        {
-                        uri.SIPURI()->SetSIPS(EFalse);
-                        //Delete the param transport=tls from the URI as it is deprecated in RFC 3261
-                        uri.SIPURI()->DeleteParam(SIPStrings::StringF( SipStrConsts::ETransport ));
+                    uri.SIPURI()->DeleteParam(SIPStrings::StringF( SipStrConsts::ETransport ));
+                    }
+                
+                //If the message is CSIPRequest, make sure its scheme is as per From Header.
+                //So if the FROM header is SIPS, Contact header is SIPS, if FROM header is SIP,
+                //Contact header scheme is sip
+                if(aMessage->IsRequest())
+                    {
+                    if ( Protocol() == KProtocolTls )
+                        {                       
+                        CURIContainer& FromUri = (((aMessage->From())->SIPAddress()).URI());
+                        if(FromUri.IsSIPURI())
+                            {
+                            CSIPURI* FromSIPUri =FromUri.SIPURI();
+                            if(FromSIPUri->IsSIPSURI())
+                                {                                
+                                uri.SIPURI()->SetSIPS( ETrue );
+                                }
+                            else
+                                {
+                                uri.SIPURI()->SetSIPS( EFalse );
+                                }
+                            }
                         }
-                    }
-                else
-                    {
-                    uri.SIPURI()->SetSIPS( EFalse );
-                    }
-			    }
-			}
-		}    
-        
+                    else
+                        {
+                        uri.SIPURI()->SetSIPS( EFalse );
+                        }
+                    } //end if (aMessage->IsRequest)                
+			    } //end if (uri.IsSIPURI())
+			} //end if(sipaddr)
+		} //end while    
     }
 
 // -----------------------------------------------------------------------------

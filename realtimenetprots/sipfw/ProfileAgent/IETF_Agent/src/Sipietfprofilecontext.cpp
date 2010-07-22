@@ -494,11 +494,11 @@ TBool CSIPIetfProfileContext::ShouldRetryRegistration( TInt aError )
 	return (aError == K503ServiceUnavailable || 
 	        aError == K408TimeOut ||
 	        aError == K500ServerInternalError ||
-		    aError == KErrSIPOutboundProxyNotResponding || 
 		    aError == KErrTimedOut ||
 		    ((aError == KErrSIPResolvingFailure || 
 		      aError == KErrSIPTransportFailure ||
-		      aError == KErrSIPICMPFailure) && 
+		      aError == KErrSIPICMPFailure ||
+		      aError == KErrSIPOutboundProxyNotResponding ) && 
 			 iConnection.State() != CSIPConnection::ESuspended));
 	}
 

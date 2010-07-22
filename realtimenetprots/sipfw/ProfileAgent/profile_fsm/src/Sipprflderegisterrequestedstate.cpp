@@ -14,7 +14,7 @@
 // Name        : sipprflderegisterrequestedstate.cpp
 // Part of     : sip profile fsm
 // implementation
-// Version     : %version: 2.1.1 %
+// Version     : %version: 2.1.2 %
 //
 
 
@@ -96,6 +96,41 @@ void CSIPPrflDeregisterRequestedState::RegisterL(
 	__ASSERT_DEBUG(aContext.Profile()!=0, User::Invariant());
 	aContext.SetNextState(*iRegisteredState);
 	}
+
+// -----------------------------------------------------------------------------
+// CSIPPrflDeregisterRequestedState::DeregisterL()
+// (other items were commented in a header).
+// -----------------------------------------------------------------------------
+//
+void CSIPPrflDeregisterRequestedState::DeregisterL(
+    MSIPProfileContext& aContext)
+    {
+    __ASSERT_DEBUG(aContext.Profile()!=0, User::Invariant());
+    __ASSERT_DEBUG(aContext.Registration()!=0, User::Invariant());
+    if (aContext.Connection().State()==CSIPConnection::EActive)
+        {
+        if (iUser.AddProfileIntoQueue(*aContext.Profile())) //compares the registrar of the present profile with the other profiles existing in the connection context array.
+            {
+            iUser.DeregisterProfileL(*aContext.Profile()); 
+            
+            } 
+        else
+            {
+            CSIPMessageElements* elements = 
+                aContext.CreateDeRegisterElementsL();
+            CleanupStack::PushL(elements);
+            CSIPClientTransaction* tx = 
+                aContext.Registration()->DeregisterL(elements);
+            CleanupStack::Pop(elements);
+            aContext.SetTransaction(tx);
+            aContext.SetNextState(*iDeregistrationInProgressState);
+            }
+        }
+    aContext.AgentObserver().SIPProfileStatusEvent(
+    *aContext.Profile(),
+    aContext.Registration()->ContextId());
+    }
+
 
 // -----------------------------------------------------------------------------
 // CSIPPrflDeregisterRequestedState::ErrorOccured()

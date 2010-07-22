@@ -14,7 +14,7 @@
 * Description:
 * Name        : sipprflderegisterrequestedstate.h
 * Part of     : sip profile fsm 
-* Version     : %version: 2.1.1 %
+* Version     : %version: 2.1.2 %
 *
 */
 
@@ -71,6 +71,13 @@ class CSIPPrflDeregisterRequestedState: public CSIPPrflStateBase
 	public://functions from base class
 		
 		CSIPConcreteProfile::TStatus ConcreteProfileState() const;
+		
+		/* DeRegister requested
+		 * update on multiple profile issue, when update on the previous profile is pending.
+		 * 07 May 2010    
+		 * */
+		void DeregisterL(
+		            MSIPProfileContext& aContext);
 		
 		/**
 		* Moves back the profile to "Registered" state
