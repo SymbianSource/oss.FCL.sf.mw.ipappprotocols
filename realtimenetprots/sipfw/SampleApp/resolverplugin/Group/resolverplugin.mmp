@@ -26,7 +26,7 @@ SOURCE          SIPExResolverPlugin.cpp
 
 USERINCLUDE 	../Inc
 
-SYSTEMINCLUDE 	/epoc32/include /epoc32/include/ecom
+MW_LAYER_SYSTEMINCLUDE
 
 START RESOURCE  ../Data/A00001EC.rss
 TARGET          sipexresolverplugin.rsc                                          

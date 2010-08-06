@@ -94,6 +94,8 @@ LIBRARY 	  cmmanager.lib
 LIBRARY           commsdat.lib 
 LIBRARY           featmgr.lib
 LIBRARY 	  commdb.lib
+LIBRARY       extendedconnpref.lib  
+LIBRARY 	  netmeta.lib
 
 VENDORID 0x70000001
 

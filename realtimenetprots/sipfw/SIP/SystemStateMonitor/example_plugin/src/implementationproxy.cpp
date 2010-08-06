@@ -19,7 +19,7 @@
 
 
 #include "sipsystemstatemonitorimpl.h"
-#include <ImplementationProxy.h>
+#include <ecom/ImplementationProxy.h>
 
 const TImplementationProxy ImplementationTable[] =
     {

@@ -33,9 +33,7 @@ SOURCE              rtpstep.cpp
 USERINCLUDE   ../src
 USERINCLUDE   ../../../inc
 
-SYSTEMINCLUDE /epoc32/include
-SYSTEMINCLUDE /epoc32/include/test
-SYSTEMINCLUDE /epoc32/include/comms-infras
+MW_LAYER_SYSTEMINCLUDE
 
 //Please add your system include under here. 
 

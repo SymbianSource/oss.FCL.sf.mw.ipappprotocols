@@ -64,48 +64,48 @@ class CSipAlrMonitor : public CBase
         * Starts to monitor IAP availability for the SNAP.
         * The observer will be informed asynchronouysly
         * when any IAP is available for the monitored SNAP. 
-        * @param aSnapId SNAP id
+        * @param aConfigData SNAP Data to identify the correct SNAP Monitor.
         * @param aObserver observer to be informed when an IAP becomes available
         */
-        void MonitorSnapL( TUint32 aSnapId, 
-                           MSipAlrObserver& aObserver );
+        void MonitorSnapL( TSipSNAPConfigurationData & aConfigData, 
+                           MSipAlrObserver& aObserver);
 
 
         /**
         * Refreshes the IAP availability for the SNAP.
         * Scans the available IAPs for the SNAP and informs all the observers 
         * if a better IAP than the current one is available.
-        * @param aSnapId SNAP id
+        * @param aConfigData SNAP Data to identify the correct SNAP Monitor.
         */
-        void RefreshIapAvailabilityL( TUint32 aSnapId );
+        void RefreshIapAvailabilityL( TSipSNAPConfigurationData & aConfigData );
     
         /**
         * Allows migration to a new IAP for the SNAP.
-        * @param aSnapId SNAP id
+        * @param aConfigData SNAP Data to identify the correct SNAP Monitor.
         * @return KErrNone on success, otherwise a system wide error code.
         */    
-        TInt AllowMigration( TUint32 aSnapId );    
+        TInt AllowMigration( TSipSNAPConfigurationData & aConfigData );    
 
         /**
         * Disallows migration to a new IAP for the SNAP.
-        * @param aSnapId SNAP id
+        * @param aConfigData SNAP Data to identify the correct SNAP Monitor.
         * @return KErrNone on success, otherwise a system wide error code.
         */    
-        TInt DisallowMigration( TUint32 aSnapId );
+        TInt DisallowMigration( TSipSNAPConfigurationData & aConfigData );
     
         /**
         * The migration has succeeded and the new IAP has been taken into use.
-        * @param aSnapId SNAP id
+        * @param aConfigData SNAP Data to identify the correct SNAP Monitor.
         * @return KErrNone on success, otherwise a system wide error code.
         */
-        TInt NewIapAccepted( TUint32 aSnapId );    
+        TInt NewIapAccepted( TSipSNAPConfigurationData & aConfigData );    
 
         /**
         * The migration has failed and the new IAP was not taken into use.
-        * @param aSnapId SNAP id
+        * @param aConfigData SNAP Data to identify the correct SNAP Monitor.
         * @return KErrNone on success, otherwise a system wide error code.
         */    
-        TInt NewIapRejected( TUint32 aSnapId );
+        TInt NewIapRejected( TSipSNAPConfigurationData & aConfigData );
 
         /**
         * Frees all the resources reserved for the observer.
@@ -122,8 +122,9 @@ class CSipAlrMonitor : public CBase
 		
 	private: // New functions
 	
-	    CSipAlrSnapMonitor* FindSnapMonitor( TUint32 aSnapId );
-		
+	    CSipAlrSnapMonitor* FindSnapMonitor( TSipSNAPConfigurationData & aConfigData);
+	    
+	    	
 	private: // Data
 	
 	    // Used for monitoring SNAP availability 

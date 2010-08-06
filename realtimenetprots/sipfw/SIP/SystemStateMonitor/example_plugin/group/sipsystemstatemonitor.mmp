@@ -33,8 +33,7 @@ START RESOURCE 12345678.rss
 TARGET sipsystemstatemonitor.rsc                                       
 END
 
-SYSTEMINCLUDE   /epoc32/include
-SYSTEMINCLUDE   /epoc32/include/ecom
+MW_LAYER_SYSTEMINCLUDE
 
 USERINCLUDE     ../inc
 

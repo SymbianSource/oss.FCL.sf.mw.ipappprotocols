@@ -14,7 +14,7 @@
 // Name        : sipconcreteprofile.cpp
 // Part of     : SIP / SIP Profile Agent / SIP Concrete Profile
 // Implementation
-// Version     : %version: 3.1.2 %
+// Version     : %version: 3.1.2.1.2 %
 //
 
 
@@ -2256,5 +2256,12 @@ EXPORT_C TBool CSIPConcreteProfile::ValidateProfileParamsL()
 		PROFILE_DEBUG3("Exceptional SNAP Entry verifier :", KDefaultSNAPIdentifier)
 		SetExtensionParameterL(KSIPSnapId,KDefaultSNAPIdentifier);
 		}
+	
+if ( ExtensionParameter(KBearerType,iVal) == KErrNotFound)
+	    { 
+PROFILE_DEBUG3("CSIPConcreteProfile::ValidateProfileParamsL.. Setting bearer Id to 0", 0)
+        TUint32 defaultId=0;
+        SetExtensionParameterL(KBearerType,defaultId);
+	    }
 	return res;
 	}

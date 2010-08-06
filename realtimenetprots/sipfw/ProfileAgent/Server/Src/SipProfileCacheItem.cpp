@@ -969,9 +969,12 @@ void CSIPProfileCacheItem::MonitorSnapL(TUint32 aSnapId,
 		StopSnapMonitoring();
 		}
 
-	if (!iMigrationController)
+	if (!iMigrationController) 
 		{
-		iMigrationController = &iServerCore.MigrationControllerL(aSnapId);
+	    TUint32 bearerId = BearerID();
+	    TSipSNAPConfigurationData aSnapData(aSnapId,bearerId);
+		iMigrationController = &iServerCore.MigrationControllerL(aSnapData);
+		PROFILE_DEBUG3("ProfileCacheItem::BearerFilter value is", bearerId)
 		TUint32 iapId = iMigrationController->AttachProfileL(*this);
 		if (iapId)
 			{
@@ -1403,3 +1406,13 @@ TBool CSIPProfileCacheItem::IsOfflineInitiated() const
     return iIsOfflineInitiated;
     }
 
+// -----------------------------------------------------------------------------
+// CSIPProfileCacheItem::BearerID
+// This function will return the Bearer ID of the Profile.
+// -----------------------------------------------------------------------------
+//
+TUint32 CSIPProfileCacheItem::BearerID()
+{   TUint32 bearerId(0);
+    LatestProfile().ExtensionParameter(KBearerType , bearerId);
+    return bearerId;
+}

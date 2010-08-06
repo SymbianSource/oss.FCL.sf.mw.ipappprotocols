@@ -82,4 +82,22 @@ class MSipAlrObserver
 
 	};
 
+// CLASS DECLARATION
+/**
+* This is the class that encapsulates all snap specific data.
+*/
+
+class TSipSNAPConfigurationData  
+    {
+public:
+    
+    TSipSNAPConfigurationData(TUint32 aSnapId , TUint32 aBearerId)
+        {
+        iSnapId = aSnapId;
+        iBearerId = aBearerId;
+        };
+    
+   TUint32 iSnapId;
+   TBool iBearerId;
+    };
 #endif // MSIPALROBSERVER_H

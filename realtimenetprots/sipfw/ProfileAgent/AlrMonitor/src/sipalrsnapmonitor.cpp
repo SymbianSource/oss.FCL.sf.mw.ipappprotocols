@@ -28,14 +28,14 @@
 // -----------------------------------------------------------------------------
 //
 CSipAlrSnapMonitor* CSipAlrSnapMonitor::NewLC(
-    TUint32 aSnapId,
+    TSipSNAPConfigurationData aSnapData,
     MSipAlrObserver& aObserver,
     RSocketServ& aSocketServer,
-    CSipSystemStateMonitor& aSystemStateMonitor )
+    CSipSystemStateMonitor& aSystemStateMonitor)
 	{
   	CSipAlrSnapMonitor* self = 
   	    new ( ELeave ) CSipAlrSnapMonitor( 
-  	        aSnapId, aSocketServer, aSystemStateMonitor );
+  	        aSnapData, aSocketServer, aSystemStateMonitor);
     CleanupStack::PushL( self );
     self->ConstructL( aObserver );
     return self;	
@@ -46,15 +46,15 @@ CSipAlrSnapMonitor* CSipAlrSnapMonitor::NewLC(
 // -----------------------------------------------------------------------------
 //	
 CSipAlrSnapMonitor::CSipAlrSnapMonitor( 
-    TUint32 aSnapId,
+    TSipSNAPConfigurationData aSnapData,
     RSocketServ& aSocketServer,
-    CSipSystemStateMonitor& aSystemStateMonitor ) : 
+    CSipSystemStateMonitor& aSystemStateMonitor) : 
     CActive ( CActive::EPriorityStandard ),
-    iSnapId( aSnapId ),
+    iSnapData( aSnapData ),
     iSocketServer( aSocketServer ),
-	iSystemStateMonitor( aSystemStateMonitor )									
+	iSystemStateMonitor( aSystemStateMonitor )
 	{
-	iPrefs.SetSnap( iSnapId );
+	iPrefs.SetSnap( aSnapData.iSnapId );
 	CActiveScheduler::Add( this );
 	}
 
@@ -67,9 +67,16 @@ void CSipAlrSnapMonitor::ConstructL( MSipAlrObserver& aObserver )
 	PROFILE_DEBUG1( "CSipAlrSnapMonitor::ConstructL entered" )
 	
 	iSystemStateMonitor.StartMonitoringL( 
-	    CSipSystemStateMonitor::ESnapAvailability, iSnapId, *this );
+	    CSipSystemStateMonitor::ESnapAvailability, SnapId(), *this );
 
   	AddObserverL( aObserver );
+  	
+  	if(IsSnapAvailable())
+  	    {
+        // SNAP is already Available to be started.
+        // No Need to wait for Notification from System State Monitor.
+  	    StartSnap();
+  	    }
 	
 	PROFILE_DEBUG1( "CSipAlrSnapMonitor::ConstructL returns" )
 	}
@@ -91,7 +98,7 @@ CSipAlrSnapMonitor::~CSipAlrSnapMonitor()
 	iObservers.Close();
 	
 	iSystemStateMonitor.StopMonitoring( 
-	    CSipSystemStateMonitor::ESnapAvailability, iSnapId, *this );
+	    CSipSystemStateMonitor::ESnapAvailability, SnapId(), *this );
 	    
 	PROFILE_DEBUG1( "CSipAlrSnapMonitor::~CSipAlrSnapMonitor returns" )
 	}
@@ -129,7 +136,7 @@ void CSipAlrSnapMonitor::RunL()
 		for ( TInt i = iObservers.Count() - 1; i >= 0; --i )
 			{
 			iObservers[i].iObserver->AlrEvent(
-				MSipAlrObserver::EOfferedIapRejected, iSnapId, KNoIap );
+				MSipAlrObserver::EOfferedIapRejected, SnapId(), KNoIap );
 			}
 		}
     else
@@ -188,7 +195,7 @@ void CSipAlrSnapMonitor::NewCarrierActive(
     TAccessPointInfo aNewAP, 
     TBool /*aIsSeamless*/ )
     {
-    PROFILE_DEBUG3( "CSipSnapAlrMonitor::NewCarrierActive", iSnapId )
+    PROFILE_DEBUG3( "CSipSnapAlrMonitor::NewCarrierActive", SnapId() )
     
     NotifyInitializedObservers( aNewAP.AccessPoint(), 
                                 MSipAlrObserver::EIapActive );
@@ -206,7 +213,7 @@ void CSipAlrSnapMonitor::Error( TInt aError )
     	PROFILE_DEBUG1( "CSipSnapAlrMonitor::Error iCommsMobilityAO==NULL")
     	return;
     	}
-    if ( aError == KErrNotFound)
+    if ( aError == KErrNotFound && !BearerId())
 	    {
 	    NotifyInitializedObservers( KNoIap,
 	    							MSipAlrObserver::ENoNewIapAvailable );
@@ -217,7 +224,11 @@ void CSipAlrSnapMonitor::Error( TInt aError )
     if ( !iDying )
         {
         ResetState();
+        if(!BearerId())
+        {
+        PROFILE_DEBUG3( "CSipSnapAlrMonitor::Error, Start Snap as Bearer Id is ", BearerId() )
         StartSnap();
+        }
         }
     }
 
@@ -235,7 +246,7 @@ void CSipAlrSnapMonitor::SystemVariableUpdated(
     
     if ( !IsActive() &&
          aVariable == CSipSystemStateMonitor::ESnapAvailability &&
-         aObjectId == iSnapId )
+         aObjectId == SnapId() )
         {
         if ( aValue == CSipSystemStateMonitor::ESnapAvailable )
             {
@@ -257,7 +268,7 @@ void CSipAlrSnapMonitor::SystemVariableUpdated(
 //		
 TUint32 CSipAlrSnapMonitor::SnapId() const
 	{
-	return iSnapId;
+	return iSnapData.iSnapId;
 	}
 			
 // -----------------------------------------------------------------------------
@@ -324,7 +335,7 @@ void CSipAlrSnapMonitor::RefreshL()
 			for ( TInt i = iObservers.Count() - 1; i >= 0; --i )
 				{
 				iObservers[i].iObserver->AlrEvent(
-					MSipAlrObserver::ERefreshError, iSnapId, KNoIap );
+					MSipAlrObserver::ERefreshError, SnapId(), KNoIap );
 				}
 			}
         }
@@ -402,7 +413,6 @@ void CSipAlrSnapMonitor::NewIapRejected()
 TInt CSipAlrSnapMonitor::StartSnap()
     {
     PROFILE_DEBUG1( "CSipAlrSnapMonitor::StartSnap entered" )
-
     TInt err = KErrNone;
     if ( !IsActive() && IsSnapAvailable() )
         {
@@ -413,14 +423,40 @@ TInt CSipAlrSnapMonitor::StartSnap()
 
     	if ( err == KErrNone )
     	    {
-        	iConnection.Start( iPrefs, iStatus );
-        	SetActive();
+            if(BearerId())
+                {
+                if(BearerId()== 1)
+                    {
+                    iExtPrefs.SetBearerSet(TExtendedConnPref::EExtendedConnBearerWLAN);
+                    }
+                else if(BearerId() == 2)
+                    {
+                    iExtPrefs.SetBearerSet(TExtendedConnPref::EExtendedConnBearerCellular);
+                    }
+				PROFILE_DEBUG1( "CSipAlrSnapMonitor::Starting Bearer Filtered connection" )
+                iExtPrefs.SetSnapId( SnapId());
+                
+                TRAPD(error, iPrefList.AppendL(&iExtPrefs));
+				if(error)
+				{
+				return error;
+				}
+                // Start connecting
+                iConnection.Start( iPrefList, iStatus );
+                SetActive();
+                }
+            else
+                {
+				PROFILE_DEBUG1( "CSipAlrSnapMonitor::Starting Normal Connection" )
+                iConnection.Start( iPrefs, iStatus );
+                SetActive();
+                }
     	    }
         }
 
 	PROFILE_DEBUG3( "CSipAlrSnapMonitor::StartSnap returns", err )
     return err;
-    }
+   }
 
 // -----------------------------------------------------------------------------
 // CSipAlrSnapMonitor::CreateMobilityAoL
@@ -476,7 +512,7 @@ void CSipAlrSnapMonitor::DestroyMobilityAo()
 void CSipAlrSnapMonitor::NotifyObservers( TUint aIapId )
 	{
 	PROFILE_DEBUG4( "CSipSnapAlrMonitor::NotifyObservers SNAP, IAP",
-	                iSnapId, aIapId )
+	        SnapId(), aIapId )
 
 	NotifyInitializedObservers( aIapId, MSipAlrObserver::EIapAvailable );
 	NotifyNewObservers( aIapId );
@@ -495,9 +531,9 @@ void CSipAlrSnapMonitor::NotifyInitializedObservers(
 		if ( iObservers[i].iInitialEventDone )
 			{
 			PROFILE_DEBUG3( "CSipAlrSnapMonitor::NotifyIntitializedObservers",
-			                iSnapId )			
+			                SnapId() )			
 			
-			iObservers[i].iObserver->AlrEvent( aEvent, iSnapId, aIapId );
+			iObservers[i].iObserver->AlrEvent( aEvent, SnapId(), aIapId );
 			}
 		}
 	}
@@ -512,10 +548,10 @@ void CSipAlrSnapMonitor::NotifyNewObservers( TUint32 aIapId )
 		{
 		if ( !iObservers[i].iInitialEventDone )
 			{
-			PROFILE_DEBUG3( "CSipAlrSnapMonitor::NotifyNewObservers", iSnapId )
+			PROFILE_DEBUG3( "CSipAlrSnapMonitor::NotifyNewObservers", SnapId() )
 
 			iObservers[i].iObserver->AlrEvent(
-			    MSipAlrObserver::EIapAvailable, iSnapId, aIapId );
+			    MSipAlrObserver::EIapAvailable, SnapId(), aIapId );
 
 			iObservers[i].iInitialEventDone = ETrue;
 			}
@@ -529,6 +565,15 @@ void CSipAlrSnapMonitor::NotifyNewObservers( TUint32 aIapId )
 TBool CSipAlrSnapMonitor::IsSnapAvailable() const
     {
     return ( iSystemStateMonitor.CurrentValue( 
-	             CSipSystemStateMonitor::ESnapAvailability, iSnapId ) == 
+	             CSipSystemStateMonitor::ESnapAvailability, SnapId() ) == 
 	                 CSipSystemStateMonitor::ESnapAvailable );
+    }
+
+// -----------------------------------------------------------------------------
+// CSipAlrSnapMonitor::BearerId
+// -----------------------------------------------------------------------------
+//
+TBool CSipAlrSnapMonitor::BearerId()
+    {
+    return iSnapData.iBearerId;
     }

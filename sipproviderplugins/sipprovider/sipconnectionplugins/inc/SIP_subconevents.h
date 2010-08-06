@@ -21,6 +21,7 @@
  @publishedAll
  @released since v9.2
 */
+#warning "SIPProvider APIs are deprecated, use SIP Client Library APIs instead."
  
 #ifndef SIPSCPR_SUBCONEVENTS_H
 #define SIPSCPR_SUBCONEVENTS_H
@@ -44,7 +45,8 @@ class CSubConSIPResponseEvent : public CSubConNotificationEvent
 /** CSubConSIPResponseEvent is used to get and set the response elements of the most recent response  
 
 @publishedAll
-@released since v9.2 */
+@deprecated 
+*/
 	{
 public:
 	/**
@@ -77,7 +79,8 @@ class CSubConSIPAuthenticationRequiredEvent : public CSubConNotificationEvent
 /** CSubConSIPAuthenticationRequiredEvent is used  when SIP authentication is required
 
 @publishedAll
-@released since v9.2 */
+@deprecated 
+*/
 	{
 public:
         
@@ -102,7 +105,8 @@ class CSubConSIPNotificationEvent : public CSubConNotificationEvent
 /** CSubConSIPNotificationEvent is used for receiving SIP event notifications 
 
 @publishedAll
-@released since v9.2 */
+@deprecated
+ */
 	{
 public:
   	inline static CSubConSIPNotificationEvent* NewL();
@@ -126,7 +130,7 @@ class CSIPSubConnExtensionEventsFactory : public CBase
 /** Factory used to create instances of the SIP SubConnection Extension Events
 
 @publishedAll
-@released since v9.2 
+@deprecated
 */
 	{
 public:

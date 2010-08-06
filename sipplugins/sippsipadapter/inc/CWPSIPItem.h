@@ -488,6 +488,9 @@ class CWPSIPItem : public CBase
          * @param aSigQos Signalling QoS value.
          */
         void SetSigQos( TUint32 aSigQos );
+        
+        void SetBearerID(TUint32 aBearerId);
+        TUint32 GetBearerID();
 
     private:
 
@@ -686,6 +689,8 @@ class CWPSIPItem : public CBase
          * Signalling QoS value.
          */
         TUint32 iSigQos;
+        
+        TUint32 iBearerId;
 
     private:
         //friend class UT_CWPSIPItem; // For testing purposes.

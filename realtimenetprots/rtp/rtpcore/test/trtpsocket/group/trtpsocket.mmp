@@ -59,15 +59,7 @@ SOURCE   rtpapi.cpp rtpcontrollerdummy.cpp rtphandlerbase.cpp
 USERINCLUDE		../../../inc
 USERINCLUDE		../../../src
 
-
-SYSTEMINCLUDE /epoc32/include
-SYSTEMINCLUDE /epoc32/include/comms-infras
-SYSTEMINCLUDE /epoc32/include/test
-SYSTEMINCLUDE /epoc32/include/libc
-
-
-
-
+MW_LAYER_SYSTEMINCLUDE
 
 LIBRARY     euser.lib testexecuteutils.lib esock.lib insock.lib
 LIBRARY		testexecutelogclient.lib netmeta.lib

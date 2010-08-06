@@ -58,9 +58,7 @@ USERINCLUDE	    ../../socketengine/Inc
 USERINCLUDE     ../../sipengine/inc
 USERINCLUDE		  ../../../SIP/Codec/inc
 
-SYSTEMINCLUDE   /epoc32/include
-SYSTEMINCLUDE	/epoc32/include/techview
-SYSTEMINCLUDE   /epoc32/include/oem
+MW_LAYER_SYSTEMINCLUDE
 
 LIBRARY         euser.lib apparc.lib cone.lib eikcore.lib
 LIBRARY         eikcoctl.lib bafl.lib 

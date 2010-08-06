@@ -39,10 +39,7 @@ USERINCLUDE   ../inc
 USERINCLUDE   ../../../inc
 
 
-SYSTEMINCLUDE  /epoc32/include/ecom
-SYSTEMINCLUDE  /epoc32/include
-SYSTEMINCLUDE  /epoc32/include/comms-infras
-SYSTEMINCLUDE  /epoc32/include/networking
+MW_LAYER_SYSTEMINCLUDE
 
 START RESOURCE A0008AA9.rss
 TARGET dummy_rtpscpr.rsc

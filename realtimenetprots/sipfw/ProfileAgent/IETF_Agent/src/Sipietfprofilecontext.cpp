@@ -562,10 +562,12 @@ void CSIPIetfProfileContext::IncomingResponse(
         PROFILE_DEBUG3("SIPIetfProfileContext::IncomingResponse", ProfileId())
         aHandled = ETrue;
         const CSIPResponseElements* response = aTransaction.ResponseElements();
-        TUint responseCode = response->StatusCode();
+        TInt responseCode  = KErrGeneral;
         TBool retry = EFalse;
         if (response)
             {
+                responseCode = response->StatusCode();
+                
                 retry = RetryRegister( &aTransaction,  responseCode);
                 if( !retry )
                 {
