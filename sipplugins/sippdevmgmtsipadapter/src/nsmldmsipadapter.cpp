@@ -499,6 +499,16 @@ void CNSmlDmSIPAdapter::DDFStructureL( MSmlDmDDFObject& aDDF )
     sigQos.SetDFFormatL( MSmlDmDDFObject::EInt );
     sigQos.AddDFTypeMimeTypeL( KNSmlDMSIPTextPlain );
     sigQos.SetDescriptionL( KNSmlDMSIPSigQosExp );
+    
+    //Bearer ID
+    MSmlDmDDFObject& bearerid = idNode.AddChildObjectL( KNSmlDMSIPBearerID );
+    bearerid.SetAccessTypesL( accessTypesGetReplaceAdd );
+    bearerid.SetOccurenceL( MSmlDmDDFObject::EZeroOrOne );
+    bearerid.SetScopeL( MSmlDmDDFObject::EDynamic );
+    bearerid.SetDFFormatL( MSmlDmDDFObject::EInt );
+    bearerid.AddDFTypeMimeTypeL( KNSmlDMSIPTextPlain );
+    bearerid.SetDescriptionL( KNSmlDMSIPBearerIDExp );
+    
 
     DBG_PRINT("CNSmlDmSIPAdapter::DDFStructureL(): end");
     }
@@ -856,6 +866,22 @@ void CNSmlDmSIPAdapter::UpdateLeafObjectL(
             }
         }
 
+    // SIP/x/BearerId
+    if ( KNSmlDMSIPBearerID() == lastUriSeg )
+        {
+        TUint32 bearerid = DesToInt( aObject );
+        if ( bearerid )
+            {
+            err = iProfiles->At( profileID )->SetParameter( 
+                    KBearerType, bearerid );
+            }
+        else
+            {
+            status = CSmlDmAdapter::EInvalidObject;
+            }
+        }
+    
+    
     // ==============================
     // OutboundProxy settings node
     // ==============================
@@ -1260,6 +1286,16 @@ SNAP not found end" );
         sigQos >>= 2;
         segmentResult.Num( sigQos );
         }
+    
+    // SIP/x/BearerId
+       if ( KNSmlDMSIPBearerID() == lastUriSeg )
+           {
+           TUint32 bearerid;
+           err = iProfiles->At( profileID )->GetParameter(
+                   KBearerType, bearerid );
+           segmentResult.Num( bearerid );
+           }
+    
 
     // Set error if fetch failed.
     if ( -1 > err )
@@ -1516,6 +1552,12 @@ void  CNSmlDmSIPAdapter::ChildURIListL(
             KNSmlDMSIPSeparator8 );
 
         segmentName.Copy( KNSmlDMSIPSigQos );
+        currentURISegmentList->InsertL( currentURISegmentList->Size(), 
+            segmentName );
+        currentURISegmentList->InsertL( currentURISegmentList->Size(), 
+            KNSmlDMSIPSeparator8 );
+        
+        segmentName.Copy( KNSmlDMSIPBearerID );
         currentURISegmentList->InsertL( currentURISegmentList->Size(), 
             segmentName );
         currentURISegmentList->InsertL( currentURISegmentList->Size(), 
@@ -1821,7 +1863,11 @@ TPtrC8 CNSmlDmSIPAdapter::RemoveLastURISeg( const TDesC8& aURI )
                 }
             }
         }
-    return aURI.Left( i );
+		
+	if(i < 0)
+		return aURI.Left(i+1);
+	else	
+		return aURI.Left( i );
     }
 
 // ---------------------------------------------------------------------------

@@ -1489,7 +1489,15 @@ void CTransport::UpdateContactHeadersL(
                         {
                         uri.SIPURI()->SetSIPS( EFalse );
                         }
-                    } //end if (aMessage->IsRequest)                
+                    //set the port information as per sip scheme and if there is no
+                    //port information set in the contact header.=
+                    if(uri.SIPURI()->IsSIPSURI() && (0 == uri.SIPURI()->HostPort().Port()))
+                        uri.SIPURI()->HostPort().SetPort(KDefaultSipsPort);
+                    else if ((EFalse == uri.SIPURI()->IsSIPSURI()) && (0 == uri.SIPURI()->HostPort().Port()))
+                        uri.SIPURI()->HostPort().SetPort(KDefaultSipPort);
+					else
+						{}
+                    } //end if (aMessage->IsRequest)				 
 			    } //end if (uri.IsSIPURI())
 			} //end if(sipaddr)
 		} //end while    

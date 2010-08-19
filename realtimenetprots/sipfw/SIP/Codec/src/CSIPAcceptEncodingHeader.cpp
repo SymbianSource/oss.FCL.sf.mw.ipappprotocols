@@ -164,7 +164,7 @@ EXPORT_C void CSIPAcceptEncodingHeader::SetCodingsL(const TDesC8& aCodings)
 	tmp->Des().Trim();
 	//Allowing '/' token for interoperability issues
 	RArray<TSIPChar> array;
-	if(CFeatureDiscovery::IsFeatureSupportedL(TUid::Uid(KFeatureIdFfSipApnSwitching)))
+	if(CFeatureDiscovery::IsFeatureSupportedL(TUid::Uid(KFeatureIdFfSipNonstandardInteropfix)))
 	    {
         array.Append('/');
 	    }

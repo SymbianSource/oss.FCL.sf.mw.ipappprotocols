@@ -52,6 +52,7 @@ _LIT( KParmLR,         "LR" );
 _LIT( KParmLOCK,       "LOCK" );
 _LIT( KParmAUTOREG,    "AUTOREG" );
 _LIT( KParmSIGQOS,     "SIGQOS" );
+_LIT( KParmBearerID,   "PBEARERID" );
 
 // For other purposes.
 const TUint32 KNotSet = 0xffffffff;
@@ -500,6 +501,14 @@ void CWPSIPAdapter::VisitL( CWPParameter& aParameter )
                     {
                     iCurrentSIPItem->SetSigQos( parmVal );
                     }
+                }
+            
+            else if(aParameter.Name() == KParmBearerID )
+                {
+                TInt bearerid;
+                TLex8 lex( tmpValue->Des() );
+                User::LeaveIfError( lex.Val( bearerid ) );
+                iCurrentSIPItem->SetBearerID((TUint32) bearerid );
                 }
             break;
             }

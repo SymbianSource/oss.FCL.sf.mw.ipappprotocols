@@ -507,27 +507,7 @@ void CSIPProfileServerCore::SystemVariableUpdated(
                     {
                     ConfirmSystemstateMonitor(CSipSystemStateMonitor::ESystemState);
                     }
-                } //end if Offline
-            
-            //If the System receives Online event
-            if(aValue == CSipSystemStateMonitor::ESystemOnline)
-                {                
-                for (TInt i = 0; i < iProfileCache.Count(); i++)
-                    {
-                    CSIPProfileCacheItem* item = iProfileCache[i];
-                    item->OfflineInitiated(EFalse);                    
-                    CSIPConcreteProfile::TStatus status;
-                    iPluginDirector->State(status, item->UsedProfile());
-                    if (item->IsReferred() && status == CSIPConcreteProfile::EUnregistered)
-                        {
-                        TRAPD(err, item->StartRegisterL(*iWaitForIAP, *iRegInProg, ETrue));
-                        if (err != KErrNone)
-                            {
-                            HandleAsyncError(*item,CSIPConcreteProfile::ERegistrationInProgress,err);
-                            }
-                        }
-                    }
-                } //end if Online           
+                } //end if Offline         
 	    } //end if SystemState    
 	else if(aVariable == CSipSystemStateMonitor::ERfsState)
 	    {
@@ -1906,20 +1886,22 @@ CSIPProfileServerCore::PassAlrErrorToClient(const CSIPProfileCacheItem& aItem,
 // -----------------------------------------------------------------------------
 //
 CSipAlrMigrationController&
-CSIPProfileServerCore::MigrationControllerL(TUint32 aSnapId)
+CSIPProfileServerCore::MigrationControllerL(TSipSNAPConfigurationData aSnapData)
 	{
-	RemoveUnusedMigrationControllers(aSnapId);
+	RemoveUnusedMigrationControllers(aSnapData.iSnapId);
 
 	for (TInt i = 0; i < iMigrationControllers.Count(); ++i)
 		{
-		if (iMigrationControllers[i]->SnapId() == aSnapId)
+        // Migration controller is unique based on the SNAP ID and Bearer ID.
+		if (iMigrationControllers[i]->SnapId() == aSnapData.iSnapId 
+		        && iMigrationControllers[i]->BearerId() == aSnapData.iBearerId)
 			{
 			return *iMigrationControllers[i];
 			}
 		}
 
 	CSipAlrMigrationController* ctrl =
-		CSipAlrMigrationController::NewLC(iAlrHandler->AlrMonitorL(), aSnapId);
+		CSipAlrMigrationController::NewLC(iAlrHandler->AlrMonitorL(),aSnapData);
 	iMigrationControllers.AppendL(ctrl);
 	CleanupStack::Pop(ctrl);
 	return *ctrl;
@@ -2210,8 +2192,7 @@ TInt CSIPProfileServerCore::ConnectionCloseTimerExpired(TAny* aPtr)
             CSIPConcreteProfile::TStatus status;
             self->iPluginDirector->State( status, self->iProfileCache[i]->UsedProfile() );
             item->OfflineInitiated(EFalse);
-            if (item->IsReferred() && (!self->iApnManager->IsIapGPRSL(item->Profile().IapId())) 
-                    && status == CSIPConcreteProfile::EUnregistered) 
+            if (item->IsReferred() && (status == CSIPConcreteProfile::EUnregistered) ) 
                 {                
                 TRAPD(err, item->StartRegisterL(*(self->iWaitForIAP), *(self->iRegInProg), ETrue));
                 if (err != KErrNone)

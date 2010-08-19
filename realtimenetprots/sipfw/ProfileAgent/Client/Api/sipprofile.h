@@ -195,6 +195,15 @@ const TUint32 KPrimaryAPN = 20;
 */
 const TUint32 KSecondaryAPN = 21;
 
+/** 
+* BearerType is of type TUint32.
+* Possible  Values and its purpose.
+* 0 --> Not Specified.
+* 1 --> WLAN Bearer Only.
+* 2 --> Cellular Data Bearer Only.
+**/
+const TUint32 KBearerType = 22;
+
 
 // CLASS DECLARATION
 /**
