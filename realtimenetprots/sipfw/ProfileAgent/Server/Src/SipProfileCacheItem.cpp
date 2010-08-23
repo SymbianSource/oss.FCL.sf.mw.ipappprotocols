@@ -366,6 +366,7 @@ void CSIPProfileCacheItem::RemoveObserver(
 	if (index != KErrNotFound)
 		{
 		iObservers.Remove(index);
+		iObservers.Compress();
 		}
 
 	RemoveFromPendingObservers(aObserver);
@@ -402,6 +403,7 @@ void CSIPProfileCacheItem::RemoveUser(
 	if (index != KErrNotFound)
 		{
 		iUsers.Remove(index);
+		iUsers.Compress();
 		CheckProfileEnabledState();
 		}
 	}
@@ -1256,6 +1258,7 @@ void CSIPProfileCacheItem::RemoveFromPendingObservers(
 	if (index != KErrNotFound)
 		{
 		iObserversWaitedForPermission.Remove(index);
+		iObserversWaitedForPermission.Compress();
 		}
 	}
 
@@ -1416,3 +1419,14 @@ TUint32 CSIPProfileCacheItem::BearerID()
     LatestProfile().ExtensionParameter(KBearerType , bearerId);
     return bearerId;
 }
+
+// -----------------------------------------------------------------------------
+// CSIPProfileCacheItem::HasQueuedUpdate
+// This function will return true if profile updated and not yet processed
+// false otherwise 
+// -----------------------------------------------------------------------------
+//
+TBool CSIPProfileCacheItem::HasQueuedUpdate() const
+    {
+    return (iQueuedProfile != NULL);
+    }

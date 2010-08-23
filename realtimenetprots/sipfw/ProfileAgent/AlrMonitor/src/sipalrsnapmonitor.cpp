@@ -300,6 +300,7 @@ TBool CSipAlrSnapMonitor::DetachObserver( MSipAlrObserver& aObserver )
 			iObservers.Remove( i );	
 			}
 		}
+	iObservers.Compress();
 
 	return iObservers.Count() == 0;
 	}
@@ -485,7 +486,7 @@ void CSipAlrSnapMonitor::ResetState()
 
     DestroyMobilityAo();
     Cancel();
-    iConnection.Close();
+//    iConnection.Close();
     iMigrationAllowedByClient = EFalse;
     iConnectionActive = EFalse;
     iPreferredCarrierAvailableCalled = EFalse;

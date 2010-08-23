@@ -112,4 +112,5 @@ EXPORTS
 	?SetPrePostProcessingRegisterCallback@RRtpSession_Internal@@QAEXPAVMPrePostProcessingCallback@@@Z @ 111 NONAME ; void RRtpSession_Internal::SetPrePostProcessingRegisterCallback(class MPrePostProcessingCallback *)
 	?RtcpStatistics@RRtpSession_Internal@@QAEHKAAVTRtcpStatistics@@@Z @ 112 NONAME ; int RRtpSession_Internal::RtcpStatistics(unsigned long, class TRtcpStatistics &)
 	?Close@RRtpSendPacket@@QAEXXZ @ 113 NONAME ; void RRtpSendPacket::Close(void)
+	?SenderSSRC@RRtcpRRItem@@QBEIXZ @ 114 NONAME ; unsigned int RRtcpRRItem::SenderSSRC(void) const
 

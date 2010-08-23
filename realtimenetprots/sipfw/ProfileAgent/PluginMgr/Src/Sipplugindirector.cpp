@@ -305,6 +305,7 @@ void CSIPPluginDirector::Cleanup()
 			}//if
 
 		}//for
+	iSIPProfileAgents.Compress();
 	}
 
 // -----------------------------------------------------------------------------
