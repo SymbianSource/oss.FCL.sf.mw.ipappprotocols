@@ -228,7 +228,7 @@ void UT_CSRTPKeyDerivation_AESCM128::UT_RFC3711_Session_Auth_Key_TestL()
     }
 
 
-void UT_CSRTPKeyDerivation_AESCM128::UT_ErronousInput_1L()
+void UT_CSRTPKeyDerivation_AESCM128::UT_ErronousInput_OneL()
     {    
         
     TInt err = KErrNone;
@@ -332,14 +332,14 @@ EUNIT_TEST(
     "CSRTPKeyDerivation_AESCM128",
     "PRF_128L",
     "FUNCTIONALITY",
-    SetupL, UT_ErronousInput_1L, Teardown)
+    SetupL, UT_ErronousInput_OneL, Teardown)
 
 EUNIT_END_TEST_TABLE
 
 //  END OF FILE
 
 /*
-void UT_CSRTPKeyDerivation_AESCM128::UT_ErronousInput_1L()
+void UT_CSRTPKeyDerivation_AESCM128::UT_ErronousInput_OneL()
     {
     TInt err = KErrNone;
     HBufC8* result = NULL;

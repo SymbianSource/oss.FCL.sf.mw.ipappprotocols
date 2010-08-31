@@ -35,9 +35,7 @@ USERINCLUDE   ../src
 USERINCLUDE   ../../../inc
 USERINCLUDE   ../../../src/rtp
 
-SYSTEMINCLUDE /epoc32/include
-SYSTEMINCLUDE /epoc32/include/comms-infras
-SYSTEMINCLUDE /epoc32/include/test
+MW_LAYER_SYSTEMINCLUDE
 
 //Please add your system include under here. 
 

@@ -25,10 +25,10 @@
 
 
 PRJ_EXPORTS
-./rtp.iby  /epoc32/rom/include/rtp.iby
+./rtp.iby  CORE_MW_LAYER_IBY_EXPORT_PATH(rtp.iby)
 
 PRJ_TESTEXPORTS
-./te_rtp.iby  /epoc32/rom/include/te_rtp.iby
+./te_rtp.iby	/epoc32/rom/include/te_rtp.iby
 ./rtptest.xml	z:/testdata/configs/rtp/rtptest.xml
 
 

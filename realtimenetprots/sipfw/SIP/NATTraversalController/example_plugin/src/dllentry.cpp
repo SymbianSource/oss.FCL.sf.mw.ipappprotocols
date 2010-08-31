@@ -18,7 +18,7 @@
 
 
 
-#include <implementationproxy.h>
+#include <ecom/implementationproxy.h>
 #include "CNATTraversalControllerExample.h"
 
 

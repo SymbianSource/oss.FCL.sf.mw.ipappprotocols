@@ -49,7 +49,8 @@ class CRtpTranStream : public CRtpStream
                              const TDesC8& aPayloadData,
                              TRtpSequence aSeqNum,
                              TBool aSetSeqNum,
-                             CRtpPacket* aPktSnd );
+                             CRtpPacket* aPktSnd,
+                             const TArray<TRtpCSRC> *aCsrcList = NULL);
 
         TInt BuildRtcpBYEPacket( const TDesC8& aReason,
                                  CRtpPacket* aPktRtcpSnd );

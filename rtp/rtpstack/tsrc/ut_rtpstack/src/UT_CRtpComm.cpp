@@ -604,7 +604,7 @@ void UT_CRtpComm::UT_CRtpComm_SetNonRtpObserverFlagL(  )
     delete iRtpComm; iRtpComm=NULL;
     }
 
-void UT_CRtpComm::UT_CRtpComm_MaxSocketSize()
+void UT_CRtpComm::UT_CRtpComm_MaxSocketSizeL()
     {
     TCreateSessionParams params;
     params.iSocketBufSize = 10000;
@@ -804,7 +804,7 @@ EUNIT_TEST(
     "CRtpComm",
     "MaxSocketSize",
     "FUNCTIONALITY",
-    SetupL, UT_CRtpComm_MaxSocketSize, Teardown)
+    SetupL, UT_CRtpComm_MaxSocketSizeL, Teardown)
     
 EUNIT_END_TEST_TABLE
 

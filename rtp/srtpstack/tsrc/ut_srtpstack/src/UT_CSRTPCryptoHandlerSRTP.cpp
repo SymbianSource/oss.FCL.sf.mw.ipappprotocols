@@ -221,14 +221,26 @@ void UT_CSRTPCryptoHandlerSRTP::Teardown(  )
     delete iTestPayload160Bits;
     delete iTestMKI128Bits;
     delete iTestAuthTag80Bits;
+	
+    iDecryptedPayload = NULL;
+    iTestPayload160Bits = NULL;
+    iTestMKI128Bits = NULL;
+    iTestAuthTag80Bits = NULL;
 
     delete iStreamIn;
     delete iSRTPSession;    
+	
+	iStreamIn = NULL;
+    iSRTPSession = NULL; 
 
     
     delete iRFC3711_SessionEncrKey128bits;
     delete iRFC3711_SessionSaltKey128bits;
     delete iRFC3711_SessionAuthKey128bits;    
+	
+	iRFC3711_SessionEncrKey128bits = NULL;
+    iRFC3711_SessionSaltKey128bits = NULL;
+    iRFC3711_SessionAuthKey128bits = NULL;  
 
     }
 
@@ -428,7 +440,7 @@ void UT_CSRTPCryptoHandlerSRTP::UT_InitializeEncryptedPacketLL(  )
 
 
 
-void UT_CSRTPCryptoHandlerSRTP::UT_DeriveSessionKeysL_1L(  )
+void UT_CSRTPCryptoHandlerSRTP::UT_DeriveSessionKeysL_OneL(  )
     {
     //Create the packet firest 
      TInt authTagLenInBytes = iContext->CryptoParams().iSrtpAuthTagLen/8;
@@ -1628,7 +1640,7 @@ EUNIT_TEST(
     "CSRTPCryptoHandlerSRTP",
     "DeriveSessionKeysL",
     "FUNCTIONALITY",
-    SetupL, UT_DeriveSessionKeysL_1L, Teardown)
+    SetupL, UT_DeriveSessionKeysL_OneL, Teardown)
 
 EUNIT_TEST(
     "UpdateROC - 1 ",

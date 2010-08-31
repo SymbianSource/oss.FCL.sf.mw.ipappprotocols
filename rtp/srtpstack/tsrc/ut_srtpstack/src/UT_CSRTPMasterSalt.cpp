@@ -100,6 +100,12 @@ void UT_CSRTPMasterSalt::Teardown(  )
 	delete iMasterSalt2;
 	delete iMasterSalt3;
 	delete iMasterSalt4;
+	
+    iMasterSalt = NULL;
+	iMasterSalt2 = NULL;
+	iMasterSalt3 = NULL;
+	iMasterSalt4 = NULL;
+	
 	iRFCTestSalt112bits.Zero();
     iRFCTestSalt112bits_dehexed.Zero();      
     }

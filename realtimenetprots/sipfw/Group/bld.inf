@@ -44,8 +44,8 @@ PRJ_EXPORTS
 ../conf/sipframework_2001f889.crml   MW_LAYER_EXPORTS_CRML(sipframework_2001f889.crml)
 
 // SIP iby-files
-../rom/sipsw.iby /epoc32/rom/include/sipsw.iby
-../rom/siph2lanbearermonitor.iby /epoc32/rom/include/siph2lanbearermonitor.iby
+../rom/sipsw.iby	CORE_MW_LAYER_IBY_EXPORT_PATH(sipsw.iby)
+../rom/siph2lanbearermonitor.iby	CORE_MW_LAYER_IBY_EXPORT_PATH(siph2lanbearermonitor.iby)
 
 // SDP Codec API
 ../SDP/api/SdpAttributeField.h SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(sdpattributefield.h)

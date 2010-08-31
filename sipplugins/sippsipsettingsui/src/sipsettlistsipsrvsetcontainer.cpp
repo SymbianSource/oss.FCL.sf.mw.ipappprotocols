@@ -20,7 +20,7 @@
 // INCLUDE FILES
 
 #include    <aknview.h>
-#include    <csxhelp/cp.hlp.hrh>
+#include    <cshelp/conset.hlp.hrh>
 #include    <gsfwviewuids.h>
 #include    <gssipsettingspluginrsc.rsg> //GUI Resource
 #include    "sipsettlistsipsrvsetcontainer.h"

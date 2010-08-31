@@ -193,6 +193,12 @@ void UT_CSRTPCryptoHandler::Teardown(  )
 
     delete iStreamOut;
     delete iSRTPSession; 
+	
+	iTestAuthTag80Bits = NULL;
+    iStreamIn = NULL;
+
+    iStreamOut = NULL;
+    iSRTPSession = NULL; 
     
     iResult.Zero();        
     iRFCTestSalt112bits.Zero();

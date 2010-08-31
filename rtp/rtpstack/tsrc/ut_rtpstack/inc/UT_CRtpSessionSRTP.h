@@ -158,19 +158,19 @@ NONSHARABLE_CLASS( UT_CRtpSessionSrtp )
         
          void UT_CRtpSessionSrtp_SendRtpPacket1L(  );
         
-         void UT_CRtpSessionSrtp_SendRtpPacket_1L();
-         void UT_CRtpSessionSrtp_SendRtpPacket_1AL(  );
+         void UT_CRtpSessionSrtp_SendRtpPacket_OneL();
+         void UT_CRtpSessionSrtp_SendRtpPacket_OneAL(  );
         
          void UT_CRtpSessionSrtp_SendRtpPacket_2L();
-         void UT_CRtpSessionSrtp_SendRtpPacket_2AL();
+         void UT_CRtpSessionSrtp_SendRtpPacket_TwoAL();
         
         
          void UT_CRtpSessionSrtp_OnRtpReceivedL();
          
-         void UT_CRtpSessionSrtp_OnRtpReceived_1L(  );
-         void UT_CRtpSessionSrtp::UT_CRtpSessionSrtp_SendSRTCPReport();
+         void UT_CRtpSessionSrtp_OnRtpReceived_OneL(  );
+         void UT_CRtpSessionSrtp::UT_CRtpSessionSrtp_SendSRTCPReportL();
 	
-		void UT_CRtpSessionSrtp_OnRtcpReceived();
+		void UT_CRtpSessionSrtp_OnRtcpReceivedL();
 	
         
 

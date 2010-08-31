@@ -34,7 +34,8 @@ enum TGSCompressionsIDs
 enum TGSRegistrationMode
     {
     EGSWhenNeeded = 0,
-    EGSAlwaysOn
+    EGSAlwaysOn,
+    EGSAlwaysOnHome
     };
 
 // Security negotiation choices

@@ -52,9 +52,7 @@ SOURCE			rtcpsessiondata.cpp
 USERINCLUDE 	../../../src/
 USERINCLUDE 	../../../inc/
 
-SYSTEMINCLUDE /epoc32/include
-SYSTEMINCLUDE /epoc32/include/test
-SYSTEMINCLUDE /epoc32/include/libc
+MW_LAYER_SYSTEMINCLUDE
 
 
 LIBRARY     euser.lib testexecuteutils.lib esock.lib insock.lib 

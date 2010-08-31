@@ -188,16 +188,20 @@ void CSipAlrMonitor::MonitorSnapL(
 //
 void CSipAlrMonitor::FreeResources ( MSipAlrObserver& aObserver )
     {
+    CSipAlrSnapMonitor* monitor= 0;
 	for ( TInt i = iSnapMonitors.Count()-1; i >= 0; i-- )
 		{
 		TBool last = iSnapMonitors[i]->DetachObserver ( aObserver );
 		if ( last ) 
 			{
-			delete iSnapMonitors[i];
-			iSnapMonitors.Remove ( i );
+            monitor = iSnapMonitors[i];
+			iSnapMonitors.Remove(i);
+			delete monitor;
+			monitor = NULL;
 			PROFILE_DEBUG1( "CSipAlrMonitor::FreeResources monitor deleted" )
 			}
 		}
+	iSnapMonitors.Compress();
     }
 
 // -----------------------------------------------------------------------------

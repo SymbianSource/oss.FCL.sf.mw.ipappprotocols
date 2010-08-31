@@ -129,16 +129,16 @@ NONSHARABLE_CLASS( UT_CRtpStream )
         
          void UT_CRtpStream_RtpStreamCreateRtcpReportSectionL();
         
-         void UT_CRtpStream_UpdateParam();
+         void UT_CRtpStream_UpdateParamL();
          	
-         void UT_CRtpStream_RtpByeAppMethods();
+         void UT_CRtpStream_RtpByeAppMethodsL();
          
-         void UT_CRtpStream_TestRtpSRMethods();
+         void UT_CRtpStream_TestRtpSRMethodsL();
          
-         void UT_CRtpStream_TestRtpRRMethods();
+         void UT_CRtpStream_TestRtpRRMethodsL();
          
          void UT_CRtpStream_TestStreamStatAndSdesMethods();
-         void UT_CRtpStream_RtpStreamProcessRtpPacket();
+         void UT_CRtpStream_RtpStreamProcessRtpPacketL();
          
          void Hex(HBufC8& aString);
 

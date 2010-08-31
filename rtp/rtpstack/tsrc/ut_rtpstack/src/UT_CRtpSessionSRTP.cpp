@@ -521,14 +521,29 @@ void UT_CRtpSessionSrtp::Teardown(  )
     delete iTestMKI128Bits;
     delete iTestAuthTag80Bits;
 
+	iDecryptedPayload = NULL;
+    iTestPayload160Bits = NULL;
+    iTestMKI128Bits = NULL;
+    iTestAuthTag80Bits = NULL;
+	
     delete iStreamIn;
     delete iStreamOut;
     delete iSRTPSession;    
-
+    
+	iStreamIn = NULL;
+    iStreamOut = NULL;
+    iSRTPSession = NULL;
+	
     delete iRFC3711_SessionEncrKey128bits;
     delete iRFC3711_SessionSaltKey128bits;
     delete iRFC3711_SessionAuthKey128bits;    
-    iRFC3711_TestMasterKey128bits.Zero();
+    
+	iRFC3711_SessionEncrKey128bits = NULL;
+    iRFC3711_SessionSaltKey128bits = NULL;
+    iRFC3711_SessionAuthKey128bits = NULL;   
+	
+	
+	iRFC3711_TestMasterKey128bits.Zero();
     iRFC3711_TestMasterSalt112bits.Zero();
     iMKI.Zero();
 
@@ -647,7 +662,7 @@ void UT_CRtpSessionSrtp::UT_CRtpSessionSrtp_SendRtpPacketL(  )
  	RTP_EUNIT_ASSERT_EQUALS(status, KErrNone)
     }
 
-void UT_CRtpSessionSrtp::UT_CRtpSessionSrtp_SendRtpPacket_1L(  )
+void UT_CRtpSessionSrtp::UT_CRtpSessionSrtp_SendRtpPacket_OneL(  )
     {
     //Test more branch
        TInt error( KErrNone );
@@ -683,7 +698,7 @@ void UT_CRtpSessionSrtp::UT_CRtpSessionSrtp_SendRtpPacket_1L(  )
  	RTP_EUNIT_ASSERT_EQUALS(status, KErrNone)
     }
  
-void UT_CRtpSessionSrtp::UT_CRtpSessionSrtp_SendRtpPacket_1AL(  )
+void UT_CRtpSessionSrtp::UT_CRtpSessionSrtp_SendRtpPacket_OneAL(  )
     {
        TInt error( KErrNone );
 
@@ -757,7 +772,7 @@ void UT_CRtpSessionSrtp::UT_CRtpSessionSrtp_SendRtpPacket_2L(  )
  	
     }
   
-  void UT_CRtpSessionSrtp::UT_CRtpSessionSrtp_SendRtpPacket_2AL(  )
+  void UT_CRtpSessionSrtp::UT_CRtpSessionSrtp_SendRtpPacket_TwoAL(  )
     {
        TInt error( KErrNone );
 
@@ -871,7 +886,7 @@ void UT_CRtpSessionSrtp::UT_CRtpSessionSrtp_OnRtpReceivedL(  )
     
     }
     
-void UT_CRtpSessionSrtp::UT_CRtpSessionSrtp_OnRtpReceived_1L(  )
+void UT_CRtpSessionSrtp::UT_CRtpSessionSrtp_OnRtpReceived_OneL(  )
     {
     
     //cover more branch
@@ -922,7 +937,7 @@ void UT_CRtpSessionSrtp::UT_CRtpSessionSrtp_OnRtpReceived_1L(  )
     
     }    
 
-void UT_CRtpSessionSrtp::UT_CRtpSessionSrtp_SendSRTCPReport()
+void UT_CRtpSessionSrtp::UT_CRtpSessionSrtp_SendSRTCPReportL()
 	{
 	TInt error( KErrNone );
 	TRtpSSRC ssrcOut( 1234 );
@@ -990,7 +1005,7 @@ void UT_CRtpSessionSrtp::UT_CRtpSessionSrtp_SendSRTCPReport()
 	
 	}
 	
-void UT_CRtpSessionSrtp::UT_CRtpSessionSrtp_OnRtcpReceived()
+void UT_CRtpSessionSrtp::UT_CRtpSessionSrtp_OnRtcpReceivedL()
 	{
 	HBufC8* encSrtcpPacket =HBufC8::NewLC(KRTCPPacket().Length());
 	*encSrtcpPacket=KRTCPPacket;
@@ -1104,14 +1119,14 @@ EUNIT_TEST(
     "CRtpSessionSrtp",
     "SendRtpPacket",
     "FUNCTIONALITY",
-    SetupL, UT_CRtpSessionSrtp_SendRtpPacket_1L, Teardown)
+    SetupL, UT_CRtpSessionSrtp_SendRtpPacket_OneL, Teardown)
 
 EUNIT_TEST(
     "SendRtpPacket4 - test ",
     "CRtpSessionSrtp",
     "SendRtpPacket",
     "FUNCTIONALITY",
-    SetupL, UT_CRtpSessionSrtp_SendRtpPacket_1AL, Teardown)
+    SetupL, UT_CRtpSessionSrtp_SendRtpPacket_OneAL, Teardown)
 
 EUNIT_TEST(
     "SendRtpPacket5 - test ",
@@ -1125,7 +1140,7 @@ EUNIT_TEST(
     "CRtpSessionSrtp",
     "SendRtpPacket",
     "FUNCTIONALITY",
-    SetupL, UT_CRtpSessionSrtp_SendRtpPacket_2AL, Teardown)
+    SetupL, UT_CRtpSessionSrtp_SendRtpPacket_TwoAL, Teardown)
 
 EUNIT_TEST(
     "OnRtpReceived1 - test ",
@@ -1139,20 +1154,20 @@ EUNIT_TEST(
     "CRtpSessionSrtp",
     "OnRtpReceived",
     "FUNCTIONALITY",
-    SetupL, UT_CRtpSessionSrtp_OnRtpReceived_1L, Teardown)
+    SetupL, UT_CRtpSessionSrtp_OnRtpReceived_OneL, Teardown)
 
 EUNIT_TEST(
     "SendSRTCPReport ",
     "CRtpSessionSrtp",
     "SendSRTCPReport",
     "FUNCTIONALITY",
-    SetupL, UT_CRtpSessionSrtp_SendSRTCPReport, Teardown)
+    SetupL, UT_CRtpSessionSrtp_SendSRTCPReportL, Teardown)
 EUNIT_TEST(
     "OnRtcpReceived ",
     "CRtpSessionSrtp",
     "OnRtcpReceived",
     "FUNCTIONALITY",
-    SetupL, UT_CRtpSessionSrtp_OnRtcpReceived, Teardown)
+    SetupL, UT_CRtpSessionSrtp_OnRtcpReceivedL, Teardown)
 
   
 EUNIT_END_TEST_TABLE

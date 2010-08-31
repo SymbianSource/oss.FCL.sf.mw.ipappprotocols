@@ -178,6 +178,7 @@ CSipAlrMigrationController::DetachProfile(MSipAlrMigrationObserver& aObserver)
 	if (index != KErrNotFound)
 		{
 		iObservers.Remove(index);
+		iObservers.Compress();
 		}
 
 	if (iObservers.Count() == 0)

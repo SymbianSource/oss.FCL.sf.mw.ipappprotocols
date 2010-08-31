@@ -81,7 +81,7 @@ class UT_CSRTPCryptoHandlerSRTCP
          void UT_CSRTPCryptoHandlerSRTCP_NewLCL();
         
         
-         void UT_DeriveSessionKeysL_1L();
+         void UT_DeriveSessionKeysL_OneL();
          
          
          void UT_PerformAuthenticationLL();         

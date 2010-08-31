@@ -37,10 +37,10 @@
 ;	SIP Settings UI
 ; /////////////////////////
 ""	-	"z:\sys\bin\GSSIPSettingsPlugin.dll"
-""	-	"z:\resource\plugins\GSSIPSettingsPlugin.r*"
+""	-	"z:\resource\plugins\GSSIPSettingsPlugin.r??"
 ""  - "z:\resource\apps\GSSIPSettingsPlugin.mif"
 
 ; /////////////////////////
 ;	SIP Settings UI resources
 ; /////////////////////////
-""  - "z:\resource\GSSIPSettingsPluginRsc.R*"
+""  - "z:\resource\GSSIPSettingsPluginRsc.R??"

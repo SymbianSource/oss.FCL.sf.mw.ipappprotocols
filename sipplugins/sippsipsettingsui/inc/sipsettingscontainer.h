@@ -103,12 +103,6 @@ class CSIPSettingsContainer : public CCoeControl,
         * @return feature id.
         */
         TInt CurrentFeatureId( );
-        
-        /**
-        * Retrieves the DrawerFlags
-        * @return feature id.
-        */       
-        TInt DrawerFlags( );
 
         /**
         * Defines observer for the middle softkey label changes.

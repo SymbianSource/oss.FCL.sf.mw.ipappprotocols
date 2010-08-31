@@ -21,7 +21,7 @@
 
 PRJ_EXPORTS
 
-./shimrtp.iby  /epoc32/rom/include/shimrtp.iby
+./shimrtp.iby  CORE_MW_LAYER_IBY_EXPORT_PATH(shimrtp.iby)
 ../inc/rtp.h		SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(rtp.h)
 #ifdef SYMBIAN_ENABLE_SPLIT_HEADERS
 ../inc/rtpsession_internal.h	SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(rtpsession_internal.h)

@@ -334,10 +334,16 @@ void UT_CSRTPStreamOut::Teardown(  )
     {
     delete iDecryptedPayload;
     delete iTestPayload160Bits;
+	
+	iDecryptedPayload = NULL;
+    iTestPayload160Bits = NULL;
     //delete iTestMKI128Bits;
 
     delete iStreamOut;
     delete iSRTPSession;    
+	
+	iStreamOut = NULL;
+    iSRTPSession = NULL; 
 
     
     delete iRFC3711_SessionEncrKey128bits;
@@ -346,17 +352,23 @@ void UT_CSRTPStreamOut::Teardown(  )
     delete iRFC3711_RtcpEncrKey128bits;
 	delete iRFC3711_RtcpSaltKey128bits;
 	delete iRFC3711_RtcpAuthKey128bits;    
-
+    
+	iRFC3711_SessionEncrKey128bits = NULL;
+    iRFC3711_SessionSaltKey128bits = NULL;
+    iRFC3711_SessionAuthKey128bits = NULL;    
+    iRFC3711_RtcpEncrKey128bits = NULL;
+	iRFC3711_RtcpSaltKey128bits = NULL;
+	iRFC3711_RtcpAuthKey128bits = NULL;
     }
 
-void UT_CSRTPStreamOut::UT_CSRTPStreamOut_NewL_1L(  )
+void UT_CSRTPStreamOut::UT_CSRTPStreamOut_NewL_OneL(  )
     {
     CSRTPStreamOut* tempStreamOut = CSRTPStreamOut::NewL(*iSRTPSession, (TUint)1);
     EUNIT_ASSERT(tempStreamOut->SSRC()== 1);
     delete tempStreamOut;
     }
 
-void UT_CSRTPStreamOut::UT_CSRTPStreamOut_NewL_2L(  )
+void UT_CSRTPStreamOut::UT_CSRTPStreamOut_NewL_TwoL(  )
     {
         HBufC8* masterKey = HBufC8::NewL(KRFC3711_TestMasterKey128bits().Length());
     CleanupStack::PushL( masterKey );
@@ -399,7 +411,7 @@ void UT_CSRTPStreamOut::UT_CSRTPStreamOut_NewL_2L(  )
     delete srtpSession;                     
     }
 
-void UT_CSRTPStreamOut::UT_CSRTPStreamOut_NewL_3L(  )
+void UT_CSRTPStreamOut::UT_CSRTPStreamOut_NewL_ThreeL(  )
     {
         HBufC8* masterKey = HBufC8::NewL(KRFC3711_TestMasterKey128bits().Length());
     CleanupStack::PushL( masterKey );
@@ -764,20 +776,20 @@ EUNIT_TEST(
     "CSRTPStreamOut",
     "NewL",
     "FUNCTIONALITY",
-    SetupL, UT_CSRTPStreamOut_NewL_1L, Teardown)
+    SetupL, UT_CSRTPStreamOut_NewL_OneL, Teardown)
 
 EUNIT_TEST(
     "NewL2 - test ",
     "CSRTPStreamOut",
     "NewL2",
     "FUNCTIONALITY",
-    SetupL, UT_CSRTPStreamOut_NewL_2L, Teardown)
+    SetupL, UT_CSRTPStreamOut_NewL_TwoL, Teardown)
 EUNIT_TEST(
     "NewL3 - test ",
     "CSRTPStreamOut",
     "NewL3",
     "FUNCTIONALITY",
-    SetupL, UT_CSRTPStreamOut_NewL_3L, Teardown)
+    SetupL, UT_CSRTPStreamOut_NewL_ThreeL, Teardown)
 
 EUNIT_TEST(
     "ProtectRtpL - test ",

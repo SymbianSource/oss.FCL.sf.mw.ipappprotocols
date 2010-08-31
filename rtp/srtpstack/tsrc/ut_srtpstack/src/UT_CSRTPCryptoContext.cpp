@@ -228,6 +228,12 @@ void UT_CSRTPCryptoContext::Teardown(  )
     delete iSRTPSession; 
 	
     delete iContext2;
+	
+	iStreamIn = NULL;
+    iStreamOut = NULL; 
+    iSRTPSession = NULL; 
+	
+    iContext2 = NULL;
     			
     }
 
@@ -250,22 +256,22 @@ void UT_CSRTPCryptoContext::UT_CSRTPCryptoContext_Test1L(  )
 
     TSrtpCryptoParams params;
     //test constructL  
-    iMasterKey3 = CSRTPMasterKey::NewLC( *masterKey3, *mki3,
+    iMasterKey3 = CSRTPMasterKey::NewL( *masterKey3, *mki3,
     							    KSRTPDefSessionEncryptionKeyLength, 
     							    KSRTPDefSessionAuthenticationKeyLength );
     iMasterSalt3 = CSRTPMasterSalt::NewL( *masterSalt3, 1100 );
-    CleanupStack::Pop( iMasterKey3 );
+   
     CleanupStack::PopAndDestroy( mki3 );
 	
     CleanupStack::PopAndDestroy( masterSalt3 );
     CleanupStack::PopAndDestroy( masterKey3 ); 
-    CleanupStack::PushL( iMasterKey3 );
-    CleanupStack::PushL( iMasterSalt3 );
+    
+  
     params.iSrtcpAuthTagLen=80;
    	RTP_EUNIT_ASSERT_SPECIFIC_LEAVE( iContext3= CSRTPCryptoContext::NewL(iMasterKey3,iMasterSalt3, params ),
    		 KErrArgument );
-   	CleanupStack::Pop( iMasterSalt3 );
-    CleanupStack::Pop( iMasterKey3 );
+   	
+  
    	delete iContext3;	 
    	
     }
@@ -288,25 +294,20 @@ void UT_CSRTPCryptoContext::UT_CSRTPCryptoContext_Test2L(  )
  
 
     TSrtpCryptoParams params;
-   	iMasterKey3 = CSRTPMasterKey::NewLC( *masterKey3, *mki3,
+   	iMasterKey3 = CSRTPMasterKey::NewL( *masterKey3, *mki3,
     							    KSRTPDefSessionEncryptionKeyLength, 
     							    KSRTPDefSessionAuthenticationKeyLength );
     iMasterSalt3 = CSRTPMasterSalt::NewL( *masterSalt3, 1100 );
-    CleanupStack::Pop( iMasterKey3 );
+   
     CleanupStack::PopAndDestroy( mki3 );
 	CleanupStack::PopAndDestroy( masterSalt3 );
     CleanupStack::PopAndDestroy( masterKey3 ); 
     
     params.iSrtcpAuthTagLen=80;
-    
-    CleanupStack::PushL( iMasterKey3 );
-    CleanupStack::PushL( iMasterSalt3 );
-   	RTP_EUNIT_ASSERT_SPECIFIC_LEAVE( iContext3= CSRTPCryptoContext::NewL(iMasterKey3,iMasterSalt3, params ),
+    RTP_EUNIT_ASSERT_SPECIFIC_LEAVE( iContext3= CSRTPCryptoContext::NewL(iMasterKey3,iMasterSalt3, params ),
    		 KErrArgument );
    	
-   	CleanupStack::Pop( iMasterSalt3 );
-    CleanupStack::Pop( iMasterKey3 );	 
-   	delete iContext3;	 
+    delete iContext3;	 
    
 	}
 	
@@ -324,18 +325,18 @@ void UT_CSRTPCryptoContext::UT_CSRTPCryptoContext_Test3L(  )
 	*mki = K128bitMKITest1;
 	Hex(*mki);
 	
-	iMasterKey4 = CSRTPMasterKey::NewLC( *masterKey, *mki,
+	iMasterKey4 = CSRTPMasterKey::NewL( *masterKey, *mki,
 									KSRTPDefSessionEncryptionKeyLength, 
         							KSRTPDefSessionAuthenticationKeyLength );
     iMasterSalt4 = CSRTPMasterSalt::NewL( *masterSalt,KSRTPDefSessionSaltingKeyLength );
-    CleanupStack::Pop( iMasterKey4 );
+   
     CleanupStack::PopAndDestroy( mki );
 	
     CleanupStack::PopAndDestroy( masterSalt );
     CleanupStack::PopAndDestroy( masterKey );  
     
-    CleanupStack::PushL( iMasterKey4 );
-    CleanupStack::PushL( iMasterSalt4 );
+    
+   
      
 	 //invalid authalg
 	 TSrtpCryptoParams params;
@@ -343,8 +344,8 @@ void UT_CSRTPCryptoContext::UT_CSRTPCryptoContext_Test3L(  )
     RTP_EUNIT_ASSERT_SPECIFIC_LEAVE(iContext4=CSRTPCryptoContext::NewL(iMasterKey4,iMasterSalt4, params),
      KErrArgument );
      
-    CleanupStack::Pop( iMasterSalt4 );
-    CleanupStack::Pop( iMasterKey4 );
+    
+  
     }
 
 void UT_CSRTPCryptoContext::UT_CSRTPCryptoContext_Test4L(  )
@@ -361,17 +362,17 @@ void UT_CSRTPCryptoContext::UT_CSRTPCryptoContext_Test4L(  )
 	*mki = K128bitMKITest1;
 	Hex(*mki);
 	
-	iMasterKey5 = CSRTPMasterKey::NewLC( *masterKey, *mki,
+	iMasterKey5 = CSRTPMasterKey::NewL( *masterKey, *mki,
 									KSRTPDefSessionEncryptionKeyLength, 
         							KSRTPDefSessionAuthenticationKeyLength);
     iMasterSalt5 = CSRTPMasterSalt::NewL( *masterSalt,KSRTPDefSessionSaltingKeyLength ); 
-    CleanupStack::Pop( iMasterKey5 );
+    
    	CleanupStack::PopAndDestroy( mki );
 	CleanupStack::PopAndDestroy( masterSalt );
     CleanupStack::PopAndDestroy( masterKey );   
 	
-	CleanupStack::PushL( iMasterKey5 );
-    CleanupStack::PushL( iMasterSalt5 );
+	
+    
     
 	TSrtpCryptoParams params;
 	 //invalid auth tag length in context5
@@ -379,8 +380,7 @@ void UT_CSRTPCryptoContext::UT_CSRTPCryptoContext_Test4L(  )
 	 RTP_EUNIT_ASSERT_SPECIFIC_LEAVE( iContext5=CSRTPCryptoContext::NewL(iMasterKey5,iMasterSalt5,params ),
      KErrArgument );
      
-     CleanupStack::Pop( iMasterSalt5 );
-     CleanupStack::Pop( iMasterKey5 );
+ 
 	 }
 
 void UT_CSRTPCryptoContext::UT_CSRTPCryptoContext_Test5L(  )
@@ -396,26 +396,24 @@ void UT_CSRTPCryptoContext::UT_CSRTPCryptoContext_Test5L(  )
     CleanupStack::PushL( mki);
 	*mki = K128bitMKITest1;
 	Hex(*mki);
-	iMasterKey6 = CSRTPMasterKey::NewLC( *masterKey, *mki,
+	iMasterKey6 = CSRTPMasterKey::NewL( *masterKey, *mki,
 									KSRTPDefSessionEncryptionKeyLength, 
         							KSRTPDefSessionAuthenticationKeyLength );
     iMasterSalt6 = CSRTPMasterSalt::NewL( *masterSalt,KSRTPDefSessionSaltingKeyLength );
-    CleanupStack::Pop( iMasterKey6 );
+  
 	TSrtpCryptoParams params;
 	CleanupStack::PopAndDestroy( mki );
 	CleanupStack::PopAndDestroy( masterSalt );
     CleanupStack::PopAndDestroy( masterKey );   
 	
-	CleanupStack::PushL( iMasterKey6 );
-    CleanupStack::PushL( iMasterSalt6 );
+	
     
 	//invalid prefix length in context6
 	params.iPrefixLen=10;
 	RTP_EUNIT_ASSERT_SPECIFIC_LEAVE( iContext6=CSRTPCryptoContext::NewL(iMasterKey6,iMasterSalt6, params )  ,
      KErrArgument ); 
      
-	CleanupStack::Pop( iMasterSalt6 );
-    CleanupStack::Pop( iMasterKey6 );
+	
      
 	}
 void UT_CSRTPCryptoContext::UT_MasterKey_Test1L(  )
@@ -536,26 +534,26 @@ void UT_CSRTPCryptoContext::TestIsEqualL()
 
     TSrtpCryptoParams params;
     //test constructL  
-    iMasterKey3 = CSRTPMasterKey::NewLC( *masterKey3, *mki3 );
+    iMasterKey3 = CSRTPMasterKey::NewL( *masterKey3, *mki3 );
     iMasterSalt3 = CSRTPMasterSalt::NewL( *masterSalt3);
-    CleanupStack::Pop( iMasterKey3 );
+    
     CleanupStack::PopAndDestroy( mki3 );
 	
     CleanupStack::PopAndDestroy( masterSalt3 );
     CleanupStack::PopAndDestroy( masterKey3 ); 
     
-    CleanupStack::PushL( iMasterKey3 );
-    CleanupStack::PushL( iMasterSalt3 );
+ 
     
    	iContext3= CSRTPCryptoContext::NewL(iMasterKey3,iMasterSalt3, params );
-   	CleanupStack::Pop( iMasterSalt3 );
-    CleanupStack::Pop( iMasterKey3 );
+ 
+ 
      
    	params.iSrtpAuthTagLen=112;
    	iContext3->UpdateCryptoParams(params );
    	EUNIT_ASSERT(iContext->IsEqual(*iContext3)==EFalse);
    
-   	delete iContext3;	 
+   	delete iContext3;
+	iContext3 = NULL;
    	//test only param is different
    	HBufC8* masterKey1 = HBufC8::NewL(K128bitMasterKey1().Length());
     CleanupStack::PushL( masterKey1 );
@@ -571,22 +569,22 @@ void UT_CSRTPCryptoContext::TestIsEqualL()
 	*mki = K128bitMKITest1;
 	Hex(*mki);
 
-	iMasterKey = CSRTPMasterKey::NewLC( *masterKey1, *mki,
+	iMasterKey = CSRTPMasterKey::NewL( *masterKey1, *mki,
 									KSRTPDefSessionEncryptionKeyLength, 
         							KSRTPDefSessionAuthenticationKeyLength );
     iMasterSalt = CSRTPMasterSalt::NewL( *masterSalt1,KSRTPDefSessionSaltingKeyLength );
-    CleanupStack::Pop( iMasterKey );
+  
     CleanupStack::PopAndDestroy( mki );
     CleanupStack::PopAndDestroy( masterSalt1 );
     CleanupStack::PopAndDestroy( masterKey1 );
     TSrtpCryptoParams params2;
     params2.iSrtpAuthTagLen=32;
-    CleanupStack::PushL( iMasterKey );
-    CleanupStack::PushL( iMasterSalt );
+  
+ 
     CSRTPCryptoContext* context = CSRTPCryptoContext::NewL(iMasterKey, iMasterSalt,params2   );
     EUNIT_ASSERT(!iContext->IsEqual(*context));
-    CleanupStack::Pop( iMasterSalt );
-    CleanupStack::Pop( iMasterKey );
+    
+ 
     params2.iSrtpAuthTagLen=80;
     params2.iMasterKeysLifeTime = 0;
     context->UpdateCryptoParams(params2 );
@@ -602,7 +600,7 @@ void UT_CSRTPCryptoContext::TestSetRCCm3SyncL()
 	EUNIT_ASSERT(iContext->CryptoParams().iIsRCCm3Sync);
 	}
 	
-void UT_CSRTPCryptoContext::TestIsValid()
+void UT_CSRTPCryptoContext::TestIsValidL()
 	{
 	TSrtpCryptoParams params;
 	//TEst cases 1 about Encryption method
@@ -665,23 +663,20 @@ void UT_CSRTPCryptoContext::TestIsValid()
 	*mki3 = K128bitMKITest3;
 	Hex(*mki3);
  
-    iMasterKey3 = CSRTPMasterKey::NewLC( *masterKey3, *mki3,
+    iMasterKey3 = CSRTPMasterKey::NewL( *masterKey3, *mki3,
     								KSRTPDefSessionAuthenticationKeyLength, 
     							    KSRTPDefSessionEncryptionKeyLength
     							    );
     iMasterSalt3 = CSRTPMasterSalt::NewL( *masterSalt3, 1100 );
-    CleanupStack::Pop( iMasterKey3 );
+   
     CleanupStack::PopAndDestroy( mki3 );
 	
     CleanupStack::PopAndDestroy( masterSalt3 );
     CleanupStack::PopAndDestroy( masterKey3 ); 
-    CleanupStack::PushL( iMasterKey3 );
-    CleanupStack::PushL( iMasterSalt3 );
+  
    	RTP_EUNIT_ASSERT_SPECIFIC_LEAVE( iContext3= CSRTPCryptoContext::NewL(iMasterKey3,iMasterSalt3, params ),
    		 KErrArgument );
    
-	CleanupStack::Pop( iMasterSalt3 );
-    CleanupStack::Pop( iMasterKey3 );
 	}
 	
 void UT_CSRTPCryptoContext::SRTPMasterKeyStaleEvent(const CSRTPStream& /*aStream*/)
@@ -828,7 +823,7 @@ EUNIT_TEST(
     "CSRTPCryptoContext",
     "TestIsValid",
     "FUNCTIONALITY",
-    SetupL, TestIsValid, Teardown)  
+    SetupL, TestIsValidL, Teardown)  
     
 EUNIT_END_TEST_TABLE
 

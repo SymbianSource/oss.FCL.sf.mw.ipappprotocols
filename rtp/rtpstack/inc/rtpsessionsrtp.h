@@ -55,19 +55,21 @@ class CRtpSessionSrtp :public CRtpSession
         ~CRtpSessionSrtp();
 
         TInt SendRtpPacket( TRtpId aTranStreamId, const TRtpSendHeader& aHeaderInfo, 
-                            const TDesC8& aPayloadData );
+                            const TDesC8& aPayloadData, const TArray<TRtpCSRC> *aCsrcList = NULL );
 
         TInt SendRtpPacket( TRtpId aTranStreamId,
                             const TRtpSendHeader& aHeaderInfo,
                             const TDesC8& aPayloadData,
-                            TRequestStatus& aStatus );
+                            TRequestStatus& aStatus,
+                            const TArray<TRtpCSRC> *aCsrcList = NULL);
 
         
         TInt SendRtpPacket( TRtpId aTranStreamId,
                             TRtpSequence aSequenceNum,
                             const TRtpSendHeader& aHeaderInfo,
                             const TDesC8& aPayloadData,
-                            TRequestStatus& aStatus );
+                            TRequestStatus& aStatus,
+                            const TArray<TRtpCSRC> *aCsrcList = NULL );
 
         //TInt SendRtcpByePacket( TRtpId aTranStreamId, const TDesC8& aReason );
         //TInt SendRtcpAppPacket( TRtpId aTranStreamId, const TRtcpApp& aApp );
