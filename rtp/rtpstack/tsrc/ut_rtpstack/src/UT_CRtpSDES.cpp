@@ -121,7 +121,7 @@ void UT_CRtpSDES::UT_CRtpSDES_NewLL(  )
     
     }
 
-void UT_CRtpSDES::UT_CRtpSDES_NewL_OneL(  )
+void UT_CRtpSDES::UT_CRtpSDES_NewL_1L(  )
     {
     TInt result( KErrNone );
     TBuf8<16> cName;
@@ -419,7 +419,7 @@ EUNIT_TEST(
     "CRtpSDES",
     "NewL",
     "FUNCTIONALITY",
-    SetupL, UT_CRtpSDES_NewL_OneL, Teardown)
+    SetupL, UT_CRtpSDES_NewL_1L, Teardown)
 
 EUNIT_TEST(
     "GetSDES - test ",

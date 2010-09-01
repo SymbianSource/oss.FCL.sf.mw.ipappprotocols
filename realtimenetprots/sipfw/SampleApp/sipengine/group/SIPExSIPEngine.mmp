@@ -34,7 +34,7 @@ SOURCE          DllEntry.cpp
 
 USERINCLUDE     ../inc
 
-MW_LAYER_SYSTEMINCLUDE
+SYSTEMINCLUDE   /epoc32/include
 
 LIBRARY		    euser.lib
 LIBRARY	    	estor.lib

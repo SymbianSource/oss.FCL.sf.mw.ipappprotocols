@@ -67,7 +67,7 @@ class UT_SRTPAuthentication_NULL
         
          void Teardown();
         
-         void UT_AuthenticateL_RFC2202_Test1_EightyL();
+         void UT_AuthenticateL_RFC2202_Test1_80L();
          
          void Hex(HBufC8& aString);                                  
 

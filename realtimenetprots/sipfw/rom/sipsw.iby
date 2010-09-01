@@ -77,7 +77,7 @@ ECOM_PLUGIN(sipdigest.dll,sipdigest.rsc)
 
 ECOM_PLUGIN(siptls.dll,siptls.rsc)
 
-#ifndef __IPSEC
+#ifdef SYMBIAN_EXCLUDE_IPSEC
 REM Feature IPSEC not included in this rom
 #else
 ECOM_PLUGIN(sipipsec.dll,sipipsec.rsc)

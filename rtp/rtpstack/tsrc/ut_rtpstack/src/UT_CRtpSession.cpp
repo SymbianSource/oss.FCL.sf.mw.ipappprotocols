@@ -1012,7 +1012,7 @@ void UT_CRtpSession::UT_CRtpSession_SendRtpPacketL(  )
     iSession->iCommNet->iSender[ERTPPort]->iStatus = TRequestStatus();
     }
 
-void UT_CRtpSession::UT_CRtpSession_SendRtpPacket_OneL(  )
+void UT_CRtpSession::UT_CRtpSession_SendRtpPacket_1L(  )
     {
     TCreateSessionParams sessionParams;
     TRtcpParams rtcpParams;
@@ -1082,7 +1082,7 @@ void UT_CRtpSession::UT_CRtpSession_SendRtpPacket_OneL(  )
   
     }
 
-void UT_CRtpSession::UT_CRtpSession_SendRtpPacket_TwoL(  )
+void UT_CRtpSession::UT_CRtpSession_SendRtpPacket_2L(  )
     {
     TInt error( KErrNone );
 
@@ -2275,7 +2275,7 @@ void UT_CRtpSession::UT_CRtpSession_OnExpiredL(  )
     
     // "CRtpSession::OnExpired() - passed" ) );
     }
-void UT_CRtpSession::UT_CRtpSession_ScheduleRtcpSendL()
+void UT_CRtpSession::UT_CRtpSession_ScheduleRtcpSend()
     {
     //"") );
     // "Test description: Test scheduling RTCP transmission" ) );
@@ -3287,7 +3287,7 @@ EUNIT_TEST(
     "CRtpSession",
     "SendRtpPacket",
     "FUNCTIONALITY",
-    SetupL, UT_CRtpSession_SendRtpPacket_OneL, Teardown)
+    SetupL, UT_CRtpSession_SendRtpPacket_1L, Teardown)
 */
 
 EUNIT_TEST(
@@ -3295,7 +3295,7 @@ EUNIT_TEST(
     "CRtpSession",
     "SendRtpPacket",
     "FUNCTIONALITY",
-    Setup2L, UT_CRtpSession_SendRtpPacket_TwoL, Teardown)
+    Setup2L, UT_CRtpSession_SendRtpPacket_2L, Teardown)
 
 EUNIT_TEST(
     "SendRtpPacket3 - test ",
@@ -3448,7 +3448,7 @@ EUNIT_TEST(
     "CRtpSession",
     "ScheduleRtcpSend",
     "FUNCTIONALITY",
-    SetupL, UT_CRtpSession_ScheduleRtcpSendL, Teardown)
+    SetupL, UT_CRtpSession_ScheduleRtcpSend, Teardown)
     
 
 EUNIT_TEST(

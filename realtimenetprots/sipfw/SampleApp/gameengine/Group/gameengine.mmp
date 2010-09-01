@@ -37,7 +37,7 @@ USERINCLUDE     ../Inc
 USERINCLUDE     ../../sipengine/inc
 USERINCLUDE	    ../../socketengine/Inc
 
-MW_LAYER_SYSTEMINCLUDE
+SYSTEMINCLUDE   /epoc32/include
 
 LIBRARY         euser.lib 
 LIBRARY         sipexsocketengine.lib

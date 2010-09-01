@@ -230,25 +230,13 @@ void UT_CSRTPStream::Teardown(  )
     delete iTestPayload160Bits;
     delete iTestMKI128Bits;
     delete iTestAuthTag80Bits;
-	
-	iDecryptedPayload = NULL;
-    iTestPayload160Bits = NULL;
-    iTestMKI128Bits = NULL;
-    iTestAuthTag80Bits = NULL;
 
     delete iStreamIn;
-    delete iSRTPSession;  
-
-    iStreamIn = NULL;
-    iSRTPSession = NULL;	
+    delete iSRTPSession;    
 
     delete iRFC3711_SessionEncrKey128bits;
     delete iRFC3711_SessionSaltKey128bits;
     delete iRFC3711_SessionAuthKey128bits;    
-	
-	iRFC3711_SessionEncrKey128bits = NULL;
-    iRFC3711_SessionSaltKey128bits = NULL;
-    iRFC3711_SessionAuthKey128bits = NULL;    
 
     }
     
@@ -360,7 +348,7 @@ void UT_CSRTPStream::UT_CSRTPStream_SetSSRCL(  )
     delete streamIn;
     }
  
- void UT_CSRTPStream::UT_CSRTPStream_ReKeyNeeded_OneL(  )
+ void UT_CSRTPStream::UT_CSRTPStream_ReKeyNeeded_1L(  )
     {
     iReKeyCalled= EFalse;
     CSRTPStreamIn* streamIn = CSRTPStreamIn::NewL(*iSRTPSession, (TUint)0);
@@ -369,7 +357,7 @@ void UT_CSRTPStream::UT_CSRTPStream_SetSSRCL(  )
     delete streamIn;
     }   
 
-void UT_CSRTPStream::UT_CSRTPStream_ReKeyNeeded_TwoL(  )
+void UT_CSRTPStream::UT_CSRTPStream_ReKeyNeeded_2L(  )
     {
     iReKeyCalled= EFalse;
     HBufC8* masterKey = HBufC8::NewL(KRFC3711_TestMasterKey128bits().Length());
@@ -444,13 +432,13 @@ EUNIT_TEST(
     "CSRTPStream",
     "ReKey",
     "FUNCTIONALITY",
-    SetupL, UT_CSRTPStream_ReKeyNeeded_OneL, Teardown)    
+    SetupL, UT_CSRTPStream_ReKeyNeeded_1L, Teardown)    
 EUNIT_TEST(
     "ReKey2 ",
     "CSRTPStream",
     "ReKey",
     "FUNCTIONALITY",
-    SetupL, UT_CSRTPStream_ReKeyNeeded_TwoL, Teardown)    
+    SetupL, UT_CSRTPStream_ReKeyNeeded_2L, Teardown)    
 
 EUNIT_TEST(
     "TestNewL",

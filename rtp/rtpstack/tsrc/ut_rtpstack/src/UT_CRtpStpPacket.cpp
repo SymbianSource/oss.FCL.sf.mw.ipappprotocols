@@ -75,8 +75,10 @@ void UT_CRtpStpPacket::ConstructL()
 void UT_CRtpStpPacket::SetupL(  )
     {
  	iRtpStpPacket = new(ELeave) CRtpStpPacket();
+        
+    CleanupStack::PushL(iRtpStpPacket);
     iRtpStpPacket->ConstructL( KMaxRtpPacketSize, 1 );
-
+    CleanupStack::Pop();
     }
 
 void UT_CRtpStpPacket::Teardown(  )

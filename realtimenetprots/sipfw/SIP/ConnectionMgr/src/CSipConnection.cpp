@@ -622,10 +622,7 @@ void CSipConnection::CreateConnectedTransportPointL(
 	        	//Message is response. Host part will be extracted from the top
 	        	//Via header
 	            CSIPViaHeader* viaHeader = TopViaHeader( &aMessage );
-	            if(viaHeader)
-	            	{
-	            	domainName = viaHeader->SentByHostPort().Host().AllocL();	
-	            	}            
+	            domainName = viaHeader->SentByHostPort().Host().AllocL();	            
 	        }
 	        transport = static_cast<CTransportTls*>(FindTransport( aParams, 
 	        	        								SIPStrings::StringF( SipStrConsts::ETLS ),

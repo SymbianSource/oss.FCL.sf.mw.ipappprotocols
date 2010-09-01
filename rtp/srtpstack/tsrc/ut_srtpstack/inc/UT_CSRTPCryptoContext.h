@@ -111,7 +111,7 @@ class UT_CSRTPCryptoContext
          
          void TestSetRCCm3SyncL();
          
-         void TestIsValidL();
+         void TestIsValid();
 
     private:    // Data
         //TBuf8<32>       iSalt;

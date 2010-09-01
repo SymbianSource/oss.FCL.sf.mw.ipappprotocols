@@ -18,7 +18,7 @@
 
 // INCLUDE FILES
 #include    <aknlists.h>
-#include    <cshelp/conset.hlp.hrh>
+#include    <csxhelp/cp.hlp.hrh>
 #include    <gsfwviewuids.h>
 #include    <gssipsettingspluginrsc.rsg>
 #include    <gssipsettingsplugin.mbg>
@@ -388,6 +388,16 @@ TInt CSIPSettingsContainer::CurrentFeatureId( )
     return CurrentIndex();
     }
 
+// ---------------------------------------------------------------------------
+// CSIPSettingsContainer::DrawerFlags()
+//
+// ---------------------------------------------------------------------------
+//
+TInt CSIPSettingsContainer::DrawerFlags()
+	{
+	return iListBox->View()->ItemDrawer()->Flags();
+	}
+	
 // ---------------------------------------------------------------------------
 // Sets observer for MSK label updations.
 // ---------------------------------------------------------------------------

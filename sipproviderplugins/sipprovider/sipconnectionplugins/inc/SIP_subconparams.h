@@ -21,7 +21,7 @@
  @publishedAll
  @released since v9.2
 */
-#warning "SIPProvider APIs are deprecated, use SIP Client Library APIs instead."
+
 #ifndef SIP_SUBCONPARAMS_H
 #define SIP_SUBCONPARAMS_H
 
@@ -45,7 +45,7 @@ class CSubConSIPInviteParamSet : public CSubConExtensionParameterSet
 This contains the SIP Invite parameters that will be passed via subconnection
 to the SIP stack
 @publishedAll
-@deprecated 
+@released since v9.2 
 */
 {
 public:
@@ -123,7 +123,7 @@ class CSubConSIPSubscribeParamSet : public CSubConExtensionParameterSet
 This contains the SIP Subscribe parameters that will be passed via subconnection
 to the SIP stack
 @publishedAll
-@deprecated 
+@released since v9.2 
 */
 {
 public:
@@ -212,7 +212,7 @@ class CSubConSIPAuthenticateParamSet : public CSubConExtensionParameterSet
 This contains the SIP Authenticate parameters that will be passed via subconnection
 to the SIP stack
 @publishedAll
-@deprecated 
+@released since v9.2 
 */
 {
 public:
@@ -265,13 +265,13 @@ class CSIPSubConnExtensionParamsFactory : public CBase
 /** Factory used to create instances of the SIP SubConnection Parameter Extension Sets.
 
 @publishedAll
-@depricated 
+@released since v9.2 
 */
 	{
 public:
 	static CSubConExtensionParameterSet* NewL(TAny* aConstructionParameters);
 	};
 
-#include "sip_subconparams.inl"
+#include "SIP_subconparams.inl"
 
 #endif // SIP_SUBCONPARAMS_H

@@ -30,7 +30,8 @@ START RESOURCE 0FFFFFFF.rss
 TARGET nattraversalcontrollerexample.rsc                                       
 END
 
-MW_LAYER_SYSTEMINCLUDE
+SYSTEMINCLUDE   /epoc32/include
+SYSTEMINCLUDE   /epoc32/include/ecom
 
 USERINCLUDE     ../src
 

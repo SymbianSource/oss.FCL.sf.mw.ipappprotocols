@@ -98,9 +98,9 @@ NONSHARABLE_CLASS( UT_CRtpManager )
          void UT_CRtpManager_StartConnectionL();
         
         
-         void UT_CRtpManager_StartConnection_OneL();
+         void UT_CRtpManager_StartConnection_1L();
         
-         void UT_CRtpManager_StartConnection_TwoL();
+         void UT_CRtpManager_StartConnection_2L();
         
          void UT_CRtpManager_CancelStartL();
         

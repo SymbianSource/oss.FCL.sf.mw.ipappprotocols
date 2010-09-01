@@ -20,7 +20,6 @@
  @publishedAll
  @released since v9.2
 */
-#warning "SIPProvider APIs are deprecated, use SIP Client Library APIs instead."
 
 
 #ifndef SIPCONNPREFS_H
@@ -49,7 +48,7 @@ class TSipConnPref : public TConnPref
 /** 
 This contains the information about the type of the connection preferences used by the SIP in the form of the profiles
 @publishedAll
-@deprecated 
+@released since v9.2 
 */
 	{
 public:

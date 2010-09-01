@@ -100,10 +100,10 @@ class UT_CSRTPStreamIn
         
          void Teardown();
         
-         void UT_CSRTPStreamIn_NewL_OneL();
-         void UT_CSRTPStreamIn_NewL_TwoL();
-         void UT_CSRTPStreamIn_NewL_ThreeL();
-         void UT_CSRTPStreamIn_NewL_FourL();
+         void UT_CSRTPStreamIn_NewL_1L();
+         void UT_CSRTPStreamIn_NewL_2L();
+         void UT_CSRTPStreamIn_NewL_3L();
+         void UT_CSRTPStreamIn_NewL_4L();
         
         
          void UT_CSRTPStreamIn_UnprotectSrtpLL();
@@ -115,7 +115,7 @@ class UT_CSRTPStreamIn
          void UT_CSRTPStreamIn_StateTestsL();
 	 	 void UT_CSRTPStreamIn_StateTests2L();
          HBufC8* BuildPacketL(TBool aSrtp, TPayloadDetails& details);    
-         void UT_CSRTPStreamIn_NewL_FiveL(  );
+         void UT_CSRTPStreamIn_NewL_5L(  );
          void UT_CSRTPStreamIn_SetCryptoInL(  );
 
          void Hex(HBufC8& aString);             

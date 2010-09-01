@@ -139,7 +139,6 @@ void UT_CRtpTranStream::SetupL(  )
 void UT_CRtpTranStream::Teardown(  )
     {
  	delete iTranStream;
-    iTranStream = NULL;
     }
 
 void UT_CRtpTranStream::UT_CRtpTranStream_NewLL(  )

@@ -228,26 +228,14 @@ void UT_CSRTPCryptoHandlerSRTCP::Teardown(  )
     delete iTestPayload160Bits;
     delete iTestMKI128Bits;
     delete iTestAuthTag80Bits;
-	
-	iDecryptedPayload = NULL;
-    iTestPayload160Bits = NULL;
-    iTestMKI128Bits = NULL;
-    iTestAuthTag80Bits = NULL;
 
     delete iStreamIn;
-    delete iSRTPSession;   
-
-    iStreamIn = NULL;
-    iSRTPSession = NULL;	
+    delete iSRTPSession;    
 
     
     delete iRFC3711_SessionEncrKey128bits;
     delete iRFC3711_SessionSaltKey128bits;
-    delete iRFC3711_SessionAuthKey128bits;   
-
-    iRFC3711_SessionEncrKey128bits = NULL;
-    iRFC3711_SessionSaltKey128bits = NULL;
-    iRFC3711_SessionAuthKey128bits = NULL; 	
+    delete iRFC3711_SessionAuthKey128bits;    
 
     }
 
@@ -263,7 +251,7 @@ void UT_CSRTPCryptoHandlerSRTCP::UT_CSRTPCryptoHandlerSRTCP_NewLCL(  )
 
 
 
-void UT_CSRTPCryptoHandlerSRTCP::UT_DeriveSessionKeysL_OneL()
+void UT_CSRTPCryptoHandlerSRTCP::UT_DeriveSessionKeysL_1L()
 	{
 	HBufC8* encSrtcpPacket =HBufC8::NewLC(KSRTCPPacket().Length());
 	*encSrtcpPacket=KSRTCPPacket;
@@ -656,7 +644,7 @@ EUNIT_TEST(
     "CSRTPCryptoHandlerSRTCP",
     "DeriveSessionKeys",
     "FUNCTIONALITY",
-    SetupL, UT_DeriveSessionKeysL_OneL, Teardown)
+    SetupL, UT_DeriveSessionKeysL_1L, Teardown)
     
 EUNIT_TEST(
     "Authentication1",

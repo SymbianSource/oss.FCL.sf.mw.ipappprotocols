@@ -74,7 +74,7 @@ NONSHARABLE_CLASS( UT_CRtpSDES )
          void UT_CRtpSDES_NewLL();
         
         
-         void UT_CRtpSDES_NewL_OneL();
+         void UT_CRtpSDES_NewL_1L();
         
         
          void UT_CRtpSDES_GetSDESL();

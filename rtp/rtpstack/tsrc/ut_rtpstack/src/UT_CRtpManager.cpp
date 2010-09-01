@@ -174,7 +174,7 @@ void UT_CRtpManager::UT_CRtpManager_StartConnectionL(  )
     iRtpManager->Close();
     }
 
-void UT_CRtpManager::UT_CRtpManager_StartConnection_OneL(  )
+void UT_CRtpManager::UT_CRtpManager_StartConnection_1L(  )
     {
     TInt result(KErrNone);
     TRtpSdesParams params;
@@ -186,7 +186,7 @@ void UT_CRtpManager::UT_CRtpManager_StartConnection_OneL(  )
     iRtpManager->Close();
     }
 
-void UT_CRtpManager::UT_CRtpManager_StartConnection_TwoL(  )
+void UT_CRtpManager::UT_CRtpManager_StartConnection_2L(  )
     {
     TInt result(KErrNone);
     TRtpSdesParams params;
@@ -937,7 +937,7 @@ EUNIT_TEST(
     "CRtpManager",
     "StartConnection 1",
     "FUNCTIONALITY",
-    SetupL, UT_CRtpManager_StartConnection_OneL, Teardown)
+    SetupL, UT_CRtpManager_StartConnection_1L, Teardown)
 
 
 EUNIT_TEST(
@@ -945,7 +945,7 @@ EUNIT_TEST(
     "CRtpManager",
     "StartConnection2",
     "FUNCTIONALITY",
-    SetupL, UT_CRtpManager_StartConnection_TwoL, Teardown)
+    SetupL, UT_CRtpManager_StartConnection_2L, Teardown)
 
 EUNIT_TEST(
     "CancelStart - test ",

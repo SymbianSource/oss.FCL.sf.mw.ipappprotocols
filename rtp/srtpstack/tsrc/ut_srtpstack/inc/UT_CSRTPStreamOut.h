@@ -96,12 +96,12 @@ class UT_CSRTPStreamOut
         
          void Teardown();
         
-         void UT_CSRTPStreamOut_NewL_OneL();
+         void UT_CSRTPStreamOut_NewL_1L();
         
         
-         void UT_CSRTPStreamOut_NewL_TwoL();
+         void UT_CSRTPStreamOut_NewL_2L();
         
-         void UT_CSRTPStreamOut_NewL_ThreeL(  );
+         void UT_CSRTPStreamOut_NewL_3L(  );
          
          void UT_CSRTPStreamOut_SetCryptoOutLL(  );
          

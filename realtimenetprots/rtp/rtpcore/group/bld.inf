@@ -19,7 +19,7 @@
 */
 
 PRJ_EXPORTS
-./rtpcore.iby  CORE_MW_LAYER_IBY_EXPORT_PATH(rtpcore.iby)
+./rtpcore.iby  /epoc32/rom/include/rtpcore.iby
 
 PRJ_MMPFILES
 rtpcore.mmp

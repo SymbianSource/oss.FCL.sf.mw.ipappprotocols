@@ -45,8 +45,7 @@ CSipSettIntegerEditItem::CSipSettIntegerEditItem(
     lex.Assign(aInteger.Ptr());
     lex.Val(value);
     iValue = value;
-    
- 
+    AknTextUtils::DisplayTextLanguageSpecificNumberConversion( aInteger );
     
     }
 
@@ -89,6 +88,7 @@ void CSipSettIntegerEditItem::EditItemL( TBool /*aCalledFromMenu*/ )
         	{
         	TBuf<KMaxServerPortLength> ValueString;
         	ValueString.AppendNum( iValue );
+			AknTextUtils::DisplayTextLanguageSpecificNumberConversion( ValueString );
         	InternalTextPtr().Copy( ValueString );
         	}
         	

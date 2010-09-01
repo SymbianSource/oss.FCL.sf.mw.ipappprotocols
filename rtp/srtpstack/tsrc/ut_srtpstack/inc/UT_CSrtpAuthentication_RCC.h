@@ -79,21 +79,21 @@ NONSHARABLE_CLASS( UT_CSrtpAuthentication_RCC )
         
          void UT_CSrtpAuthentication_RCC_AuthenticateLL();
          void Hex(HBufC8& aString);
-         void UT_AuthenticateL_RFC2202_Test1_EightyL();
-         void UT_AuthenticateL_RFC2202_Test1_ThirtyTwoL();
-         void UT_AuthenticateL_RFC2202_Test2_EightyL();
-         void UT_AuthenticateL_RFC2202_Test2_ThirtyTwoL();
-         void UT_AuthenticateL_RFC2202_Test3_EightyL();
-         void UT_AuthenticateL_RFC2202_Test3_ThirtyTwoL();
-         void UT_AuthenticateL_RFC2202_Test4_EightyL();
-         void UT_AuthenticateL_RFC2202_Test4_ThirtyTwoL();
-         void UT_AuthenticateL_RFC2202_Test5_EightyL();
-         void UT_AuthenticateL_RFC2202_Test5_ThirtyTwoL();
-         void UT_AuthenticateL_RFC2202_Test6_EightyL();
-         void UT_AuthenticateL_RFC2202_Test6_ThirtyTwoL();
-         void UT_AuthenticateL_RFC2202_Test7_EightyL();
-         void UT_AuthenticateL_RFC2202_Test7_ThirtyTwoL();
-         void UT_AuthenticateL_Test8_ThirtyTwoL(  );
+         void UT_AuthenticateL_RFC2202_Test1_80L();
+         void UT_AuthenticateL_RFC2202_Test1_32L();
+         void UT_AuthenticateL_RFC2202_Test2_80L();
+         void UT_AuthenticateL_RFC2202_Test2_32L();
+         void UT_AuthenticateL_RFC2202_Test3_80L();
+         void UT_AuthenticateL_RFC2202_Test3_32L();
+         void UT_AuthenticateL_RFC2202_Test4_80L();
+         void UT_AuthenticateL_RFC2202_Test4_32L();
+         void UT_AuthenticateL_RFC2202_Test5_80L();
+         void UT_AuthenticateL_RFC2202_Test5_32L();
+         void UT_AuthenticateL_RFC2202_Test6_80L();
+         void UT_AuthenticateL_RFC2202_Test6_32L();
+         void UT_AuthenticateL_RFC2202_Test7_80L();
+         void UT_AuthenticateL_RFC2202_Test7_32L();
+         void UT_AuthenticateL_Test8_32L(  );
          void UT_AuthenticateL_Test_KeyChangedL();
          
     private:    // Data

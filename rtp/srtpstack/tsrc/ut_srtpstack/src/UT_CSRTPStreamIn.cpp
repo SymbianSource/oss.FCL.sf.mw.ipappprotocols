@@ -347,19 +347,11 @@ void UT_CSRTPStreamIn::Teardown(  )
     {
     delete iDecryptedPayload;
     delete iTestPayload160Bits;
-	
-	iDecryptedPayload = NULL;
-    iTestPayload160Bits = NULL;
-
 
 
     delete iStreamIn;
     delete iStreamInLateBD;
     delete iSRTPSession;    
-	
-	iStreamIn = NULL;
-    iStreamInLateBD = NULL;
-    iSRTPSession = NULL; 
 
    
     delete iRFC3711_SessionEncrKey128bits;
@@ -368,23 +360,16 @@ void UT_CSRTPStreamIn::Teardown(  )
     delete iRFC3711_RtcpEncrKey128bits;
 	delete iRFC3711_RtcpSaltKey128bits;
 	delete iRFC3711_RtcpAuthKey128bits;
-	
-	iRFC3711_SessionEncrKey128bits = NULL;
-    iRFC3711_SessionSaltKey128bits = NULL;
-    iRFC3711_SessionAuthKey128bits = NULL;    
-    iRFC3711_RtcpEncrKey128bits = NULL;
-	iRFC3711_RtcpSaltKey128bits = NULL;
-	iRFC3711_RtcpAuthKey128bits = NULL;
     }
 
-void UT_CSRTPStreamIn::UT_CSRTPStreamIn_NewL_OneL(  )
+void UT_CSRTPStreamIn::UT_CSRTPStreamIn_NewL_1L(  )
     {        
     CSRTPStreamIn* tempStreamIn = CSRTPStreamIn::NewL(*iSRTPSession, (TUint)1);
     EUNIT_ASSERT(tempStreamIn->SSRC()== 1);
     delete tempStreamIn;
     }
 
-void UT_CSRTPStreamIn::UT_CSRTPStreamIn_NewL_TwoL(  )
+void UT_CSRTPStreamIn::UT_CSRTPStreamIn_NewL_2L(  )
     {
     HBufC8* masterKey = HBufC8::NewL(KRFC3711_TestMasterKey128bits().Length());
     CleanupStack::PushL( masterKey );
@@ -421,7 +406,7 @@ void UT_CSRTPStreamIn::UT_CSRTPStreamIn_NewL_TwoL(  )
      CleanupStack::PopAndDestroy( srtpSession );                   
     }
 
-void UT_CSRTPStreamIn::UT_CSRTPStreamIn_NewL_ThreeL(  )
+void UT_CSRTPStreamIn::UT_CSRTPStreamIn_NewL_3L(  )
     {
     HBufC8* masterKey = HBufC8::NewL(KRFC3711_TestMasterKey128bits().Length());
     CleanupStack::PushL( masterKey );
@@ -457,7 +442,7 @@ void UT_CSRTPStreamIn::UT_CSRTPStreamIn_NewL_ThreeL(  )
     delete tempStreamIn;   
     CleanupStack::PopAndDestroy( srtpSession );                   
     }
-void UT_CSRTPStreamIn::UT_CSRTPStreamIn_NewL_FourL(  )
+void UT_CSRTPStreamIn::UT_CSRTPStreamIn_NewL_4L(  )
     {
      HBufC8* masterKey = HBufC8::NewL(KRFC3711_TestMasterKey128bits().Length());
     CleanupStack::PushL( masterKey );
@@ -494,7 +479,7 @@ void UT_CSRTPStreamIn::UT_CSRTPStreamIn_NewL_FourL(  )
     CleanupStack::PopAndDestroy( srtpSession );
     }
     
-void UT_CSRTPStreamIn::UT_CSRTPStreamIn_NewL_FiveL(  )
+void UT_CSRTPStreamIn::UT_CSRTPStreamIn_NewL_5L(  )
     {
      HBufC8* masterKey = HBufC8::NewL(KRFC3711_TestMasterKey128bits().Length());
     CleanupStack::PushL( masterKey );
@@ -1051,35 +1036,35 @@ EUNIT_TEST(
     "CSRTPStreamIn",
     "NewL1",
     "FUNCTIONALITY",
-    SetupL, UT_CSRTPStreamIn_NewL_OneL, Teardown)
+    SetupL, UT_CSRTPStreamIn_NewL_1L, Teardown)
 
 EUNIT_TEST(
     "NewL2 - test ",
     "CSRTPStreamIn",
     "NewL2",
     "FUNCTIONALITY",
-    SetupL, UT_CSRTPStreamIn_NewL_TwoL, Teardown)
+    SetupL, UT_CSRTPStreamIn_NewL_2L, Teardown)
 
 EUNIT_TEST(
     "NewL3 - test ",
     "CSRTPStreamIn",
     "NewL3",
     "FUNCTIONALITY",
-    SetupL, UT_CSRTPStreamIn_NewL_ThreeL, Teardown)
+    SetupL, UT_CSRTPStreamIn_NewL_3L, Teardown)
     
 EUNIT_TEST(
     "NewL4 - test ",
     "CSRTPStreamIn",
     "NewL4",
     "FUNCTIONALITY",
-    SetupL, UT_CSRTPStreamIn_NewL_FourL, Teardown)    
+    SetupL, UT_CSRTPStreamIn_NewL_4L, Teardown)    
 
 EUNIT_TEST(
     "NewL5 - test ",
     "CSRTPStreamIn",
     "NewL5",
     "FUNCTIONALITY",
-    SetupL, UT_CSRTPStreamIn_NewL_FiveL, Teardown)    
+    SetupL, UT_CSRTPStreamIn_NewL_5L, Teardown)    
 EUNIT_TEST(
     "UnprotectSrtpL - test ",
     "CSRTPStreamIn",

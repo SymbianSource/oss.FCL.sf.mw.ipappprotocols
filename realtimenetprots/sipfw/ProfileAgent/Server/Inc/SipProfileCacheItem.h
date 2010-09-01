@@ -571,8 +571,6 @@ class CSIPProfileCacheItem : public CBase, public MSipAlrMigrationObserver
 		* Function returns the Bearer ID for the Profile. 
 		*/
 		TUint32 BearerID();
-
-		TBool HasQueuedUpdate()const;
 	private:
 
 	    /**

@@ -29,7 +29,7 @@ SOURCE          SIPExTimeOutTimer.cpp
 
 USERINCLUDE     ../Inc
 
-MW_LAYER_SYSTEMINCLUDE
+SYSTEMINCLUDE   /epoc32/include
 
 LIBRARY         euser.lib 
 LIBRARY         esock.lib   // RSocketServ

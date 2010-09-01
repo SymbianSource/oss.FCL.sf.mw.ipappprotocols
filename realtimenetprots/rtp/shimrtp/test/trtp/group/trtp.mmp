@@ -36,7 +36,10 @@ SOURCE		trtpserver.cpp
 SOURCE		trtpstep.cpp	
 
 
-MW_LAYER_SYSTEMINCLUDE
+SYSTEMINCLUDE /epoc32/include/comms-infras
+SYSTEMINCLUDE /epoc32/include
+SYSTEMINCLUDE /epoc32/include/test
+SYSTEMINCLUDE /epoc32/include/libc
 
 
 LIBRARY     euser.lib estlib.lib

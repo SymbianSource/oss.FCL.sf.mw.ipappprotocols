@@ -112,6 +112,8 @@ void CSIPSettingsModel::SetDefaultProfileL(
     {
     __GSLOGSTRING1("CSIPSettingsModel::SetDefaultProfileL index: %d", aIndex)
     TRAPD(err, iHandler->SetDefaultProfileL( aIndex ));		
+    if( err != KErrNone )
+        {
       if ( err == KErrInUse )
     	  {
           HBufC* txtErr = StringLoader::LoadLC( R_QTN_SIP_ERROR_PROFILE_USED );
@@ -123,6 +125,7 @@ void CSIPSettingsModel::SetDefaultProfileL(
     	  {
           User::Leave( err );
     	  }
+        }
     }
 
 // -----------------------------------------------------------------------------

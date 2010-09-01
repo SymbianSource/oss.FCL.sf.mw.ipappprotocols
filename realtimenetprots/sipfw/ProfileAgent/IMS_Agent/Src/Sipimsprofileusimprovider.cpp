@@ -402,10 +402,7 @@ void CSIPProfileUsimProvider::AuthInfoUpdatedL()
 	iObserver.UpdateRegistrationsL();
   	if (!iProfileSIMRecord.PrivateIdentity().Length())
   		{   
-  		if(iAuthorization)
-  			{	
     	iAuthorization->RequestL();
-   			}
   		}
 	}
 

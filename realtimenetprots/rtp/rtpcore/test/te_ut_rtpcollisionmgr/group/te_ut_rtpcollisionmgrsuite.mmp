@@ -47,7 +47,9 @@ SOURCE              rtpcollisionmng.cpp
 USERINCLUDE   ../src
 USERINCLUDE   ../../../inc
 
-MW_LAYER_SYSTEMINCLUDE
+SYSTEMINCLUDE /epoc32/include
+SYSTEMINCLUDE /epoc32/include/test
+SYSTEMINCLUDE /epoc32/include/libc
 
 
 LIBRARY     euser.lib esock.lib insock.lib random.lib bluetooth.lib hal.lib charconv.lib

@@ -79,10 +79,10 @@ class UT_CSRTPSession
         
          void Teardown();
         
-         void UT_CSRTPSession_NewL_OneL();
+         void UT_CSRTPSession_NewL_1L();
         
         
-         void UT_CSRTPSession_NewL_TwoL();
+         void UT_CSRTPSession_NewL_2L();
         
         
          void UT_CSRTPSession_RemoveStreamL();

@@ -19,7 +19,7 @@
 // INCLUDE FILES
 #include    <eikappui.h>
 #include    <eikenv.h>
-#include    <cshelp/conset.hlp.hrh>
+#include    <csxhelp/cp.hlp.hrh>
 #include    <gsfwviewuids.h>
 #include    <aknsettingitemlist.h>
 #include    "sipsettlistsipprofsetcontainer.h"

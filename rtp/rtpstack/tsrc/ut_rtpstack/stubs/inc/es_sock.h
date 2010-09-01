@@ -1216,7 +1216,7 @@ private:
 	TUint32 iReserved[4];
 	};
 
-class CSubConParameterSet : public CBase, public SMetaDataECom
+class CSubConParameterSet : public SMetaDataECom
 /** Base class for all RSubConnection parameter sets.
 
 @publishedAll
@@ -1408,7 +1408,7 @@ public:
 	IMPORT_C TUint32 Id() const;
 	};
 
-class CSubConNotificationEvent : public CBase, public SMetaDataECom
+class CSubConNotificationEvent : public SMetaDataECom
 	{
 public:
 	IMPORT_C static CSubConNotificationEvent* NewL(const STypeId& aTypeId);

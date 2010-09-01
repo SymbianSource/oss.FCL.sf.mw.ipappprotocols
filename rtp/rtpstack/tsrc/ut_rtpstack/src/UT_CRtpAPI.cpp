@@ -68,8 +68,6 @@ EUNIT_ASSERT( val1 != KNullId );
 #endif
 
 _LIT8(KHello, "hello...testing");
-_LIT8(KNoCName, "");
-
 // CONSTRUCTION
 UT_CRtpAPI* UT_CRtpAPI::NewL()
     {
@@ -142,12 +140,10 @@ void UT_CRtpAPI::Teardown(  )
     {
     iRtpAPI->Close();
     delete iRtpAPI;
-	iRtpAPI = NULL;
 
     iStpAPI->Close();
     delete iStpAPI;
-    iStpAPI = NULL;
-	}
+    }
 
 void UT_CRtpAPI::UT_CRtpAPI_NewLL(  )
     {
@@ -198,7 +194,7 @@ void UT_CRtpAPI::UT_CRtpAPI_StartConnectionL(  )
 	iRtpAPI->CancelStart();
     }
 
-void UT_CRtpAPI::UT_CRtpAPI_StartConnection_OneL(  )
+void UT_CRtpAPI::UT_CRtpAPI_StartConnection_1L(  )
     {
     //Synchronize
     TInt result(KErrNone);
@@ -984,7 +980,7 @@ void UT_CRtpAPI::UT_CRtpAPI_SendRtpPacketL(  )
     EUNIT_ASSERT( KErrNone == status.Int() );
 	}
 
-void UT_CRtpAPI::UT_CRtpAPI_SendRtpPacket_ThreeL()
+void UT_CRtpAPI::UT_CRtpAPI_SendRtpPacket_3L()
     {
     TInt result(KErrNone);
     TRtpSdesParams params;
@@ -1424,7 +1420,6 @@ void UT_CRtpAPI::ErrorNotify( TInt aErrCode )
 	{
 	iErr= aErrCode;
 	}
-	
 //from Obs	
 void UT_CRtpAPI::RtpPacketReceived( TRtpId /*aStreamId*/, 
                                         const TRtpRecvHeader& /*aHeaderInfo*/, 
@@ -1474,279 +1469,6 @@ void UT_CRtpAPI::SRTPMasterKeyStaleEvent(const CSRTPStream&  /*aStream*/)
 {
 	
 }
-
-void UT_CRtpAPI::ReadyToSendRtpPacket( TRtpId /*aTranStreamId*/, TPtr8 &/*aPacket*/ )
-    {
-    // RTP Packet Callback received
-    iIsCallBackReceived = ETrue;
-    }
-
-
-void UT_CRtpAPI::UT_CRtpAPI_RegisterRtpPostProcessingObserverL(  )
-    {
-    TInt result(KErrNone);
-    TRtpSdesParams params;
-    
-    result = iRtpAPI->OpenL( params, NULL, NULL, NULL );
-    EUNIT_ASSERT(result==KErrNone);
-    
-    TRequestStatus status;
-    result = iRtpAPI->StartConnection( status, KDefaultIap2 ); // KDefaultIap
-    RTP_EUNIT_ASSERT_EQUALS ( result, KErrNone );
- // Wait until the connection is really up
-    User::WaitForRequest( status );
-
-    //create session
-    TCreateSessionParams sessionParams;
-    sessionParams.iPriority = TCreateSessionParams::EPriorityStandard;
-    sessionParams.iSocketBufSize = KSocketBufSize;
-    TUint port( 5000 );
-    TBool enableRtcp( EFalse );
-    TRtcpParams rtcpParams;
-    rtcpParams.iRtcpFraction = 0.10;
-    rtcpParams.iRtcpTimeOut = 0;
-    rtcpParams.iSessionBWidth = 32000;
-
-    TRtpId error( KNullId );
-    error = iRtpAPI->CreateSessionL( sessionParams,
-                                    port,
-                                    enableRtcp,
-                                    &rtcpParams );
-    RTP_EUNIT_ASSERT_RTP_ID( error );
-    
-    TRcvStreamParams recvparams;
-    recvparams.iPayloadType = 0;
-
-    TRtpId error2( KNullId );
-    TInt err( KErrNone );
-    error2 = iRtpAPI->CreateReceiveStreamL( error /*session id*/, recvparams );
-    RTP_EUNIT_ASSERT_RTP_ID ( error2 );
-        
-    
-    err = iRtpAPI->RegisterRtpPostProcessingObserver( error, *this );
-    EUNIT_ASSERT ( err == KErrNone )
-    }
-
-
-void UT_CRtpAPI::UT_CRtpAPI_SendRtpPacketWithCSRCL()
-    {
-    TInt result(KErrNone);
-    TRtpSdesParams params;
-    
-    result = iRtpAPI->OpenL( params, NULL, NULL, NULL );
-    RTP_EUNIT_ASSERT_EQUALS(result, KErrNone);
-    
-    TRequestStatus status;
-    result = iRtpAPI->StartConnection( status, KDefaultIap ); // KDefaultIap
-    RTP_EUNIT_ASSERT_EQUALS ( result, KErrNone );
- // Wait until the connection is really up
-    User::WaitForRequest( status );
-
-    //create session
-    TCreateSessionParams sessionParams;
-    sessionParams.iPriority = TCreateSessionParams::EPriorityStandard;
-    sessionParams.iSocketBufSize = KSocketBufSize;
-    TUint port( 5000 );
-    TBool enableRtcp( EFalse );
-    TRtcpParams rtcpParams;
-    rtcpParams.iRtcpFraction = 0.10;
-    rtcpParams.iRtcpTimeOut = 0;
-    rtcpParams.iSessionBWidth = 32000;
-
-    TRtpId error( KNullId );
-    error = iRtpAPI->CreateSessionL( sessionParams,
-                                    port,
-                                    enableRtcp,
-                                    &rtcpParams );
-    RTP_EUNIT_ASSERT_RTP_ID( error );
-    
-    TTranStreamParams transparams;
-    transparams.iPayloadType = 0;
-    TRtpSSRC ssrc( 0 );
-    
-    TInt err( KErrNone );
-    err = iRtpAPI->RegisterRtpPostProcessingObserver( error, *this );
-    EUNIT_ASSERT ( err == KErrNone )
-
-
-    err = iRtpAPI->CreateTransmitStreamL( error /*session id*/, transparams, ssrc );
-    RTP_EUNIT_ASSERT_RTP_ID ( err );
-    
-    
-    TRtpSendHeader header; 
-    header.iHeaderExtension = NULL;
-    header.iMarker = 0;
-    header.iPadding = 0;
-    header.iPayloadType = 0;
-    header.iTimestamp = 10;
-
-    HBufC8* data = HBufC8::NewLC(KLength);
-    data->Des().Copy(KHello);
-    CleanupStack::Pop(data);
-
-    TRtpSendPktParams *headerinfo = new(ELeave) TRtpSendPktParams(header);
-    headerinfo->iTranStreamId = err;
-    headerinfo->iPayloadData.Set(data->Des()); 
-    
-    const TUint KArrayGranularity = 15;
-    
-    CArrayFixFlat<TUint32>* fix;
-    fix = new(ELeave) CArrayFixFlat<TUint32>(KArrayGranularity);
-    
-    fix->AppendL(123456);
-    fix->AppendL(999999);
-     
-    TInt error2( KErrNone );
-    iIsCallBackReceived = EFalse;
-    // Try sending synchronously with Csrc
-    error2 = iRtpAPI->SendRtpPacket(*headerinfo, fix->Array());
-    RTP_EUNIT_ASSERT_EQUALS ( error2, KErrNone );
-    
-    CRtpSession* rtpSession = iRtpAPI->iManager->GetSession( err );
-    User::WaitForRequest( rtpSession->iCommNet->iSender[ERTPPort]->iStatus );
-    rtpSession->iCommNet->iSender[ERTPPort]->RunL();
-    rtpSession->iCommNet->iSender[ERTPPort]->iStatus = TRequestStatus();
-    EUNIT_ASSERT(iIsCallBackReceived == ETrue);
-    
-    iIsCallBackReceived = EFalse;
-    // Try sending asynchronously with CSRC
-    headerinfo->iStatus = &status;
-    error2 = iRtpAPI->SendRtpPacket(*headerinfo, fix->Array());
-    RTP_EUNIT_ASSERT_EQUALS ( error2, KErrNone );
-    EUNIT_ASSERT( KRequestPending == status.Int() );
-    User::WaitForRequest( rtpSession->iCommNet->iSender[ERTPPort]->iStatus );
-    rtpSession->iCommNet->iSender[ERTPPort]->RunL();
-    rtpSession->iCommNet->iSender[ERTPPort]->iStatus = TRequestStatus();
-    User::WaitForRequest( status );
-    EUNIT_ASSERT( KErrNone == status.Int() );
-    // Is call back received check
-    EUNIT_ASSERT(iIsCallBackReceived == ETrue);
-    
-    iIsCallBackReceived = EFalse;
-    // Try sending asynchronously, specifying the sequence number with CSRC
-	TRtpSequence seqNum = 42;
-    headerinfo->iSequenceNum = &seqNum;
-    error2 = iRtpAPI->SendRtpPacket(*headerinfo, fix->Array());
-    RTP_EUNIT_ASSERT_EQUALS ( error2, KErrNone );
-    EUNIT_ASSERT( KRequestPending == status.Int() );
-    User::WaitForRequest( rtpSession->iCommNet->iSender[ERTPPort]->iStatus );
-    rtpSession->iCommNet->iSender[ERTPPort]->RunL();
-    rtpSession->iCommNet->iSender[ERTPPort]->iStatus = TRequestStatus();
-    User::WaitForRequest( status );
-    EUNIT_ASSERT( KErrNone == status.Int() );
-    EUNIT_ASSERT(iIsCallBackReceived == ETrue);
-    
-    delete fix;
-    delete headerinfo;
-    delete data;
-    }
-
-
-void UT_CRtpAPI::UT_CRtpAPI_UnregisterRtpPostProcessingObserverL(  )
-    {
-    TInt result(KErrNone);
-    TRtpSdesParams params;
-    
-    result = iRtpAPI->OpenL( params, NULL, NULL, NULL );
-    EUNIT_ASSERT(result==KErrNone);
-    
-    TRequestStatus status;
-    result = iRtpAPI->StartConnection( status, KDefaultIap2 ); // KDefaultIap
-    RTP_EUNIT_ASSERT_EQUALS ( result, KErrNone );
- // Wait until the connection is really up
-    User::WaitForRequest( status );
-
-    //create session
-    TCreateSessionParams sessionParams;
-    sessionParams.iPriority = TCreateSessionParams::EPriorityStandard;
-    sessionParams.iSocketBufSize = KSocketBufSize;
-    TUint port( 5000 );
-    TBool enableRtcp( EFalse );
-    TRtcpParams rtcpParams;
-    rtcpParams.iRtcpFraction = 0.10;
-    rtcpParams.iRtcpTimeOut = 0;
-    rtcpParams.iSessionBWidth = 32000;
-
-    TRtpId error( KNullId );
-    error = iRtpAPI->CreateSessionL( sessionParams,
-                                    port,
-                                    enableRtcp,
-                                    &rtcpParams );
-    RTP_EUNIT_ASSERT_RTP_ID( error );
-    
-    TRcvStreamParams recvparams;
-    recvparams.iPayloadType = 0;
-
-    TRtpId error2( KNullId );
-    TInt err( KErrNone );
-    error2 = iRtpAPI->CreateReceiveStreamL( error /*session id*/, recvparams );
-    RTP_EUNIT_ASSERT_RTP_ID ( error2 );
-        
-    TTranStreamParams transparams;
-    transparams.iPayloadType = 0;
-    TRtpSSRC ssrc( 0 );
-    
-    err = iRtpAPI->RegisterRtpPostProcessingObserver( error, *this );
-    EUNIT_ASSERT ( err == KErrNone )
-    
-    err = iRtpAPI->CreateTransmitStreamL( error /*session id*/, transparams, ssrc );
-    RTP_EUNIT_ASSERT_RTP_ID ( err );
-    
-    
-    TRtpSendHeader header; 
-    header.iHeaderExtension = NULL;
-    header.iMarker = 0;
-    header.iPadding = 0;
-    header.iPayloadType = 0;
-    header.iTimestamp = 10;
-
-    HBufC8* data = HBufC8::NewLC(KLength);
-    data->Des().Copy(KHello);
-    CleanupStack::Pop(data);
-
-    TRtpSendPktParams *headerinfo = new(ELeave) TRtpSendPktParams(header);
-    headerinfo->iTranStreamId = err;
-    headerinfo->iPayloadData.Set(data->Des()); 
-    
-    const TUint KArrayGranularity = 15;
-    
-    CArrayFixFlat<TUint32>* fix;
-    fix = new(ELeave) CArrayFixFlat<TUint32>(KArrayGranularity);
-    
-    fix->AppendL(123456);
-    fix->AppendL(999999);
-     
-    TInt error3( KErrNone );
-    iIsCallBackReceived = EFalse;
-    // Try sending synchronously with Csrc
-    error3 = iRtpAPI->SendRtpPacket(*headerinfo, fix->Array());
-    RTP_EUNIT_ASSERT_EQUALS ( error3, KErrNone );
-    
-    CRtpSession* rtpSession = iRtpAPI->iManager->GetSession( err );
-    User::WaitForRequest( rtpSession->iCommNet->iSender[ERTPPort]->iStatus );
-    rtpSession->iCommNet->iSender[ERTPPort]->RunL();
-    rtpSession->iCommNet->iSender[ERTPPort]->iStatus = TRequestStatus();
-    EUNIT_ASSERT(iIsCallBackReceived == ETrue);
-    
-    // Unregister callback
-    iRtpAPI->UnregisterRtpPostProcessingObserver(error);
-    
-    iIsCallBackReceived = EFalse;
-    error3 = KErrNone;
-    // Try sending synchronously with Csrc
-    error3 = iRtpAPI->SendRtpPacket(*headerinfo, fix->Array());
-    RTP_EUNIT_ASSERT_EQUALS ( error3, KErrNone );
-    
-    User::WaitForRequest( rtpSession->iCommNet->iSender[ERTPPort]->iStatus );
-    rtpSession->iCommNet->iSender[ERTPPort]->RunL();
-    rtpSession->iCommNet->iSender[ERTPPort]->iStatus = TRequestStatus();
-    EUNIT_ASSERT(iIsCallBackReceived == EFalse);
-    
-    delete fix;
-    delete headerinfo;
-    delete data;
-    }
-
 //  TEST TABLE
 
 EUNIT_BEGIN_TEST_TABLE(
@@ -1780,7 +1502,7 @@ EUNIT_TEST(
     "CRtpAPI",
     "StartConnection",
     "FUNCTIONALITY",
-    SetupL, UT_CRtpAPI_StartConnection_OneL, Teardown)
+    SetupL, UT_CRtpAPI_StartConnection_1L, Teardown)
 
 EUNIT_TEST(
     "CancelStart - test ",
@@ -1934,7 +1656,7 @@ EUNIT_TEST(
     "CRtpAPI",
     "SendRtpPacket",
     "FUNCTIONALITY",
-    SetupL, UT_CRtpAPI_SendRtpPacket_ThreeL, Teardown)
+    SetupL, UT_CRtpAPI_SendRtpPacket_3L, Teardown)
 
 EUNIT_TEST(
     "SendDataL - test ",
@@ -2075,30 +1797,8 @@ EUNIT_TEST(
     "Version",
     "FUNCTIONALITY",
     SetupL, UT_CRtpAPI_VersionL, Teardown)
-    
-EUNIT_TEST(
-    "RegisterRtpPostProcessingObserver - test ",
-    "CRtpAPI",
-    "RegisterRtpPostProcessingObserver",
-    "FUNCTIONALITY",
-    SetupL, UT_CRtpAPI_RegisterRtpPostProcessingObserverL, Teardown)    
 
 
-EUNIT_TEST(
-    "SendRtpPacketWithCSRC - test ",
-    "CRtpAPI",
-    "SendRtpPacket",
-    "FUNCTIONALITY",
-    SetupL, UT_CRtpAPI_SendRtpPacketWithCSRCL, Teardown)   
-    
-EUNIT_TEST(
-    "UnregisterRtpPostProcessingObserver - test ",
-    "CRtpAPI",
-    "UnregisterRtpPostProcessingObserver",
-    "FUNCTIONALITY",
-    SetupL, UT_CRtpAPI_UnregisterRtpPostProcessingObserverL, Teardown)  
-
-    
 EUNIT_END_TEST_TABLE
 
 //  END OF FILE

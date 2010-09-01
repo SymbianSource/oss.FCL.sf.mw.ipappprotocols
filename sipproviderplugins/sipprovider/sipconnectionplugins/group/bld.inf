@@ -26,7 +26,7 @@ PRJ_EXPORTS
 
 ../data/esock_sip.cmi      			z:/private/101f7988/esock_sip.cmi
 
-../group/sipproviders.iby            CORE_MW_LAYER_IBY_EXPORT_PATH(sipproviders.iby)
+../group/sipproviders.iby            /epoc32/rom/include/sipproviders.iby
 
 PRJ_MMPFILES
 sipproviders.mmp

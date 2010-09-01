@@ -74,7 +74,3 @@ EXPORTS
 	_ZTI12CRtpSendItem @ 73 NONAME ; #<TI>#
 	_ZTI15CRtpSessionSrtp @ 74 NONAME ; #<TI>#
 	_ZTV15CRtpSessionSrtp @ 75 NONAME ; #<VT>#
-	_ZN7CRtpAPI13SendRtpPacketERK17TRtpSendPktParams6TArrayImE @ 76 NONAME
-	_ZN7CRtpAPI33RegisterRtpPostProcessingObserverEmR26MRtpPostProcessingObserver @ 77 NONAME
-	_ZN7CRtpAPI35UnregisterRtpPostProcessingObserverEm @ 78 NONAME
-

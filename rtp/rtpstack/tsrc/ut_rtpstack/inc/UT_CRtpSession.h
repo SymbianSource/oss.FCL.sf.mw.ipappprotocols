@@ -158,10 +158,10 @@ NONSHARABLE_CLASS( UT_CRtpSession )
          void UT_CRtpSession_SendRtpPacketL();
         
         
-         void UT_CRtpSession_SendRtpPacket_OneL();
+         void UT_CRtpSession_SendRtpPacket_1L();
         
         
-         void UT_CRtpSession_SendRtpPacket_TwoL();
+         void UT_CRtpSession_SendRtpPacket_2L();
         
         
          void UT_CRtpSession_SendRtpPacket_3L();
@@ -243,7 +243,7 @@ NONSHARABLE_CLASS( UT_CRtpSession )
         
          void UT_CRtpSession_OnExpiredL();
         
-         void UT_CRtpSession_ScheduleRtcpSendL();
+         void UT_CRtpSession_ScheduleRtcpSend();
         
          void UT_CRtpSession_OnRtpReceivedLL();
         

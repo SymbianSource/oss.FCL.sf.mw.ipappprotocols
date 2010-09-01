@@ -28,9 +28,7 @@ SOURCE		rtpfilestreamer.cpp
 SOURCE		demoapp.cpp
 
 USERINCLUDE	../inc
-
-MW_LAYER_SYSTEMINCLUDE
-
+SYSTEMINCLUDE	/epoc32/include
 LIBRARY		euser.lib
 LIBRARY		esock.lib
 LIBRARY		insock.lib

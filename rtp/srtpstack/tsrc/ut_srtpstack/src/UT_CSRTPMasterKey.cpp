@@ -144,12 +144,6 @@ void UT_CSRTPMasterKey::Teardown(  )
 	delete iMasterKey4;
 	delete iMasterKey5;
 	
-    iMasterKey = NULL;
-	iMasterKey2 = NULL;
-	iMasterKey3 = NULL;
-	iMasterKey4 = NULL;
-	iMasterKey5 = NULL;
-	
 	iTestKey128bits.Zero();
     iTestKey128bits_dehexed.Zero();    
     }

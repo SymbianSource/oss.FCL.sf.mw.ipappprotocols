@@ -151,14 +151,14 @@ void UT_CSRTPSession::Teardown(  )
     iContext=NULL;
     }
 
-void UT_CSRTPSession::UT_CSRTPSession_NewL_OneL(  )
+void UT_CSRTPSession::UT_CSRTPSession_NewL_1L(  )
     {
     CSRTPSession* srtpSession = CSRTPSession::NewL( iDestination); 
     EUNIT_ASSERT(srtpSession);
     delete srtpSession;
     }
 
-void UT_CSRTPSession::UT_CSRTPSession_NewL_TwoL(  )
+void UT_CSRTPSession::UT_CSRTPSession_NewL_2L(  )
     {
                             
     CSRTPSession* srtpSession = CSRTPSession::NewL(iDestination,
@@ -630,14 +630,14 @@ EUNIT_TEST(
     "CSRTPSession",
     "NewL",
     "FUNCTIONALITY",
-    SetupL, UT_CSRTPSession_NewL_OneL, Teardown)
+    SetupL, UT_CSRTPSession_NewL_1L, Teardown)
 
 EUNIT_TEST(
     "NewL - test ",
     "CSRTPSession",
     "NewL",
     "FUNCTIONALITY",
-    SetupL, UT_CSRTPSession_NewL_TwoL, Teardown)
+    SetupL, UT_CSRTPSession_NewL_2L, Teardown)
 EUNIT_TEST(
     "ConstructL ",
     "CSRTPSession",

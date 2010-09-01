@@ -721,47 +721,6 @@ TInt CRtpManager::RegisterRtpObserver( TRtpId aSessionId,
     return result;
     }
 
-
-// ---------------------------------------------------------------------------
-// TInt CRtpManager::RegisterRtpPostProcessingObserver()
-//
-// ---------------------------------------------------------------------------
-//
-TInt CRtpManager::RegisterRtpPostProcessingObserver( TRtpId aSessionId, MRtpPostProcessingObserver& aRtpPacketObserver )
-    {
-    CRtpSession* session = GetSession( aSessionId ); 
-    TInt result( KErrGeneral );
-    if ( session )
-        {
-        result = session->RegisterRtpPostProcessingObserver( aRtpPacketObserver );
-        }
-    else
-        {
-        RTP_DEBUG_DETAIL( "CRtpManager::RegisterRtpPostProcessingObserver, Session not found" );
-        }
-    return result;
-    }
-
-
-// ---------------------------------------------------------------------------
-// CRtpManager::UnregisterRtpPostProcessingObserver()
-//
-// ---------------------------------------------------------------------------
-//
-void CRtpManager::UnregisterRtpPostProcessingObserver( TRtpId aSessionId )
-    {
-    CRtpSession* session = GetSession( aSessionId ); 
-
-    if ( session )
-        {
-        session->UnregisterRtpPostProcessingObserver();
-        }
-    else
-        {
-        RTP_DEBUG_DETAIL( "CRtpManager::UnregisterRtpPostProcessingObserver, Session not found" );
-        }
-    }
-    
 // ---------------------------------------------------------------------------
 // CRtpManager::UnregisterRtpObserver()
 //
@@ -814,8 +773,7 @@ TInt CRtpManager::SetNonRTPDataObserver( TRtpId aSessionId,
 //
 TInt CRtpManager::SendRtpPacket( TRtpId aTranStreamId,
                                  const TRtpSendHeader& aHeaderInfo, 
-                                 const TDesC8& aPayloadData,
-                                 const TArray<TRtpCSRC> *aCsrcList)
+                                 const TDesC8& aPayloadData )
     {
     CRtpSession* rtpSession = GetSession( aTranStreamId );
 
@@ -828,13 +786,13 @@ TInt CRtpManager::SendRtpPacket( TRtpId aTranStreamId,
             	
  		        return static_cast<CRtpSessionSrtp*>
  		        	(rtpSession)->SendRtpPacket( aTranStreamId, aHeaderInfo,
-                                             	 aPayloadData, aCsrcList );
+                                             	 aPayloadData );
  	
             	}
             else
             	{
             	return rtpSession->SendRtpPacket( aTranStreamId, aHeaderInfo,
-             		                                 aPayloadData, aCsrcList );
+             		                                 aPayloadData );
             	}
             }
         else
@@ -857,8 +815,7 @@ TInt CRtpManager::SendRtpPacket( TRtpId aTranStreamId,
 TInt CRtpManager::SendRtpPacket( TRtpId aTranStreamId,
                                  const TRtpSendHeader& aHeaderInfo,
                                  const TDesC8& aPayloadData,
-                                 TRequestStatus& aStatus,
-                                 const TArray<TRtpCSRC> *aCsrcList)
+                                 TRequestStatus& aStatus )
     {
     CRtpSession* rtpSession = GetSession( aTranStreamId ); 
 
@@ -871,13 +828,13 @@ TInt CRtpManager::SendRtpPacket( TRtpId aTranStreamId,
             	
  		        return static_cast<CRtpSessionSrtp*>
  		        	(rtpSession)->SendRtpPacket( aTranStreamId, aHeaderInfo,
-                                              aPayloadData, aStatus, aCsrcList );
+                                              aPayloadData, aStatus );
  	
             	}
             else
             	{
             	return rtpSession->SendRtpPacket( aTranStreamId, aHeaderInfo,
-                                              aPayloadData, aStatus, aCsrcList );
+                                              aPayloadData, aStatus );
             	}
            
             }
@@ -903,8 +860,7 @@ TInt CRtpManager::SendRtpPacket( TRtpId aTranStreamId,
                                  TRtpSequence aSequenceNum,
                                  const TRtpSendHeader& aHeaderInfo,
                                  const TDesC8& aPayloadData,
-                                 TRequestStatus& aStatus,
-                                 const TArray<TRtpCSRC> *aCsrcList )
+                                 TRequestStatus& aStatus )
     {
     CRtpSession* rtpSession = GetSession( aTranStreamId ); 
     TInt result( KErrNone );
@@ -918,14 +874,14 @@ TInt CRtpManager::SendRtpPacket( TRtpId aTranStreamId,
 	 		        result = static_cast<CRtpSessionSrtp*>
 	 		        	(rtpSession)->SendRtpPacket( aTranStreamId, aSequenceNum,
 	                                              aHeaderInfo, aPayloadData,
-	                                              aStatus, aCsrcList );
+	                                              aStatus );
 	 	
 	            	}
 	            else
 	            	{
 	            	result =  rtpSession->SendRtpPacket( aTranStreamId, aSequenceNum,
 	                                              aHeaderInfo, aPayloadData,
-	                                              aStatus, aCsrcList );
+	                                              aStatus );
 	            	}	            
 	            
 	            }

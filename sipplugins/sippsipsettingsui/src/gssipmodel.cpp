@@ -1205,7 +1205,9 @@ void CGSSIPModel::CheckProfileForDeleteL(
         {
         profile->GetParameter( KSIPDefaultProfile, aDefault );
         profile->GetParameter( KSIPProfileLocked, aLocked );
-        aIsUse = iEngine->IsInUseL( *profile );
+        TUint32 profileId;
+        profile->GetParameter( KSIPProfileId, profileId );        
+        aIsUse = CheckIsProfileInUseL( profileId );
         } 
     __GSLOGSTRING("CGSSIPModel::CheckProfileForDeleteL End" )
     }
@@ -1224,6 +1226,10 @@ TBool CGSSIPModel::CheckIsProfileInUseL( TUint32 aProfileId )
     if ( profile )
         {
         profile->GetParameter( KSIPProfileRegistered, inUse );
+        if ( !inUse )
+        	{
+            inUse = iEngine->IsInUseL( *profile );
+        	}
         }
     
     return inUse;    

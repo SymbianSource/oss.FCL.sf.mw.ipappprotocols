@@ -27,7 +27,7 @@ PRJ_EXPORTS
 ../inc/rtp_proto_id.h		SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(rtp_proto_id.h)
 #ifdef SYMBIAN_NON_SEAMLESS_NETWORK_BEARER_MOBILITY
 ../inc/rtp_subconparams.h	SYMBIAN_MW_LAYER_PLATFORM_EXPORT_PATH(rtp_subconparams.h)
-./cfrtp.iby          CORE_MW_LAYER_IBY_EXPORT_PATH(cfrtp.iby)
+./cfrtp.iby          /epoc32/rom/include/cfrtp.iby
 
 PRJ_MMPFILES
 cfrtp.mmp

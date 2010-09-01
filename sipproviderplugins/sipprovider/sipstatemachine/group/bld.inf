@@ -25,5 +25,5 @@ PRJ_MMPFILES
 SipStateMachine.mmp
 
 PRJ_EXPORTS
-../group/SipStateMachine.iby	CORE_MW_LAYER_IBY_EXPORT_PATH(sipstatemachine.iby)
+../group/SipStateMachine.iby /epoc32/rom/include/sipstatemachine.iby
 ../inc/siphlerr.h 	SYMBIAN_MW_LAYER_PUBLIC_EXPORT_PATH(siphlerr.h)

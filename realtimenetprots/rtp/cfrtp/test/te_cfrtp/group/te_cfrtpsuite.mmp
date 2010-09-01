@@ -33,7 +33,9 @@ USERINCLUDE     ../inc
 USERINCLUDE     ../../../inc
 USERINCLUDE     ../../rtpscpr_dummy/inc
 
-MW_LAYER_SYSTEMINCLUDE
+SYSTEMINCLUDE   /epoc32/include
+SYSTEMINCLUDE   /epoc32/include/test
+SYSTEMINCLUDE   /epoc32/include/comms-infras
 
 LIBRARY		testexecuteutils.lib 
 LIBRARY		testexecutelogclient.lib 

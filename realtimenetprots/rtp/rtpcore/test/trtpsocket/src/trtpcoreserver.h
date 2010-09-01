@@ -124,7 +124,7 @@ inline TRtpFixedHeader::TRtpFixedHeader()
   	iSSRC = 0;					// synchronization source
   	}
 
-class CRtpFixedHeader : public CBase
+class CRtpFixedHeader
    	{
    public:
    	CRtpFixedHeader(TDes8& packet);
@@ -238,7 +238,7 @@ struct TRtcpPacketStruct
        } specific;
    };
 
-class CRtcpPacketTest : public CBase
+class CRtcpPacketTest
    	{
    public:
    	CRtcpPacketTest(TDes8& aPacket);

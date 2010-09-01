@@ -312,67 +312,36 @@ void UT_SRTPAuthentication_HMAC_SHA1::SetupL(  )
 void UT_SRTPAuthentication_HMAC_SHA1::Teardown(  )
     {
     delete iAuthenticator;
-    iAuthenticator = NULL;
-	
+    
 	delete iRFC2202_Test1_Key_160bits;
 	delete iRFC2202_Test1_Data_16bits;
 	delete iRFC2202_Test1_Tag_80bits;
 	delete iRFC2202_Test1_Tag_32bits;
-	
-	iRFC2202_Test1_Key_160bits = NULL;
-	iRFC2202_Test1_Data_16bits = NULL;
-	iRFC2202_Test1_Tag_80bits = NULL;
-	iRFC2202_Test1_Tag_32bits = NULL;
 
 	delete iRFC2202_Test2_Key;
 	delete iRFC2202_Test2_Data_28bits;
 	delete iRFC2202_Test2_Tag_80bits;
 	delete iRFC2202_Test2_Tag_32bits;
-	
-    iRFC2202_Test2_Key = NULL;
-	iRFC2202_Test2_Data_28bits = NULL;
-	iRFC2202_Test2_Tag_80bits = NULL;
-	iRFC2202_Test2_Tag_32bits = NULL;
 
 	delete iRFC2202_Test3_Key_160bits;
 	delete iRFC2202_Test3_Data_400bits;
 	delete iRFC2202_Test3_Tag_80bits;
 	delete iRFC2202_Test3_Tag_32bits;
-	
-    iRFC2202_Test3_Key_160bits = NULL;
-	iRFC2202_Test3_Data_400bits = NULL;
-	iRFC2202_Test3_Tag_80bits = NULL;
-	iRFC2202_Test3_Tag_32bits = NULL;
 
     delete iRFC2202_Test4_Key_200bits;
     delete iRFC2202_Test4_Data_400bits;
     delete iRFC2202_Test4_Tag_80bits;
     delete iRFC2202_Test4_Tag_32bits;
-	
-	iRFC2202_Test4_Key_200bits = NULL;
-    iRFC2202_Test4_Data_400bits = NULL;
-    iRFC2202_Test4_Tag_80bits = NULL;
-    iRFC2202_Test4_Tag_32bits = NULL;
 
     delete iRFC2202_Test5_Key_160bits;
     delete iRFC2202_Test5_Data;
     delete iRFC2202_Test5_Tag_80bits;
     delete iRFC2202_Test5_Tag_32bits;
 
-	iRFC2202_Test5_Key_160bits = NULL;
-    iRFC2202_Test5_Data = NULL;
-    iRFC2202_Test5_Tag_80bits = NULL;
-    iRFC2202_Test5_Tag_32bits = NULL;
-	
 	delete iRFC2202_Test6_Key_640bits;
 	delete iRFC2202_Test6_Data_54bits;
 	delete iRFC2202_Test6_Tag_80bits;
 	delete iRFC2202_Test6_Tag_32bits;
-	
-    iRFC2202_Test6_Key_640bits = NULL;
-	iRFC2202_Test6_Data_54bits = NULL;
-	iRFC2202_Test6_Tag_80bits = NULL;
-	iRFC2202_Test6_Tag_32bits = NULL;
 
 	delete iRFC2202_Test7_Key_640bits;
 	delete iRFC2202_Test7_Data_73bits;
@@ -382,19 +351,10 @@ void UT_SRTPAuthentication_HMAC_SHA1::Teardown(  )
 	delete iTest8_Data_168bits;
 	delete iTest8_Data2_32bits;
 	delete iTest8_Tag_80bits;
-	
-    iRFC2202_Test7_Key_640bits = NULL;
-	iRFC2202_Test7_Data_73bits = NULL;
-	iRFC2202_Test7_Tag_80bits = NULL;
-	iRFC2202_Test7_Tag_32bits = NULL;
-	iTest8_Key_160bits = NULL;
-	iTest8_Data_168bits = NULL;
-	iTest8_Data2_32bits = NULL;
-	iTest8_Tag_80bits = NULL;
     }
 
 
-void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test1_EightyL(  )
+void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test1_80L(  )
     {
  	HBufC8* result = iAuthenticator->AuthenticateL(80, *iRFC2202_Test1_Key_160bits, 
  	                                         *iRFC2202_Test1_Data_16bits,
@@ -408,7 +368,7 @@ void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test1_EightyL(  )
  	delete result;     	 	 	
     }
 
-void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test1_ThirtyTwoL(  )
+void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test1_32L(  )
     {
  	HBufC8* result = iAuthenticator->AuthenticateL(32, *iRFC2202_Test1_Key_160bits, 
  	                                         *iRFC2202_Test1_Data_16bits,
@@ -423,7 +383,7 @@ void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test1_ThirtyTwoL(
     }
 
 
-void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test2_EightyL(  )
+void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test2_80L(  )
     {
  	HBufC8* result = iAuthenticator->AuthenticateL(80, *iRFC2202_Test2_Key, 
  	                                         *iRFC2202_Test2_Data_28bits,
@@ -437,7 +397,7 @@ void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test2_EightyL(  )
  	delete result;    
     }
 
-void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test2_ThirtyTwoL(  )
+void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test2_32L(  )
     {
  	HBufC8* result = iAuthenticator->AuthenticateL(32, *iRFC2202_Test2_Key, 
  	                                         *iRFC2202_Test2_Data_28bits,
@@ -452,7 +412,7 @@ void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test2_ThirtyTwoL(
     }
 
 
-void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test3_EightyL(  )
+void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test3_80L(  )
     {
  	HBufC8* result = iAuthenticator->AuthenticateL(80, *iRFC2202_Test3_Key_160bits, 
  	                                         *iRFC2202_Test3_Data_400bits,
@@ -466,7 +426,7 @@ void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test3_EightyL(  )
  	delete result;    
     }
 
-void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test3_ThirtyTwoL(  )
+void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test3_32L(  )
     {
  	HBufC8* result = iAuthenticator->AuthenticateL(32, *iRFC2202_Test3_Key_160bits, 
  	                                         *iRFC2202_Test3_Data_400bits,
@@ -480,7 +440,7 @@ void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test3_ThirtyTwoL(
  	delete result;    
     }
 
-void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test4_EightyL(  )
+void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test4_80L(  )
     {
  	HBufC8* result = iAuthenticator->AuthenticateL(80, *iRFC2202_Test4_Key_200bits, 
  	                                         *iRFC2202_Test4_Data_400bits,
@@ -494,7 +454,7 @@ void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test4_EightyL(  )
  	delete result;    
     }
 
-void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test4_ThirtyTwoL(  )
+void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test4_32L(  )
     {
  	HBufC8* result = iAuthenticator->AuthenticateL(32, *iRFC2202_Test4_Key_200bits, 
  	                                         *iRFC2202_Test4_Data_400bits,
@@ -508,7 +468,7 @@ void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test4_ThirtyTwoL(
  	delete result;    
     }
 
-void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test5_EightyL(  )
+void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test5_80L(  )
     {
  	HBufC8* result = iAuthenticator->AuthenticateL(80, *iRFC2202_Test5_Key_160bits, 
  	                                         *iRFC2202_Test5_Data,
@@ -522,7 +482,7 @@ void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test5_EightyL(  )
  	delete result;    
     }
 
-void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test5_ThirtyTwoL(  )
+void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test5_32L(  )
     {
  	HBufC8* result = iAuthenticator->AuthenticateL(32, *iRFC2202_Test5_Key_160bits, 
  	                                         *iRFC2202_Test5_Data,
@@ -536,7 +496,7 @@ void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test5_ThirtyTwoL(
  	delete result;    
     }
 
-void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test6_EightyL(  )
+void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test6_80L(  )
     {
  	HBufC8* result = iAuthenticator->AuthenticateL(80, *iRFC2202_Test6_Key_640bits, 
  	                                         *iRFC2202_Test6_Data_54bits,
@@ -550,7 +510,7 @@ void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test6_EightyL(  )
  	delete result;    
     }
 
-void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test6_ThirtyTwoL(  )
+void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test6_32L(  )
     {
  	HBufC8* result = iAuthenticator->AuthenticateL(32, *iRFC2202_Test6_Key_640bits, 
  	                                         *iRFC2202_Test6_Data_54bits,
@@ -564,7 +524,7 @@ void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test6_ThirtyTwoL(
  	delete result;    
     }
 
-void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test7_EightyL(  )
+void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test7_80L(  )
     {
  	HBufC8* result = iAuthenticator->AuthenticateL(80, *iRFC2202_Test7_Key_640bits, 
  	                                         *iRFC2202_Test7_Data_73bits,
@@ -578,7 +538,7 @@ void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test7_EightyL(  )
  	delete result;    
     }
 
-void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test7_ThirtyTwoL(  )
+void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test7_32L(  )
     {
  	HBufC8* result = iAuthenticator->AuthenticateL(32, *iRFC2202_Test7_Key_640bits, 
  	                                         *iRFC2202_Test7_Data_73bits,
@@ -593,7 +553,7 @@ void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_RFC2202_Test7_ThirtyTwoL(
     }
 
 
-void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_Test8_ThirtyTwoL(  )
+void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_Test8_32L(  )
     {
     TBuf8<20> buf; 
     TBuf8<19> buf2;
@@ -672,8 +632,8 @@ void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_Test8_ThirtyTwoL(  )
 
 void UT_SRTPAuthentication_HMAC_SHA1::UT_AuthenticateL_Test_KeyChangedL(  )
     {
-    UT_AuthenticateL_RFC2202_Test1_EightyL();
-    UT_AuthenticateL_RFC2202_Test1_ThirtyTwoL();
+    UT_AuthenticateL_RFC2202_Test1_80L();
+    UT_AuthenticateL_RFC2202_Test1_32L();
     }
 
 void UT_SRTPAuthentication_HMAC_SHA1::Hex(HBufC8& aString)
@@ -709,104 +669,104 @@ EUNIT_TEST(
     "SRTPAuthentication_HMAC_SHA1",
     "AuthenticateL",
     "FUNCTIONALITY",
-    SetupL, UT_AuthenticateL_RFC2202_Test1_EightyL, Teardown)
+    SetupL, UT_AuthenticateL_RFC2202_Test1_80L, Teardown)
 
 EUNIT_TEST(
     "AuthenticateL - 1 32 bits",
     "SRTPAuthentication_HMAC_SHA1",
     "AuthenticateL",
     "FUNCTIONALITY",
-    SetupL, UT_AuthenticateL_RFC2202_Test1_ThirtyTwoL, Teardown)
+    SetupL, UT_AuthenticateL_RFC2202_Test1_32L, Teardown)
 
 EUNIT_TEST(
     "AuthenticateL - 2 80 bits",
     "SRTPAuthentication_HMAC_SHA1",
     "AuthenticateL",
     "FUNCTIONALITY",
-    SetupL, UT_AuthenticateL_RFC2202_Test2_EightyL, Teardown)
+    SetupL, UT_AuthenticateL_RFC2202_Test2_80L, Teardown)
 
 EUNIT_TEST(
     "AuthenticateL - 2 32 bits",
     "SRTPAuthentication_HMAC_SHA1",
     "AuthenticateL",
     "FUNCTIONALITY",
-    SetupL, UT_AuthenticateL_RFC2202_Test2_ThirtyTwoL, Teardown)
+    SetupL, UT_AuthenticateL_RFC2202_Test2_32L, Teardown)
 
 EUNIT_TEST(
     "AuthenticateL - 3 80 bits",
     "SRTPAuthentication_HMAC_SHA1",
     "AuthenticateL",
     "FUNCTIONALITY",
-    SetupL, UT_AuthenticateL_RFC2202_Test3_EightyL, Teardown)
+    SetupL, UT_AuthenticateL_RFC2202_Test3_80L, Teardown)
 
 EUNIT_TEST(
     "AuthenticateL - 3 32 bits",
     "SRTPAuthentication_HMAC_SHA1",
     "AuthenticateL",
     "FUNCTIONALITY",
-    SetupL, UT_AuthenticateL_RFC2202_Test3_ThirtyTwoL, Teardown)
+    SetupL, UT_AuthenticateL_RFC2202_Test3_32L, Teardown)
 
 EUNIT_TEST(
     "AuthenticateL - 4 80 bits",
     "SRTPAuthentication_HMAC_SHA1",
     "AuthenticateL",
     "FUNCTIONALITY",
-    SetupL, UT_AuthenticateL_RFC2202_Test4_EightyL, Teardown)
+    SetupL, UT_AuthenticateL_RFC2202_Test4_80L, Teardown)
 
 EUNIT_TEST(
     "AuthenticateL - 4 32 bits",
     "SRTPAuthentication_HMAC_SHA1",
     "AuthenticateL",
     "FUNCTIONALITY",
-    SetupL, UT_AuthenticateL_RFC2202_Test4_ThirtyTwoL, Teardown)
+    SetupL, UT_AuthenticateL_RFC2202_Test4_32L, Teardown)
 
 EUNIT_TEST(
     "AuthenticateL - 5 80 bits",
     "SRTPAuthentication_HMAC_SHA1",
     "AuthenticateL",
     "FUNCTIONALITY",
-    SetupL, UT_AuthenticateL_RFC2202_Test5_EightyL, Teardown)
+    SetupL, UT_AuthenticateL_RFC2202_Test5_80L, Teardown)
 
 EUNIT_TEST(
     "AuthenticateL - 5 32 bits",
     "SRTPAuthentication_HMAC_SHA1",
     "AuthenticateL",
     "FUNCTIONALITY",
-    SetupL, UT_AuthenticateL_RFC2202_Test5_ThirtyTwoL, Teardown)
+    SetupL, UT_AuthenticateL_RFC2202_Test5_32L, Teardown)
 
 EUNIT_TEST(
     "AuthenticateL - 6 80 bits",
     "SRTPAuthentication_HMAC_SHA1",
     "AuthenticateL",
     "FUNCTIONALITY",
-    SetupL, UT_AuthenticateL_RFC2202_Test6_EightyL, Teardown)
+    SetupL, UT_AuthenticateL_RFC2202_Test6_80L, Teardown)
 
 EUNIT_TEST(
     "AuthenticateL - 6 32 bits",
     "SRTPAuthentication_HMAC_SHA1",
     "AuthenticateL",
     "FUNCTIONALITY",
-    SetupL, UT_AuthenticateL_RFC2202_Test6_ThirtyTwoL, Teardown)
+    SetupL, UT_AuthenticateL_RFC2202_Test6_32L, Teardown)
 
 EUNIT_TEST(
     "AuthenticateL - 7 80 bits",
     "SRTPAuthentication_HMAC_SHA1",
     "AuthenticateL",
     "FUNCTIONALITY",
-    SetupL, UT_AuthenticateL_RFC2202_Test7_EightyL, Teardown)
+    SetupL, UT_AuthenticateL_RFC2202_Test7_80L, Teardown)
 
 EUNIT_TEST(
     "AuthenticateL - 7 32 bits",
     "SRTPAuthentication_HMAC_SHA1",
     "AuthenticateL",
     "FUNCTIONALITY",
-    SetupL, UT_AuthenticateL_RFC2202_Test7_ThirtyTwoL, Teardown)
+    SetupL, UT_AuthenticateL_RFC2202_Test7_32L, Teardown)
 EUNIT_TEST(
     "AuthenticateL - RealPacket",
     "SRTPAuthentication_HMAC_SHA1",
     "AuthenticateL with Real Packet",
     "FUNCTIONALITY",
-    SetupL, UT_AuthenticateL_Test8_ThirtyTwoL, Teardown)
+    SetupL, UT_AuthenticateL_Test8_32L, Teardown)
     
 EUNIT_TEST(
     "AuthenticateL - KeyChanged",

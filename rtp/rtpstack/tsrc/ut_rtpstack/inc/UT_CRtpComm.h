@@ -124,7 +124,7 @@ NONSHARABLE_CLASS( UT_CRtpComm )
          
          void UT_CRtpComm_CommReceiveL(  );
          
-         void UT_CRtpComm_MaxSocketSizeL();
+         void UT_CRtpComm_MaxSocketSize();
          
     private:
     	static TInt StopScheduler( TAny* aThis );

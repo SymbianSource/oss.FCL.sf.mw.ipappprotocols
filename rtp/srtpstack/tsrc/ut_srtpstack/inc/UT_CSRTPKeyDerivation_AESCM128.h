@@ -75,7 +75,7 @@ class UT_CSRTPKeyDerivation_AESCM128
 
          void UT_RFC3711_Session_Auth_Key_TestL();
 
-        void UT_ErronousInput_OneL();
+        void UT_ErronousInput_1L();
          
         void UT_ErronousInput_2L();
          

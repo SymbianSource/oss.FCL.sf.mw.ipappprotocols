@@ -334,15 +334,7 @@ class CRtpAPI : public CBase
                                      const TRtpSendHeader& aHeaderInfo,
                                      const TDesC8& aPayloadData,
                                      TRequestStatus& aStatus );
-       
-        /**
-        * Send an RTP data packet, with a given CSRC list.
-        * @param aHeaderInfo - [input] TRtpSendPktParam and CSRC list.
-        * @return KErrNone if successful; system wide error code otherwise
-        */
-        IMPORT_C TInt SendRtpPacket( const TRtpSendPktParams&  aSendPktParam, 
-                                     TArray<TRtpCSRC>   aCSRCList);
- 
+
 
         /**
         * Send a non-RTP (control) data packet asynchronously
@@ -541,30 +533,8 @@ class CRtpAPI : public CBase
         * @return KErrNone.
         */
         IMPORT_C TInt NotInUseSetNonRTPDataObserver( );
-        
-        
-        /**
-        * Register a callback object for Send RTP data packets from an RTP
-        * Session. Only one Sender callback object is allowed to be
-        * registered for one Session.
-        * MRTPPacketObserver::ReadyToSendRtpPacket function from aRtpObserver object is
-        * called when an RTP data packet is received.
-        * @param aSessionId - [input] RTP Session ID
-        * @param aRtpObserver - [input] Callback object to receive RTP packets
-        * @return KErrNone if successful; system wide error code otherwise
-        */
-        IMPORT_C TInt RegisterRtpPostProcessingObserver( TRtpId aSessionId,
-                MRtpPostProcessingObserver& aRtpObserver );
-        
-        
-        /**
-        * Unregister RTP Packet observer callback object associated with an RTP
-        * session.
-        * @param aSessionId - [input] RTP Session ID
-        * @return None
-        */
-        IMPORT_C void UnregisterRtpPostProcessingObserver( TRtpId aSessionId );
-        
+                                    
+
     private:
         /**
         * C++ default constructor.
