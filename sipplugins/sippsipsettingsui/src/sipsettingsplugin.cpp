@@ -363,6 +363,10 @@ void CSIPSettingsPlugin::HandleCommandL( TInt aCommand )
                 iContainer->ListItemDeletedL();
                 CheckMiddleSoftkeyLabelL();          
                 }
+            else
+                {
+                AppUi()->ActivateLocalViewL( KGSSIPSettingsPluginUID );
+                }
             break;
         
         // Activate 'Connection' or 'Administrative Settings' view

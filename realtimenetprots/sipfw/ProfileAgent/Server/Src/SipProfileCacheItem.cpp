@@ -1416,3 +1416,14 @@ TUint32 CSIPProfileCacheItem::BearerID()
     LatestProfile().ExtensionParameter(KBearerType , bearerId);
     return bearerId;
 }
+
+// -----------------------------------------------------------------------------
+// CSIPProfileCacheItem::HasQueuedUpdate
+// This function will return true if profile updated and not yet processed
+// false otherwise 
+// -----------------------------------------------------------------------------
+//
+TBool CSIPProfileCacheItem::HasQueuedUpdate() const
+    {
+    return (iQueuedProfile != NULL);
+    }

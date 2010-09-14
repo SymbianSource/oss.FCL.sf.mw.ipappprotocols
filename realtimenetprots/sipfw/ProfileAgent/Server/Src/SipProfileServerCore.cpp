@@ -396,7 +396,14 @@ TBool CSIPProfileServerCore::ProceedRegistration
     	{
     	return EFalse;
     	}
-
+    
+      if((aError != KErrNone) && item->HasQueuedUpdate())
+        {
+        PROFILE_DEBUG4("ProfileServerCore::ProceedRegistration HasQueuedUpdate, err",
+			item->HasQueuedUpdate(), aError)
+        return EFalse;
+        }
+    
     if ( ShouldChangeIap(item->UsedProfile(), aError) && 
     	 !item->SnapRetryCountReached() )
         {
