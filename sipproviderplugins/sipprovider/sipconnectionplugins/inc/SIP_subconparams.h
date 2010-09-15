@@ -272,6 +272,6 @@ public:
 	static CSubConExtensionParameterSet* NewL(TAny* aConstructionParameters);
 	};
 
-#include "SIP_subconparams.inl"
+#include "sip_subconparams.inl"
 
 #endif // SIP_SUBCONPARAMS_H

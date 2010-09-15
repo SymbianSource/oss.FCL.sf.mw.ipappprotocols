@@ -514,7 +514,27 @@ void CSIPProfileServerCore::SystemVariableUpdated(
                     {
                     ConfirmSystemstateMonitor(CSipSystemStateMonitor::ESystemState);
                     }
-                } //end if Offline         
+                } //end if Offline
+            
+            //If the System receives Online event
+            if(aValue == CSipSystemStateMonitor::ESystemOnline)
+                {                
+                for (TInt i = 0; i < iProfileCache.Count(); i++)
+                    {
+                    CSIPProfileCacheItem* item = iProfileCache[i];
+                    item->OfflineInitiated(EFalse);                    
+                    CSIPConcreteProfile::TStatus status;
+                    iPluginDirector->State(status, item->UsedProfile());
+                    if (item->IsReferred() && status == CSIPConcreteProfile::EUnregistered)
+                        {
+                        TRAPD(err, item->StartRegisterL(*iWaitForIAP, *iRegInProg, ETrue));
+                        if (err != KErrNone)
+                            {
+                            HandleAsyncError(*item,CSIPConcreteProfile::ERegistrationInProgress,err);
+                            }
+                        }
+                    }
+                } //end if Online           
 	    } //end if SystemState    
 	else if(aVariable == CSipSystemStateMonitor::ERfsState)
 	    {
@@ -1553,6 +1573,7 @@ void CSIPProfileServerCore::SessionCleanupL(
     if (index != KErrNotFound)
         {
         iObservers.Remove(index);
+        iObservers.Compress();
         }
 
     for (TInt i = 0; i < iProfileCache.Count(); i ++)
@@ -1760,6 +1781,7 @@ void CSIPProfileServerCore::ReserveStorageL(TBool aRestoreOngoing)
 			{
 			// Backup ends. Do not read profiles, as they are already in cache.
 			iProfileStorage = CSIPProfileStorage::NewL(iFs);
+			iProfileStorage->GetProfileStorageIndexObject()->SetProfileServerCoreObject(this);
 			}
 		PROFILE_DEBUG1("ProfileServerCore::ReserveStorageL, storage reserved")
 		}
@@ -1933,6 +1955,7 @@ void CSIPProfileServerCore::RemoveProfileItem(TUint32 aProfileId)
     if (index >= 0)
     	{
     	iProfileCache.Remove(index);
+    	iProfileCache.Compress();
     	}
 	}
 
@@ -1949,7 +1972,9 @@ void CSIPProfileServerCore::RemoveUnusedMigrationControllers(TUint32 aSnapId)
 			{
 			CSipAlrMigrationController* unused = iMigrationControllers[i];
 			iMigrationControllers.Remove(i);
+			iMigrationControllers.Compress();
 			delete unused;
+			unused = NULL;
 			}
 		}
 	}
@@ -2199,7 +2224,8 @@ TInt CSIPProfileServerCore::ConnectionCloseTimerExpired(TAny* aPtr)
             CSIPConcreteProfile::TStatus status;
             self->iPluginDirector->State( status, self->iProfileCache[i]->UsedProfile() );
             item->OfflineInitiated(EFalse);
-            if (item->IsReferred() && (status == CSIPConcreteProfile::EUnregistered) ) 
+            if (item->IsReferred() && (!self->iApnManager->IsIapGPRSL(item->Profile().IapId())) 
+                    && status == CSIPConcreteProfile::EUnregistered) 
                 {                
                 TRAPD(err, item->StartRegisterL(*(self->iWaitForIAP), *(self->iRegInProg), ETrue));
                 if (err != KErrNone)
