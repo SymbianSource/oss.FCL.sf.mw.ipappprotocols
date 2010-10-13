@@ -396,14 +396,7 @@ TBool CSIPProfileServerCore::ProceedRegistration
     	{
     	return EFalse;
     	}
-    
-      if((aError != KErrNone) && item->HasQueuedUpdate())
-        {
-        PROFILE_DEBUG4("ProfileServerCore::ProceedRegistration HasQueuedUpdate, err",
-			item->HasQueuedUpdate(), aError)
-        return EFalse;
-        }
-    
+
     if ( ShouldChangeIap(item->UsedProfile(), aError) && 
     	 !item->SnapRetryCountReached() )
         {
@@ -1573,7 +1566,6 @@ void CSIPProfileServerCore::SessionCleanupL(
     if (index != KErrNotFound)
         {
         iObservers.Remove(index);
-        iObservers.Compress();
         }
 
     for (TInt i = 0; i < iProfileCache.Count(); i ++)
@@ -1781,7 +1773,6 @@ void CSIPProfileServerCore::ReserveStorageL(TBool aRestoreOngoing)
 			{
 			// Backup ends. Do not read profiles, as they are already in cache.
 			iProfileStorage = CSIPProfileStorage::NewL(iFs);
-			iProfileStorage->GetProfileStorageIndexObject()->SetProfileServerCoreObject(this);
 			}
 		PROFILE_DEBUG1("ProfileServerCore::ReserveStorageL, storage reserved")
 		}
@@ -1915,22 +1906,20 @@ CSIPProfileServerCore::PassAlrErrorToClient(const CSIPProfileCacheItem& aItem,
 // -----------------------------------------------------------------------------
 //
 CSipAlrMigrationController&
-CSIPProfileServerCore::MigrationControllerL(TSipSNAPConfigurationData aSnapData)
+CSIPProfileServerCore::MigrationControllerL(TUint32 aSnapId)
 	{
-	RemoveUnusedMigrationControllers(aSnapData.iSnapId);
+	RemoveUnusedMigrationControllers(aSnapId);
 
 	for (TInt i = 0; i < iMigrationControllers.Count(); ++i)
 		{
-        // Migration controller is unique based on the SNAP ID and Bearer ID.
-		if (iMigrationControllers[i]->SnapId() == aSnapData.iSnapId 
-		        && iMigrationControllers[i]->BearerId() == aSnapData.iBearerId)
+		if (iMigrationControllers[i]->SnapId() == aSnapId)
 			{
 			return *iMigrationControllers[i];
 			}
 		}
 
 	CSipAlrMigrationController* ctrl =
-		CSipAlrMigrationController::NewLC(iAlrHandler->AlrMonitorL(),aSnapData);
+		CSipAlrMigrationController::NewLC(iAlrHandler->AlrMonitorL(), aSnapId);
 	iMigrationControllers.AppendL(ctrl);
 	CleanupStack::Pop(ctrl);
 	return *ctrl;
@@ -1955,7 +1944,6 @@ void CSIPProfileServerCore::RemoveProfileItem(TUint32 aProfileId)
     if (index >= 0)
     	{
     	iProfileCache.Remove(index);
-    	iProfileCache.Compress();
     	}
 	}
 
@@ -1972,9 +1960,7 @@ void CSIPProfileServerCore::RemoveUnusedMigrationControllers(TUint32 aSnapId)
 			{
 			CSipAlrMigrationController* unused = iMigrationControllers[i];
 			iMigrationControllers.Remove(i);
-			iMigrationControllers.Compress();
 			delete unused;
-			unused = NULL;
 			}
 		}
 	}

@@ -228,20 +228,17 @@ TInt CRtpManager::StartConnection( TRequestStatus& aStatus, TInt aIapId )
 // TInt CRtpManager::PrepareConnection()
 // ---------------------------------------------------------------------------
 //
-TInt CRtpManager::PrepareConnection( TCommDbConnPref& aPrefs, TInt aIapId )
+TInt CRtpManager::PrepareConnection( TConnPrefList& aPrefs, TInt aIapId )
     {
     RTP_DEBUG_DETAIL( "CRtpManager::PrepareConnection"  );
     
     TInt err( KErrCouldNotConnect );
 
     if ( aIapId != KUseDefaultIap )
-        {
-	    aPrefs.SetDialogPreference( ECommDbDialogPrefDoNotPrompt );
-        aPrefs.SetIapId( aIapId );
-        }
-    
-    aPrefs.SetDirection( ECommDbConnectionDirectionOutgoing );
-
+        {  
+        iPreferences.SetIapId( aIapId );
+        aPrefs.AppendL( &iPreferences );
+        } 
     err = iSocketServPtr->Connect();
 
     if ( err != KErrNone )

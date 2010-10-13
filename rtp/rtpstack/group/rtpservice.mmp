@@ -65,6 +65,8 @@ LIBRARY			commdb.lib
 LIBRARY			efsrv.lib
 LIBRARY			srtp.lib 
 LIBRARY			charconv.lib
+LIBRARY                 extendedconnpref.lib
+LIBRARY                 netmeta.lib
 
 CAPABILITY      CAP_GENERAL_DLL
 

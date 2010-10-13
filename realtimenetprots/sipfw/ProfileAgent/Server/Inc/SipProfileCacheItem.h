@@ -567,12 +567,7 @@ class CSIPProfileCacheItem : public CBase, public MSipAlrMigrationObserver
 		*/
 		void HandleProfileError(TInt aError, 
 			CSIPConcreteProfile& aProfile);		
-/**
-		* Function returns the Bearer ID for the Profile. 
-		*/
-		TUint32 BearerID();
 
-		TBool HasQueuedUpdate()const;
 	private:
 
 	    /**

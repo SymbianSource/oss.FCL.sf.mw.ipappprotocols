@@ -77,8 +77,6 @@ _LIT8( KNSmlDMSIPSnap,
     "DestinationNetwork" );
 _LIT8( KNSmlDMSIPSigQos,
     "SignalingQoS" );
-_LIT8( KNSmlDMSIPBearerID,
-    "BearerID" );
 
 // Explanations of parameters
 _LIT8( KNSmlDMSIPNodeNameExp,
@@ -129,8 +127,6 @@ _LIT8( KNSmlDMSIPSnapExp,
     "Reference to Destination Network" );
 _LIT8( KNSmlDMSIPSigQosExp,
     "Signaling QoS" );
-_LIT8( KNSmlDMSIPBearerIDExp,
-    "Bearer ID" );
 
 // For SIP URI.
 // References: OMA DM MO for Nokia SIP and IETF RFC3261.

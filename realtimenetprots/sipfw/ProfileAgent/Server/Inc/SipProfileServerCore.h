@@ -36,7 +36,6 @@
 #include "sipprofileerrorhandler.h"
 #include <sipsystemstateobserver.h>
 #include "sipapnmanager.h"
-#include "sipalrobserver.h"
 #include <e32base.h>
 
 // FORWARD DECLARATIONS
@@ -467,10 +466,10 @@ class CSIPProfileServerCore : public CBase,
 		/**
         * Gets the migration controller of the given SNAP id. If a controller
         * does not exists, creates a new one.
-		* @param aSnapData 
+		* @param aSnapId SNAP id
 		* @return Migration controller, ownership is not transferred.
 		*/
-		CSipAlrMigrationController& MigrationControllerL(TSipSNAPConfigurationData aSnapData);
+		CSipAlrMigrationController& MigrationControllerL(TUint32 aSnapId);
 
 		CSIPProfileState& UnregisteredState();
 

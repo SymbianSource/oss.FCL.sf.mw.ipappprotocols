@@ -781,9 +781,7 @@ TBool CSIPIMSProfileContext::RetryRegister(
 //	
 TBool CSIPIMSProfileContext::ShouldRetryRegistration( TInt aError )
 	{
-	return (iProfile &&
-	        AgentObserver().ProceedRegistration(*iProfile, aError) &&
-	        (aError == K503ServiceUnavailable ||
+	return (aError == K503ServiceUnavailable ||
 	        aError == K408TimeOut ||
 	        aError == K480TemporarilyUnavailable ||
 	        aError == K500ServerInternalError ||
@@ -793,7 +791,7 @@ TBool CSIPIMSProfileContext::ShouldRetryRegistration( TInt aError )
 		      aError == KErrSIPTransportFailure ||
 		      aError == KErrSIPICMPFailure ||
 		      aError == KErrSIPOutboundProxyNotResponding ) && 
-			 iConnection.State() != CSIPConnection::ESuspended)));
+			 iConnection.State() != CSIPConnection::ESuspended));
 	}
 
 // -----------------------------------------------------------------------------

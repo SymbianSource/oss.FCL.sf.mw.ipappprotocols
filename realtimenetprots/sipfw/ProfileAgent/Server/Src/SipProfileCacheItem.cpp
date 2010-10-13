@@ -366,7 +366,6 @@ void CSIPProfileCacheItem::RemoveObserver(
 	if (index != KErrNotFound)
 		{
 		iObservers.Remove(index);
-		iObservers.Compress();
 		}
 
 	RemoveFromPendingObservers(aObserver);
@@ -403,7 +402,6 @@ void CSIPProfileCacheItem::RemoveUser(
 	if (index != KErrNotFound)
 		{
 		iUsers.Remove(index);
-		iUsers.Compress();
 		CheckProfileEnabledState();
 		}
 	}
@@ -971,12 +969,9 @@ void CSIPProfileCacheItem::MonitorSnapL(TUint32 aSnapId,
 		StopSnapMonitoring();
 		}
 
-	if (!iMigrationController) 
+	if (!iMigrationController)
 		{
-	    TUint32 bearerId = BearerID();
-	    TSipSNAPConfigurationData aSnapData(aSnapId,bearerId);
-		iMigrationController = &iServerCore.MigrationControllerL(aSnapData);
-		PROFILE_DEBUG3("ProfileCacheItem::BearerFilter value is", bearerId)
+		iMigrationController = &iServerCore.MigrationControllerL(aSnapId);
 		TUint32 iapId = iMigrationController->AttachProfileL(*this);
 		if (iapId)
 			{
@@ -1258,7 +1253,6 @@ void CSIPProfileCacheItem::RemoveFromPendingObservers(
 	if (index != KErrNotFound)
 		{
 		iObserversWaitedForPermission.Remove(index);
-		iObserversWaitedForPermission.Compress();
 		}
 	}
 
@@ -1409,24 +1403,3 @@ TBool CSIPProfileCacheItem::IsOfflineInitiated() const
     return iIsOfflineInitiated;
     }
 
-// -----------------------------------------------------------------------------
-// CSIPProfileCacheItem::BearerID
-// This function will return the Bearer ID of the Profile.
-// -----------------------------------------------------------------------------
-//
-TUint32 CSIPProfileCacheItem::BearerID()
-{   TUint32 bearerId(0);
-    LatestProfile().ExtensionParameter(KBearerType , bearerId);
-    return bearerId;
-}
-
-// -----------------------------------------------------------------------------
-// CSIPProfileCacheItem::HasQueuedUpdate
-// This function will return true if profile updated and not yet processed
-// false otherwise 
-// -----------------------------------------------------------------------------
-//
-TBool CSIPProfileCacheItem::HasQueuedUpdate() const
-    {
-    return (iQueuedProfile != NULL);
-    }

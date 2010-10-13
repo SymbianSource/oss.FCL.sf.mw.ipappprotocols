@@ -106,5 +106,8 @@ LIBRARY                 cryptography.lib
 LIBRARY                 hash.lib
 LIBRARY			rtpstppacket.lib
 LIBRARY			charconv.lib
+LIBRARY     esock.lib
+LIBRARY     extendedconnpref.lib
+LIBRARY     netmeta.lib
 
 // End of file

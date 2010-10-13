@@ -134,8 +134,8 @@ void CSipAlrHandler::RefreshIapAvailabilityL(CSIPProfileCacheItem& aProfile)
     TUint32 snapId(0);
     __ASSERT_ALWAYS(aProfile.IsSNAPConfigured(snapId),
     				User::Leave(KErrArgument));
-    TSipSNAPConfigurationData aSnapData(snapId ,aProfile.BearerID());
-    AlrMonitorL().RefreshIapAvailabilityL(aSnapData);
+
+    AlrMonitorL().RefreshIapAvailabilityL(snapId);
     }
 
 // -----------------------------------------------------------------------------

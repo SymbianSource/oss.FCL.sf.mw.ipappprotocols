@@ -34,7 +34,6 @@
 #include <e32base.h>
 #include <in_sock.h>
 #include <connpref.h>
-#include <extendedconnpref.h>
 
 #ifdef SYMBIAN_NON_SEAMLESS_NETWORK_BEARER_MOBILITY
 #include <comms-infras/es_mobility_apiext.h>
@@ -57,10 +56,10 @@ class CSipAlrSnapMonitor : public CActive,
 	public: // Constructors and destructor
 	    
     	static CSipAlrSnapMonitor* NewLC( 
-    	    TSipSNAPConfigurationData aSnapData,
+            TUint32 aSnapId,
             MSipAlrObserver& aObserver,
             RSocketServ& aSocketServer,
-            CSipSystemStateMonitor& aSystemStateMonitor);
+            CSipSystemStateMonitor& aSystemStateMonitor );
             
     	~CSipAlrSnapMonitor();
     
@@ -109,9 +108,7 @@ class CSipAlrSnapMonitor : public CActive,
 
         void NewIapAccepted();    
    
-        void NewIapRejected();  
-        
-        TBool BearerId();
+        void NewIapRejected();    
         
 	private: // New functions	
 		
@@ -137,9 +134,9 @@ class CSipAlrSnapMonitor : public CActive,
 	private: // Constructors
 	
 		CSipAlrSnapMonitor( 
-		    TSipSNAPConfigurationData aSnapData,
+		    TUint32 aSnapId,
 		    RSocketServ& aSocketServer,
-		    CSipSystemStateMonitor& aSystemStateMonitor);
+		    CSipSystemStateMonitor& aSystemStateMonitor );
 		
     	void ConstructL( 
     	    MSipAlrObserver& aObserver );
@@ -155,7 +152,7 @@ class CSipAlrSnapMonitor : public CActive,
   			
     private: // Data
     
-    	TSipSNAPConfigurationData iSnapData;	
+		TUint32 iSnapId;	
 		RSocketServ& iSocketServer;
         CSipSystemStateMonitor& iSystemStateMonitor;				
 		RConnection iConnection;
@@ -167,8 +164,6 @@ class CSipAlrSnapMonitor : public CActive,
 		TBool iFirstStartHasSucceeded;
 		TBool iConnectionActive;
 		TBool iDying;
-		TConnPrefList  iPrefList;
-	    TExtendedConnPref iExtPrefs;
 		
 	private: // For testing purposes	
 		

@@ -106,8 +106,10 @@ TBool CSIPApnManager::IsPrimaryApnInUse( TUint32 aIapId )
 // CSIPApnManager::WriteApnL
 // ----------------------------------------------------------------------------
 //
-void CSIPApnManager::WriteApnL( TUint32 aIapId, TBool /*aIsPrimaryApn*/, const TDesC8* aApn )
+void CSIPApnManager::WriteApnL( TUint32 aIapId, TBool aIsPrimaryApn, const TDesC8* aApn )
 	{
+	PROFILE_DEBUG3( "CSIPApnManager::WriteApnL isPrimary", aIsPrimaryApn )
+
 	CSIPApnConfigurationHandler* handler = FindIapIdHandler( aIapId );
 	    if (!handler)
 	        {

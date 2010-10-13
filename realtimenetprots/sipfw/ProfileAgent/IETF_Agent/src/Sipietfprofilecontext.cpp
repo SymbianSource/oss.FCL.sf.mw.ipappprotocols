@@ -491,9 +491,7 @@ TBool CSIPIetfProfileContext::RetryRegister(
 //	
 TBool CSIPIetfProfileContext::ShouldRetryRegistration( TInt aError )
 	{
-	return (iProfile && 
-	        AgentObserver().ProceedRegistration(*iProfile, aError) &&
-	        (aError == K503ServiceUnavailable || 
+	return (aError == K503ServiceUnavailable || 
 	        aError == K408TimeOut ||
 	        aError == K500ServerInternalError ||
 		    aError == KErrTimedOut ||
@@ -501,7 +499,7 @@ TBool CSIPIetfProfileContext::ShouldRetryRegistration( TInt aError )
 		      aError == KErrSIPTransportFailure ||
 		      aError == KErrSIPICMPFailure ||
 		      aError == KErrSIPOutboundProxyNotResponding ) && 
-			 iConnection.State() != CSIPConnection::ESuspended)));
+			 iConnection.State() != CSIPConnection::ESuspended));
 	}
 
 // -----------------------------------------------------------------------------
@@ -564,12 +562,10 @@ void CSIPIetfProfileContext::IncomingResponse(
         PROFILE_DEBUG3("SIPIetfProfileContext::IncomingResponse", ProfileId())
         aHandled = ETrue;
         const CSIPResponseElements* response = aTransaction.ResponseElements();
-        TInt responseCode  = KErrGeneral;
+        TUint responseCode = response->StatusCode();
         TBool retry = EFalse;
         if (response)
             {
-                responseCode = response->StatusCode();
-                
                 retry = RetryRegister( &aTransaction,  responseCode);
                 if( !retry )
                 {

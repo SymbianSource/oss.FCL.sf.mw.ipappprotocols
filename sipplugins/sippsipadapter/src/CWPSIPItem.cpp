@@ -146,7 +146,6 @@ void CWPSIPItem::ConstructL()
     iToAppRef                                 = HBufC8::NewL( 0 );
     iNetwork                                  = HBufC::NewL( 0 );
     iSnapId                                   = KErrNotFound;
-    iBearerId                                 = 0;
     SetSigQos( 40 );
     DBG_PRINT( "CWPSIPItem::ConstructL - end" );
     }
@@ -1008,9 +1007,7 @@ TUint32 CWPSIPItem::StoreL()
 
     // Signalling QoS parameter.
     cSIPManagedProfile->SetParameter( KSIPSoIpTOS, iSigQos );
-    
-    cSIPManagedProfile->SetParameter( KBearerType, iBearerId );
-    
+
     // Stores SIP profile to permanent storage
     cSIPManagedProfileRegistry->SaveL( *cSIPManagedProfile );
 
@@ -1262,14 +1259,4 @@ void CWPSIPItem::SetSigQos( TUint32 aSigQos )
     iSigQos = tosBits;
     }
 
-
-void CWPSIPItem::SetBearerID(TUint32 aBearerId)
-{
-iBearerId = aBearerId;
-}
-
-TUint32 CWPSIPItem:: GetBearerID()
-{
-return iBearerId; 
-}
 // End of file.

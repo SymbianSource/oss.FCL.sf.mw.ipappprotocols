@@ -25,6 +25,8 @@
 #include <es_enum.h>
 #include <rtpdef.h>
 #include <rtpheader.h>
+#include <extendedconnpref.h>
+#include <connpref.h>
 #include "rtpsession.h"
 #include "rtpsdes.h"
 #include "localaddrresolver.h"
@@ -233,7 +235,7 @@ class CRtpManager : public CBase,
         * Opens the socket server and the connection
         * @return KErrNone if successful, system error code otherwise
         */
-        TInt PrepareConnection( TCommDbConnPref& aPrefs, TInt aIapId );
+        TInt PrepareConnection( TConnPrefList& aPrefs, TInt aIapId );
 
         /*
         * @return Internet Access Point ID of iConn
@@ -267,7 +269,9 @@ class CRtpManager : public CBase,
 
         MRtpErrNotify& iErrNotify;
 
-        TCommDbConnPref iPrefs;
+        TConnPrefList iPrefs;
+        TExtendedConnPref iPreferences;
+        
     private:    
     #ifdef EUNIT_TESTING
 	  friend class UT_CRtpAPI;

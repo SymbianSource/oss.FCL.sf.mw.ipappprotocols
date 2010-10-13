@@ -30,10 +30,10 @@
 // -----------------------------------------------------------------------------
 //
 CSipAlrMigrationController*
-CSipAlrMigrationController::NewLC(CSipAlrMonitor& aAlrMonitor, TSipSNAPConfigurationData aSnapData)
+CSipAlrMigrationController::NewLC(CSipAlrMonitor& aAlrMonitor, TUint32 aSnapId)
 	{
 	CSipAlrMigrationController* self =
-		new (ELeave) CSipAlrMigrationController(aAlrMonitor, aSnapData);
+		new (ELeave) CSipAlrMigrationController(aAlrMonitor, aSnapId);
     CleanupStack::PushL(self);
     return self;
 	}
@@ -44,9 +44,9 @@ CSipAlrMigrationController::NewLC(CSipAlrMonitor& aAlrMonitor, TSipSNAPConfigura
 //
 CSipAlrMigrationController::CSipAlrMigrationController(
 	CSipAlrMonitor& aAlrMonitor,
-	TSipSNAPConfigurationData aSnapData) :
+	TUint32 aSnapId) :
 	iAlrMonitor(aAlrMonitor),
-	iSnapData(aSnapData)
+    iSnapId(aSnapId)
 #ifdef CPPUNIT_TEST
     // Set the array granularity to 1, so it allocates memory in each append
     , iObservers(1)
@@ -125,13 +125,8 @@ void CSipAlrMigrationController::AlrEvent(MSipAlrObserver::TEvent aEvent,
 //
 TUint32 CSipAlrMigrationController::SnapId() const
 	{
-	return iSnapData.iSnapId;
+	return iSnapId;
 	}
-
-TUint32 CSipAlrMigrationController::BearerId() const
-    {
-    return iSnapData.iBearerId;
-    }
 
 // -----------------------------------------------------------------------------
 // CSipAlrMigrationController::IsUsed
@@ -153,13 +148,12 @@ CSipAlrMigrationController::AttachProfileL(MSipAlrMigrationObserver& aObserver)
     {
 	TSipAlrMigrationObserverInfo observerInfo(aObserver);
 	iObservers.AppendL(observerInfo);
-    
+
     const TInt KFirstObserverExists = 1;
     if (iObservers.Count() == KFirstObserverExists)
     	{
-        PROFILE_DEBUG3("CSipAlrMigrCtrl::AttachProfileL snapId", SnapId())
-        PROFILE_DEBUG3("CSipAlrMigrCtrl::AttachProfileL BearerFiltered.. ", BearerId())
-        iAlrMonitor.MonitorSnapL(iSnapData, *this);
+    	PROFILE_DEBUG3("CSipAlrMigrCtrl::AttachProfileL snapId", iSnapId)
+    	iAlrMonitor.MonitorSnapL(iSnapId, *this);
     	return KNoIap;
     	}
 
@@ -178,7 +172,6 @@ CSipAlrMigrationController::DetachProfile(MSipAlrMigrationObserver& aObserver)
 	if (index != KErrNotFound)
 		{
 		iObservers.Remove(index);
-		iObservers.Compress();
 		}
 
 	if (iObservers.Count() == 0)
@@ -258,11 +251,11 @@ void CSipAlrMigrationController::SetMigrationPermission(
 			TInt err(KErrNone);
 			if (iMigrationDisallowed)
 				{
-			    err = iAlrMonitor.DisallowMigration(iSnapData);
+				err = iAlrMonitor.DisallowMigration(iSnapId);
 				}
 			else
 				{
-			    err = iAlrMonitor.AllowMigration(iSnapData);
+				err = iAlrMonitor.AllowMigration(iSnapId);
 				}
 			if (err != KErrNone)
 				{
@@ -281,10 +274,9 @@ void CSipAlrMigrationController::SetMigrationPermission(
 //
 void CSipAlrMigrationController::RefreshIapAvailabilityL(TUint32 aSnapId)
 	{
-	if (!iRefreshIssued && aSnapId == SnapId())
+	if (!iRefreshIssued && aSnapId == iSnapId)
 		{
-	    
-		iAlrMonitor.RefreshIapAvailabilityL(iSnapData);
+		iAlrMonitor.RefreshIapAvailabilityL(aSnapId);
 		iRefreshIssued = ETrue;
 		}
 	}
@@ -301,7 +293,7 @@ TInt CSipAlrMigrationController::SetIapAcceptance(
 	PROFILE_DEBUG4("CSipAlrMigrCtrl::SetIapAcceptance, iap,works=",
 				   iAllowedIapId,
 				   aIapWorks)
-    
+
 	TInt index = FindIndex(aObserver);
 	if (index != KErrNotFound && iObservers[index].iIsWaitingForAcceptance)
 		{
@@ -314,14 +306,14 @@ TInt CSipAlrMigrationController::SetIapAcceptance(
 				iObservers[i].iIsWaitingForAcceptance = EFalse;
 				}
 			PROFILE_DEBUG1("CSipAlrMigrCtrl::SetIapAcceptance accepted")
-			return iAlrMonitor.NewIapAccepted(iSnapData);
+			return iAlrMonitor.NewIapAccepted(iSnapId);
 			}
 
 		if (!ObserversWaitingAcceptance())
 			{
 			// Nobody got IAP to work
 			PROFILE_DEBUG1("CSipAlrMigrCtrl::SetIapAcceptance rejected")
-			return iAlrMonitor.NewIapRejected(iSnapData);
+			return iAlrMonitor.NewIapRejected(iSnapId);
 			}
 		}
 	return KErrNone;

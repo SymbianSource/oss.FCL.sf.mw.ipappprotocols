@@ -58,7 +58,7 @@ class CSipAlrMigrationController :
 
 	public:
     	static CSipAlrMigrationController* NewLC(CSipAlrMonitor& aAlrMonitor,
-                             TSipSNAPConfigurationData aSnapData);
+    											 TUint32 aSnapId);
 
     	~CSipAlrMigrationController();
 
@@ -71,8 +71,6 @@ class CSipAlrMigrationController :
     public: // New functions
 
 		TUint32 SnapId() const;
-		
-		TUint32 BearerId() const;
 
 		/**
         * Check if any profile is using this instance.
@@ -118,13 +116,11 @@ class CSipAlrMigrationController :
 							  TBool aIapWorks);
 							  
 		void ResetFlags();
-		
-		
 
 	private: // Constructors
 
 	    CSipAlrMigrationController(CSipAlrMonitor& aAlrMonitor,
-                                    TSipSNAPConfigurationData aSnapData);
+	    						   TUint32 aSnapId);
 
     private: // New functions
 
@@ -147,6 +143,9 @@ class CSipAlrMigrationController :
 
 		RArray<TSipAlrMigrationObserverInfo> iObservers;
 
+		// SNAP id that is monitored. Does not change.
+		const TUint32 iSnapId;
+
 		// The IAP id, that was most recently offered to observers with
 		// MSipAlrMigrationObserver::IapAvailableL.
 		TUint32 iOfferedIapId;
@@ -164,9 +163,6 @@ class CSipAlrMigrationController :
 		// Will be set to EFalse, when ALR monitor notifies about IAP, using
 		// MSipAlrObserver::IapAvailable.
 		TBool iRefreshIssued;
-		
-		// This contains the SNAP ID and the Bearer ID configured for the SNAP.
-		TSipSNAPConfigurationData iSnapData;
 
     private: // For testing purposes		
 #ifdef CPPUNIT_TEST

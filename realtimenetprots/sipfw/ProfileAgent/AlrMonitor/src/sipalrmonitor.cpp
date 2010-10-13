@@ -71,12 +71,12 @@ CSipAlrMonitor::~CSipAlrMonitor()
 // CSipAlrMonitor::RefreshIapAvailabilityL
 // -----------------------------------------------------------------------------
 //	
-void CSipAlrMonitor::RefreshIapAvailabilityL ( TSipSNAPConfigurationData & aConfigData )
+void CSipAlrMonitor::RefreshIapAvailabilityL ( TUint32 aSnapId )
 	{
     PROFILE_DEBUG3( "CSipAlrMonitorImplementation::RefreshIapAvailabilityL",
-            aConfigData.iSnapId )
+	                 aSnapId )
     
-    CSipAlrSnapMonitor* monitor = FindSnapMonitor( aConfigData );
+    CSipAlrSnapMonitor* monitor = FindSnapMonitor( aSnapId );
     if ( monitor )
         {
 		monitor->RefreshL();
@@ -87,11 +87,11 @@ void CSipAlrMonitor::RefreshIapAvailabilityL ( TSipSNAPConfigurationData & aConf
 // CSipAlrMonitor::AllowMigration
 // -----------------------------------------------------------------------------
 //
-TInt CSipAlrMonitor::AllowMigration( TSipSNAPConfigurationData & aConfigData )
+TInt CSipAlrMonitor::AllowMigration( TUint32 aSnapId )
     {
-    PROFILE_DEBUG3("CSipAlrMonitor::AllowMigration, SnapId",aConfigData.iSnapId)
-    PROFILE_DEBUG3("CSipAlrMonitor::AllowMigration, BearerFiltering",aConfigData.iBearerId)
-    CSipAlrSnapMonitor* monitor = FindSnapMonitor( aConfigData );
+    PROFILE_DEBUG3("CSipAlrMonitor::AllowMigration, SnapId",aSnapId)
+    
+    CSipAlrSnapMonitor* monitor = FindSnapMonitor( aSnapId );
     if ( monitor )
         {
         monitor->AllowMigration();     
@@ -103,11 +103,11 @@ TInt CSipAlrMonitor::AllowMigration( TSipSNAPConfigurationData & aConfigData )
 // CSipAlrMonitor::DisallowMigration
 // -----------------------------------------------------------------------------
 //
-TInt CSipAlrMonitor::DisallowMigration( TSipSNAPConfigurationData& aConfigData )
+TInt CSipAlrMonitor::DisallowMigration( TUint32 aSnapId )
     {
-    PROFILE_DEBUG3("CSipAlrMonitor::DisallowMigration, SnapId",aConfigData.iSnapId)
-    PROFILE_DEBUG3("CSipAlrMonitor::DisallowMigration, BearerFiltering",aConfigData.iBearerId)
-    CSipAlrSnapMonitor* monitor = FindSnapMonitor( aConfigData );
+    PROFILE_DEBUG3("CSipAlrMonitor::DisallowMigration, SnapId",aSnapId)
+    
+    CSipAlrSnapMonitor* monitor = FindSnapMonitor( aSnapId );
     if ( monitor )
         {
         monitor->DisallowMigration();     
@@ -120,11 +120,11 @@ TInt CSipAlrMonitor::DisallowMigration( TSipSNAPConfigurationData& aConfigData )
 // CSipAlrMonitor::NewIapAccepted
 // -----------------------------------------------------------------------------
 //    
-TInt CSipAlrMonitor::NewIapAccepted( TSipSNAPConfigurationData & aConfigData)  
+TInt CSipAlrMonitor::NewIapAccepted( TUint32 aSnapId )  
     {
-    PROFILE_DEBUG3("CSipAlrMonitor::NewIapAccepted, SnapId",aConfigData.iSnapId)
+    PROFILE_DEBUG3("CSipAlrMonitor::NewIapAccepted, SnapId",aSnapId)
     
-    CSipAlrSnapMonitor* monitor = FindSnapMonitor( aConfigData );
+    CSipAlrSnapMonitor* monitor = FindSnapMonitor( aSnapId );
     if ( monitor )
         {
         monitor->NewIapAccepted();     
@@ -137,11 +137,11 @@ TInt CSipAlrMonitor::NewIapAccepted( TSipSNAPConfigurationData & aConfigData)
 // CSipAlrMonitor::NewIapRejected
 // -----------------------------------------------------------------------------
 //  
-TInt CSipAlrMonitor::NewIapRejected( TSipSNAPConfigurationData & aConfigData )
+TInt CSipAlrMonitor::NewIapRejected( TUint32 aSnapId )
     {
-    PROFILE_DEBUG3( "CSipAlrMonitor::NewIapRejected, SnapId",aConfigData.iSnapId )
+    PROFILE_DEBUG3( "CSipAlrMonitor::NewIapRejected, SnapId",aSnapId )
     
-    CSipAlrSnapMonitor* monitor = FindSnapMonitor( aConfigData );
+    CSipAlrSnapMonitor* monitor = FindSnapMonitor( aSnapId );
     if ( monitor )
         {
         monitor->NewIapRejected();
@@ -155,14 +155,13 @@ TInt CSipAlrMonitor::NewIapRejected( TSipSNAPConfigurationData & aConfigData )
 // -----------------------------------------------------------------------------
 //
 void CSipAlrMonitor::MonitorSnapL( 
-    TSipSNAPConfigurationData& aConfigData,
-    MSipAlrObserver& aObserver)
+    TUint32 aSnapId,
+    MSipAlrObserver& aObserver )
     {
     PROFILE_DEBUG4( "CSipAlrMonitor::MonitorSnapL",
-            aConfigData.iSnapId, reinterpret_cast< TUint >( &aObserver ) ) 
-                    
- 
-    CSipAlrSnapMonitor* monitor = FindSnapMonitor( aConfigData);
+                    aSnapId, reinterpret_cast< TUint >( &aObserver ) )    
+    
+    CSipAlrSnapMonitor* monitor = FindSnapMonitor( aSnapId );
     if ( monitor )
         {
         // Monitor exists, add observer and get current IAP availability
@@ -174,7 +173,7 @@ void CSipAlrMonitor::MonitorSnapL(
     else
         {
     	monitor = CSipAlrSnapMonitor::NewLC( 
-    	        aConfigData, aObserver, iSocketServer, iSystemStateMonitor);
+    	    aSnapId, aObserver, iSocketServer, iSystemStateMonitor );
     	iSnapMonitors.AppendL( monitor );
     	CleanupStack::Pop( monitor );
     	
@@ -188,38 +187,31 @@ void CSipAlrMonitor::MonitorSnapL(
 //
 void CSipAlrMonitor::FreeResources ( MSipAlrObserver& aObserver )
     {
-    CSipAlrSnapMonitor* monitor= 0;
 	for ( TInt i = iSnapMonitors.Count()-1; i >= 0; i-- )
 		{
 		TBool last = iSnapMonitors[i]->DetachObserver ( aObserver );
 		if ( last ) 
 			{
-            monitor = iSnapMonitors[i];
-			iSnapMonitors.Remove(i);
-			delete monitor;
-			monitor = NULL;
+			delete iSnapMonitors[i];
+			iSnapMonitors.Remove ( i );
 			PROFILE_DEBUG1( "CSipAlrMonitor::FreeResources monitor deleted" )
 			}
 		}
-	iSnapMonitors.Compress();
     }
 
 // -----------------------------------------------------------------------------
 // CSipAlrMonitor::FindSnapMonitor
 // -----------------------------------------------------------------------------
 //
-CSipAlrSnapMonitor* CSipAlrMonitor::FindSnapMonitor( TSipSNAPConfigurationData & aConfigData)
+CSipAlrSnapMonitor* CSipAlrMonitor::FindSnapMonitor( TUint32 aSnapId )
     {
     CSipAlrSnapMonitor* monitor = NULL;
 	for ( TInt i = 0; i < iSnapMonitors.Count() && !monitor; i++ )
 		{
-		if ( iSnapMonitors[i]->SnapId() == aConfigData.iSnapId && iSnapMonitors[i]->BearerId() == aConfigData.iBearerId ) //mtr found
-		    {
-		   	monitor = iSnapMonitors[i];
+		if ( iSnapMonitors[i]->SnapId() == aSnapId )
+			{    
+			monitor = iSnapMonitors[i];
 			}
         }
     return monitor;
     }
-
-
-

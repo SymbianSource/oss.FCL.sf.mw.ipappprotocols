@@ -185,7 +185,6 @@ void CSIPManagedProfile::SetParameterL(TUint32 aParam, const TDesC8& aVal)
 		case KSIPDigestPassword:
 		case KSIPHeaders:
 		case KSIPSoIpTOS:
-		case KBearerType:
 			User::Leave(KErrNotFound);
 		case KSIPContactHeaderUser:
 		    User::Leave(KErrAccessDenied);
@@ -277,7 +276,6 @@ void CSIPManagedProfile::SetParameterL(TUint32 aParam, TBool aVal)
 		case KSIPSnapId:
         case KPrimaryAPN:
         case KSecondaryAPN:
-        case KBearerType:
 			User::Leave(KErrNotFound);			
 		default:
 			iSIPProfile->SetExtensionParameterL(aParam, aVal);
