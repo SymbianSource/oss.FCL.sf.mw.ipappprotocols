@@ -89,7 +89,10 @@ class CStateModel
 	private: // New methods
 
 		/// @return Reference to the active state instance.
-		inline TStateBase& State() const;
+		inline TStateBase& State() const 
+            {
+		    return const_cast< TStateBase& >( iStates.At( iStateValue ) );
+		    }
 
 	private: // Constructors
 

@@ -765,10 +765,23 @@ TBool CSIPProfileCacheItem::HandleError(TInt aError)
 	{
 	PROFILE_DEBUG4("ProfileCacheItem::HandleError id,err", ProfileId(), aError)
 
+    TBool updateProfile(HasProfileUpdate() && iCurrentState->Name() == 
+            CSIPConcreteProfile::EUnregistrationInProgress);
 	if (iCurrentState->ErrorOccurred(*this, aError))
 		{
 		PROFILE_DEBUG1("ProfileCacheItem::HandleError go unregistered")
-		        
+		    
+        if(updateProfile)
+            {
+            PROFILE_DEBUG1("CSIPProfileCacheItem::HandleError ChangeStateL")
+            StopSnapMonitoring();
+            TRAPD(err, ChangeStateL(&iServerCore.UnregisteredState()));
+            if (err == KErrNone)
+                {                 
+                return EFalse;
+                }
+            }
+        PROFILE_DEBUG1("CSIPProfileCacheItem::HandleError SwitchToUnregisteredState")
         if(SwitchToUnregisteredState(ETrue))
             {
             return EFalse;

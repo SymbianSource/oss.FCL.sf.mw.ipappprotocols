@@ -579,9 +579,6 @@ void CSIPApnConfigurationHandler::ChangeApnL(
 	CMDBSession* db = CMDBSession::NewL( KCDVersion1_1 );
     CleanupStack::PushL( db );
     
-	db->OpenTransactionL();
-    CleanupStack::PushL(TCleanupItem(RollBackDBTransaction, db));
-    
     // Set attributes so that also protected iaps can be accessed
     db->SetAttributeMask( ECDHidden | ECDProtectedWrite ); 
 
@@ -592,8 +589,6 @@ void CSIPApnConfigurationHandler::ChangeApnL(
     CleanupStack::PushL( iapRecord );
     
     iapRecord->SetRecordId( iIapId );
-    
-    TBool clearedProtectedIap = ClearProtectedRecord( *iapRecord );
 
     iapRecord->LoadL( *db );
     
@@ -615,8 +610,6 @@ void CSIPApnConfigurationHandler::ChangeApnL(
 
     CCDOutgoingGprsRecord* serviceRecord = 
     static_cast<CCDOutgoingGprsRecord*>( iapRecord->iService.iLinkedRecord );  
-    
-    TBool clearedProtectedService = ClearProtectedRecord( *serviceRecord );
         
     PROFILE_DEBUG6( 
             "CSIPApnConfigurationHandler::ChangeApnL() curr apn",
@@ -637,30 +630,17 @@ void CSIPApnConfigurationHandler::ChangeApnL(
     PROFILE_DEBUG3( 
             "CSIPApnConfigurationHandler::ChangeApnL() new security",
             aUseSecureAuthentication )
-	                
-    serviceRecord->ModifyL( *db ); 
-    
-    if ( clearedProtectedIap )
+                 
+    TRAPD(err, serviceRecord->ModifyL( *db ));
+    if (err != KErrNone)
         {
-        // Set protection back
-        iapRecord->SetAttributes( ECDProtectedWrite );
-        iapRecord->ModifyL( *db );
-        }
+         PROFILE_DEBUG3( "CSIPApnConfigurationHandler::ChangeApnL,ModifyL leaves",err )
+         User::Leave(err);
+        }        
     
-    if ( clearedProtectedService )
-        {
-        // Set protection back
-        serviceRecord->SetAttributes( ECDProtectedWrite );
-        serviceRecord->ModifyL( *db );
-        }
-        
     db->ClearAttributeMask( ECDHidden | ECDProtectedWrite );
     
     CleanupStack::PopAndDestroy( iapRecord );
-    
-    db->CommitTransactionL();
-    
-	CleanupStack::Pop(); //cleanup item
 	
     CleanupStack::PopAndDestroy( db );
     
@@ -673,22 +653,6 @@ void CSIPApnConfigurationHandler::ChangeApnL(
     
     PROFILE_DEBUG1( 
             "CSIPApnConfigurationHandler::ChangeApnL(), exit" )
-    }
-
-// -----------------------------------------------------------------------------
-// CSIPApnConfigurationHandler::ClearProtectedRecord
-// -----------------------------------------------------------------------------
-//
-TBool CSIPApnConfigurationHandler::ClearProtectedRecord( 
-    CommsDat::CCDRecordBase& aRecord )
-    {
-    TBool cleared( EFalse );
-    if ( aRecord.IsSetAttribute( CommsDat::ECDProtectedWrite ) )
-        {
-        aRecord.ClearAttributes( CommsDat::ECDProtectedWrite );
-        cleared = ETrue;
-        }
-    return cleared;
     }
 
 // -----------------------------------------------------------------------------
@@ -934,16 +898,6 @@ void CSIPApnConfigurationHandler::AllowCellularDataUsage()
     iDBMonitoringRetryCount = 0;
     iCellularDataBlocked = EFalse;
     PROFILE_DEBUG1("DatabaseMonitoringCompletedL::AllowCellularDataUsage Exit" );
-    }
-
-// -----------------------------------------------------------------------------
-// CSIPApnConfigurationHandler::RollBackDBTransaction
-// -----------------------------------------------------------------------------
-//
-void CSIPApnConfigurationHandler::RollBackDBTransaction(TAny* aDb)
-    {
-    CMDBSession* db = static_cast<CMDBSession*>(aDb);
-    TRAP_IGNORE(db->RollbackTransactionL());
     }
 
 // End of file

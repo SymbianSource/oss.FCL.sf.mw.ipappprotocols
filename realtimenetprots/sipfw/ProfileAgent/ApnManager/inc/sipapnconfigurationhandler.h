@@ -122,8 +122,6 @@ class CSIPApnConfigurationHandler : public CActive
         void ChangeApnL( const TDesC8& aApn, 
                          TBool aUseSecureAuthentication );
         
-        TBool ClearProtectedRecord( CommsDat::CCDRecordBase& aRecord );
-        
         void SetMonitoringState( TSipApnMonitoringState aMonitoringState );
         
         TSipApnMonitoringState MonitoringState() const;
@@ -156,13 +154,6 @@ class CSIPApnConfigurationHandler : public CActive
 		void BlockCellularDataUsageL();
 		
 		void AllowCellularDataUsage();
-
-		
-	    /**
-	    * Rollsback db in case of failure      
-	        * @param aDb 
-	    */
-	    static void RollBackDBTransaction(TAny* aDb);
 
 	private: // Data
 	

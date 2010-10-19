@@ -21,6 +21,7 @@
 
 // INCLUDE FILES
 #include <bamdesca.h>
+#include <uri8.h>
 #include "sipprofilecontextbase.h"
 #include "sipgendefs.h"
 #include "SipProfileLog.h"
@@ -41,7 +42,8 @@
 #include "sipstrconsts.h"
 #include "sipmanagedprofile.h"
 #include "sip.h"
-#include <uri8.h>
+
+
 
 const TInt KMicroSecsInSec = 1000000;
 _LIT8(KTmpSipUri, "sip:tmp");

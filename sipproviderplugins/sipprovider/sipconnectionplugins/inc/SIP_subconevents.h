@@ -137,6 +137,6 @@ public:
 	static CSubConNotificationEvent* NewL(TAny* aConstructionParameters);
 	};
 
-#include "sip_subconevents.inl"
+#include <sip_subconevents.inl>
 
 #endif // SIPSCPR_SUBCONEVENTS_H

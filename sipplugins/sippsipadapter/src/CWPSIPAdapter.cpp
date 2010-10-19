@@ -840,11 +840,22 @@ void CWPSIPAdapter::SettingsSavedL( const TDesC8& aAppIdOfSavingItem,
                     CSIPProfile* profile = NULL;
                     profile = registry->ProfileL( 
                         iDatas[counter]->GetProfileId() );
+                    CleanupStack::PushL( profile );
                     CSIPManagedProfile* managedProfile = 
                         static_cast<CSIPManagedProfile*>( profile );
+                    
+                    CleanupStack::PushL( managedProfile ); 
+                    
                     managedProfile->SetParameter( 
                         KSIPSnapId, (TUint32)snapId );
                     registry->SaveL( *managedProfile );
+                    
+                    CleanupStack::PopAndDestroy(managedProfile);
+                        
+                    CleanupStack::Pop( profile );
+                    profile = NULL;
+                       
+                    
                     CleanupStack::PopAndDestroy( 2, observer ); // CS:0
                     }
                 else

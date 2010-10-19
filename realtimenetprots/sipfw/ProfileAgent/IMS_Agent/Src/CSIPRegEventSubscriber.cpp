@@ -21,13 +21,7 @@
 
 
 // INCLUDE FILES
-#include "CSIPRegEventSubscriber.h"
-#include "CSIPNotifyXmlBodyParser.h"
-#include "sipreginfoelement.h"
-#include "TSIPRegEventStateNotSubscribed.h"
-#include "TSIPRegEventStateSubscribing.h"
-#include "TSIPRegEventStateSubscribed.h"
-#include "TSIPRegEventStateReSubscribing.h"
+#include <sipprofileagentextensionparams.h>
 #include "sipfromheader.h"
 #include "siptoheader.h"
 #include "sipeventheader.h"
@@ -42,7 +36,14 @@
 #include "siperr.h"
 #include "sipstrings.h"
 #include "sipstrconsts.h"
-#include <sipprofileagentextensionparams.h>
+#include "CSIPRegEventSubscriber.h"
+#include "CSIPNotifyXmlBodyParser.h"
+#include "sipreginfoelement.h"
+#include "TSIPRegEventStateNotSubscribed.h"
+#include "TSIPRegEventStateSubscribing.h"
+#include "TSIPRegEventStateSubscribed.h"
+#include "TSIPRegEventStateReSubscribing.h"
+
 
 
 _LIT8(KRegEventName, "reg");
