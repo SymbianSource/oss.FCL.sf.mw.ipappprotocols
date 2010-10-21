@@ -38,11 +38,6 @@ _LIT(KSipProfileServerShutdownSemaphore, "SipProfileServerShutdownSemaphore");
 
 const TUid KServerUid3 = {0x101F413C};
 
-#if (defined (__WINS__) || defined(__WINSCW__))
-static const TUint KServerMinHeapSize =  0x1000;  //   4K
-static const TUint KServerMaxHeapSize = 0x80000;  // 512K 
-#endif
-
 // The server version.
 // A version must be specifyed when creating a session with the server
 const TUint KSipProfileServerMajorVersionNumber=0;

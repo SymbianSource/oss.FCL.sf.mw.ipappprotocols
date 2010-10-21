@@ -103,14 +103,6 @@ void CNetworkManager::RegisterObserverL( MSIPNetworkObserver& aObserver,
 										 TInt aError )
 	{
 	__SIP_LOG("CNetworkManager::RegisterObserverL, Start")
-	// A bearer monitor plugin is not needed on emulator, except when doing
-	// unit testing
-#if ((defined (__WINS__) || defined(__WINSCW__)) && !defined(CPPUNIT_TEST) )
-
-	aError++; aIapId++; aObserver; // Avoid compiler warnings
-	return;
-
-#else
 
 	// Try to find an existing observer entry from the registry
 	TInt index = FindRegistryEntry( aObserver );
@@ -138,7 +130,6 @@ void CNetworkManager::RegisterObserverL( MSIPNetworkObserver& aObserver,
    		iObservers.AppendL( entry );
     	CleanupStack::Pop( bearer );	
 		}
-#endif
 	}
 
 // -----------------------------------------------------------------------------
@@ -495,19 +486,8 @@ void CNetworkManager::GetServiceTypeL(
 const TSIPAccessNetworkInfo& CNetworkManager::RegisterAccessNetworkObserver(
     MSIPNetworkInfoObserver& aObserver )
 	{
-	// A bearer monitor plugin is not needed on emulator, except when doing
-	// unit testing
-#if ((defined (__WINS__) || defined(__WINSCW__)) && !defined(CPPUNIT_TEST) )
-	aObserver; // Avoid compiler warnings
-	
-	//Since the real plugin is not started in emulator, pass hardcoded values
-	//to ConnectionMgr so that the P-Access-Network-Info header can be tested.
-	iAccessNetworkInfo = DummyAccessNetworkValues();
-	
-#else
+    
 	iNetworkInfoObserver = &aObserver;
-#endif
-
 	return iAccessNetworkInfo;
 	}
 	

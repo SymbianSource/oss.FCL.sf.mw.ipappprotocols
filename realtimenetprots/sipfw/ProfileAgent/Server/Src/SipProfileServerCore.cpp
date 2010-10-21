@@ -2361,7 +2361,7 @@ TBool CSIPProfileServerCore::CheckApnSwitchEnabledL( const CSIPConcreteProfile& 
     {
     PROFILE_DEBUG1("CSIPProfileServerCore::CheckApnSwitchEnabledL" )
     TUint32 profileId = aProfile.Id();
-    
+    TBool result = EFalse;
     PROFILE_DEBUG3("CSIPProfileServerCore::CheckApnSwitchEnabledL, IapId", profileId )
     
     CSIPProfileCacheItem* item = ProfileCacheItem(profileId); 
@@ -2380,10 +2380,11 @@ TBool CSIPProfileServerCore::CheckApnSwitchEnabledL( const CSIPConcreteProfile& 
             if (isIapGPRS)
             item->SetApnSwitchStatus(ETrue); //  Set Switch APN Enabled
             }
+            result = item->IsApnSwitchEnabled();
         } 
     PROFILE_DEBUG3("CSIPProfileServerCore::CheckApnSwitchEnabledL returns"
-                                                ,item->IsApnSwitchEnabled())
-    return item->IsApnSwitchEnabled(); 
+                                                ,result)
+    return result; 
     }
 
 // -----------------------------------------------------------------------------
@@ -2482,4 +2483,13 @@ TBool CSIPProfileServerCore::IsUpdateAllowed( CSIPConcreteProfile *aProfile )
             }
         }
     return allowed;
+    }
+
+// ----------------------------------------------------------------------------
+// CSIPProfileServerCore::GetProfileCacheCount() const
+// ----------------------------------------------------------------------------
+//
+TInt CSIPProfileServerCore::GetProfileCacheCount() const
+    {
+    return iProfileCache.Count();
     }

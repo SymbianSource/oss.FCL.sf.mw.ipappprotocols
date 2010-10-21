@@ -627,6 +627,7 @@ void CSipConnection::CreateConnectedTransportPointL(
 	            	domainName = viaHeader->SentByHostPort().Host().AllocL();	
 	            	}            
 	        }
+		CleanupStack:: PushL(domainName);
 	        transport = static_cast<CTransportTls*>(FindTransport( aParams, 
 	        	        								SIPStrings::StringF( SipStrConsts::ETLS ),
 	        	        								aAddress));
@@ -634,7 +635,7 @@ void CSipConnection::CreateConnectedTransportPointL(
 			//TLS object.
 			if ( ( UriUtils::HostType( *domainName ) == UriUtils::ETextHost ))
 		        transport->SetDomainNameL(domainName->Des());
-		    delete domainName;	
+			CleanupStack:: PopAndDestroy(); //delete domainName;	
 	        break;
 	        }
 	    default:
@@ -1676,10 +1677,7 @@ void CSipConnection::ReleaseTransportResources( TBool aReleaseAllResources )
 
     if ( aReleaseAllResources )
         {
-#if ( !defined( __WINS__ ) && !defined( __WINSCW__ ) )
-	    // In HW RConnection must be closed when network coverage is lost	
    	    CloseConnection();      
-#endif
         }
 	}
 

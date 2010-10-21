@@ -38,7 +38,9 @@ USERINCLUDE 	../PluginMgr/Inc
 USERINCLUDE 	../profile_fsm/inc
 //SIP Proxy Resolver
 USERINCLUDE 	../ProxyResolver/inc
+USERINCLUDE 	../traces
 
+OS_LAYER_SYSTEMINCLUDE
 MW_LAYER_SYSTEMINCLUDE_SYMBIAN
 
 START RESOURCE 101F4139.rss
@@ -55,7 +57,6 @@ LIBRARY sipprofile.lib
 LIBRARY sipprofilefsm.lib
 LIBRARY sipproxyrsv.lib
 LIBRARY inetprotutil.lib
-LIBRARY flogger.lib
 LIBRARY efsrv.lib
 
 VENDORID 0x70000001

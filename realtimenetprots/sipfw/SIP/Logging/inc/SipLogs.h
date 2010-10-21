@@ -30,16 +30,17 @@
 #define SIPLOGS_H
 
 #include <e32std.h>
+#include <in_sock.h>
 
-#ifdef _DEBUG 
-    // Comment the following line to turn off all kind of logging:
-    #define USE_SIP_LOGS
-    
-    // Comment the following line to switch from RFileLogger to RDebug logging:
-    #define USE_SIP_FILE_LOGS
-
-    // Comment the following line to switch off SIP message logging
-    #define USE_SIP_MESSAGE_LOG
+#ifdef _DEBUG
+#include "OstTraceDefinitions.h"
+#ifdef OST_TRACE_COMPILER_IN_USE
+#include "TSIPLoggerTraces.h"
+// Comment the following line to turn off all kind of logging:
+#define USE_SIP_LOGS
+// Comment the following line to switch off SIP message logging
+#define USE_SIP_MESSAGE_LOG
+#endif
 #endif
 
 
@@ -49,7 +50,10 @@
     
     #define __SIP_LOG(aStr)\
         TSIPLogger::Print(_L(aStr));
-    
+
+    #define __SIP_TXT8_LOG(aStr)\
+        TSIPLogger::Print(aStr);
+   
     #define __SIP_DES8_LOG(aStr,aMsg)\
         TSIPLogger::Print(_L(aStr), aMsg);    
 
@@ -76,6 +80,7 @@
 #else // _USE_SIP_LOGS
 
     #define __SIP_LOG(aStr)
+    #define __SIP_TXT8_LOG(aStr)
     #define __SIP_DES8_LOG(aStr,aMsg)
     #define __SIP_DES16_LOG(aStr,aMsg)
     #define __SIP_INT_LOG1(aStr,aValue)

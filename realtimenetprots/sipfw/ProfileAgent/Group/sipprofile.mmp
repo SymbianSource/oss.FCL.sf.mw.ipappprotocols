@@ -35,7 +35,9 @@ SOURCE        extensiondescrarrayparam.cpp
 
 USERINCLUDE   ../Profile/api
 USERINCLUDE   ../Profile/Inc
+USERINCLUDE   ../traces
 
+OS_LAYER_SYSTEMINCLUDE
 MW_LAYER_SYSTEMINCLUDE_SYMBIAN
 
 LIBRARY       euser.lib
@@ -45,7 +47,6 @@ LIBRARY       inetprotutil.lib
 LIBRARY       random.lib
 LIBRARY 	  commsdat.lib 
 LIBRARY 	  charconv.lib 
-LIBRARY       flogger.lib
 LIBRARY 	  efsrv.lib
 
 VENDORID 0x70000001

@@ -37,11 +37,6 @@ _LIT(KSipClientResolverServerSemaphoreName, "siprsvsrvSemaphore");
 
 const TUid KServerUid3 = { 0x1020334f };
 
-#if (defined (__WINS__) || defined(__WINSCW__))
-static const TUint KServerMinHeapSize =  0x1000;  //   4K
-static const TUint KServerMaxHeapSize = 0x80000;  // 512K (Should be enough)
-#endif
-
 // The server version.
 // A version must be specifyed when creating a session with the server
 const TUint KSipCRServerMajorVersionNumber=0;

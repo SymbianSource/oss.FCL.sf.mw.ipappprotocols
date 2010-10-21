@@ -65,6 +65,7 @@ CRtpFlow::~CRtpFlow()
 	{
 	delete iRtpSession;
 	iRtpBuffer.Close();
+	delete iRtpHandler;
 	LOG_NODE_DESTROY(KESockFlowTag, CRtpFlow);
 	}
 	

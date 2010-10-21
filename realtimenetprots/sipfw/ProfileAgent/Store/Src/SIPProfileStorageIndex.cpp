@@ -198,10 +198,16 @@ TUint32 CSIPProfileStorageIndex::GetNextProfileIdL()
 	TUint32 profileID = iProfileIdArray.Count()+1;
 	
 	iProfileIdArray.SortUnsigned();
-	for (TUint32 i = 0; i < iProfileIdArray.Count(); i++)
+	TInt profilescount;
+	if(iCore->GetProfileCacheCount() > iProfileIdArray.Count())
+	    profilescount = iCore->GetProfileCacheCount();
+	else
+	    profilescount = iProfileIdArray.Count();
+	
+	for (TUint32 i = 0; i <profilescount ; i++)
 	    {
 	    TRAPD(err, iCore->ProfileCacheItemL(i+1));
-	    if (i+1 != iProfileIdArray[i] && KErrNotFound == err)
+	    if(KErrNotFound == err && !ProfileExists(i+1))
 	        {
 	        profileID = i+1;
 	        break;

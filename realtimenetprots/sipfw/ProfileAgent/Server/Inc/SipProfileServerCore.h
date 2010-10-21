@@ -788,6 +788,11 @@ class CSIPProfileServerCore : public CBase,
          */ 
         static TBool Compare(const TSIPProfileTypeInfo& first,
                         const TSIPProfileTypeInfo& second);
+	public:
+		/**
+         * Returns the count of profiles in the cache
+         */
+        TInt GetProfileCacheCount() const;
 		
         
 	private: // Data

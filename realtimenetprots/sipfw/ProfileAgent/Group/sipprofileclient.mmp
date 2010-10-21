@@ -40,7 +40,9 @@ SOURCE            sipprofilealrcontroller.cpp
 USERINCLUDE       ../Client/Api
 USERINCLUDE       ../Client/Inc
 USERINCLUDE       ../Profile/Inc
+USERINCLUDE       ../traces
 
+OS_LAYER_SYSTEMINCLUDE
 MW_LAYER_SYSTEMINCLUDE
 
 LIBRARY           euser.lib

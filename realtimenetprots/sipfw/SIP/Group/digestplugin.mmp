@@ -56,7 +56,8 @@ USERINCLUDE     ../Codec/api
 USERINCLUDE     ../LightWeightTimer/inc
 USERINCLUDE     ../sipapi/api
 USERINCLUDE     ../sipapi/inc
-USERINCLUDE     ../Logging/inc	
+USERINCLUDE     ../Logging/inc
+USERINCLUDE     ../traces	
 
 
 SOURCEPATH      ../SIPSec/DigestPlugin/resource
@@ -66,6 +67,7 @@ END
 
 // MW_LAYER_SYSTEMINCLUDE_SYMBIAN Illigal dependency on imcvcodc.h. Needs to be fixed
 APP_LAYER_SYSTEMINCLUDE_SYMBIAN
+OS_LAYER_SYSTEMINCLUDE
 
 
 LIBRARY       euser.lib
@@ -81,7 +83,6 @@ LIBRARY	      inetprotutil.lib
 LIBRARY       etel.lib
 LIBRARY       etelmm.lib
 LIBRARY       commsdat.lib
-LIBRARY       flogger.lib
 LIBRARY       charconv.lib
 LIBRARY       centralrepository.lib
 LIBRARY       efsrv.lib

@@ -39,15 +39,10 @@
 #include "CSIPRegistrationMgr.h"
 #include "CSipRefreshMgr.h"
 #include "CSipConnectionMgr.h"
-#include "TSIPLogger.h"
 #include "SipLogs.h"
 #include "sipstrings.h"
 #include "SIPHeaderLookup.h"
 
-
-#if (defined (__WINS__) || defined(__WINSCW__))
-#include "TSIPMemAllocFailureSimulation.h"
-#endif
 
 const TUint KServerCloseWaitTime = 500; // milliseconds
 
@@ -107,10 +102,6 @@ void CSipServerCore::ConstructL ()
 	                                 SIPSec(),SigComp());
 	iTU->SetDialogs (iDialogMgr);
 
-#if (defined (__WINS__) || defined(__WINSCW__))
-	TSIPMemAllocFailureSimulation::Start();
-#endif
-
 	iServer = CSipCSServer::NewL(*this);
 
     __SIP_LOG("SIP Server Created")
@@ -134,10 +125,6 @@ CSipServerCore::~CSipServerCore ()
 	// This must be deleted first to remove SIP server from system's
 	// list of servers asap.
 	delete iServer;
-
-#if (defined (__WINS__) || defined(__WINSCW__))
-	TSIPMemAllocFailureSimulation::Stop();
-#endif
 
     delete iDialogMgr;
     delete iRegistrationMgr;

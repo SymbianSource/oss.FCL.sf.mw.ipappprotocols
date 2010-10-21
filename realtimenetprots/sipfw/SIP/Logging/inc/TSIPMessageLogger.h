@@ -54,7 +54,6 @@ private:
 
     static void WriteSipMessage (const TDesC8& aSIPMessage);
 
-		static TBool LogDirExists( const TDesC& aFolderName );
 		
 #ifdef WRITE_EXTRA_LOGS
 	static void WriteExtraLogs(const TDesC8& aSipMessage);

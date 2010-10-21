@@ -56,7 +56,9 @@ USERINCLUDE   ../Resolver/inc
 USERINCLUDE   ../Resolver/src
 USERINCLUDE   ../common/inc
 USERINCLUDE   ../../SIP/Codec/inc
+USERINCLUDE   ../traces
 
+OS_LAYER_SYSTEMINCLUDE
 MW_LAYER_SYSTEMINCLUDE_SYMBIAN
 
 LIBRARY       euser.lib
@@ -70,7 +72,6 @@ LIBRARY       inetprotutil.lib
 LIBRARY       sipcodec.lib
 LIBRARY       sdpcodec.lib
 LIBRARY       centralrepository.lib
-LIBRARY       flogger.lib
 LIBRARY       efsrv.lib
 
 VENDORID 0x70000001

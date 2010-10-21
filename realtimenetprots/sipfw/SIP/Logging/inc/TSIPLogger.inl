@@ -14,115 +14,39 @@
 * Description:
 * Name          : TSIPLogger.inl
 * Part of       : SIP Logging
-* Version       :  
+* Version       :
 *
 */
 
-
-
-#include <e32std.h>
-#include <utf.h>
-#include <e32svr.h>
-#include <flogger.h>
-#include <f32file.h>
-
-#include "SipLogs.h"
-#include "TSIPLogger.h"
-
-_LIT(KSipLogFileDir, "Sip");
-_LIT(KSipLogFileName, "SipLog.txt");
-_LIT(KSeparator, "---------------");
-_LIT(KIntMessageFormat,"%S: %d");
-_LIT(KTwoIntMessageFormat,"%S: %d, %d");
-_LIT(KAddrMessageFormat,"%S: %S port %d");
-_LIT(KSipLogPath, "C:\\logs\\sip\\");
-
 inline void TSIPLogger::Print(const TDesC& aStr)
 	{
-	if ( LogDirExists( KSipLogPath ) )
-		{
-		RFileLogger::Write (KSipLogFileDir, KSipLogFileName, 
-			EFileLoggingModeAppend,aStr);                                  
-		RFileLogger::Write (KSipLogFileDir, KSipLogFileName, 
-			EFileLoggingModeAppend, KSeparator);
-		}
-	else
-		{
-		_LIT(KSIPFormat, "SIP: %S");
-		TBuf<256> log;
-		log.Format(KSIPFormat, &aStr);
-		RDebug::RawPrint(log);
-		}
+    OstTraceExt1( TRACE_NORMAL, TSIPLOGGER_PRINT_TEXT16, "SIP: %S", aStr );
 	}
 
+inline void TSIPLogger::Print(const TDesC8& aStr)
+    {
+    //OstTraceExt1( TRACE_NORMAL, TSIPLOGGER_PRINT_TEXT16, "SIP: %S", aStr );
+    OstTraceExt1( TRACE_NORMAL, TSIPLOGGER_PRINT_TEXT8, "SIP: %s", aStr );
+    }
 
-inline void TSIPLogger::Print(const TDesC& aStr, 
+inline void TSIPLogger::Print(const TDesC& aStr,
 		                      const TDesC8& aMsg)
 	{
-	if ( LogDirExists( KSipLogPath ) )
-		{
-		RFileLogger::Write (KSipLogFileDir, KSipLogFileName,
-			EFileLoggingModeAppend, aStr);
-
-		RFileLogger::Write (KSipLogFileDir, KSipLogFileName, 
-				EFileLoggingModeAppend, aMsg);
-
-		RFileLogger::Write (KSipLogFileDir, KSipLogFileName, 
-			EFileLoggingModeAppend, KSeparator);
-		}
-	else
-		{
-		TBuf<100> msg;
-		TBuf<256> log;
-		TInt err = CnvUtfConverter::ConvertToUnicodeFromUtf8(msg, aMsg.Left(99));
-
-		_LIT(KSIPFormat, "SIP: %S: %S");
-		log.Format(KSIPFormat, &aStr, &msg);
-
-		RDebug::RawPrint(log);
-		}
+    OstTraceExt2( TRACE_NORMAL, TSIPLOGGER_PRINT_TEXT16_TEXT8, "SIP: %S: %s", aStr, aMsg );
 	}
 
 
-inline void TSIPLogger::Print(const TDesC& aStr, 
+inline void TSIPLogger::Print(const TDesC& aStr,
 		                      const TDesC16& aMsg)
 	{
-	if ( LogDirExists( KSipLogPath ) )
-		{
-		RFileLogger::Write (KSipLogFileDir, KSipLogFileName, 
-			EFileLoggingModeAppend, aStr);
-		RFileLogger::Write (KSipLogFileDir, KSipLogFileName, 
-			EFileLoggingModeAppend, aMsg);                                 
-		RFileLogger::Write (KSipLogFileDir, KSipLogFileName, 
-			EFileLoggingModeAppend, KSeparator);
-		}
-	else
-		{
-		_LIT(KSIPFormat, "SIP: %S: %S");
-		TBuf<256> log;
-		log.Format(KSIPFormat, &aStr, &aMsg);
-		RDebug::RawPrint(log);
-		}
+    OstTraceExt2( TRACE_NORMAL, TSIPLOGGER_PRINT_TEXT16_TEXT16, "SIP: %S: %S", aStr, aMsg );
 	}
 
 
 inline void TSIPLogger::Print(const TDesC& aStr,
 		                      TUint32 aValue)
 	{
-	if ( LogDirExists( KSipLogPath ) )
-		{
-		RFileLogger::WriteFormat (KSipLogFileDir, KSipLogFileName, 
-			EFileLoggingModeAppend, KIntMessageFormat, &aStr, aValue);
-		RFileLogger::Write (KSipLogFileDir, KSipLogFileName, 
-			EFileLoggingModeAppend, KSeparator);
-		}
-	else
-		{
-		_LIT(KSIPFormat, "SIP: %S: %d");
-		TBuf<256> log;
-		log.Format(KSIPFormat, &aStr, aValue);
-		RDebug::RawPrint(log);
-		}
+    OstTraceExt2( TRACE_NORMAL, TSIPLOGGER_PRINT_TEXT16_UINT32, "SIP: %S: %u", aStr, aValue );
 	}
 
 
@@ -130,57 +54,17 @@ inline void TSIPLogger::Print(const TDesC& aStr,
 		                      TUint32 aValue1,
 		                      TUint32 aValue2)
 	{
-	if ( LogDirExists( KSipLogPath ) )
-		{
-		RFileLogger::WriteFormat (KSipLogFileDir, KSipLogFileName, 
-			EFileLoggingModeAppend, KTwoIntMessageFormat, &aStr, 
-			aValue1, aValue2);                                
-		RFileLogger::Write (KSipLogFileDir, KSipLogFileName, 
-			EFileLoggingModeAppend, KSeparator);
-		}
-	else
-		{
-		_LIT(KSIPFormat, "SIP: %S: %d, %d");
-		TBuf<256> log;
-		log.Format(KSIPFormat, &aStr, aValue1, aValue2);
-		RDebug::RawPrint(log);
-		}
+    OstTraceExt3( TRACE_NORMAL, TSIPLOGGER_PRINT_TEXT16_UINT32_UINT32, "SIP: %S: %u, %u", aStr, aValue1, aValue2 );
 	}
 
-  
+
 inline void TSIPLogger::Print(const TDesC& aStr,
-                              const TInetAddr& aAddr) 
+                              const TInetAddr& aAddr)
 	{
 	const TInt KIPv6AddrMaxLen = 39;
 	TBuf<KIPv6AddrMaxLen> addrBuf;
 	aAddr.Output(addrBuf);
 
-	if ( LogDirExists( KSipLogPath ) )
-		{
-		RFileLogger::WriteFormat (KSipLogFileDir, KSipLogFileName, 
-			EFileLoggingModeAppend, KAddrMessageFormat, &aStr,
-			&addrBuf, aAddr.Port());                                 
-		RFileLogger::Write (KSipLogFileDir, KSipLogFileName, 
-			EFileLoggingModeAppend, KSeparator);
-		}
-	else
-		{
-		_LIT(KSIPFormat, "SIP: %S: %S port %d");
-		TBuf<256> log;
-		log.Format(KSIPFormat, &aStr, &addrBuf, aAddr.Port());
-		RDebug::RawPrint(log);
-		}
+	OstTraceExt3( TRACE_NORMAL, TSIPLOGGER_PRINT_TEXT16_TEXT16_UINT32, "SIP: %S: %S port %u", aStr, addrBuf, aAddr.Port() );
 	}
 
-inline TBool TSIPLogger::LogDirExists( const TDesC& aFolderName )
-	{
-    TBool exists( EFalse );
-    RFs fs;
-    if ( KErrNone == fs.Connect() )
-        {
-        TEntry entry;
-        exists = ( fs.Entry( aFolderName, entry ) == KErrNone );
-        fs.Close();        
-        }
-    return exists;
-	}

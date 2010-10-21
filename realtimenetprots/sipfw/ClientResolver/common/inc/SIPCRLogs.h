@@ -30,9 +30,12 @@
 
 #include <e32std.h>
 
-#ifdef _DEBUG 
-    // Comment the following line to turn off all kind of logging:
-    #define USE_SIP_CR_LOGS
+#ifdef _DEBUG
+#include "OstTraceDefinitions.h"
+#ifdef OST_TRACE_COMPILER_IN_USE
+#include "SIPCRLogsTraces.h"
+#define USE_SIP_CR_LOGS
+#endif
 #endif
 
 
@@ -49,10 +52,7 @@
 
 	        inline static void Print(const TDesC16& aStr,
 	                                 TInt aValue);
-			private:
-					inline static TBool LogDirExists( const TDesC& aPath );
-			
-					inline static void WriteToFile( const TDesC& aStr );
+
 	    };
 	    
 	#include "SIPCRLogs.inl"    

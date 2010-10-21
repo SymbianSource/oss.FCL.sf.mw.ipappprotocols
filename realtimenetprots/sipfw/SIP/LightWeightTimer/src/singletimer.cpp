@@ -95,12 +95,8 @@ void CSingleTimer::SetAfter(TUint32 aDelay, TTimerId aTimerId)
 
 	iTimerId = aTimerId;
 
-	//If the duration is very short, expire immediately for better performance.
-#ifdef __WINSCW__
-	if (aDelay < KEmulatorDelay)
-#else
 	if (aDelay < KTargetHwDelay)
-#endif
+
 		{
 		ExpireImmediately();
 		}

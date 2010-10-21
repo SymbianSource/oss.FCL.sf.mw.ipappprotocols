@@ -74,7 +74,9 @@ USERINCLUDE       ../PluginMgr/Inc
 USERINCLUDE       ../Store/Inc
 USERINCLUDE       ../AlrMonitor/inc
 USERINCLUDE       ../ApnManager/inc
+USERINCLUDE       ../traces
 
+OS_LAYER_SYSTEMINCLUDE
 MW_LAYER_SYSTEMINCLUDE
 
 LIBRARY           euser.lib
@@ -87,7 +89,6 @@ LIBRARY       	  charconv.lib
 LIBRARY           inetprotutil.lib
 LIBRARY           sipprofile.lib
 LIBRARY           random.lib
-LIBRARY           flogger.lib
 LIBRARY           netmeta.lib
 LIBRARY           centralrepository.lib
 LIBRARY 	  cmmanager.lib

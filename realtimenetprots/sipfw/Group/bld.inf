@@ -233,11 +233,6 @@ PRJ_MMPFILES
 ../ProfileAgent/Group/sipprofilefsm.mmp
 ../ProfileAgent/Group/sipietfagent.mmp
 ../ProfileAgent/Group/sipimsagent.mmp
-
-// SIP H2LanBearerMonitor plugin is build only in HW environments
-// since it would distract emulator unit testing
-#if ( !defined( WINS ) && !defined( WINSCW ) )
 ../SIP/Group/h2lanbearermonitor.mmp
-#endif
 PRJ_TESTMMPFILES
 #include "../Test/CapTests/Te_Cap_SipServerSource/bld.inf" 

@@ -33,14 +33,11 @@
 #include <e32std.h>    
 
 #ifdef _DEBUG
-    // RFileLogger has been redefined in Commsdebugutility.H
-    // This is a bug in Symbian 9.5.
-    // Using __FLOG_ACTIVE from Commsdebugutility.H to avoid build break
-   #if !defined(CPPUNIT_TEST)
-        // Comment the following line to turn off all kind of logging:
-        #define USE_SIP_PROFILE_LOGS
-    #endif
- 
+#include "OstTraceDefinitions.h"
+#ifdef OST_TRACE_COMPILER_IN_USE
+#include "SipProfileLogTraces.h"
+#define USE_SIP_PROFILE_LOGS
+#endif
 #endif
 
 
@@ -69,12 +66,7 @@
 
 			inline static void Print(const TDesC16& aStr1,
 				const TDesC8& aStr2);
-			private:
-			inline static TBool LogDirExists( const TDesC& aPath );
 
-			inline static void WriteToFile( const TDesC& aStr );
-	
-			inline static void WriteLog( const TDesC& aStr );
 	    };
 
 	#include "SipProfileLog.inl"

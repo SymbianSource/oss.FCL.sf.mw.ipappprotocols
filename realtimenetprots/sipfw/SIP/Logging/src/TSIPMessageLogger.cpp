@@ -22,20 +22,14 @@
 
 #ifdef USE_SIP_MESSAGE_LOG
 
-#include <flogger.h>
 #include "TSIPMessageLogger.h"
 #include "TSIPLogLineParser.h"
 #include "sipmessage.h"
 
-_LIT(KSIPMessageLogFileDir, "Sip");
-_LIT(KSIPMessageLogFileName, "SipLog.txt");
-//_LIT(KSipLogPath, "C:\\logs\\sip\\");
 
-_LIT8(KFormatParseError, "    SIP Codec parse error: %d!");
-_LIT8(KFooter, "-----");
 
 // Leave some space for date and time:
-const TInt KMaxLineLength = KLogBufferSize-50;
+const TInt KMaxLineLength = 100;
 
 #ifdef WRITE_EXTRA_LOGS
 const TInt KSensibleLineLength = 60;
@@ -71,42 +65,20 @@ void TSIPMessageLogger::Write(
     const TDesC8& aSubsystemName,
     const TDesC8& aSIPMessage)
     {
-    TBool exists = LogDirExists( KSipLogPath );
-    
-    if ( exists )
-        {
-        RFileLogger::Write( KSIPMessageLogFileDir,KSIPMessageLogFileName,
-                            EFileLoggingModeAppend, aSubsystemName);
-        }
-    else
-        {
-        RDebug::RawPrint( aSubsystemName );
-        }
-  
+
+    __SIP_TXT8_LOG(aSubsystemName)
+
     WriteSipMessage (aSIPMessage);
-    
+
 #ifdef WRITE_EXTRA_LOGS
-    if ( exists )
-        {
-        RFileLogger::Write( KSIPMessageLogFileDir,KSIPMessageLogFileName,
-                            EFileLoggingModeAppend,KShortFooter);
-      }
-    else
-        {
-        RDebug::RawPrint( KShortFooter );
-        }
+
+    __SIP_LOG("---")
+
     WriteExtraLogs(aSIPMessage);
 #endif
 
-    if ( exists )
-        {
-        RFileLogger::Write( KSIPMessageLogFileDir,KSIPMessageLogFileName,
-                            EFileLoggingModeAppend,KFooter);
-        }
-    else
-        {
-        RDebug::RawPrint( KFooter );
-        }
+    __SIP_LOG("---")
+
     }
 
 // -----------------------------------------------------------------------------
@@ -117,28 +89,11 @@ void TSIPMessageLogger::WriteParseError(
     const TDesC8& aSubsystemName,
     TInt aError)
     {
-    if ( LogDirExists( KSipLogPath ) )
-        {
-        RFileLogger::Write( KSIPMessageLogFileDir,KSIPMessageLogFileName,
-                            EFileLoggingModeAppend,
-                            aSubsystemName);
+    __SIP_TXT8_LOG(aSubsystemName)
+    __SIP_INT_LOG1("    SIP Codec parse error: %d", aError )
 
-        RFileLogger::WriteFormat( KSIPMessageLogFileDir,KSIPMessageLogFileName,
-                                  EFileLoggingModeAppend,
-                                  KFormatParseError, aError);
 
-        RFileLogger::Write( KSIPMessageLogFileDir,KSIPMessageLogFileName,
-                            EFileLoggingModeAppend,KFooter);
-        }
-    else
-        {
-        _LIT8( KFmt, "%d" );
-        TBuf8<32> buf;
-        buf.Format( KFmt, aError );
-        RDebug::RawPrint( aSubsystemName );
-        RDebug::RawPrint( buf );
-        RDebug::RawPrint( KFooter );
-        }
+
     }
 
 // -----------------------------------------------------------------------------
@@ -148,42 +103,17 @@ void TSIPMessageLogger::WriteParseError(
 void TSIPMessageLogger::WriteSipMessage (const TDesC8& aSIPMessage)
     {
     TSIPLogLineParser lineParser( aSIPMessage, KMaxLineLength );
-    
-    if ( LogDirExists( KSipLogPath ) )
-        { 
-        while ( !lineParser.End())
-            {
-            RFileLogger::Write( KSIPMessageLogFileDir,KSIPMessageLogFileName, 
-                                EFileLoggingModeAppend,
-                                lineParser.GetLine());
-            }
-        }
-    else
-        {
-        while ( !lineParser.End() )
-            {
-            RDebug::RawPrint( lineParser.GetLine() );
-            }
-        }
+
+    while ( !lineParser.End() )
+    {
+        TPtrC8 ptr = lineParser.GetLine();
+        __SIP_DES8_LOG("%s", ptr)
     }
 
-// -----------------------------------------------------------------------------
-// TSIPMessageLogger::LogDirExists
-// -----------------------------------------------------------------------------
-//
-TBool TSIPMessageLogger::LogDirExists( const TDesC& aFolderName )
-    {
-    TBool exists( EFalse );
-    RFs fs;
-    if ( KErrNone == fs.Connect() )
-        {
-        TEntry entry;
-        exists = ( fs.Entry( aFolderName, entry ) == KErrNone );
-        fs.Close();        
-        }
-    return exists;
     }
-    
+
+
+
 // -----------------------------------------------------------------------------
 // TSIPMessageLogger::WriteExtraLogs
 // -----------------------------------------------------------------------------
@@ -220,27 +150,18 @@ void TSIPMessageLogger::WriteExtraLogs(const TDesC8& aSIPMessage)
                 }
 
             }
-        
+
         if (buf.Length() >= KSensibleLineLength)
             {
             //Buffer full, write it to log file
-            RFileLogger::Write (KSIPMessageLogFileDir,KSIPMessageLogFileName,
-                                EFileLoggingModeAppend, buf);
+            __SIP_TXT8_LOG(buf)
             buf.Zero();
             }
         }
 
     if (buf.Length() > 0)
         {
-        if ( LogDirExists( KSipLogPath ) )
-            {
-            RFileLogger::Write (KSIPMessageLogFileDir,KSIPMessageLogFileName, 
-                            EFileLoggingModeAppend, buf);
-          }
-        else
-            {
-            RDebug::RawPrint( buf );
-            }
+        __SIP_TXT8_LOG(buf)
         }
     }
 #endif // WRITE_EXTRA_LOGS

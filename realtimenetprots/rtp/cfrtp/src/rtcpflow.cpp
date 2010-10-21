@@ -65,6 +65,7 @@ CRtcpFlow::~CRtcpFlow()
 	{
 	iRtcpBuffer.Close();
 	iRtcpTempBuffer.Close();
+	delete iRtcpHandler;
 	LOG_NODE_DESTROY(KESockFlowTag, CRtcpFlow);
 	LOG( ESockLogExternal::Printf(KESockFlowTag,KRtcpFlowSubTag,_L8(" ~CRtcpFlow %08x:\t "), this));
 	}

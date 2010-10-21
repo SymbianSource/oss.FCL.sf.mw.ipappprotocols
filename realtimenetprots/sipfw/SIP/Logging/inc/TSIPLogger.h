@@ -28,15 +28,13 @@
 #ifndef TSIPLOGGER_H
 #define TSIPLOGGER_H
 
-#include <e32std.h>
-#include <in_sock.h>
-
 class TSIPLogger
 	{
 	public:
 	
 	    inline static void Print(const TDesC& aStr);
 	    
+	    inline static void Print(const TDesC8& aStr);
 	    
 	    inline static void Print(const TDesC& aStr, 
 		                         const TDesC8& aMsg);
@@ -58,6 +56,7 @@ class TSIPLogger
 
 		inline static TBool LogDirExists( const TDesC& aFolderName );                                    
     };
+
 
 #include "TSIPLogger.inl"
 

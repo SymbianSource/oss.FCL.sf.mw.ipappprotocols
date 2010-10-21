@@ -43,10 +43,6 @@ SOURCE            CSipCSSubSessionReceiver.cpp
 SOURCE            CSIPRoutingRequest.cpp
 SOURCE            CSIPRoutingRequestStore.cpp
 
-#if (defined(WINS)||defined(WINSCW))
-SOURCE            TSIPMemAllocFailureSimulation.cpp
-#endif
-
 SOURCEPATH        ../Refreshes/src
 SOURCE            CSipRefreshMgr.cpp
 SOURCE            CSipRefreshBase.cpp
@@ -284,7 +280,9 @@ USERINCLUDE       ../TransactionUser/src
 USERINCLUDE       ../NetworkMonitor/inc
 USERINCLUDE       ../SIPSec/Framework/inc
 USERINCLUDE       ../RequestHandler/inc
+USERINCLUDE     ../traces
 
+OS_LAYER_SYSTEMINCLUDE
 MW_LAYER_SYSTEMINCLUDE
 
 LIBRARY           ecom.lib
@@ -298,7 +296,6 @@ LIBRARY           commdb.lib
 LIBRARY           commsdat.lib
 LIBRARY           inetprotutil.lib
 LIBRARY           centralrepository.lib
-LIBRARY           flogger.lib
 LIBRARY           sipcodec.lib
 LIBRARY           securesocket.lib
 LIBRARY           efsrv.lib

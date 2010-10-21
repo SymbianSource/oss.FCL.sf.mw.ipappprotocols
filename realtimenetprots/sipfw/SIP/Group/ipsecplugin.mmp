@@ -57,6 +57,7 @@ USERINCLUDE     ../Codec/api
 USERINCLUDE     ../LightWeightTimer/inc
 USERINCLUDE     ../ConnectionMgr/inc
 USERINCLUDE     ../Logging/inc
+USERINCLUDE     ../traces
 
 
 SOURCEPATH		../SIPSec/IpSecPlugin/resource
@@ -64,6 +65,7 @@ START RESOURCE 	1020334E.rss
 TARGET 			sipipsec.rsc                                          
 END
 
+OS_LAYER_SYSTEMINCLUDE
 MW_LAYER_SYSTEMINCLUDE_SYMBIAN
 
 
@@ -75,7 +77,6 @@ LIBRARY	      sipcodec.lib
 LIBRARY       esock.lib 
 LIBRARY       insock.lib
 LIBRARY       commdb.lib
-LIBRARY       flogger.lib
 LIBRARY       charconv.lib
 
 LIBRARY		    lib_pfkey.lib

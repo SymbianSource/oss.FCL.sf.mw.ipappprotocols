@@ -37,7 +37,9 @@ USERINCLUDE       ../Client/src
 USERINCLUDE       ../common/inc
 USERINCLUDE       ../Server/inc
 USERINCLUDE       ../../SIP/Codec/inc
+USERINCLUDE       ../traces
 
+OS_LAYER_SYSTEMINCLUDE
 MW_LAYER_SYSTEMINCLUDE_SYMBIAN
 
 LIBRARY           euser.lib

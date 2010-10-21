@@ -82,10 +82,8 @@ void CSigComp::ConstructL(TMemorySize aDecompressionMemSize,
     User::LeaveIfError(rfs.Connect());
     CleanupClosePushL(rfs);
 
-#if !defined(__WINS__) && !defined(__WINSCW__)
     TParsePtrC parser(RProcess().FileName());
-    User::LeaveIfError(rfs.SetSessionPath(parser.Drive()));
-#endif    
+    User::LeaveIfError(rfs.SetSessionPath(parser.Drive()));   
 
     TInt stateLen = 0;
     RFile file;
