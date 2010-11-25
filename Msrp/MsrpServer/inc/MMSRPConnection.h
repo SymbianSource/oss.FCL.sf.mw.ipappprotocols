@@ -94,10 +94,24 @@ public:
     * Sends the buffer content
     * the observer cud be implemented by msg or subsession
     * connection observer deemed unnecessary in send call
+    * @param aMsg message writer observer class
     */
     virtual void SendL( MMSRPWriterObserver& aMsg ) = 0;
             
+    /**
+    * Continue sending the current message. This usually is called when
+    * new chunk of message is to be transmitted after receiving a response
+    * to chunk
+    * @param aMsg message writer observer class
+    */
+    virtual void ContinueSendingL( MMSRPWriterObserver& aMsg ) = 0;
     
+    /**
+    * Cancels the sending if given message is currently being sent
+    * @param aMsg message writer observer class
+    */
+    virtual void CancelSendingL( const MMSRPWriterObserver* aMsg ) = 0;
+
     /**
      * use case unknown : connection failure detected, parse error on the connection
      * Send failed , goes directly to subsession.

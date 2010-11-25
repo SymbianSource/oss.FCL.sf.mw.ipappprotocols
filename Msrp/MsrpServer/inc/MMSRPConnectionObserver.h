@@ -51,8 +51,17 @@ class MMSRPConnectionObserver
          */
         virtual TBool MessageReceivedL( CMSRPMessageHandler* aMsg ) = 0;
         
+        /**
+         * Message received which does not belong to any existing session
+         * @param aMsg the received message
+         */
         virtual void UnclaimedMessageL( CMSRPMessageHandler* aMsg ) = 0;
-
+        
+        /**
+        * Current message receive progress reported to connected subsessions
+        * @param aMessageHandler message handler instance, ownership not transferred
+         */
+        virtual void MessageReceiveProgressL( CMSRPMessageHandler* aMessageHandler ) = 0;
     };
 
 #endif // MMMSRPCONNECTIONOBSERVER_H

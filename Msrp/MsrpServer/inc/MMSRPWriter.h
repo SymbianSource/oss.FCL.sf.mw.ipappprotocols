@@ -28,12 +28,23 @@
 class MMSRPWriter
 	{
 	public:
-	    inline virtual ~MMSRPWriter(){}
+
+        /**
+         * Virtual destructor
+         */     
+        inline virtual ~MMSRPWriter(){}
+	    
 	    /**
 	     * register for send service
 	     * also triggers writer start, inactive on nothing to send
 	     */	    
 	    virtual void RequestSendL(MMSRPWriterObserver& aMsg) = 0;
+
+        /**
+         * Cancels the sending if given message is currently being sent
+         * @param aMsg message writer observer class
+         */     
+        virtual void CancelSendingL( const MMSRPWriterObserver* aMsg ) = 0;
 
         /**
          * Cancel current send, socket state to be verified

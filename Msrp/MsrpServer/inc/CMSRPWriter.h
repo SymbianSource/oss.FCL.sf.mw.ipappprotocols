@@ -34,29 +34,31 @@ class MMSRPWriterErrorObserver;
 
 class CMSRPWriter : public CActive, public MMSRPWriter
     {
- public:
-
-     // Constructors and destructor
-     static MMSRPWriter* NewL(RSocket& aSocket, MMSRPWriterErrorObserver& aConnection );
-     virtual ~CMSRPWriter();
-      
-     virtual void RequestSendL(MMSRPWriterObserver& aMsg);
-     
- protected: // from CActive
-     void DoCancel();
-     void RunL();
-     TInt RunError(TInt aError);
+     public:
     
- private:
-     CMSRPWriter(RSocket& aSocket, MMSRPWriterErrorObserver& aConnection);
-     void ConstructL();
-     void SendL();
+         // Constructors and destructor
+         static MMSRPWriter* NewL(RSocket& aSocket, MMSRPWriterErrorObserver& aConnection );
+         virtual ~CMSRPWriter();
 
- private: // data
-     MMSRPWriterErrorObserver& iConnection;  
-     RSocket& iSocket;     
-     RPointerArray<MMSRPWriterObserver> iSendQueue;
-     TBool iWriteIssued;
+     public: // from MMSRPWriter
+         void RequestSendL(MMSRPWriterObserver& aMsg);
+         void CancelSendingL( const MMSRPWriterObserver* aMsg );
+         
+     protected: // from CActive
+         void DoCancel();
+         void RunL();
+         TInt RunError(TInt aError);
+        
+     private:
+         CMSRPWriter(RSocket& aSocket, MMSRPWriterErrorObserver& aConnection);
+         void ConstructL();
+         void SendL();
+    
+     private: // data
+         MMSRPWriterErrorObserver& iConnection;  
+         RSocket& iSocket;     
+         RPointerArray<MMSRPWriterObserver> iSendQueue;
+         TBool iWriteIssued;
     };     
 
 #endif // CMSRPWRITER_H

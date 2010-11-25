@@ -78,8 +78,10 @@ CMSRPImplementation::~CMSRPImplementation()
 	}
  
  
-CMSRPSession* CMSRPImplementation::CreateMSRPSessionL( MMSRPSessionObserver& aObserver,
-                                                       const TUint aIapId )
+CMSRPSession* CMSRPImplementation::CreateMSRPSessionL( 
+    MMSRPSessionObserver& aObserver,
+    const TUint aIapId,
+    const TDesC8& aSessionId )
 	{
 	// Creates and Returns a MSRP Session. 
 	// No paramers are taken at this stage. Primarily because 
@@ -91,7 +93,7 @@ CMSRPSession* CMSRPImplementation::CreateMSRPSessionL( MMSRPSessionObserver& aOb
 	MSRPLOG("CMSRP Impl.. Create MSRP session");
 
 	CMSRPSession* msrpSession 
-	 			= CMSRPSession::NewL( *iMSRP, aObserver, aIapId );
+	 			= CMSRPSession::NewL( *iMSRP, aObserver, aIapId, aSessionId );
 
 	// CMSRPImplementation would like to keep a tab on number of MSRP sessions 
 	// that it is serving.Append the MSRPSession to a session array.

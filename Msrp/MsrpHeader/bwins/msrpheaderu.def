@@ -1,96 +1,107 @@
 EXPORTS
-	?SetStatusCodeL@CMSRPResponse@@QAEXI@Z @ 1 NONAME ; void CMSRPResponse::SetStatusCodeL(unsigned int)
-	?DecodeL@CMSRPFromPathHeader@@SAPAV1@ABVTDesC8@@@Z @ 2 NONAME ; class CMSRPFromPathHeader * CMSRPFromPathHeader::DecodeL(class TDesC8 const &)
-	?SetToPathHeader@CMSRPMessageBase@@QAEXPAVCMSRPToPathHeader@@@Z @ 3 NONAME ; void CMSRPMessageBase::SetToPathHeader(class CMSRPToPathHeader *)
-	?InternalizeValueL@CMSRPFromPathHeader@@SAPAV1@AAVRReadStream@@@Z @ 4 NONAME ; class CMSRPFromPathHeader * CMSRPFromPathHeader::InternalizeValueL(class RReadStream &)
-	?InternalizeValueL@CMSRPFailureReportHeader@@SAPAV1@AAVRReadStream@@@Z @ 5 NONAME ; class CMSRPFailureReportHeader * CMSRPFailureReportHeader::InternalizeValueL(class RReadStream &)
-	?Close@MSRPStrings@@SAXXZ @ 6 NONAME ; void MSRPStrings::Close(void)
-	?ReasonPhrase@CMSRPResponse@@QBE?AVRStringF@@XZ @ 7 NONAME ; class RStringF CMSRPResponse::ReasonPhrase(void) const
-	?OpenL@MSRPStrings@@SAXXZ @ 8 NONAME ; void MSRPStrings::OpenL(void)
-	?SetEndPosition@CMSRPByteRangeHeader@@QAEXH@Z @ 9 NONAME ; void CMSRPByteRangeHeader::SetEndPosition(int)
-	?NewLC@CMSRPByteRangeHeader@@SAPAV1@HHH@Z @ 10 NONAME ; class CMSRPByteRangeHeader * CMSRPByteRangeHeader::NewLC(int, int, int)
-	?IsContent@CMSRPMessage@@QBEHXZ @ 11 NONAME ; int CMSRPMessage::IsContent(void) const
-	?InternalizeValueL@CMSRPSuccessReportHeader@@SAPAV1@AAVRReadStream@@@Z @ 12 NONAME ; class CMSRPSuccessReportHeader * CMSRPSuccessReportHeader::InternalizeValueL(class RReadStream &)
-	?ToTextValueLC@CMSRPHeaderBase@@QBEPAVHBufC8@@XZ @ 13 NONAME ; class HBufC8 * CMSRPHeaderBase::ToTextValueLC(void) const
-	??1CMSRPMessageBase@@UAE@XZ @ 14 NONAME ; CMSRPMessageBase::~CMSRPMessageBase(void)
-	?NewL@CMSRPToPathHeader@@SAPAV1@PAVCUri8@@@Z @ 15 NONAME ; class CMSRPToPathHeader * CMSRPToPathHeader::NewL(class CUri8 *)
-	?NewLC@CMSRPSuccessReportHeader@@SAPAV1@ABVRStringF@@@Z @ 16 NONAME ; class CMSRPSuccessReportHeader * CMSRPSuccessReportHeader::NewLC(class RStringF const &)
-	?ExternalizeValueL@CMSRPFailureReportHeader@@QBEXAAVRWriteStream@@@Z @ 17 NONAME ; void CMSRPFailureReportHeader::ExternalizeValueL(class RWriteStream &) const
-	??0CMSRPResponse@@QAE@IVRStringF@@@Z @ 18 NONAME ; CMSRPResponse::CMSRPResponse(unsigned int, class RStringF)
-	??1CMSRPFromPathHeader@@UAE@XZ @ 19 NONAME ; CMSRPFromPathHeader::~CMSRPFromPathHeader(void)
-	?ExternalizeL@CMSRPMessage@@UAEXAAVRWriteStream@@@Z @ 20 NONAME ; void CMSRPMessage::ExternalizeL(class RWriteStream &)
-	??1CMSRPMessageIdHeader@@UAE@XZ @ 21 NONAME ; CMSRPMessageIdHeader::~CMSRPMessageIdHeader(void)
-	?SetSuccessReportHeader@CMSRPMessageBase@@QAEXPAVCMSRPSuccessReportHeader@@@Z @ 22 NONAME ; void CMSRPMessageBase::SetSuccessReportHeader(class CMSRPSuccessReportHeader *)
-	?InternalizeL@CMSRPMessage@@SAPAV1@AAVRReadStream@@@Z @ 23 NONAME ; class CMSRPMessage * CMSRPMessage::InternalizeL(class RReadStream &)
-	?NewLC@CMSRPToPathHeader@@SAPAV1@PAVCUri8@@@Z @ 24 NONAME ; class CMSRPToPathHeader * CMSRPToPathHeader::NewLC(class CUri8 *)
-	?ToTextLC@CMSRPHeaderBase@@QBEPAVHBufC8@@XZ @ 25 NONAME ; class HBufC8 * CMSRPHeaderBase::ToTextLC(void) const
-	?InternalizeValueL@CMSRPToPathHeader@@SAPAV1@AAVRReadStream@@@Z @ 26 NONAME ; class CMSRPToPathHeader * CMSRPToPathHeader::InternalizeValueL(class RReadStream &)
-	??1CMSRPFromToHeaderBase@@UAE@XZ @ 27 NONAME ; CMSRPFromToHeaderBase::~CMSRPFromToHeaderBase(void)
-	??8CMSRPFromToHeaderBase@@QBEHABV0@@Z @ 28 NONAME ; int CMSRPFromToHeaderBase::operator==(class CMSRPFromToHeaderBase const &) const
-	?SuccessReportHeader@CMSRPMessageBase@@QBEPBVCMSRPSuccessReportHeader@@XZ @ 29 NONAME ; class CMSRPSuccessReportHeader const * CMSRPMessageBase::SuccessReportHeader(void) const
-	?ExternalizeValueL@CMSRPContentTypeHeader@@QBEXAAVRWriteStream@@@Z @ 30 NONAME ; void CMSRPContentTypeHeader::ExternalizeValueL(class RWriteStream &) const
-	?InternalizeValueL@CMSRPMessageIdHeader@@SAPAV1@AAVRReadStream@@@Z @ 31 NONAME ; class CMSRPMessageIdHeader * CMSRPMessageIdHeader::InternalizeValueL(class RReadStream &)
-	?TotalLength@CMSRPByteRangeHeader@@QBEHXZ @ 32 NONAME ; int CMSRPByteRangeHeader::TotalLength(void) const
-	?SetMessageIdHeader@CMSRPMessageBase@@QAEXPAVCMSRPMessageIdHeader@@@Z @ 33 NONAME ; void CMSRPMessageBase::SetMessageIdHeader(class CMSRPMessageIdHeader *)
-	?NewL@CMSRPFailureReportHeader@@SAPAV1@ABVRStringF@@@Z @ 34 NONAME ; class CMSRPFailureReportHeader * CMSRPFailureReportHeader::NewL(class RStringF const &)
-	?FromPathHeader@CMSRPMessageBase@@QBEPBVCMSRPFromPathHeader@@XZ @ 35 NONAME ; class CMSRPFromPathHeader const * CMSRPMessageBase::FromPathHeader(void) const
-	?DecodeL@CMSRPToPathHeader@@SAPAV1@ABVTDesC8@@@Z @ 36 NONAME ; class CMSRPToPathHeader * CMSRPToPathHeader::DecodeL(class TDesC8 const &)
-	?ToPathHeader@CMSRPMessageBase@@QBEPBVCMSRPToPathHeader@@XZ @ 37 NONAME ; class CMSRPToPathHeader const * CMSRPMessageBase::ToPathHeader(void) const
-	??0CMSRPResponse@@QAE@XZ @ 38 NONAME ; CMSRPResponse::CMSRPResponse(void)
-	?OpenL@MSRPStrings@@SAXAAVRStringPool@@@Z @ 39 NONAME ; void MSRPStrings::OpenL(class RStringPool &)
-	??1CMSRPContentTypeHeader@@UAE@XZ @ 40 NONAME ; CMSRPContentTypeHeader::~CMSRPContentTypeHeader(void)
-	?NewL@CMSRPFromPathHeader@@SAPAV1@PAVCUri8@@@Z @ 41 NONAME ; class CMSRPFromPathHeader * CMSRPFromPathHeader::NewL(class CUri8 *)
-	?FailureReportHeader@CMSRPMessageBase@@QBEPBVCMSRPFailureReportHeader@@XZ @ 42 NONAME ; class CMSRPFailureReportHeader const * CMSRPMessageBase::FailureReportHeader(void) const
-	??1CMSRPHeaderBase@@UAE@XZ @ 43 NONAME ; CMSRPHeaderBase::~CMSRPHeaderBase(void)
-	?ExternalizeValueL@CMSRPMessageIdHeader@@QBEXAAVRWriteStream@@@Z @ 44 NONAME ; void CMSRPMessageIdHeader::ExternalizeValueL(class RWriteStream &) const
-	?NewLC@CMSRPMessageIdHeader@@SAPAV1@ABVTDesC8@@@Z @ 45 NONAME ; class CMSRPMessageIdHeader * CMSRPMessageIdHeader::NewLC(class TDesC8 const &)
-	??1CMSRPResponse@@UAE@XZ @ 46 NONAME ; CMSRPResponse::~CMSRPResponse(void)
-	?NewL@CMSRPByteRangeHeader@@SAPAV1@HHH@Z @ 47 NONAME ; class CMSRPByteRangeHeader * CMSRPByteRangeHeader::NewL(int, int, int)
-	?NewL@CMSRPSuccessReportHeader@@SAPAV1@ABVRStringF@@@Z @ 48 NONAME ; class CMSRPSuccessReportHeader * CMSRPSuccessReportHeader::NewL(class RStringF const &)
-	??1CMSRPFailureReportHeader@@UAE@XZ @ 49 NONAME ; CMSRPFailureReportHeader::~CMSRPFailureReportHeader(void)
-	?Pool@MSRPStrings@@SA?AVRStringPool@@XZ @ 50 NONAME ; class RStringPool MSRPStrings::Pool(void)
-	?SetTotalLength@CMSRPByteRangeHeader@@QAEXH@Z @ 51 NONAME ; void CMSRPByteRangeHeader::SetTotalLength(int)
-	??1CMSRPSuccessReportHeader@@UAE@XZ @ 52 NONAME ; CMSRPSuccessReportHeader::~CMSRPSuccessReportHeader(void)
-	?NewL@CMSRPContentTypeHeader@@SAPAV1@ABVTDesC8@@@Z @ 53 NONAME ; class CMSRPContentTypeHeader * CMSRPContentTypeHeader::NewL(class TDesC8 const &)
-	?NewLC@CMSRPContentTypeHeader@@SAPAV1@ABVTDesC8@@@Z @ 54 NONAME ; class CMSRPContentTypeHeader * CMSRPContentTypeHeader::NewLC(class TDesC8 const &)
-	??1CMSRPMessage@@UAE@XZ @ 55 NONAME ; CMSRPMessage::~CMSRPMessage(void)
-	?InternalizeL@CMSRPResponse@@SAPAV1@AAVRReadStream@@@Z @ 56 NONAME ; class CMSRPResponse * CMSRPResponse::InternalizeL(class RReadStream &)
-	?Content@CMSRPMessage@@QAEABVTDesC8@@XZ @ 57 NONAME ; class TDesC8 const & CMSRPMessage::Content(void)
-	??1CMSRPToPathHeader@@UAE@XZ @ 58 NONAME ; CMSRPToPathHeader::~CMSRPToPathHeader(void)
-	?SetContent@CMSRPMessage@@QAEXPAVHBufC8@@@Z @ 59 NONAME ; void CMSRPMessage::SetContent(class HBufC8 *)
-	?Table@MSRPStrings@@SAABUTStringTable@@XZ @ 60 NONAME ; struct TStringTable const & MSRPStrings::Table(void)
-	?StatusCode@CMSRPResponse@@QBEIXZ @ 61 NONAME ; unsigned int CMSRPResponse::StatusCode(void) const
-	?ContentTypeHeader@CMSRPMessageBase@@QBEPBVCMSRPContentTypeHeader@@XZ @ 62 NONAME ; class CMSRPContentTypeHeader const * CMSRPMessageBase::ContentTypeHeader(void) const
-	?SetContentTypeHeader@CMSRPMessageBase@@QAEXPAVCMSRPContentTypeHeader@@@Z @ 63 NONAME ; void CMSRPMessageBase::SetContentTypeHeader(class CMSRPContentTypeHeader *)
-	?ExternalizeValueL@CMSRPSuccessReportHeader@@QBEXAAVRWriteStream@@@Z @ 64 NONAME ; void CMSRPSuccessReportHeader::ExternalizeValueL(class RWriteStream &) const
-	?InternalizeValueL@CMSRPByteRangeHeader@@SAPAV1@AAVRReadStream@@@Z @ 65 NONAME ; class CMSRPByteRangeHeader * CMSRPByteRangeHeader::InternalizeValueL(class RReadStream &)
-	?IsResponse@CMSRPResponse@@SAHABVTDesC8@@@Z @ 66 NONAME ; int CMSRPResponse::IsResponse(class TDesC8 const &)
-	?EndPosition@CMSRPByteRangeHeader@@QBEHXZ @ 67 NONAME ; int CMSRPByteRangeHeader::EndPosition(void) const
-	?ToTextL@CMSRPHeaderBase@@QBEPAVHBufC8@@XZ @ 68 NONAME ; class HBufC8 * CMSRPHeaderBase::ToTextL(void) const
-	??0CMSRPMessage@@QAE@XZ @ 69 NONAME ; CMSRPMessage::CMSRPMessage(void)
-	?StringF@MSRPStrings@@SA?AVRStringF@@H@Z @ 70 NONAME ; class RStringF MSRPStrings::StringF(int)
-	?SetFailureReportHeader@CMSRPMessageBase@@QAEXPAVCMSRPFailureReportHeader@@@Z @ 71 NONAME ; void CMSRPMessageBase::SetFailureReportHeader(class CMSRPFailureReportHeader *)
-	?NewL@CMSRPMessageIdHeader@@SAPAV1@ABVTDesC8@@@Z @ 72 NONAME ; class CMSRPMessageIdHeader * CMSRPMessageIdHeader::NewL(class TDesC8 const &)
-	?IsMessage@CMSRPMessage@@SAHABVTDesC8@@@Z @ 73 NONAME ; int CMSRPMessage::IsMessage(class TDesC8 const &)
-	?SetStartPosition@CMSRPByteRangeHeader@@QAEXH@Z @ 74 NONAME ; void CMSRPByteRangeHeader::SetStartPosition(int)
-	?SetFromPathHeader@CMSRPMessageBase@@QAEXPAVCMSRPFromPathHeader@@@Z @ 75 NONAME ; void CMSRPMessageBase::SetFromPathHeader(class CMSRPFromPathHeader *)
-	?ByteRangeHeader@CMSRPMessageBase@@QBEPBVCMSRPByteRangeHeader@@XZ @ 76 NONAME ; class CMSRPByteRangeHeader const * CMSRPMessageBase::ByteRangeHeader(void) const
-	?ExternalizeValueL@CMSRPFromToHeaderBase@@QBEXAAVRWriteStream@@@Z @ 77 NONAME ; void CMSRPFromToHeaderBase::ExternalizeValueL(class RWriteStream &) const
-	??1CMSRPByteRangeHeader@@UAE@XZ @ 78 NONAME ; CMSRPByteRangeHeader::~CMSRPByteRangeHeader(void)
-	?NewLC@CMSRPFromPathHeader@@SAPAV1@PAVCUri8@@@Z @ 79 NONAME ; class CMSRPFromPathHeader * CMSRPFromPathHeader::NewLC(class CUri8 *)
-	?InternalizeValueL@CMSRPContentTypeHeader@@SAPAV1@AAVRReadStream@@@Z @ 80 NONAME ; class CMSRPContentTypeHeader * CMSRPContentTypeHeader::InternalizeValueL(class RReadStream &)
-	?MessageIdHeader@CMSRPMessageBase@@QBEPBVCMSRPMessageIdHeader@@XZ @ 81 NONAME ; class CMSRPMessageIdHeader const * CMSRPMessageBase::MessageIdHeader(void) const
-	?StartPosition@CMSRPByteRangeHeader@@QBEHXZ @ 82 NONAME ; int CMSRPByteRangeHeader::StartPosition(void) const
-	?SetByteRangeHeader@CMSRPMessageBase@@QAEXPAVCMSRPByteRangeHeader@@@Z @ 83 NONAME ; void CMSRPMessageBase::SetByteRangeHeader(class CMSRPByteRangeHeader *)
-	?SetReasonPhrase@CMSRPResponse@@QAEXVRStringF@@@Z @ 84 NONAME ; void CMSRPResponse::SetReasonPhrase(class RStringF)
-	?ExternalizeValueL@CMSRPByteRangeHeader@@QBEXAAVRWriteStream@@@Z @ 85 NONAME ; void CMSRPByteRangeHeader::ExternalizeValueL(class RWriteStream &) const
-	?NewLC@CMSRPFailureReportHeader@@SAPAV1@ABVRStringF@@@Z @ 86 NONAME ; class CMSRPFailureReportHeader * CMSRPFailureReportHeader::NewLC(class RStringF const &)
-	?ExternalizeL@CMSRPResponse@@UAEXAAVRWriteStream@@@Z @ 87 NONAME ; void CMSRPResponse::ExternalizeL(class RWriteStream &)
-	?GetNotifyProgress@CMSRPMessage@@QAEHXZ @ 88 NONAME ; int CMSRPMessage::GetNotifyProgress(void)
-	?SetNotifyProgress@CMSRPMessage@@QAEXH@Z @ 89 NONAME ; void CMSRPMessage::SetNotifyProgress(int)
-	?SetFileName@CMSRPMessage@@QAEXABV?$TBuf@$0BAA@@@@Z @ 90 NONAME ; void CMSRPMessage::SetFileName(class TBuf<256> const &)
-	?GetFileName@CMSRPMessage@@QAEAAV?$TBuf@$0BAA@@@XZ @ 91 NONAME ; class TBuf<256> & CMSRPMessage::GetFileName(void)
-	?IsFile@CMSRPMessage@@QAEHXZ @ 92 NONAME ; int CMSRPMessage::IsFile(void)
-	?SetFileSize@CMSRPMessage@@QAEXH@Z @ 93 NONAME ; void CMSRPMessage::SetFileSize(int)
-	?GetFileSize@CMSRPMessage@@QAEHXZ @ 94 NONAME ; int CMSRPMessage::GetFileSize(void)
+	??0CMSRPMessage@@QAE@XZ @ 1 NONAME ; CMSRPMessage::CMSRPMessage(void)
+	??0CMSRPReport@@QAE@XZ @ 2 NONAME ; CMSRPReport::CMSRPReport(void)
+	??0CMSRPResponse@@QAE@IVRStringF@@@Z @ 3 NONAME ; CMSRPResponse::CMSRPResponse(unsigned int, class RStringF)
+	??0CMSRPResponse@@QAE@XZ @ 4 NONAME ; CMSRPResponse::CMSRPResponse(void)
+	??1CMSRPByteRangeHeader@@UAE@XZ @ 5 NONAME ; CMSRPByteRangeHeader::~CMSRPByteRangeHeader(void)
+	??1CMSRPContentTypeHeader@@UAE@XZ @ 6 NONAME ; CMSRPContentTypeHeader::~CMSRPContentTypeHeader(void)
+	??1CMSRPFailureReportHeader@@UAE@XZ @ 7 NONAME ; CMSRPFailureReportHeader::~CMSRPFailureReportHeader(void)
+	??1CMSRPFromPathHeader@@UAE@XZ @ 8 NONAME ; CMSRPFromPathHeader::~CMSRPFromPathHeader(void)
+	??1CMSRPFromToHeaderBase@@UAE@XZ @ 9 NONAME ; CMSRPFromToHeaderBase::~CMSRPFromToHeaderBase(void)
+	??1CMSRPHeaderBase@@UAE@XZ @ 10 NONAME ; CMSRPHeaderBase::~CMSRPHeaderBase(void)
+	??1CMSRPMessage@@UAE@XZ @ 11 NONAME ; CMSRPMessage::~CMSRPMessage(void)
+	??1CMSRPMessageBase@@UAE@XZ @ 12 NONAME ; CMSRPMessageBase::~CMSRPMessageBase(void)
+	??1CMSRPMessageIdHeader@@UAE@XZ @ 13 NONAME ; CMSRPMessageIdHeader::~CMSRPMessageIdHeader(void)
+	??1CMSRPReport@@UAE@XZ @ 14 NONAME ; CMSRPReport::~CMSRPReport(void)
+	??1CMSRPResponse@@UAE@XZ @ 15 NONAME ; CMSRPResponse::~CMSRPResponse(void)
+	??1CMSRPStatusHeader@@UAE@XZ @ 16 NONAME ; CMSRPStatusHeader::~CMSRPStatusHeader(void)
+	??1CMSRPSuccessReportHeader@@UAE@XZ @ 17 NONAME ; CMSRPSuccessReportHeader::~CMSRPSuccessReportHeader(void)
+	??1CMSRPToPathHeader@@UAE@XZ @ 18 NONAME ; CMSRPToPathHeader::~CMSRPToPathHeader(void)
+	??8CMSRPFromToHeaderBase@@QBEHABV0@@Z @ 19 NONAME ; int CMSRPFromToHeaderBase::operator==(class CMSRPFromToHeaderBase const &) const
+	?ByteRangeHeader@CMSRPMessageBase@@QBEPBVCMSRPByteRangeHeader@@XZ @ 20 NONAME ; class CMSRPByteRangeHeader const * CMSRPMessageBase::ByteRangeHeader(void) const
+	?Close@MSRPStrings@@SAXXZ @ 21 NONAME ; void MSRPStrings::Close(void)
+	?Content@CMSRPMessage@@QAEABVTDesC8@@XZ @ 22 NONAME ; class TDesC8 const & CMSRPMessage::Content(void)
+	?ContentTypeHeader@CMSRPMessageBase@@QBEPBVCMSRPContentTypeHeader@@XZ @ 23 NONAME ; class CMSRPContentTypeHeader const * CMSRPMessageBase::ContentTypeHeader(void) const
+	?DecodeL@CMSRPFromPathHeader@@SAPAV1@ABVTDesC8@@@Z @ 24 NONAME ; class CMSRPFromPathHeader * CMSRPFromPathHeader::DecodeL(class TDesC8 const &)
+	?DecodeL@CMSRPToPathHeader@@SAPAV1@ABVTDesC8@@@Z @ 25 NONAME ; class CMSRPToPathHeader * CMSRPToPathHeader::DecodeL(class TDesC8 const &)
+	?EndPosition@CMSRPByteRangeHeader@@QBEHXZ @ 26 NONAME ; int CMSRPByteRangeHeader::EndPosition(void) const
+	?ExternalizeL@CMSRPMessage@@UAEXAAVRWriteStream@@@Z @ 27 NONAME ; void CMSRPMessage::ExternalizeL(class RWriteStream &)
+	?ExternalizeL@CMSRPReport@@UAEXAAVRWriteStream@@@Z @ 28 NONAME ; void CMSRPReport::ExternalizeL(class RWriteStream &)
+	?ExternalizeL@CMSRPResponse@@UAEXAAVRWriteStream@@@Z @ 29 NONAME ; void CMSRPResponse::ExternalizeL(class RWriteStream &)
+	?ExternalizeValueL@CMSRPByteRangeHeader@@QBEXAAVRWriteStream@@@Z @ 30 NONAME ; void CMSRPByteRangeHeader::ExternalizeValueL(class RWriteStream &) const
+	?ExternalizeValueL@CMSRPContentTypeHeader@@QBEXAAVRWriteStream@@@Z @ 31 NONAME ; void CMSRPContentTypeHeader::ExternalizeValueL(class RWriteStream &) const
+	?ExternalizeValueL@CMSRPFailureReportHeader@@QBEXAAVRWriteStream@@@Z @ 32 NONAME ; void CMSRPFailureReportHeader::ExternalizeValueL(class RWriteStream &) const
+	?ExternalizeValueL@CMSRPFromToHeaderBase@@QBEXAAVRWriteStream@@@Z @ 33 NONAME ; void CMSRPFromToHeaderBase::ExternalizeValueL(class RWriteStream &) const
+	?ExternalizeValueL@CMSRPMessageIdHeader@@QBEXAAVRWriteStream@@@Z @ 34 NONAME ; void CMSRPMessageIdHeader::ExternalizeValueL(class RWriteStream &) const
+	?ExternalizeValueL@CMSRPStatusHeader@@QBEXAAVRWriteStream@@@Z @ 35 NONAME ; void CMSRPStatusHeader::ExternalizeValueL(class RWriteStream &) const
+	?ExternalizeValueL@CMSRPSuccessReportHeader@@QBEXAAVRWriteStream@@@Z @ 36 NONAME ; void CMSRPSuccessReportHeader::ExternalizeValueL(class RWriteStream &) const
+	?FailureReportHeader@CMSRPMessageBase@@QBEPBVCMSRPFailureReportHeader@@XZ @ 37 NONAME ; class CMSRPFailureReportHeader const * CMSRPMessageBase::FailureReportHeader(void) const
+	?FromPathHeader@CMSRPMessageBase@@QBEPBVCMSRPFromPathHeader@@XZ @ 38 NONAME ; class CMSRPFromPathHeader const * CMSRPMessageBase::FromPathHeader(void) const
+	?GetFileName@CMSRPMessage@@QAEAAV?$TBuf@$0BAA@@@XZ @ 39 NONAME ; class TBuf<256> & CMSRPMessage::GetFileName(void)
+	?InternalizeL@CMSRPMessage@@SAPAV1@AAVRReadStream@@@Z @ 40 NONAME ; class CMSRPMessage * CMSRPMessage::InternalizeL(class RReadStream &)
+	?InternalizeL@CMSRPReport@@SAPAV1@AAVRReadStream@@@Z @ 41 NONAME ; class CMSRPReport * CMSRPReport::InternalizeL(class RReadStream &)
+	?InternalizeL@CMSRPResponse@@SAPAV1@AAVRReadStream@@@Z @ 42 NONAME ; class CMSRPResponse * CMSRPResponse::InternalizeL(class RReadStream &)
+	?InternalizeValueL@CMSRPByteRangeHeader@@SAPAV1@AAVRReadStream@@@Z @ 43 NONAME ; class CMSRPByteRangeHeader * CMSRPByteRangeHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CMSRPContentTypeHeader@@SAPAV1@AAVRReadStream@@@Z @ 44 NONAME ; class CMSRPContentTypeHeader * CMSRPContentTypeHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CMSRPFailureReportHeader@@SAPAV1@AAVRReadStream@@@Z @ 45 NONAME ; class CMSRPFailureReportHeader * CMSRPFailureReportHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CMSRPFromPathHeader@@SAPAV1@AAVRReadStream@@@Z @ 46 NONAME ; class CMSRPFromPathHeader * CMSRPFromPathHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CMSRPMessageIdHeader@@SAPAV1@AAVRReadStream@@@Z @ 47 NONAME ; class CMSRPMessageIdHeader * CMSRPMessageIdHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CMSRPStatusHeader@@SAPAV1@AAVRReadStream@@@Z @ 48 NONAME ; class CMSRPStatusHeader * CMSRPStatusHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CMSRPSuccessReportHeader@@SAPAV1@AAVRReadStream@@@Z @ 49 NONAME ; class CMSRPSuccessReportHeader * CMSRPSuccessReportHeader::InternalizeValueL(class RReadStream &)
+	?InternalizeValueL@CMSRPToPathHeader@@SAPAV1@AAVRReadStream@@@Z @ 50 NONAME ; class CMSRPToPathHeader * CMSRPToPathHeader::InternalizeValueL(class RReadStream &)
+	?IsContent@CMSRPMessage@@QBEHXZ @ 51 NONAME ; int CMSRPMessage::IsContent(void) const
+	?IsFile@CMSRPMessage@@QAEHXZ @ 52 NONAME ; int CMSRPMessage::IsFile(void)
+	?IsMessage@CMSRPMessage@@SAHABVTDesC8@@@Z @ 53 NONAME ; int CMSRPMessage::IsMessage(class TDesC8 const &)
+	?IsReport@CMSRPReport@@SAHABVTDesC8@@@Z @ 54 NONAME ; int CMSRPReport::IsReport(class TDesC8 const &)
+	?IsResponse@CMSRPResponse@@SAHABVTDesC8@@@Z @ 55 NONAME ; int CMSRPResponse::IsResponse(class TDesC8 const &)
+	?MessageIdHeader@CMSRPMessageBase@@QBEPBVCMSRPMessageIdHeader@@XZ @ 56 NONAME ; class CMSRPMessageIdHeader const * CMSRPMessageBase::MessageIdHeader(void) const
+	?NewL@CMSRPByteRangeHeader@@SAPAV1@HHH@Z @ 57 NONAME ; class CMSRPByteRangeHeader * CMSRPByteRangeHeader::NewL(int, int, int)
+	?NewL@CMSRPContentTypeHeader@@SAPAV1@ABVTDesC8@@@Z @ 58 NONAME ; class CMSRPContentTypeHeader * CMSRPContentTypeHeader::NewL(class TDesC8 const &)
+	?NewL@CMSRPFailureReportHeader@@SAPAV1@ABVRStringF@@@Z @ 59 NONAME ; class CMSRPFailureReportHeader * CMSRPFailureReportHeader::NewL(class RStringF const &)
+	?NewL@CMSRPFromPathHeader@@SAPAV1@PAVCUri8@@@Z @ 60 NONAME ; class CMSRPFromPathHeader * CMSRPFromPathHeader::NewL(class CUri8 *)
+	?NewL@CMSRPMessageIdHeader@@SAPAV1@ABVTDesC8@@@Z @ 61 NONAME ; class CMSRPMessageIdHeader * CMSRPMessageIdHeader::NewL(class TDesC8 const &)
+	?NewL@CMSRPStatusHeader@@SAPAV1@H@Z @ 62 NONAME ; class CMSRPStatusHeader * CMSRPStatusHeader::NewL(int)
+	?NewL@CMSRPSuccessReportHeader@@SAPAV1@ABVRStringF@@@Z @ 63 NONAME ; class CMSRPSuccessReportHeader * CMSRPSuccessReportHeader::NewL(class RStringF const &)
+	?NewL@CMSRPToPathHeader@@SAPAV1@PAVCUri8@@@Z @ 64 NONAME ; class CMSRPToPathHeader * CMSRPToPathHeader::NewL(class CUri8 *)
+	?NewLC@CMSRPByteRangeHeader@@SAPAV1@HHH@Z @ 65 NONAME ; class CMSRPByteRangeHeader * CMSRPByteRangeHeader::NewLC(int, int, int)
+	?NewLC@CMSRPContentTypeHeader@@SAPAV1@ABVTDesC8@@@Z @ 66 NONAME ; class CMSRPContentTypeHeader * CMSRPContentTypeHeader::NewLC(class TDesC8 const &)
+	?NewLC@CMSRPFailureReportHeader@@SAPAV1@ABVRStringF@@@Z @ 67 NONAME ; class CMSRPFailureReportHeader * CMSRPFailureReportHeader::NewLC(class RStringF const &)
+	?NewLC@CMSRPFromPathHeader@@SAPAV1@PAVCUri8@@@Z @ 68 NONAME ; class CMSRPFromPathHeader * CMSRPFromPathHeader::NewLC(class CUri8 *)
+	?NewLC@CMSRPMessageIdHeader@@SAPAV1@ABVTDesC8@@@Z @ 69 NONAME ; class CMSRPMessageIdHeader * CMSRPMessageIdHeader::NewLC(class TDesC8 const &)
+	?NewLC@CMSRPStatusHeader@@SAPAV1@H@Z @ 70 NONAME ; class CMSRPStatusHeader * CMSRPStatusHeader::NewLC(int)
+	?NewLC@CMSRPSuccessReportHeader@@SAPAV1@ABVRStringF@@@Z @ 71 NONAME ; class CMSRPSuccessReportHeader * CMSRPSuccessReportHeader::NewLC(class RStringF const &)
+	?NewLC@CMSRPToPathHeader@@SAPAV1@PAVCUri8@@@Z @ 72 NONAME ; class CMSRPToPathHeader * CMSRPToPathHeader::NewLC(class CUri8 *)
+	?OpenL@MSRPStrings@@SAXAAVRStringPool@@@Z @ 73 NONAME ; void MSRPStrings::OpenL(class RStringPool &)
+	?OpenL@MSRPStrings@@SAXXZ @ 74 NONAME ; void MSRPStrings::OpenL(void)
+	?Pool@MSRPStrings@@SA?AVRStringPool@@XZ @ 75 NONAME ; class RStringPool MSRPStrings::Pool(void)
+	?ReasonPhrase@CMSRPResponse@@QBE?AVRStringF@@XZ @ 76 NONAME ; class RStringF CMSRPResponse::ReasonPhrase(void) const
+	?SetByteRangeHeader@CMSRPMessageBase@@QAEXPAVCMSRPByteRangeHeader@@@Z @ 77 NONAME ; void CMSRPMessageBase::SetByteRangeHeader(class CMSRPByteRangeHeader *)
+	?SetContent@CMSRPMessage@@QAEXPAVHBufC8@@@Z @ 78 NONAME ; void CMSRPMessage::SetContent(class HBufC8 *)
+	?SetContentTypeHeader@CMSRPMessageBase@@QAEXPAVCMSRPContentTypeHeader@@@Z @ 79 NONAME ; void CMSRPMessageBase::SetContentTypeHeader(class CMSRPContentTypeHeader *)
+	?SetEndPosition@CMSRPByteRangeHeader@@QAEXH@Z @ 80 NONAME ; void CMSRPByteRangeHeader::SetEndPosition(int)
+	?SetFailureReportHeader@CMSRPMessageBase@@QAEXPAVCMSRPFailureReportHeader@@@Z @ 81 NONAME ; void CMSRPMessageBase::SetFailureReportHeader(class CMSRPFailureReportHeader *)
+	?SetFileName@CMSRPMessage@@QAEXABV?$TBuf@$0BAA@@@@Z @ 82 NONAME ; void CMSRPMessage::SetFileName(class TBuf<256> const &)
+	?SetFromPathHeader@CMSRPMessageBase@@QAEXPAVCMSRPFromPathHeader@@@Z @ 83 NONAME ; void CMSRPMessageBase::SetFromPathHeader(class CMSRPFromPathHeader *)
+	?SetMessageIdHeader@CMSRPMessageBase@@QAEXPAVCMSRPMessageIdHeader@@@Z @ 84 NONAME ; void CMSRPMessageBase::SetMessageIdHeader(class CMSRPMessageIdHeader *)
+	?SetReasonPhrase@CMSRPResponse@@QAEXVRStringF@@@Z @ 85 NONAME ; void CMSRPResponse::SetReasonPhrase(class RStringF)
+	?SetStartPosition@CMSRPByteRangeHeader@@QAEXH@Z @ 86 NONAME ; void CMSRPByteRangeHeader::SetStartPosition(int)
+	?SetStatusCode@CMSRPStatusHeader@@QAEXH@Z @ 87 NONAME ; void CMSRPStatusHeader::SetStatusCode(int)
+	?SetStatusCodeL@CMSRPResponse@@QAEXI@Z @ 88 NONAME ; void CMSRPResponse::SetStatusCodeL(unsigned int)
+	?SetStatusHeader@CMSRPMessageBase@@QAEXPAVCMSRPStatusHeader@@@Z @ 89 NONAME ; void CMSRPMessageBase::SetStatusHeader(class CMSRPStatusHeader *)
+	?SetSuccessReportHeader@CMSRPMessageBase@@QAEXPAVCMSRPSuccessReportHeader@@@Z @ 90 NONAME ; void CMSRPMessageBase::SetSuccessReportHeader(class CMSRPSuccessReportHeader *)
+	?SetToPathHeader@CMSRPMessageBase@@QAEXPAVCMSRPToPathHeader@@@Z @ 91 NONAME ; void CMSRPMessageBase::SetToPathHeader(class CMSRPToPathHeader *)
+	?SetTotalLength@CMSRPByteRangeHeader@@QAEXH@Z @ 92 NONAME ; void CMSRPByteRangeHeader::SetTotalLength(int)
+	?StartPosition@CMSRPByteRangeHeader@@QBEHXZ @ 93 NONAME ; int CMSRPByteRangeHeader::StartPosition(void) const
+	?StatusCode@CMSRPResponse@@QBEIXZ @ 94 NONAME ; unsigned int CMSRPResponse::StatusCode(void) const
+	?StatusCode@CMSRPStatusHeader@@QBEHXZ @ 95 NONAME ; int CMSRPStatusHeader::StatusCode(void) const
+	?StatusHeader@CMSRPMessageBase@@QBEPBVCMSRPStatusHeader@@XZ @ 96 NONAME ; class CMSRPStatusHeader const * CMSRPMessageBase::StatusHeader(void) const
+	?StringF@MSRPStrings@@SA?AVRStringF@@H@Z @ 97 NONAME ; class RStringF MSRPStrings::StringF(int)
+	?SuccessReportHeader@CMSRPMessageBase@@QBEPBVCMSRPSuccessReportHeader@@XZ @ 98 NONAME ; class CMSRPSuccessReportHeader const * CMSRPMessageBase::SuccessReportHeader(void) const
+	?Table@MSRPStrings@@SAABUTStringTable@@XZ @ 99 NONAME ; struct TStringTable const & MSRPStrings::Table(void)
+	?ToPathHeader@CMSRPMessageBase@@QBEPBVCMSRPToPathHeader@@XZ @ 100 NONAME ; class CMSRPToPathHeader const * CMSRPMessageBase::ToPathHeader(void) const
+	?ToTextL@CMSRPHeaderBase@@QBEPAVHBufC8@@XZ @ 101 NONAME ; class HBufC8 * CMSRPHeaderBase::ToTextL(void) const
+	?ToTextLC@CMSRPHeaderBase@@QBEPAVHBufC8@@XZ @ 102 NONAME ; class HBufC8 * CMSRPHeaderBase::ToTextLC(void) const
+	?ToTextValueLC@CMSRPHeaderBase@@QBEPAVHBufC8@@XZ @ 103 NONAME ; class HBufC8 * CMSRPHeaderBase::ToTextValueLC(void) const
+	?TotalLength@CMSRPByteRangeHeader@@QBEHXZ @ 104 NONAME ; int CMSRPByteRangeHeader::TotalLength(void) const
+	?__DbgTestInvariant@CMSRPStatusHeader@@QBEXXZ @ 105 NONAME ; void CMSRPStatusHeader::__DbgTestInvariant(void) const
 

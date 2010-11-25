@@ -66,8 +66,12 @@ class CMSRPConnection : public CBase, public MMSRPConnection, public MMSRPConnec
 
         virtual void ReleaseConnection(MMSRPConnectionObserver& aSubsession);
                                     
-        virtual void SendL( MMSRPWriterObserver& aMsg /*, MMSRPConnectionObserver& aSubsession*/  );
-                                                             
+        void SendL( MMSRPWriterObserver& aMsg );
+   
+        void ContinueSendingL( MMSRPWriterObserver& aMsg );
+   
+        void CancelSendingL( const MMSRPWriterObserver* aMsg );
+   
         virtual void ConnectionEstablishedL( TInt aNewState, RSocket* aSocket, TInt aStatus );
 
 		virtual TInt getConnectionState();
@@ -76,12 +80,13 @@ class CMSRPConnection : public CBase, public MMSRPConnection, public MMSRPConnec
         
         //virtual void ConnectionEstablishedL( TInt aNewState, RSocket* aDataSocket, TInt aStatus );
         
-        //from MMSRPReaderObserver
+	public: //from MMSRPReaderObserver
 
         virtual void ReadStatusL(RMsrpBuf& aBuf, TInt aStatus);
         
-        //from MMSRPParserObserver
-        virtual void ParseStatusL (CMSRPMessageHandler* aMsg, TInt aStatus);
+   public: //from MMSRPParserObserver
+        TInt ParseStatusL ( CMSRPMessageHandler* aMsg, TInt aStatus );
+        void ReportReceiveprogressL(  CMSRPMessageHandler* aMsg ); 
                                         
         //from MMSRPWriterErrorObserver
         virtual void WriteSocketError(TInt aError);

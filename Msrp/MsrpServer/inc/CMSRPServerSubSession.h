@@ -76,6 +76,8 @@ class CQueue : public CBase
 		inline TBool Queue(T& element);
 		inline T* DeQueue();
 		inline TBool isEmpty();
+        inline T* FindElement( T* aMatch );
+        inline T* FindElement( TDesC8& aMessageId );
 
 		inline T* getHead();
 		
@@ -145,6 +147,50 @@ T* CQueue<T>::getHead()
 	}
 
 template <class T>
+T* CQueue<T>::FindElement( T* aMatch )
+    {
+    if( !iList.IsEmpty() )
+        {
+        TSglQueIter<T> iterator(CQueue<T>::iList);
+        iterator.SetToFirst();
+        T* matchingOwner;
+        
+        while( ( matchingOwner = iterator++ ) )
+            {
+            if( matchingOwner == aMatch )
+                {
+                return matchingOwner;
+                }
+            }
+        }
+    return NULL;
+    }
+
+template <class T>
+T* CQueue<T>::FindElement( TDesC8& aMessageId )
+    {
+    if( !iList.IsEmpty() )
+        {
+        TSglQueIter<T> iterator(CQueue<T>::iList);
+        iterator.SetToFirst();
+        T* currentElement;
+        
+        while( ( currentElement = iterator++ ) )
+            {
+            HBufC8* messageId = currentElement->MessageIdLC();
+            if ( *messageId == aMessageId )
+                {
+                CleanupStack::PopAndDestroy( ); // messageId
+                return currentElement;
+                }
+            CleanupStack::PopAndDestroy( ); // messageId
+            }
+        }
+        
+    return NULL;
+    }
+
+template <class T>
 T* CQueue<T>::getMatch(T* aMatch)	
 	{
 		aMatch;
@@ -194,10 +240,13 @@ T*	CQueueMsgHandlers<T>::getMatch(T* aInCommingMsg)
 		
 		while((iMatchingOwner = iterator++))
 			{
-			if(iMatchingOwner->IsOwnerOfResponse(*aInCommingMsg))
-				{
-				return iMatchingOwner;
-				}
+			if ( iMatchingOwner != aInCommingMsg )
+			    {
+                if(iMatchingOwner->IsOwnerOfResponse(*aInCommingMsg))
+                    {
+                    return iMatchingOwner;
+                    }
+                }
 			}
 
 		return NULL;
@@ -219,16 +268,22 @@ public:
 	enum TQueueType
 		{
 		TClientQueue,
-		TInCommingMsgQueue	
+		TInCommingMsgQueue,
+		TCompletedSendQueue,
+        TCompletedIncQueue,
+		TReceiveProgressQueue,
+		TSendProgressQueue
 		};
 	
-    static CMSRPServerSubSession* NewL( CMSRPServerSession& aServerSession, CStateFactory& aStateFactory );
+    static CMSRPServerSubSession* NewL( 
+            CMSRPServerSession& aServerSession, CStateFactory& aStateFactory, const TDesC8& aSessionId );
     
-    static CMSRPServerSubSession* NewLC( CMSRPServerSession& aServerSession, CStateFactory& aStateFactory );
+    static CMSRPServerSubSession* NewLC( 
+            CMSRPServerSession& aServerSession, CStateFactory& aStateFactory, const TDesC8& aSessionId );
        
     virtual ~CMSRPServerSubSession( );
        
-    TBool ServiceL( const RMessage2& aMessage );
+    void ServiceL( const RMessage2& aMessage );
 
 	// From MMSRPConnectionObserver
 	void ConnectionStateL( TInt aNewState, TInt aStatus );
@@ -238,35 +293,33 @@ public:
 	void UnclaimedMessageL( CMSRPMessageHandler* aMsg );
 
 	// From MMSRPMsgObserver
-	void MessageSendCompleteL();
+	void MessageSendCompleteL( CMSRPMessageHandler* aMessageHandler );
 	
 	void MessageResponseSendCompleteL(CMSRPMessageHandler& aMsg);
 	
-	virtual void MessageSendProgressL(TInt aBytesSent, TInt aTotalBytes);
+    void MessageReportSendCompleteL( CMSRPMessageHandler& aMsg );
 	
-	virtual void MessageReceiveProgressL(TInt aBytesSent, TInt aTotalBytes);
+	void MessageSendProgressL( CMSRPMessageHandler* aMessageHandler );
+	
+	void MessageReceiveProgressL( CMSRPMessageHandler* aMessageHandler );
+	
+	void MessageCancelledL( );
 		
 	void WriterError();
-     
-	CMSRPMessageHandler* ReceiveFileMsgHandler();
-	
-	void NotifyFileReceiveResultToClientL(CMSRPMessageHandler *msgHandler);
-	
-	void NotifyFileSendResultToClientL(CMSRPMessageHandler *msgHandler);
 	
 private:
     CMSRPServerSession& iServerSession;
     CMSRPServerSubSession( CMSRPServerSession& aServerSession, CStateFactory &aStateFactory);
-    void ConstructL();
+    void ConstructL( const TDesC8& aSessionId );
 
 	// ProcessEventL shall only take a event. The data associated with the event can be a 
 	// RMessage(Client to Server events), CSendBuffer(buffer being send out by connection manager), 
 	// CMSRPMessage(received message) or other such data.
 	// The associated data is stored in the context and retrieved by the relevant state when needed.
 	
-	TBool CMSRPServerSubSession::ProcessEventL( TMSRPFSMEvent aEvent);
+	void CMSRPServerSubSession::ProcessEventL( TMSRPFSMEvent aEvent);
         
-    HBufC8* CreateSubSessionIDL( );
+	//HBufC8* CreateSubSessionIDL( );
     
     void HandleLocalPathRequestL( const RMessage2& aMessage );
        
@@ -296,10 +349,11 @@ private:
 
 	// Utility functions.
 
-	TBool sendResultToClientL(CMSRPMessageHandler *incommingMsgHandler);
+	void sendResultToClientL(CMSRPMessageHandler *incommingMsgHandler);
 	TBool sendMsgToClientL(CMSRPMessageHandler *incommingMsgHandler);
-	TBool SendProgressToClientL(CMSRPMessageHandler *msgHandler);
-	TBool ReceiveProgressToClientL(CMSRPMessageHandler *msgHandler);
+    TBool sendReportToClientL( CMSRPMessageHandler *incommingMsgHandler );
+	void SendProgressToClientL( CMSRPMessageHandler* aMessageHandler );
+	void ReceiveProgressToClientL( CMSRPMessageHandler* aMessageHandler );
 
 	void ReadSendDataPckgL();
 
@@ -312,7 +366,13 @@ private:
 
 	void QueueLog();
 
-	TBool checkMessageForSelfL(CMSRPMessageHandler *aMsgHandler);
+    /**
+    * Checks that incoming messages session id is a correct one for
+    * this session
+    * @param aMsgHandler message handler containing the incoming message
+    * @return true if message belongs to this session, false if not
+    */
+    TBool CheckMessageSessionIdL( CMSRPMessageHandler *aMsgHandler );
 	TBool matchSessionIDL(const CMSRPHeaderBase *aPathHeader, TBool local = TRUE);
 	TPtrC8 extractSessionID(const TDesC8& aPathBuffer);
 
@@ -351,12 +411,17 @@ private:
 	const RMessage2* iClientMessage;
 	CMSRPMessageHandler* iReceivedMsg;
 	CMSRPMessageHandler* iReceivedResp;
+    CMSRPMessageHandler* iReceivedReport;
 	CMSRPMessageHandler* iReceiveFileMsgHdler;
-	TBool iFileShare; //is previous state file share
 	TBool iSendCompleteNotify; //
 	TBool iReceiveCompleteNotify;
-	TInt iBytesTransferred;
-	TInt iTotalBytes;
+	TBool iFileShareCancelled;
+	
+	// used for progress reports, temporary, not owned
+    CMSRPMessageHandler* iReceiveProgressMsg;
+    
+    // used for progress reports, temporary, not owned
+    CMSRPMessageHandler* iSendProgressMsg;
 	
 	// Client Listners waiting to be completed.
 	
@@ -377,19 +442,28 @@ private:
 	// OutGoingMessage queue where it waits for a response to arrive.
 	CMSRPMessageHandler *iCurrentMsgHandler;	
 
-	// Queues.	
+	// Message queues	
 	CQueueMsgHandlers<CMSRPMessageHandler> iOutMsgQ;
 	CQueueMsgHandlers<CMSRPMessageHandler> iInCommingMsgQ;
 	CQueueMsgHandlers<CMSRPMessageHandler> iPendingSendMsgQ;
-	CQueueMsgHandlers<CMSRPMessageHandler> iPendingForDeletionQ;		
-
+	CQueueMsgHandlers<CMSRPMessageHandler> iPendingForDeletionQ;	
+    CQueueMsgHandlers< CMSRPMessageHandler > iPendingDataSendCompleteQ;    
+    CQueueMsgHandlers< CMSRPMessageHandler > iPendingDataIncCompleteQ;    
+    
+    // progress report queues
+    CQueueMsgHandlers< CMSRPMessageHandler > iPendingSendProgressQ;    
+    CQueueMsgHandlers< CMSRPMessageHandler > iPendingReceiveProgressQ;    
+	
+	// This queue holds the instance of messages currently being received
+    CQueueMsgHandlers< CMSRPMessageHandler > iCurrentlyReceivingMsgQ;    
+	
+	TBool iSendProgressReports;
+	
 	friend class TStateBase;
 	friend class TStateIdle; 
 	friend class TStateConnecting; 
 	friend class TStateActive;
-	friend class TStateActiveSend;
 	friend class TStateWaitForClient; 
-	friend class TStateFileShare;
 	friend class TStateError; // Not a very good thing !! Need change.
 
 	#ifdef __UT_TSTATEFACTORY_H__

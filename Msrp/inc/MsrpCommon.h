@@ -38,7 +38,7 @@ const TInt KTimeOutInSeconds( 30 );
 const TInt KSecondinMicroseconds( 1000000 );
 
 const TInt KListenTimeoutInSeconds( 30 );
-const TInt KBufSize = 4096;
+const TInt KBufSize = 16384;
 const TInt KThreshold = 1024;
 
 #endif
@@ -97,6 +97,7 @@ const TInt KMaxLengthOfUrl = 255;
 const TInt KMaxLengthOfHost = 255;
 const TInt KMaxLengthOfSessionId = 255;
 const TInt KSizeOfProgramPath = 50;
+const TInt KBufExpandSize = 256;
 
 // maximum length of incoming message buffer (for externalizing CMSRPMessage
 // class
@@ -167,8 +168,24 @@ const TInt KUnknownRange = -1;
 #endif // END MACROS
 
 // ENUMS
-// MSRP API IPC request definitions
 
+/** Error codes returned to the client */
+enum TMSRPErrorCodes
+    {
+    EUnknownCode = 1,
+    EAllOk = 200,
+    EUnintelligibleRequest = 400,
+    EActionNotAllowed = 403,
+    ETimeout = 408,
+    EStopSending = 413,
+    EMimeNotUnderstood = 415,
+    EParameterOutOfBounds = 423,
+    ESessionDoesNotExist = 481,
+    EUnknownRequestMethod = 501,
+    ESessionAlreadyBound = 506
+    };
+
+// MSRP API IPC request definitions
 enum TMSRPRequests
 	{
     EMSRPCreateSubSession,
@@ -179,11 +196,11 @@ enum TMSRPRequests
     EMSRPListenMessages,
     EMSRPListenSendResult,
     EMSRPSendMessage,    
-    EMSRPSendFile,
-    EMSRPReceiveFile,
 	EMSRPCancelSending,
 	EMSRPCancelReceiving,
 	EMSRPCancelSendRespListening,
+	EMSRPProcessQueuedRequests,
+	EMSRPProgressReports,
 	EMSRPReserved
 	};
 
@@ -215,22 +232,10 @@ enum TReportStatus
     EPartial
     };
 
-enum TErrorCode
-    {
-    EUndefined = -1,
-    ENoError = 0,
-    ENetworkTimeout = 1,
-    EUnrecoverableError = 2,    
-    ELocalTimeout = 3,
-    EInvalidAction = 4
-    };
-
-
 // Local host name and session id
 typedef struct TLocalPathMSRPData
     {
     TBuf8< KMaxLengthOfHost> iLocalHost;
-    TBuf8< KMaxLengthOfSessionId > iSessionID;
     } TLocalPathMSRPData;
     
 
@@ -250,6 +255,7 @@ typedef struct TListenMSRPData
 	TUint iRemotePort;
 	TBuf8< KMaxLengthOfSessionId > iRemoteSessionID;
 	TBuf8< KMaxLengthOfIncomingMessageExt > iExtMessageBuffer;
+    TBuf8< KMaxLengthOfSessionId > iMessageId;
 	TBool iIsMessage;
 	TBool iIsProgress;
     TInt iBytesRecvd;

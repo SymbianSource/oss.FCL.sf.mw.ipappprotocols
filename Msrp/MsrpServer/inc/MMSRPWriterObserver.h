@@ -36,7 +36,9 @@ class MMSRPWriterObserver
         EUndefined = 0,
 	    EPending, //Sending incomplete. Same observer is called again immediately
 	    EComplete, //No more to send. A new observer is called, this is removed 
-	    EInterrupted //There is more to send. Same observer called later
+	    EInterrupted, //There is more to send. Same observer called later
+	    EWaitingForResponse,
+	    ESendingReport // sending report when requested
 	    };	
 	
 	    /**
@@ -45,7 +47,7 @@ class MMSRPWriterObserver
 	     * @param aInterrupt Signals whether other msgs are queued waiting to be sent
 	     * @return KErrNone or system wide eror codes 
 	     */	    
-	    virtual TWriteStatus GetSendBufferL( TPtrC8& aData, TBool aInterrupt ) = 0;
+	    virtual const TDesC8& GetSendBufferL( TWriteStatus& aStatus, TBool aInterrupt ) = 0;
 
 	   /**           
         * Called when the message has been written to the socket

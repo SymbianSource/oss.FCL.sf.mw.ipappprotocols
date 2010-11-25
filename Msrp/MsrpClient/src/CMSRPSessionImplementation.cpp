@@ -24,6 +24,7 @@
 #include "CMSRPIncomingListener.h"
 #include "CMSRPSendResultListener.h"
 #include "CMSRPMessage.h"
+#include "CMSRPReport.h"
 #include "CMSRPToPathHeader.h"
 #include "CMSRPFromPathHeader.h"
 #include "CMSRPMessageIdHeader.h"
@@ -31,6 +32,8 @@
 #include "CMsrpFailureReportHeader.h"
 #include "CMsrpContentTypeHeader.h"
 #include "CMSRPSessionParams.h"
+#include "CMSRPStatusHeader.h"
+#include "CMSRPByteRangeHeader.h"
 
 
 // SYSTEM INCLUDES
@@ -43,27 +46,32 @@ const TInt KMsrpFixedLength=19; // fixed length of a uri
 
 //  Member Functions
 
-CMSRPSessionImplementation* CMSRPSessionImplementation::NewL( RMSRP& aRMSRP,
-                                                              MMSRPSessionObserver& aObserver,
-                                                              const TUint aIapId )
+CMSRPSessionImplementation* CMSRPSessionImplementation::NewL( 
+    RMSRP& aRMSRP,
+    MMSRPSessionObserver& aObserver,
+    const TUint aIapId,
+    const TDesC8& aSessionId )
 	{
 	MSRPLOG("CMSRPSessionImplementation::NewL");
-	CMSRPSessionImplementation *self = CMSRPSessionImplementation::NewLC( aRMSRP, aObserver, aIapId );
+	CMSRPSessionImplementation *self = CMSRPSessionImplementation::NewLC( 
+	        aRMSRP, aObserver, aIapId, aSessionId );
 
 	CleanupStack::Pop(self);
 	return self;
 	}
 
 
-CMSRPSessionImplementation* CMSRPSessionImplementation::NewLC( RMSRP& aRMSRP,
-                                                               MMSRPSessionObserver& aObserver,
-                                                               const TUint aIapId )
+CMSRPSessionImplementation* CMSRPSessionImplementation::NewLC( 
+    RMSRP& aRMSRP,
+    MMSRPSessionObserver& aObserver,
+    const TUint aIapId,
+    const TDesC8& aSessionId )
     {
     MSRPLOG("CMSRPSessionImplementation::NewLC");
     CMSRPSessionImplementation *self = new (ELeave) CMSRPSessionImplementation( aRMSRP, aObserver );                                                            
 
     CleanupStack::PushL(self);                                                       
-    self->ConstructL( aIapId );
+    self->ConstructL( aIapId, aSessionId );
     return self;
     }
 
@@ -78,45 +86,41 @@ CMSRPSessionImplementation::CMSRPSessionImplementation( RMSRP& aRMSRP,
 	}
 
 
-void CMSRPSessionImplementation::ConstructL( const TUint aIapId )
+void CMSRPSessionImplementation::ConstructL( const TUint aIapId, const TDesC8& aSessionId )
 	{
 	MSRPLOG("CMSRPSessionImplementation::ConstructL enter");
 	
 	MSRPStrings::OpenL();
 	iMSRPSession = new ( ELeave ) RMSRPSession();
 	    
-	User::LeaveIfError(iMSRPSession->CreateServerSubSession( iRMSRP, aIapId ) );
+	User::LeaveIfError(iMSRPSession->CreateServerSubSession( iRMSRP, aIapId, aSessionId ) );
 	MSRPLOG("Sub session opened successfully!");
 		
-	RBuf8 sessionID;
-	sessionID.CreateL( KMaxLengthOfSessionId );
-	CleanupClosePushL( sessionID );
-	
 	RBuf8 localHost;
 	localHost.CreateL( KMaxLengthOfHost );
 	CleanupClosePushL( localHost );
 	
-	iMSRPSession->GetLocalPathL( localHost, sessionID );
+	iMSRPSession->GetLocalPathL( localHost );
 	
-	iLocalMsrpPath.CreateL( KMsrpUriScheme, KMsrpFixedLength + localHost.Length() + sessionID.Length() );
+	iLocalMsrpPath.CreateL( KMsrpUriScheme, KMsrpFixedLength + localHost.Length() + aSessionId.Length() );
 		
 	iLocalMsrpPath.Append( localHost );
 	iLocalMsrpPath.Append( KColon );
 	iLocalMsrpPath.AppendNum( KMsrpPort );
 	iLocalMsrpPath.Append( KForwardSlash );   
-	iLocalMsrpPath.Append( sessionID );
+	iLocalMsrpPath.Append( aSessionId );
 	iLocalMsrpPath.Append( KSemicolon );
 	iLocalMsrpPath.Append( KTransport );
 	
 	
 	iConnectionListener = CMSRPConnectionListener::NewL(
 	        *this, *iMSRPSession );
-	iIncomingListener = CMSRPIncomingListener::NewL(
-	        *this, *iMSRPSession );
 	iSendResultListener = CMSRPSendResultListener::NewL(
-	        *this, *iMSRPSession, sessionID );
+	        *this, *iMSRPSession, aSessionId );
+	iIncomingListener = CMSRPIncomingListener::NewL(
+            *this, *iMSRPSession );
 	
-	CleanupStack::PopAndDestroy(2); //sessionID and localHost
+	CleanupStack::PopAndDestroy( ); // localHost
 	MSRPLOG("CMSRPSessionImplementation::ConstructL exit");
 	}
 
@@ -124,7 +128,7 @@ void CMSRPSessionImplementation::ConstructL( const TUint aIapId )
 CMSRPSessionImplementation::~CMSRPSessionImplementation()
     {
     MSRPLOG("CMSRPSessionImplementation::Dtor Entered");
-        
+    
     MSRPStrings::Close();
     iLocalMsrpPath.Close();
     iRemoteMsrpPath.Close();
@@ -217,8 +221,7 @@ void CMSRPSessionImplementation::ListenL( const TDesC8& aRemoteMsrpPath )
 
 
 void CMSRPSessionImplementation::ConnectionEstablishedL( TInt aStatus )
-    {
-    
+    {    
     MSRPLOG("CMSRPSessionImplementation::ConnectionEstablished enter");
     
     iSessionObserver.ConnectStatus(aStatus);
@@ -228,7 +231,7 @@ void CMSRPSessionImplementation::ConnectionEstablishedL( TInt aStatus )
         iIncomingListener->ListenMessages( );
 
         // start listening when message has been sent,  to responses
-        iSendResultListener->ListenSendResultL( );                
+        iSendResultListener->ListenSendResultL( );        
         }
     
     MSRPLOG("CMSRPSessionImplementation::ConnectionEstablished exit");
@@ -248,24 +251,60 @@ void CMSRPSessionImplementation::HandleIncomingMessageL(
         CMSRPMessage* message = NULL;
         message = CMSRPMessage::InternalizeL( readStream );
         CleanupStack::PushL(message);
+        MSRPLOG2( "CMSRPSessionImplementation::HandleIncomingMessageL, content = %d", message->IsContent()  )
+        MSRPLOG2( "CMSRPSessionImplementation::HandleIncomingMessageL, FN = %S", &message->GetFileName()  )
         
-        HBufC8* messageContent = NULL;
-        if(message->IsContent())
+        HBufC8* contentType = NULL;
+        if( message->IsContent() )
             {
-            messageContent = HBufC8::NewL(message->Content().Length());
-            CleanupStack::PushL( messageContent );
-            *messageContent = message->Content();
+            HBufC8* messageContent = NULL;
+            if ( message->Content().Length() )
+                {
+                messageContent = HBufC8::NewL(message->Content().Length());
+                CleanupStack::PushL( messageContent );
+                *messageContent = message->Content();
+                }
+            else
+                {
+                messageContent = HBufC8::NewL(KNullDesC8().Length());
+                CleanupStack::PushL( messageContent );
+                *messageContent = KNullDesC8();
+                }
+            
+            if( message->ContentTypeHeader() )
+                {
+                contentType = message->ContentTypeHeader()->ToTextValueLC();
+                CleanupStack::Pop();
+                }
+
+            iSessionObserver.IncomingMessageInBuffer( messageContent, contentType, aStatus );
+            CleanupStack::Pop( messageContent );
             }
         else
             {
-            messageContent = HBufC8::NewL(KNullDesC8().Length());
-            CleanupStack::PushL( messageContent );
-            *messageContent = KNullDesC8();
+            if( message->ContentTypeHeader() )
+                {
+                contentType = message->ContentTypeHeader()->ToTextValueLC();
+                CleanupStack::Pop();
+                }
+            iSessionObserver.IncomingMessageInFile( message->GetFileName(), contentType, aStatus );
             }
+        CleanupStack::PopAndDestroy( message );
+        }
+    else if ( CMSRPReport::IsReport( aIncomingMessage ) )
+        {
+        CMSRPReport* report = CMSRPReport::InternalizeL( readStream );
+        MSRPLOG2( "CMSRPSessionImplementation::HandleIncomingMessageL, status = %d", report->StatusHeader()->StatusCode() )
+        MSRPLOG2( "CMSRPSessionImplementation::HandleIncomingMessageL, startpos = %d", report->ByteRangeHeader()->StartPosition() )
+        MSRPLOG2( "CMSRPSessionImplementation::HandleIncomingMessageL, endpos = %d", report->ByteRangeHeader()->EndPosition() )
+        MSRPLOG2( "CMSRPSessionImplementation::HandleIncomingMessageL, total = %d", report->ByteRangeHeader()->TotalLength() )
 
-        iSessionObserver.IncomingMessage( messageContent, aStatus );
-        CleanupStack::Pop( messageContent );
-        CleanupStack::PopAndDestroy(message);
+        iSessionObserver.IncomingReport(
+            report->StatusHeader()->StatusCode(),
+            report->ByteRangeHeader()->StartPosition(),
+            report->ByteRangeHeader()->EndPosition(),
+            report->ByteRangeHeader()->TotalLength() );
+        delete report;
         }
     else
         {
@@ -275,15 +314,24 @@ void CMSRPSessionImplementation::HandleIncomingMessageL(
     MSRPLOG( "CMSRPSessionImplementation::HandleIncomingMessageL exit" )
     }
 
-void CMSRPSessionImplementation::ReceiveProgress(TInt aBytesReceived, TInt aTotalBytes)
+
+void CMSRPSessionImplementation::ReceiveProgress( 
+    const TDesC8& aMessageId, 
+    TInt aBytesReceived, 
+    TInt aTotalBytes )
     {
-    iSessionObserver.FileReceiveProgress(aBytesReceived, aTotalBytes);
+    iSessionObserver.ReceiveProgress( aMessageId, aBytesReceived, aTotalBytes);
     }
 
-void CMSRPSessionImplementation::SendProgress(TInt aBytesSent, TInt aTotalBytes)
+
+void CMSRPSessionImplementation::SendProgress( 
+    const TDesC8& aMessageId,
+    TInt aBytesSent, 
+    TInt aTotalBytes )
     {
-    iSessionObserver.FileSendProgress(aBytesSent, aTotalBytes);    
+    iSessionObserver.SendProgress( aMessageId, aBytesSent, aTotalBytes);    
     }
+
 
 CMSRPMessage* CMSRPSessionImplementation::CreateMsrpMessageL(
     const TDesC8& aMessage, const TDesC8& aToPath,
@@ -345,14 +393,14 @@ CMSRPMessage* CMSRPSessionImplementation::CreateMsrpMessageL(
         CMSRPContentTypeHeader* contentType = CMSRPContentTypeHeader::NewL( aMimeType );
         msrpMessage->SetContentTypeHeader( contentType );
         
-        if(aMessage.Length())
+        if( aMessage.Length() )
             {
             // content of the message
             HBufC8* contentOfMessage = HBufC8::NewL( aMessage.Length() );
             *contentOfMessage = aMessage;
 
             msrpMessage->SetContent( contentOfMessage );
-            }        
+            }
         }
     
     CleanupStack::Pop(msrpMessage);
@@ -373,7 +421,7 @@ void CMSRPSessionImplementation::SendMessageL( CMSRPMessage* aMessage )
         User::Leave( KErrArgument );
         }
 
-    CBufSeg* buf1 = CBufSeg::NewL( 256 ); // expandsize 256
+    CBufSeg* buf1 = CBufSeg::NewL( KBufExpandSize );
     CleanupStack::PushL( buf1 );
     RBufWriteStream writeStream( *buf1 );
     CleanupClosePushL( writeStream );
@@ -405,11 +453,6 @@ HBufC8* CMSRPSessionImplementation::SendBufferL(
     {
     MSRPLOG( "CMSRPSessionImplementation::SendBufferL enter" )
     
-    if(aMessage.Length() && !aMimeType.Length())
-        {
-        User::Leave( KErrArgument );
-        }
-    
     CMSRPMessage* msrpMessage = CreateMsrpMessageL(
                                 aMessage, iRemoteMsrpPath, iLocalMsrpPath, aMimeType );
     CleanupStack::PushL( msrpMessage );
@@ -429,71 +472,62 @@ void CMSRPSessionImplementation::CancelSendingL( TDesC8& aMessageId )
     User::LeaveIfError( iMSRPSession->CancelSending( aMessageId ) );
     }
 
+void CMSRPSessionImplementation::CancelReceivingL( TDesC8& aMessageId )
+    {
+    MSRPLOG( "CMSRPSessionImplementation::CancelReceivingL " )
+    // then let's send a message to server to cancel receiving
+    User::LeaveIfError( iMSRPSession->CancelReceiving( aMessageId ) );
+    }
 
 void CMSRPSessionImplementation::SendStatusL( TInt aStatus, const TDesC8& aMessageid )
     {
     MSRPLOG2( "CMSRPSessionImplementation::SendStatus = %d", aStatus )
-    if(isReceiveFile || isSendFile )
+    for ( TInt i = 0; i < iSentMessages.Count(); i++ )
         {
-        if(isReceiveFile)
+        HBufC8* messageid = iSentMessages[ i ]->MessageIdHeader()->ToTextValueLC();
+        if ( *messageid == aMessageid )
             {
-            iSessionObserver.ReceiveFileNotification( aStatus );
-           
-            }
-        if(isSendFile)
-            {
-            iSessionObserver.SendFileNotification( aStatus );
-            }
-        }
-     else
-        {
-        for ( TInt i = 0; i < iSentMessages.Count(); i++ )
-            {
-            HBufC8* messageid = iSentMessages[ i ]->MessageIdHeader()->ToTextValueLC();
-            if ( *messageid == aMessageid )
-                {
-                // match
-                delete iSentMessages[ i ];
-                iSentMessages.Remove( i );
-                iSessionObserver.SendResult( aStatus, aMessageid );
-                CleanupStack::PopAndDestroy(messageid); // messageid from above
-                break;
-                }
+            // match
+            delete iSentMessages[ i ];
+            iSentMessages.Remove( i );
+            iSessionObserver.SendResult( aStatus, aMessageid );
             CleanupStack::PopAndDestroy(messageid); // messageid from above
+            break;
             }
+        CleanupStack::PopAndDestroy(messageid); // messageid from above
         }
-
+        
     MSRPLOG( "CMSRPSessionImplementation::SendStatus exit" )
     }
 
 void CMSRPSessionImplementation::HandleConnectionErrors( TInt aErrorStatus )
     {
     MSRPLOG2( "CMSRPSessionImplementation::HandleConnectionErrors Error = %d", aErrorStatus )
-    iSessionObserver.ListenPortFailure(aErrorStatus);  
-    
+    iSessionObserver.ConnectStatus(aErrorStatus);      
     }
 
-void CMSRPSessionImplementation::SendFileL(const TFileName& aFileName, const TDesC8& aMimeType)
+
+HBufC8* CMSRPSessionImplementation::SendFileL(const TFileName& aFileName, const TDesC8& aMimeType)
     {
-    MSRPLOG( "CMSRPSessionImplementation::SendFileL enter" );
-   
+    MSRPLOG( "CMSRPSessionImplementation::SendFileL enter" );   
+    
     if(aFileName.Length() && !aMimeType.Length())
         {
         User::Leave( KErrArgument );
         }
-     isSendFile = ETrue;
-    CMSRPMessage* iFile = SetFileParamsL(aFileName,iRemoteMsrpPath, iLocalMsrpPath,aMimeType );
+    CMSRPMessage* file = SetFileParamsL( aFileName,iRemoteMsrpPath, iLocalMsrpPath,aMimeType );
+    CleanupStack::PushL( file );
     
-     //Set progress indication
-    iFile->SetNotifyProgress(iProgress);
-     
-    CBufSeg* buf = CBufSeg::NewL( 100 ); // expandsize to 100 
+    iSentMessages.AppendL( file );
+    CleanupStack::Pop(); // file
+    
+    CBufSeg* buf = CBufSeg::NewL( KBufExpandSize ); 
     
     //todo need to check what's optimal value here
     CleanupStack::PushL( buf );
     RBufWriteStream writeStr( *buf );
     CleanupClosePushL( writeStr );
-    iFile->ExternalizeL( writeStr );
+    file->ExternalizeL( writeStr );
     writeStr.CommitL();
     
     // MSRP message externalized to buffer, now let's move it to flat buffer
@@ -504,130 +538,93 @@ void CMSRPSessionImplementation::SendFileL(const TFileName& aFileName, const TDe
         }
 
     buf->Read( 0, iExtMessageBuffer, buf->Size() );
+    HBufC8* messageId = file->MessageIdHeader()->ToTextValueLC();
+    CleanupStack::Pop(); // messageid
     CleanupStack::PopAndDestroy( 2 ); // buf, writestream
-   
-    delete iFile;
-	iFile = NULL;
+    CleanupStack::PushL( messageId );
+       
     // send the filename
-   User::LeaveIfError( iMSRPSession->SendFileL( iExtMessageBuffer ) );
-   MSRPLOG( "CMSRPSessionImplementation::SendFileL exit" ); 
-    }  
+    User::LeaveIfError( iMSRPSession->SendMessage( iExtMessageBuffer ) );
+    CleanupStack::Pop( messageId ); 
     
-void CMSRPSessionImplementation::ReceiveFileL(const TFileName& aFileName,const TInt aFileSize, const TDesC8& aMimeType)
-    {
-    MSRPLOG( "CMSRPSessionImplementation::ReceiveFileL enter" );
-    isReceiveFile = ETrue;
-    if(aFileName.Length() && !aMimeType.Length())
-            {
-            User::Leave( KErrArgument );
-            }
-    CMSRPMessage* iFile = SetFileParamsL(aFileName,iRemoteMsrpPath, iLocalMsrpPath,aMimeType );
-       
-       //Set FileSize
-       iFile->SetFileSize(aFileSize);
-       
-       //Set progress indication
-       iFile->SetNotifyProgress(iProgress);
-        
-       CBufSeg* buf = CBufSeg::NewL( 100 ); // expandsize to 100 
-       
-       //todo need to check what's optimal value here
-       CleanupStack::PushL( buf );
-       RBufWriteStream writeStr( *buf );
-       CleanupClosePushL( writeStr );
-       iFile->ExternalizeL( writeStr );
-       writeStr.CommitL();
-       
-       // MSRP message externalized to buffer, now let's move it to flat buffer
-       if ( buf->Size() > KMaxLengthOfIncomingMessageExt )
-           {
-           // invalid message size
-           User::Leave( KErrArgument );
-           }
-
-       buf->Read( 0, iExtMessageBuffer, buf->Size() );
-       CleanupStack::PopAndDestroy( 2 ); // buf, writestream
-       
-       delete iFile;
-	   iFile = NULL;
-          // send the filename
-          User::LeaveIfError( iMSRPSession->ReceiveFileL( iExtMessageBuffer ) );
-       
-       
-    }
+    MSRPLOG( "CMSRPSessionImplementation::SendFileL exit" );
+    return messageId;
+    }  
 
 CMSRPMessage* CMSRPSessionImplementation::SetFileParamsL(const TFileName& aFileName,const TDesC8& aToPath,
                                                         const TDesC8& aFromPath, 
                                                         const TDesC8& aMimeType )
     {
-      MSRPLOG( "CMSRPSessionImplementation::SetFileParamsL enter" );
+    MSRPLOG( "CMSRPSessionImplementation::SetFileParamsL enter" );
     
-      CMSRPMessage* msrpMessage = new ( ELeave ) CMSRPMessage();
-      CleanupStack::PushL( msrpMessage );
+    CMSRPMessage* msrpMessage = new ( ELeave ) CMSRPMessage();
+    CleanupStack::PushL( msrpMessage );
     
-      //set filename
-      msrpMessage->SetFileName( aFileName );
+    //set filename
+    msrpMessage->SetFileName( aFileName );
     
-      //set to path
-      CMSRPToPathHeader* toPath = CMSRPToPathHeader::DecodeL( aToPath );
-      msrpMessage->SetToPathHeader( toPath );
-
-      //set from path
-      CMSRPFromPathHeader* fromPath = CMSRPFromPathHeader::DecodeL( aFromPath );
-      msrpMessage->SetFromPathHeader( fromPath );
-
-      //set content type
-      if(aMimeType.Length())
-          {
-          CMSRPContentTypeHeader* contentType = CMSRPContentTypeHeader::NewL( aMimeType );
-          msrpMessage->SetContentTypeHeader( contentType );
-          }
-      
-      //set  message id header
-      TTime now;
-      now.HomeTime();
-      TInt64 seed = now.Int64();
-      // Create a random number as the session ID
-      TInt random = Math::Rand( seed );
-      TBuf8< 100 > idString;
-      idString.AppendNum( random );
-      CMSRPMessageIdHeader* messageIdHeader = CMSRPMessageIdHeader::NewL( idString );
-      msrpMessage->SetMessageIdHeader( messageIdHeader );
+    //set to path
+    CMSRPToPathHeader* toPath = CMSRPToPathHeader::DecodeL( aToPath );
+    msrpMessage->SetToPathHeader( toPath );
+    
+    //set from path
+    CMSRPFromPathHeader* fromPath = CMSRPFromPathHeader::DecodeL( aFromPath );
+    msrpMessage->SetFromPathHeader( fromPath );
+    
+    //set content type
+    if(aMimeType.Length())
+      {
+      CMSRPContentTypeHeader* contentType = CMSRPContentTypeHeader::NewL( aMimeType );
+      msrpMessage->SetContentTypeHeader( contentType );
+      }
+    
+    //set  message id header
+    TTime now;
+    now.HomeTime();
+    TInt64 seed = now.Int64();
+    // Create a random number as the session ID
+    TInt random = Math::Rand( seed );
+    TBuf8< 100 > idString;
+    idString.AppendNum( random );
+    CMSRPMessageIdHeader* messageIdHeader = CMSRPMessageIdHeader::NewL( idString );
+    msrpMessage->SetMessageIdHeader( messageIdHeader );
       
       // success report header
-        if( iSuccessReport != ENo )
+    if( iSuccessReport != ENo )
+        {
+        RStringF string = MSRPStrings::StringF( MSRPStrConsts::EYes );
+        CMSRPSuccessReportHeader* successReportHeader = CMSRPSuccessReportHeader::NewL( string );
+        msrpMessage->SetSuccessReportHeader( successReportHeader );
+        }
+    
+    // failure report header
+    if( iFailureReport != EYes )
+        {
+        RStringF string;
+        CleanupClosePushL(string);
+        if( iFailureReport == ENo )
             {
-            RStringF string = MSRPStrings::StringF( MSRPStrConsts::EYes );
-            CMSRPSuccessReportHeader* successReportHeader = CMSRPSuccessReportHeader::NewL( string );
-            msrpMessage->SetSuccessReportHeader( successReportHeader );
+            string = MSRPStrings::StringF( MSRPStrConsts::ENo );
             }
-        
-        // failure report header
-        if( iFailureReport != EYes )
+        else
             {
-            RStringF string;
-            CleanupClosePushL(string);
-            if( iFailureReport == ENo )
-                {
-                string = MSRPStrings::StringF( MSRPStrConsts::ENo );
-                }
-            else
-                {
-                string = MSRPStrings::StringF( MSRPStrConsts::EPartial );
-                }
-            CMSRPFailureReportHeader* failureReportHeader = CMSRPFailureReportHeader::NewL( string );
-            msrpMessage->SetFailureReportHeader( failureReportHeader );
-            CleanupStack::PopAndDestroy(); // string
+            string = MSRPStrings::StringF( MSRPStrConsts::EPartial );
             }
-      
-          CleanupStack::Pop(msrpMessage); // msrpMessage
+        CMSRPFailureReportHeader* failureReportHeader = CMSRPFailureReportHeader::NewL( string );
+        msrpMessage->SetFailureReportHeader( failureReportHeader );
+        CleanupStack::PopAndDestroy(); // string
+        }
+    
+    CleanupStack::Pop(msrpMessage); // msrpMessage
          
-     MSRPLOG( "CMSRPSessionImplementation::SetFileParamsL enter" );
-	 return msrpMessage;
+    MSRPLOG( "CMSRPSessionImplementation::SetFileParamsL enter" );
+	return msrpMessage;
     }
 
 
 void CMSRPSessionImplementation::NotifyProgress(TBool aFlag)
     {
-     iProgress = aFlag;
+    iMSRPSession->SetProgressReports( aFlag );
     }
+
+// End of file

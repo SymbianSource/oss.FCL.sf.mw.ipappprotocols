@@ -94,7 +94,7 @@ void CMSRPIncomingListener::RunL()
             if(iServerInterface.GetListenProgress())
                 {
                 //handle listen progress
-                iSessionImpl.ReceiveProgress(iServerInterface.GetBytesReceived(), iServerInterface.GetTotalBytesReceived());                       
+                iSessionImpl.ReceiveProgress( iServerInterface.ListenMessageId(), iServerInterface.GetBytesReceived(), iServerInterface.GetTotalBytesReceived());                       
                 }
             else
                 {
@@ -120,7 +120,7 @@ void CMSRPIncomingListener::DoCancel()
     {
     if ( IsActive() )
         {
-        iServerInterface.CancelReceiving();
+        TBuf8<1> empty; // cancel all
+        iServerInterface.CancelReceiving( empty );
         }
-   
     }

@@ -25,6 +25,7 @@
 #include "MMSRPWriterObserver.h"
 #include "CMSRPMessage.h"
 #include "CMSRPResponse.h"
+#include "CMSRPReport.h"
 #include "CMSRPByteRangeHeader.h"
 #include "CMSRPToPathHeader.h"
 #include "CMSRPFromPathHeader.h"
@@ -37,6 +38,7 @@
 #include "TMSRPUtil.h"
 #include "MMSRPConnection.h"
 #include "MMSRPMessageObserver.h"
+#include "CMSRPStatusHeader.h"
 
 // Constants
 const TInt KEndlineConstLength = 10;
@@ -102,6 +104,10 @@ void CMSRPMessageHandler::ConstructL( const TDesC8& aMessage )
             iContentPtr.Set(iMessage->Content());
             }
         }    
+    else if ( CMSRPReport::IsReport( aMessage ) )
+        {
+        iReport = CMSRPReport::InternalizeL( readStream );
+        }
     else
         {
         User::Leave( KErrArgument );
@@ -110,6 +116,8 @@ void CMSRPMessageHandler::ConstructL( const TDesC8& aMessage )
     iBuffer.CreateL( KMaxBufferSize );
     iState = EIdle;
     MSRPStrings::OpenL();
+    
+    iFs.Connect();
     MSRPLOG( "CMSRPMessageHandler::ConstructL exit" )
     }
 
@@ -128,7 +136,7 @@ void CMSRPMessageHandler::ConstructL( TMSRPMessageType aMessageType )
     else if( aMessageType == EMSRPReport )
         {
         // Since Reports are not supported now.. jus create a message class
-        iMessage = new ( ELeave ) CMSRPMessage();            
+        iReport = new ( ELeave ) CMSRPReport();            
         }
     else
         {
@@ -140,6 +148,7 @@ void CMSRPMessageHandler::ConstructL( TMSRPMessageType aMessageType )
     iBuffer.CreateL( KSmallBuffer );
     iState = EIdle;    
     MSRPStrings::OpenL();
+    iFs.Connect();
     MSRPLOG( "CMSRPMessageHandler::ConstructL exit" )
     }
 
@@ -164,15 +173,16 @@ CMSRPMessageHandler::CMSRPMessageHandler( )
 //
 CMSRPMessageHandler::~CMSRPMessageHandler( )
     {
+    MSRPLOG2( "-> CMSRPMessageHandler::~CMSRPMessageHandler = %d", this )
     delete iMessage;
     delete iResponse;
     delete iFileBuffer;
+    iSentChunks.ResetAndDestroy();
+    iSentChunks.Close();
     iBuffer.Close();
     MSRPStrings::Close();
-    iChunkList.ResetAndDestroy();
-    iChunkList.Close();
-    //iFile.Flush();
     iFile.Close();
+    MSRPLOG( "<- CMSRPMessageHandler::~CMSRPMessageHandler" )
     }
 
 
@@ -183,6 +193,10 @@ void CMSRPMessageHandler::AddHeaderL( TMsrpHeaderType aHeaderType, TPtrC8& aHead
     if( iResponse )
         {
         messageBase = iResponse;
+        }
+    else if ( iReport )
+        {
+        messageBase = iReport;
         }
     else
         {
@@ -264,8 +278,11 @@ void CMSRPMessageHandler::AddHeaderL( TMsrpHeaderType aHeaderType, TPtrC8& aHead
             }                
         case EStatus:        
             {
+            TInt statusValue = TMSRPUtil::ConvertToNumber( aHeaderValue );
+            messageBase->SetStatusHeader( CMSRPStatusHeader::NewL( statusValue ) );
             break; // required for reports only. Not handled now
             }              
+            
         default:             
             {
             break;
@@ -277,29 +294,45 @@ void CMSRPMessageHandler::AddHeaderL( TMsrpHeaderType aHeaderType, TPtrC8& aHead
     }
 
     
-void CMSRPMessageHandler::AddContentL( TPtrC8& aContent )
+void CMSRPMessageHandler::AddContentL( TPtrC8& aContent, TBool aByteRangeFound )
     {
-    MSRPLOG( "CMSRPMessageHandler::AddContentL enter" )
+    MSRPLOG2( "CMSRPMessageHandler::AddContentL enter, instance = %d", this )
     if( iMessage )
         {
-        if( iBuffer.Length() + aContent.Length() > iBuffer.MaxLength() )
+        if ( aByteRangeFound )
             {
-            iBuffer.ReAllocL(iBuffer.Length() + aContent.Length());
-            iBuffer.Append(aContent);
+            if( iBuffer.Length() + aContent.Length() > iBuffer.MaxLength() )
+                {
+                HBufC8* combined = HBufC8::NewLC( iBuffer.Length() + aContent.Length() );
+                TPtr8 ptr = combined->Des();
+                ptr = iBuffer;
+                ptr.Append( aContent );
+                // must write to file
+                WriteMessageToFileL( ptr );
+                CleanupStack::PopAndDestroy( ); // combined
+                iBuffer.Zero();
+                }
+            else
+                {
+                iBuffer.Append( aContent );
+                iCurrentNumberOfBytes = iBuffer.Length();
+                }
             }
         else
             {
-            iBuffer.Append(aContent);
+            AppendMessageToFileL( aContent );
             }
         }    
     MSRPLOG( "CMSRPMessageHandler::AddContentL exit" )
     }
 
 
-void CMSRPMessageHandler::SetTransactionId( TPtrC8& aTransactionId )
+void CMSRPMessageHandler::SetTransactionId( TDesC8& aTransactionId )
     {
-    MSRPLOG( "CMSRPMessageHandler::SetTransactionId enter" )    
-    iTransactionId = aTransactionId;    
+    MSRPLOG( "CMSRPMessageHandler::SetTransactionId enter" )
+    HBufC8* transactionId = HBufC8::NewL( aTransactionId.Length() );
+    *transactionId = aTransactionId;
+    iSentChunks.Append( transactionId );
     MSRPLOG( "CMSRPMessageHandler::SetTransactionId exit" )
     }
 
@@ -320,15 +353,35 @@ void CMSRPMessageHandler::SetStatusOfResponseL( TPtrC8& aStatusCode, TPtrC8& /*a
 
 void CMSRPMessageHandler::EndOfMessageL( TMsrpMsgEndStatus aStatus )
     {
-    MSRPLOG( "CMSRPMessageHandler::EndOfMessageL enter" )  
-    if( iMessage && iBuffer.Length() )
+    MSRPLOG2( "CMSRPMessageHandler::EndOfMessageL enter = %d", this )
+    MSRPLOG2( "CMSRPMessageHandler::EndOfMessageL enter = %d", aStatus )
+    iMessageEnding = aStatus;
+    if( iMessage && iBuffer.Length() && ( aStatus == EMessageEnd ) )
         {
-        HBufC8* contentOfMessage = HBufC8::NewL( iBuffer.Length() );
-        *contentOfMessage = iBuffer;
-        iMessage->SetContent( contentOfMessage );
-        iBuffer.Zero();
+        if ( !iTempFileName.Length() )
+            {
+            HBufC8* contentOfMessage = HBufC8::NewL( iBuffer.Length() );
+            *contentOfMessage = iBuffer;
+            iMessage->SetContent( contentOfMessage );
+            iBuffer.Zero();
+            }
+        else
+            {
+            WriteMessageToFileL( iBuffer );
+            iBuffer.Zero();
+            }
         }
-    iMsgEndStatus = aStatus;    
+    if ( aStatus == EMessageEnd )
+        {
+        iState = EMessageDone;
+        }
+    
+    if( aStatus == EMessageTerminated )
+        {
+        iTerminateReceiving = ETrue;
+        iState = ETerminated;
+        }
+        
     MSRPLOG( "CMSRPMessageHandler::EndOfMessageL exit" )
     }
 
@@ -341,66 +394,13 @@ MMSRPIncomingMessage::TMSRPMessageType CMSRPMessageHandler::MessageType( )
     }
 
 
-CMSRPMessage* CMSRPMessageHandler::GetIncomingMessage( )
+CMSRPMessage* CMSRPMessageHandler::GetIncomingMessage( ) const
     {
     MSRPLOG( "CMSRPMessageHandler::GetIncomingMessage enter" )  
-    if( iMessage )
-        {
-        return iMessage;
-        }
-    return NULL;
+    return iMessage;
     }
 
-
-void CMSRPMessageHandler::UpdateResponseStateL(CMSRPMessageHandler *incomingMsgHandler)
-    {
-    MSRPLOG( "CMSRPMessageHandler::UpdateResponseState enter" )
-    TBuf8<100> iTransactionId = incomingMsgHandler->TransactionId();
-    for(TInt i=0;i<iChunkList.Count();i++)
-       {
-        if(iTransactionId == iChunkList[i]->GetTransactionId())
-            {
-             iChunkList[i]->SetResponseSent(ETrue);
-             ReceiveFileStateL(iChunkList[i]->GetEndPos()- iChunkList[i]->GetStartPos() + 1);                    
-            }
-       }
-    MSRPLOG( "CMSRPMessageHandler::UpdateResponseState exit" )
-    }
-
-
-void CMSRPMessageHandler::ReceiveFileStateL( TInt aBytesTransferred )
-    {
-    MSRPLOG( "CMSRPMessageHandler::ReceiveFileState enter" )
-    MSRPLOG2( "CMSRPMessageHandler::ReceiveFileState Notify %d", iProgress )
-    MSRPLOG2( "CMSRPMessageHandler::ReceiveFileState iFileNotified %d", iNotifiedBytes )    
-    MSRPLOG2( "CMSRPMessageHandler::ReceiveFileState iunnotified %d", iPendingBytes )
-    MSRPLOG2( "CMSRPMessageHandler::ReceiveFileState aBytesTransferred %d", aBytesTransferred )
-    MSRPLOG2( "CMSRPMessageHandler::ReceiveFileState iFileSize %d", iFileSize )
-    
-    iPendingBytes += aBytesTransferred;
-    
-    if(iNotifiedBytes + iPendingBytes == iFileSize)
-        {
-        iFileTransferComplete = ETrue;
-        }
-    
-    if(iPendingBytes >= KMaxChunkReadSize)
-        {
-        MSRPLOG( "CMSRPMessageHandler::ReceiveFileState unnotified exceeds threshold" )
-        MSRPLOG2( "CMSRPMessageHandler::ReceiveFileState iFileReceiveComplete: %d", iFileTransferComplete )                
-            
-        iNotifiedBytes += iPendingBytes;
-        iPendingBytes = 0;
-        //notify client of progress
-        if(iProgress && !iFileTransferComplete)
-            iMSRPMessageObserver->MessageReceiveProgressL(iNotifiedBytes, iFileSize);
-        }
- 
-     MSRPLOG( "CMSRPMessageHandler::ReceiveFileState exit" )   
-     }
-    
-
-TBool CMSRPMessageHandler::SendResponseL( MMSRPMessageObserver* aMessageObserver, 
+void CMSRPMessageHandler::SendResponseL( MMSRPMessageObserver* aMessageObserver, 
                                             MMSRPConnection& aConnection, TUint aResponseCode )
     {
     MSRPLOG( "CMSRPMessageHandler::SendResponseL enter" )
@@ -421,7 +421,7 @@ TBool CMSRPMessageHandler::SendResponseL( MMSRPMessageObserver* aMessageObserver
             sendResponse = EFalse;
             }
         else if( (frHeaderValue->Des() == MSRPStrings::StringF( MSRPStrConsts::EPartial ).DesC()) 
-                && (aResponseCode == CMSRPResponse::EAllOk) )
+                && (aResponseCode == EAllOk) )
             {
             sendResponse = EFalse;
             }
@@ -430,7 +430,7 @@ TBool CMSRPMessageHandler::SendResponseL( MMSRPMessageObserver* aMessageObserver
     
     if( !iMessage->ToPathHeader() || !iMessage->FromPathHeader() )
         {
-        aResponseCode = CMSRPResponse::EUnknownCode;
+        aResponseCode = EUnknownCode;
         sendResponse = EFalse;
         }
     
@@ -445,86 +445,136 @@ TBool CMSRPMessageHandler::SendResponseL( MMSRPMessageObserver* aMessageObserver
         
         HBufC8* toPathValue = iMessage->ToPathHeader()->ToTextValueLC();
         iResponse->SetFromPathHeader( CMSRPFromPathHeader::DecodeL( *toPathValue ) );
-        CleanupStack::PopAndDestroy(toPathValue);
+        CleanupStack::PopAndDestroy(toPathValue);   
         
         iActiveMsgType = EMSRPResponse;
+        iState = EIdle;
         aConnection.SendL( *this );
         }
   
     MSRPLOG( "CMSRPMessageHandler::SendResponseL exit" )
-	
-	if( aResponseCode == CMSRPResponse::EAllOk )
-        return ETrue;
-    else
-        return EFalse;
     }
 
-
-TBool CMSRPMessageHandler::IfResponseReqL()
+TBool CMSRPMessageHandler::SendReportL( 
+    MMSRPMessageObserver* aMessageObserver, 
+    MMSRPConnection& aConnection, TUint aStatusCode )
     {
-    TBool responseReq = ETrue;
-    if( iMessage->FailureReportHeader() )
+    MSRPLOG( "CMSRPMessageHandler::SendReportL enter" )
+    
+    TBool sendReport = EFalse;
+    if ( iActiveMsgType == EMSRPResponse )
         {
-        HBufC8* frHeaderValue = iMessage->FailureReportHeader()->ToTextValueLC();
-        if( frHeaderValue->Des() == MSRPStrings::StringF( MSRPStrConsts::ENo ).DesC() )
-            {
-             responseReq = EFalse;
-            }
-        else if( (frHeaderValue->Des() == MSRPStrings::StringF( MSRPStrConsts::EPartial ).DesC()))
-            {
-            responseReq = EFalse;
-            }
-        CleanupStack::PopAndDestroy(frHeaderValue);     
+        // currently sending a response
+        MSRPLOG( "CMSRPMessageHandler::SendReportL sendin a response..." )
+        return sendReport;
         }
-    return responseReq;
-    }
+    iMSRPMessageObserver = aMessageObserver;
+    if( iMessage->SuccessReportHeader() )
+        {
+        HBufC8* successHeaderValue = iMessage->SuccessReportHeader()->ToTextValueLC();
+        if( successHeaderValue->Des() == MSRPStrings::StringF( MSRPStrConsts::EYes ).DesC() )
+            {
+            MSRPLOG( "CMSRPMessageHandler::SendReportL report needed!" )
+            sendReport = ETrue;
+            }
+        CleanupStack::PopAndDestroy( successHeaderValue );
+        }
+        
+    if ( sendReport )
+        {
+        iReport = new ( ELeave ) CMSRPReport( ) ;
+        iReport->SetStatusHeader( CMSRPStatusHeader::NewL( aStatusCode ) );
 
+        HBufC8* fromPathValue = iMessage->FromPathHeader()->ToTextValueLC();
+        iReport->SetToPathHeader( CMSRPToPathHeader::DecodeL( *fromPathValue ) );
+        CleanupStack::PopAndDestroy(fromPathValue);
+        
+        HBufC8* toPathValue = iMessage->ToPathHeader()->ToTextValueLC();
+        iReport->SetFromPathHeader( CMSRPFromPathHeader::DecodeL( *toPathValue ) );
+        CleanupStack::PopAndDestroy(toPathValue);   
+
+        HBufC8* messageId = iMessage->MessageIdHeader()->ToTextValueLC();
+        iReport->SetMessageIdHeader( CMSRPMessageIdHeader::NewL( *messageId ) );
+        CleanupStack::PopAndDestroy( messageId );   
+        
+        TInt size( 0 );
+        if ( iTempFileName.Length() )
+            {
+            OpenTemporaryFileL( iTempFileName );
+            iTempFile->Size( size );
+            }
+        else
+            {
+            size = iBuffer.Length();
+            }
+        CMSRPByteRangeHeader* byteRange = 
+                CMSRPByteRangeHeader::NewL( 1, size, size );
+        iReport->SetByteRangeHeader( byteRange );
+        
+        iActiveMsgType = EMSRPReport;
+        iState = EIdle;
+        aConnection.SendL( *this );
+        }
+    MSRPLOG( "CMSRPMessageHandler::SendReportL exit" )
+    return sendReport;
+    }
 
 TDesC8& CMSRPMessageHandler::TransactionId( )
     {
     MSRPLOG( "CMSRPMessageHandler::TransactionId enter" )
-    return iTransactionId;
+    return *iSentChunks[ iSentChunks.Count() - 1 ];
     }
 
 
-CMSRPResponse* CMSRPMessageHandler::GetIncomingResponse( )
+CMSRPResponse* CMSRPMessageHandler::GetIncomingResponse( ) const
     {
     MSRPLOG( "CMSRPMessageHandler::GetIncomingResponse enter" )
-    if( iResponse )
-        {
-        return iResponse;
-        }
-    return NULL;
+    return iResponse;
     }
 
+CMSRPReport* CMSRPMessageHandler::GetIncomingReport( ) const
+    {
+    MSRPLOG( "-> CMSRPMessageHandler::GetIncomingReport" )
+    return iReport;
+    }
 
 void CMSRPMessageHandler::SendMessageL( MMSRPConnection& aConnection )
     {
     MSRPLOG( "CMSRPMessageHandler::SendMessageL enter" )    
     iActiveMsgType = EMSRPMessage;
+    isSending = ETrue;
+    if ( iMessage->IsFile() )
+        {
+        User::LeaveIfError(iFile.Open(iFs, iMessage->GetFileName(), EFileShareReadersOrWriters)); 
+        iFile.Size(iFileSize);
+        iFileBuffer = HBufC8::NewL(KMaxChunkReadSize);            
+        FillFileBufferL();
+        }
+    else
+        {
+        iContentPtr.Set( iMessage->Content() );
+        }
+        
     aConnection.SendL( *this );
     MSRPLOG( "CMSRPMessageHandler::SendMessageL exit" )
     }
 
-
-void CMSRPMessageHandler::SendFileL(MMSRPConnection& aConnection)
+TBool CMSRPMessageHandler::IsOwnerOfResponse( MMSRPIncomingMessage& aIncomingMessage )
     {
-    MSRPLOG( "CMSRPMessageHandler::SendFileL enter" ) 
-    /* Flags  */
-    isFile = ETrue;    
-    iProgress = iMessage->GetNotifyProgress();
-    
-    User::LeaveIfError(iFs.Connect());
-    User::LeaveIfError(iFile.Open(iFs, iMessage->GetFileName(), EFileShareReadersOrWriters)); 
-    iFile.Size(iFileSize);
-    iFileBuffer = HBufC8::NewL(KMaxChunkReadSize);            
-    FillFileBufferL();
-    iActiveMsgType = EMSRPMessage;
-    aConnection.SendL( *this );
-    
-    MSRPLOG( "CMSRPMessageHandler::SendFileL exit" )     
+    MSRPLOG2( "CMSRPMessageHandler::IsOwnerOfResponse enter =%d", this )
+    for ( TInt i = 0; i < iSentChunks.Count(); i++ )
+        {
+        if( aIncomingMessage.TransactionId() == *iSentChunks[ i ] )
+            {
+            MSRPLOG( "CMSRPMessageHandler::IsOwnerOfResponse enter, yes" )
+            iResponseNeeded = EFalse;
+            return ETrue;
+            }  
+        }
+              
+    MSRPLOG( "CMSRPMessageHandler::IsOwnerOfResponse exit" )
+    return EFalse;
     }
-
 
 TInt CMSRPMessageHandler::FillFileBufferL()
     {    
@@ -540,264 +590,147 @@ TInt CMSRPMessageHandler::FillFileBufferL()
 	return iFileBuffer->Length();
     }
 
-
-void CMSRPMessageHandler::ReceiveFileL( )
+void CMSRPMessageHandler::TerminateReceiving( 
+    MMSRPMessageObserver* aMessageObserver, 
+    MMSRPConnection& aConnection )
     {
-    MSRPLOG( "CMSRPMessageHandler::ReceiveFileL enter" )
-    isFile = ETrue;
-    iProgress = iMessage->GetNotifyProgress();
-    
-    User::LeaveIfError(iFs.Connect());
-    User::LeaveIfError(iFile.Replace(iFs,iMessage->GetFileName(),EFileWrite));
-    iFileSize = iMessage->GetFileSize();
-    iFileBuffer = HBufC8::NewL(KMaxChunkReadSize);
-    
-    MSRPLOG( "CMSRPMessageHandler::ReceiveFileL exit" )
+    MSRPLOG( "CMSRPMessageHandler::SetFSTerminate" )
+    iTerminateReceiving = ETrue;
+
+    SendResponseL( aMessageObserver, aConnection, EStopSending );
     }
 
-
-void CMSRPMessageHandler::WritetoFileL(CMSRPMessageHandler *incomingMsgHandler )
+void CMSRPMessageHandler::TerminateSending()
     {
-    MSRPLOG( "CMSRPMessageHandler::WriteToFile enter" )
-    CMSRPMessage* inFileChunk = incomingMsgHandler->GetIncomingMessage();
-    HBufC8* messageContent = NULL;
-    if(inFileChunk->IsContent())
-        {
-        messageContent = HBufC8::NewL(inFileChunk->Content().Length());
-        *messageContent = inFileChunk->Content();        
-        WriteChunkToFileL(*messageContent,incomingMsgHandler->TransactionId());
-       
-        if (!incomingMsgHandler->IfResponseReqL())
-            ReceiveFileStateL(messageContent->Length());
-        }
-    delete messageContent;
-    MSRPLOG( "CMSRPMessageHandler::WriteToFile exit" )          
-    }               
-    
-    
-void CMSRPMessageHandler::WriteChunkToFileL(const TDesC8& aFileChunk ,TDesC8& aTransactionId)  
-    {    
-    MSRPLOG( "CMSRPMessageHandler::WriteChunktoFile enter" )      
-     if(iBufPosInFile<(iFileSize-1))
-       {
-       iFile.Write(iBufPosInFile,aFileChunk);
-       
-       /* Create and update the structure */
-       CMSRPMessageChunkState* iChunk = CMSRPMessageChunkState::NewL( ); 
-       iChunk->SetStartPos(iBufPosInFile);
-       iBufPosInFile += aFileChunk.Length();
-       iChunk->SetEndPos(iBufPosInFile-1);
-       iChunk->SetTransactionId(aTransactionId);
-       iChunkList.Append(iChunk);
-        }
-       else
-           {
-            //Receive Bytes greater than file Size
-            User::Leave( KErrArgument );
-           }
-  
-       MSRPLOG( "CMSRPMessageHandler::WriteChunktoFile exit" )
-     
+    MSRPLOG( "CMSRPMessageHandler::SetFSTerminate" )
+    iTerminateSending = ETrue;
     }
 
-
-TBool CMSRPMessageHandler::IsOwnerOfResponse( MMSRPIncomingMessage& aIncomingMessage )
+TBool CMSRPMessageHandler::IsTransmissionTerminated( )
     {
-    MSRPLOG( "CMSRPMessageHandler::IsOwnerOfResponse enter" )
-    if(isFile)
+    MSRPLOG3("-> CMSRPMessageHandler::IsTransmissionTerminated, %d and %d", iTerminateReceiving, iTerminateSending )
+    if ( iTerminateReceiving || iTerminateSending )
         {
-         /*  compare for transaction id  */
-        for(TInt i=0;i<iChunkList.Count();i++)
-           {
-            if(aIncomingMessage.TransactionId() == iChunkList[i]->GetTransactionId())
-             {
-             if( iState == EWaitingForResponse || ( iState == EMessageSent && iResponseNeeded ))
-                 {
-                   if (i == iChunkList.Count()-1)
-                     {
-                      iResponseNeeded = EFalse;
-                      iState = EMessageDone;
-                     }
-                 }
-               return ETrue;
-             }
-           }
+        return ETrue;
         }
-    if( aIncomingMessage.TransactionId() == iTransactionId )
+        
+    return EFalse;
+    }
+
+TBool CMSRPMessageHandler::IsReportNeeded( )
+    {
+    if( iMessage->SuccessReportHeader() )
         {
-        if( iState == EWaitingForResponse || ( iState == EMessageSent && iResponseNeeded ))
+        HBufC8* successHeaderValue = iMessage->SuccessReportHeader()->ToTextValueLC();
+        if( successHeaderValue->Des() == MSRPStrings::StringF( MSRPStrConsts::EYes ).DesC() )
             {
-            iResponseNeeded = EFalse;
+            CleanupStack::PopAndDestroy( successHeaderValue );
             return ETrue;
             }
-        }  
-              
-    MSRPLOG( "CMSRPMessageHandler::IsOwnerOfResponse exit" )
+        CleanupStack::PopAndDestroy( successHeaderValue );
+        }
+        
     return EFalse;
     }
 
-
-void CMSRPMessageHandler::ConsumeFileResponseL(MMSRPIncomingMessage& aIncomingMessage )
+TUint CMSRPMessageHandler::ConsumeResponseL( MMSRPIncomingMessage& aIncomingMessage )
     {
-    MSRPLOG( "CMSRPMessageHandler::ConsumeFileResponseL enter" )
+    MSRPLOG2( "CMSRPMessageHandler::ConsumeResponseL enter, this = %d", this )
+   
+    TUint responseCode( EUnknownCode );
     CMSRPResponse* response = aIncomingMessage.GetIncomingResponse();
-    TUint statusCode = response->StatusCode();
-    
-    for(TInt i=0;i<iChunkList.Count();i++)
-       {
-        if(aIncomingMessage.TransactionId()== iChunkList[i]->GetTransactionId())
-            {
-            iChunkList[i]->SetResponseReceived(ETrue);
-            SendFileStateL(iChunkList[i]->GetEndPos()- iChunkList[i]->GetStartPos() + 1 ) ;
-            }                     
-       }          
-      
-    MSRPLOG( "CMSRPMessageHandler::ConsumeFileResponseL exit" )     
-    } 
-
-
-void CMSRPMessageHandler::SendFileStateL(TInt aBytesTransferred )
-    {
-    MSRPLOG( "CMSRPMessageHandler::SendFileStateL enter" )
-    MSRPLOG2( "CMSRPMessageHandler::SendFileStateL granularity %d", iProgress )
-    MSRPLOG2( "CMSRPMessageHandler::SendFileStateL iFileNotified %d", iNotifiedBytes )    
-    MSRPLOG2( "CMSRPMessageHandler::SendFileStateL iunnotified %d", iPendingBytes )
-    MSRPLOG2( "CMSRPMessageHandler::SendFileStateL aBytesTransferred %d", aBytesTransferred )
-    MSRPLOG2( "CMSRPMessageHandler::SendFileStateL iFileSize %d", iFileSize )
-
-    iPendingBytes += aBytesTransferred;
-    
-    if(iNotifiedBytes + iPendingBytes == iFileSize)
+    if ( response )
         {
-        iFileTransferComplete = ETrue;      
-        } 
-    
-    if(iPendingBytes  >= KMaxChunkReadSize)
-        {
-        MSRPLOG( "CMSRPMessageHandler::SendFileStateL unnotified exceeds threshold" )
-        MSRPLOG2( "CMSRPMessageHandler::SendFileStateL iFileSendComplete: %d", iFileTransferComplete )                
-        iNotifiedBytes += iPendingBytes;
-        iPendingBytes = 0;
-
-        //notify client of progress
-        if( iProgress && !iFileTransferComplete )//send progress requested and avoid double notifn. as send complete not handled in waitfor clientstate
-            iMSRPMessageObserver->MessageSendProgressL(iNotifiedBytes, iFileSize);//iByteinPos
-
-        }
-    MSRPLOG( "CMSRPMessageHandler::SendFileStateL exit" )
-    }
-
-
-TBool CMSRPMessageHandler::FileTransferComplete( )
-    {
-    if(iFileTransferComplete)
-        return ETrue;
-    else
-        return EFalse;
-    }
-
-
-TBool CMSRPMessageHandler::IsInFile()
-    {
-    if(isFile)
-      {
-       return ETrue;
-      }
-    return EFalse;
-    }
-
-
-TBool CMSRPMessageHandler::ConsumeResponseL( MMSRPIncomingMessage& aIncomingMessage )
-    {
-    MSRPLOG( "CMSRPMessageHandler::ConsumeResponseL enter" )
-    
-    TBool ret;
-    CMSRPResponse* response = aIncomingMessage.GetIncomingResponse();
-    TUint statusCode = response->StatusCode();
-       
-    if( iMessage->FailureReportHeader() &&  
-            (iMessage->FailureReportHeader()->ToTextValueLC()->Des() == 
-            MSRPStrings::StringF( MSRPStrConsts::EPartial ).DesC()) &&
-                statusCode == CMSRPResponse::EAllOk )                
-        {
-        iState = EMessageDone;
-        ret = EFalse;
-        }
-    else
-        {        
         RStringF statusString = response->ReasonPhrase();
-        iResponse = new (ELeave) CMSRPResponse( statusCode, statusString );
+        responseCode = response->StatusCode();
+        delete iResponse;
+        iResponse = NULL;
+        iResponse = new (ELeave) CMSRPResponse( responseCode, statusString );
         HBufC8* toPathValue = response->ToPathHeader()->ToTextValueLC();
         HBufC8* fromPathValue = response->FromPathHeader()->ToTextValueLC();
         iResponse->SetToPathHeader( CMSRPToPathHeader::DecodeL( toPathValue->Des() ) );
         iResponse->SetFromPathHeader( CMSRPFromPathHeader::DecodeL( fromPathValue->Des() ) );
         CleanupStack::PopAndDestroy(fromPathValue);
         CleanupStack::PopAndDestroy(toPathValue);
-        iState = EMessageDone;
-        ret = ETrue;
         }
-    
-    if( iMessage->FailureReportHeader() )
+
+    // removing the transaction id
+    for ( TInt i = 0; i < iSentChunks.Count(); i++ )
         {
-        CleanupStack::PopAndDestroy(); // FR header value from above
+        if( aIncomingMessage.TransactionId() == *iSentChunks[ i ] )
+            {
+            delete iSentChunks[ i ];
+            iSentChunks.Remove( i );
+            }  
         }
-         
+
+    if ( iState == EWaitingForResponse )
+        {
+        iState = EMessageDone;
+        }
+       
     MSRPLOG( "CMSRPMessageHandler::ConsumeResponseL exit" )
-    return ret;
+    return responseCode;
     }
 
 
 TBool CMSRPMessageHandler::IsMessageComplete()
     {
-    MSRPLOG( "CMSRPMessageHandler::IsMessageComplete enter" )
-    if( iState == EMessageDone )
-        return ETrue;
-    else
+    MSRPLOG2( "CMSRPMessageHandler::IsMessageComplete enter= %d", this )
+    MSRPLOG2( "CMSRPMessageHandler::IsMessageComplete enter= %d", iMessageEnding )
+    MSRPLOG2( "CMSRPMessageHandler::IsMessageComplete enter= %d", iState )
+    if ( iMessageEnding != EMessageEnd && iMessageEnding != EMessageTerminated )
+        {
         return EFalse;
+        }
+    else if( iState == EMessageDone || iState == ETerminated )
+        {
+        return ETrue;
+        }
+    else
+        {
+        return EFalse;
+        }
     }
 
 
-TBool CMSRPMessageHandler::GetSendResultL( TUint &aErrorCode, HBufC8* &aMessageId )
+TUint CMSRPMessageHandler::GetSendResultL( HBufC8* &aMessageId )
     {
     MSRPLOG( "CMSRPMessageHandler::GetSendResult enter" )
-    if( iState == EMessageDone )
+    TUint aErrorCode( EUnknownCode );
+    aMessageId = iMessage->MessageIdHeader()->ToTextValueLC();
+    CleanupStack::Pop(aMessageId);
+    if(iResponse)
         {
-        aMessageId = iMessage->MessageIdHeader()->ToTextValueLC();
-        CleanupStack::Pop(aMessageId);
-        if(iResponse)
-            {
-            TUint code = iResponse->StatusCode();
-            if( code == CMSRPResponse::EAllOk )
-                {
-                aErrorCode = ENoError;
-                }
-            else if ( code == CMSRPResponse::ETimeout )
-                {
-                aErrorCode = ENetworkTimeout;
-                }
-            else
-                {
-                aErrorCode = EUnrecoverableError;
-                }            
-            }
-        else
-            {
-            aErrorCode = ENoError;
-            }
-        }    
-    MSRPLOG( "CMSRPMessageHandler::GetSendResult exit" )
-    if( aErrorCode == EUnrecoverableError )
-        {
-        return ETrue;
+        aErrorCode = iResponse->StatusCode();
         }
-    else
-        {
-        return EFalse;
-        }
+        
+    return aErrorCode;
     }
 
+// -----------------------------------------------------------------------------
+// CMSRPMessageHandler::IsFailureHeaderPartial
+// -----------------------------------------------------------------------------
+//
+TBool CMSRPMessageHandler::IsFailureHeaderPartial()
+    {
+    if( iMessage->FailureReportHeader() )
+        {
+        HBufC8* frHeaderValue = iMessage->FailureReportHeader()->ToTextValueLC();
+        if( frHeaderValue->Des() == MSRPStrings::StringF( MSRPStrConsts::EPartial ).DesC() ) 
+            {
+            CleanupStack::PopAndDestroy(frHeaderValue);
+            return ETrue;
+            }
+        CleanupStack::PopAndDestroy(frHeaderValue);
+        }
+        
+    return EFalse;
+    }
 
-MMSRPWriterObserver::TWriteStatus CMSRPMessageHandler::GetSendBufferL( TPtrC8& aData, TBool aInterrupt )
+const TDesC8& CMSRPMessageHandler::GetSendBufferL( 
+    MMSRPWriterObserver::TWriteStatus& aStatus, 
+    TBool aInterrupt )
     {
     MSRPLOG( "CMSRPMessageHandler::GetSendBufferL enter" )
     iInterrupt = aInterrupt;
@@ -839,26 +772,21 @@ MMSRPWriterObserver::TWriteStatus CMSRPMessageHandler::GetSendBufferL( TPtrC8& a
             }
         }
     
-    aData.Set(iBuffer);        
+    aStatus = EMsrpSocketWrite;
     MSRPLOG( "CMSRPMessageHandler::GetSendBufferL exit" )
-    return EMsrpSocketWrite;
+    return iBuffer;
     }
 
 
 MMSRPWriterObserver::TMsgStatus CMSRPMessageHandler::WriteDoneL( TInt aStatus )
     {
     MSRPLOG( "CMSRPMessageHandler::WriteDoneL enter" )
+    MSRPLOG2( "CMSRPMessageHandler::WriteDoneL state = %d", iState )
+    MSRPLOG2( "CMSRPMessageHandler::WriteDoneL activestate = %d", iActiveMsgType )
     MMSRPWriterObserver::TMsgStatus retStatus = EUndefined;
 
     if( !aStatus )
         {
-        /*if file send and message and response not needed, update progress*/
-        if (isFile && iActiveMsgType == EMSRPMessage && iResponseNeeded == FALSE)
-            {
-            if (iFileBytesSent > 0)
-                SendFileStateL(iFileBytesSent);
-            }
-        
         if( iState == EMessageSent )
             {
             switch( iActiveMsgType )
@@ -873,34 +801,73 @@ MMSRPWriterObserver::TMsgStatus CMSRPMessageHandler::WriteDoneL( TInt aStatus )
                         {
                         iState = EMessageDone;
                         }  
-                    iMSRPMessageObserver->MessageSendCompleteL();
+                    iMSRPMessageObserver->MessageSendProgressL( this );   
+                    iMSRPMessageObserver->MessageSendCompleteL( this );
+                    retStatus = MMSRPWriterObserver::EComplete;
                     break;                    
                     }
                 case EMSRPResponse:
                     {
-                    iState = EMessageDone;
+                    if( iTerminateReceiving )
+                        {
+                        iState = ETerminated;
+                        iMessageEnding = EMessageTerminated;
+                        }
+                    else
+                        {
+                        iState = EMessageDone;
+                        }
+                    iActiveMsgType = EMSRPNotDefined;
                     iMSRPMessageObserver->MessageResponseSendCompleteL(*this);
+                    if ( IsReportNeeded() )
+                        {
+                        retStatus = MMSRPWriterObserver::ESendingReport;
+                        }
+                    else
+                        {
+                        retStatus = MMSRPWriterObserver::EComplete;
+                        }
+                    break;
+                    }
+                case EMSRPReport:
+                    {
+                    iMessageEnding = EMessageEnd;
+                    iState = EMessageDone;
+                    iMSRPMessageObserver->MessageReportSendCompleteL( *this );
+                    retStatus = MMSRPWriterObserver::EComplete;
                     break;
                     }
                 }
-            //iActiveMsgType = EMSRPNotDefined;
-            retStatus = MMSRPWriterObserver::EComplete;
             }        
         else if( iState ==  EInProgress )
             {
-            retStatus = MMSRPWriterObserver::EPending;
-            }            
-        else if(iState == EChunkSent)
+            iMSRPMessageObserver->MessageSendProgressL( this ); 
+            if ( iMessageEnding == EMessageNotDefined )
+                {
+                retStatus = MMSRPWriterObserver::EPending;
+                }
+            else
+                {
+                iState = EIdle;
+                retStatus = MMSRPWriterObserver::EWaitingForResponse;
+                }
+            }
+        else if( iState == ETerminated )
             {
-            retStatus = MMSRPWriterObserver::EInterrupted;
-            iState = EIdle;
-            }        
+            if( iResponseNeeded )
+                {
+                iState = EWaitingForResponse;
+                }
+                                        
+            iMSRPMessageObserver->MessageCancelledL();
+            retStatus = MMSRPWriterObserver::EComplete;
+            }
         else
            {
            iMSRPMessageObserver->WriterError();
            }
         }
-    MSRPLOG( "CMSRPMessageHandler::WriteDone exit" )
+
     return retStatus;
     }
 
@@ -913,35 +880,25 @@ void CMSRPMessageHandler::CreateByteRangeHeaderL()
     if ( iMessage->IsFile())
         {                
         byteRange = CMSRPByteRangeHeader::NewL( iBufPosInFile+iStartPosInBuffer+1,KUnknownRange,iFileSize);
-      
-        CleanupStack::PushL(byteRange);
-        iMessage->SetByteRangeHeader( byteRange );
-        CleanupStack::Pop(byteRange);
         }
     else
         {
-        if( !iMessage->ByteRangeHeader() )
-            {
-             if ( iMessage->IsContent() )
-                 {
-                 byteRange = CMSRPByteRangeHeader::NewL( 1,
-                 iMessage->Content().Length(), iMessage->Content().Length() );
-                 CleanupStack::PushL(byteRange);
-                 }
-             else
-                 {
-                 byteRange = CMSRPByteRangeHeader::NewL( 1, 0, 0 );
-                 CleanupStack::PushL(byteRange);
-                 }
-            iMessage->SetByteRangeHeader( byteRange );
-            CleanupStack::Pop(byteRange);
-            }
+        if ( iMessage->IsContent() )
+             {
+             byteRange = CMSRPByteRangeHeader::NewL( 1,
+             iMessage->Content().Length(), iMessage->Content().Length() );
+             }
+        else
+             {
+             byteRange = CMSRPByteRangeHeader::NewL( 1, 0, 0 );
+             }
         }
+    iMessage->SetByteRangeHeader( byteRange );
     MSRPLOG( "CMSRPMessageHandler::CreateByteRangeHeaderL exit" )
     }
 
 
-void CMSRPMessageHandler::CreateTransactionId()
+void CMSRPMessageHandler::CreateTransactionIdL()
     {
     MSRPLOG( "CMSRPMessageHandler::CreateTransactionId enter" )
     
@@ -949,7 +906,75 @@ void CMSRPMessageHandler::CreateTransactionId()
     now.HomeTime();
     TInt64 seed = now.Int64();
     TInt random = Math::Rand( seed );
-    iTransactionId.NumUC( random );
+    HBufC8* transactionId = HBufC8::NewL( KMaxLengthOfTransactionIdString );
+    TPtr8 temp( transactionId->Des() );
+    temp.NumUC( random );
+    
+    if ( iActiveMsgType != EMSRPReport )
+        {
+        // let's make sure the message content does not include the end line
+        // otherwise we need to regenerate the random number
+        TBuf8< KMaxLengthOfMessageEndString > endLine;
+        endLine.Append( KAsterisk );
+        endLine.Append( KDashLine );
+        endLine.Append( temp );
+        endLine.Append( KAsterisk );
+        
+        if ( iMessage->IsFile() )
+            {
+            // must first load the right chunk to memory temporarily
+            RFile file;
+            CleanupClosePushL( file );
+            User::LeaveIfError(
+                file.Open( iFs, iMessage->GetFileName(), EFileShareReadersOrWriters ) );
+        
+            // Check that the file does not contain the generated ID
+            TInt readPosition( 0 );
+            HBufC8* tempFileBuffer = HBufC8::NewLC( KMaxChunkReadSize );
+            TPtr8 fileBuffer( tempFileBuffer->Des() );
+            User::LeaveIfError(
+                file.Read( readPosition, fileBuffer, KMaxChunkReadSize ) );
+            while ( fileBuffer.Length() )
+                {
+                if ( fileBuffer.Match( endLine ) != KErrNotFound )
+                    {
+                    // found
+                    random = Math::Rand( seed );
+                    temp.NumUC( random );
+                    endLine.Zero();
+                    endLine.Append( KAsterisk );
+                    endLine.Append( KDashLine );
+                    endLine.Append( temp );
+                    endLine.Append( KAsterisk );
+                    readPosition = 0;
+                    }
+                else
+                    {
+                    readPosition += ( KMaxChunkReadSize - KMaxLengthOfMessageEndString );
+                    }
+                User::LeaveIfError(
+                    file.Read( readPosition, fileBuffer, KMaxChunkReadSize ) );
+                }
+            CleanupStack::PopAndDestroy( tempFileBuffer );
+            CleanupStack::PopAndDestroy( ); // file
+            }
+        else
+            {
+            // content
+            while ( iMessage->Content().Match( temp ) != KErrNotFound )
+                {
+                // found
+                random = Math::Rand( seed );
+                temp.NumUC( random );
+                endLine.Zero();
+                endLine.Append( KAsterisk );
+                endLine.Append( KDashLine );
+                endLine.Append( temp );
+                endLine.Append( KAsterisk );
+                }
+            }
+        }
+    iSentChunks.Append( transactionId );
     
     MSRPLOG( "CMSRPMessageHandler::CreateTransactionId exit" )
     }
@@ -959,16 +984,20 @@ void CMSRPMessageHandler::WriteInitialLineToBufferL()
     {
     MSRPLOG( "CMSRPMessageHandler::WriteInitialLineToBufferL enter" )
     
+    if( iActiveMsgType == EMSRPMessage )
+        {
+        iMessageEnding = EMessageNotDefined;
+        }
     iBuffer.Append( MSRPStrings::StringF( MSRPStrConsts::EMSRP ).DesC() );
 
     iBuffer.Append( KSpaceChar );
     
     if (! (iActiveMsgType == EMSRPResponse) )
          {
-         CreateTransactionId();
+         CreateTransactionIdL();
          }
    
-    iBuffer.Append( iTransactionId );
+    iBuffer.Append( *iSentChunks[ iSentChunks.Count() -1 ] );
 
     iBuffer.Append( KSpaceChar );
     
@@ -983,6 +1012,10 @@ void CMSRPMessageHandler::WriteInitialLineToBufferL()
         iBuffer.Append( statusCode );
         iBuffer.Append( KSpaceChar );
         iBuffer.Append( iResponse->ReasonPhrase().DesC() );
+        }
+    else if ( iActiveMsgType == EMSRPReport )
+        {
+        iBuffer.Append( MSRPStrings::StringF( MSRPStrConsts::EReport ).DesC() );
         }
     else
         {
@@ -1007,6 +1040,10 @@ void CMSRPMessageHandler::WriteHeadersToBufferL()
     else if ( iActiveMsgType == EMSRPResponse )
         {
         messageBase = iResponse;
+        }
+    else if ( iActiveMsgType == EMSRPReport )
+        {
+        messageBase = iReport;
         }
     else
         {
@@ -1045,8 +1082,7 @@ void CMSRPMessageHandler::WriteHeadersToBufferL()
         if ( messageBase->FailureReportHeader() )
             {
             HBufC8* valueString = messageBase->FailureReportHeader()->ToTextValueLC();
-            if ( valueString->Des() == MSRPStrings::StringF( MSRPStrConsts::EYes ).DesC() ||
-                valueString->Des() == MSRPStrings::StringF( MSRPStrConsts::EPartial ).DesC() )
+            if ( valueString->Des() == MSRPStrings::StringF( MSRPStrConsts::EYes ).DesC() )
                 {
                 iResponseNeeded = ETrue;
                 }
@@ -1068,7 +1104,14 @@ void CMSRPMessageHandler::WriteHeadersToBufferL()
         CleanupStack::PopAndDestroy(); // above 
         iBuffer.Append( KCRAndLF );
         }
-    
+
+    if( iActiveMsgType == EMSRPReport )
+        {
+        iBuffer.Append( messageBase->StatusHeader()->ToTextLC()->Des() );
+        CleanupStack::PopAndDestroy(); // above 
+        iBuffer.Append( KCRAndLF );
+        }
+        
     if( iActiveMsgType == EMSRPMessage )
         {
         if ( messageBase->ContentTypeHeader() )
@@ -1092,29 +1135,29 @@ void CMSRPMessageHandler::WriteHeadersToBufferL()
 void CMSRPMessageHandler::WriteFileContentToBufferL()
     {
     MSRPLOG( "CMSRPMessageHandler::WriteFileContentToBuffer enter" )
-    TInt endlineSize = iTransactionId.Length() + KEndlineConstLength;
+    TInt endlineSize = iSentChunks[ iSentChunks.Count() -1 ]->Length() + KEndlineConstLength;
     TInt remBufferSize = iBuffer.MaxLength() - iBuffer.Length() - endlineSize - KCRAndLF().Length();
     TInt chunkLength = iFileBuffer->Length() - iEndPosInBuffer;
     
-    /*if(remBufferSize<0) TODO*/
     if(chunkLength > remBufferSize)
         {
         iFileBytesSent = remBufferSize;
         iBuffer.Append(iFileBuffer->Mid(iEndPosInBuffer, iFileBytesSent));
         iEndPosInBuffer += iFileBytesSent;
-        if(iInterrupt)
+        
+        if( iTerminateSending )
             {
-            WriteEndLineToBuffer(EMessageContinues);
-            //add chunk entry
-            CMSRPMessageChunkState* iChunk = CMSRPMessageChunkState::NewL( ); 
-            iChunk->SetStartPos(iBufPosInFile+iStartPosInBuffer);           
-            iChunk->SetEndPos(iBufPosInFile+iEndPosInBuffer-1);//since endpos is pointing to next start pos 
-            iChunk->SetTransactionId(iTransactionId);
-            iChunkList.Append(iChunk);
-
+            iBuffer.Append(KCRAndLF());
+            WriteEndLineToBuffer( EMessageTerminated );
             iStartPosInBuffer = iEndPosInBuffer;
-            iState = EChunkSent;
+            iState = ETerminated;
             }
+        else if(iInterrupt)
+            {
+            iBuffer.Append(KCRAndLF());
+            WriteEndLineToBuffer(EMessageContinues);
+            iStartPosInBuffer = iEndPosInBuffer;
+            }        
        /* else
             {
             //msg state remains InProgress (in write done return pending)
@@ -1125,28 +1168,49 @@ void CMSRPMessageHandler::WriteFileContentToBufferL()
         iFileBytesSent = chunkLength;
         iBuffer.Append(iFileBuffer->Mid(iEndPosInBuffer, iFileBytesSent));
         iEndPosInBuffer += iFileBytesSent;
+        
+        if ( FillFileBufferL() == 0 )
+            {
+            iBuffer.Append( KCRAndLF( ) );
+            WriteEndLineToBuffer( EMessageEnd );
+            iState = EMessageSent;
+            }
+        
+        if( iTerminateSending && iState != EMessageSent )
+            {
+            iBuffer.Append( KCRAndLF( ) );
+            WriteEndLineToBuffer( EMessageTerminated );
+            iState = ETerminated;
+            }
+        }
+#if 0
+/* This is an alternative piece of code which writes the message in chunks. 
+ * The size of chunk is determined by the size of the iBuffer
+ */
+    else //bytes completed in current file buffer
+        {
+        iFileBytesSent = chunkLength;
+        iBuffer.Append(iFileBuffer->Mid(iEndPosInBuffer, iFileBytesSent));
+        iEndPosInBuffer += iFileBytesSent;
         iBuffer.Append(KCRAndLF());
         
-        //add chunk entry
-        CMSRPMessageChunkState* iChunk = CMSRPMessageChunkState::NewL( ); 
-        iChunk->SetStartPos(iBufPosInFile+iStartPosInBuffer);           
-        iChunk->SetEndPos(iBufPosInFile+iEndPosInBuffer-1); 
-        iChunk->SetTransactionId(iTransactionId);
-        iChunkList.Append(iChunk);
-        
-        if(FillFileBufferL() > 0)
+        if(iTerminateFS)
+            {
+            WriteEndLineToBuffer(EMessageTerminated);
+            iState = ETerminated;
+            }
+        else if(FillFileBufferL() > 0)
             {
             //next file buffer has data
             WriteEndLineToBuffer(EMessageContinues);
-            iState = EChunkSent;        
             }
         else
             {
             WriteEndLineToBuffer(EMessageEnd);
             iState = EMessageSent;
             }
-
         }
+#endif
     
     iWriteDone = ETrue;
     MSRPLOG( "CMSRPMessageHandler::WriteFileContentToBuffer exit" )
@@ -1182,12 +1246,12 @@ void CMSRPMessageHandler::WriteEndLineToBuffer(MMSRPMessageHandler::TMsrpMsgEndS
     MSRPLOG( "CMSRPMessageHandler::WriteEndLineToBuffer enter" )
         
     TInt remBufferSize = iBuffer.MaxLength() - iBuffer.Length();        
-    TInt endlineSize = iTransactionId.Length() + KEndlineConstLength;
+    TInt endlineSize = iSentChunks[ iSentChunks.Count() -1 ]->Length() + KEndlineConstLength;
     
     if( endlineSize <= remBufferSize )
         {
         iBuffer.Append( KDashLine );
-        iBuffer.Append( iTransactionId );
+        iBuffer.Append( *iSentChunks[ iSentChunks.Count() -1 ] );
         
         if(iActiveMsgType == EMSRPResponse)
             {
@@ -1196,18 +1260,29 @@ void CMSRPMessageHandler::WriteEndLineToBuffer(MMSRPMessageHandler::TMsrpMsgEndS
             }
         else
             {
-            if( aEndFlag )
-               {
-               iBuffer.Append( KMessageContinuesSign );
-               }
+            if( aEndFlag == EMessageTerminated )
+                {
+                MSRPLOG( "CMSRPMessageHandler::WriteEndLineToBuffer - Appending #" )    
+                iBuffer.Append( KMessageTerminatedSign );
+                iMessageEnding = EMessageTerminated;
+                }
+            else if( aEndFlag == EMessageContinues )
+                {
+                MSRPLOG( "CMSRPMessageHandler::WriteEndLineToBuffer - Appending +" )
+                iBuffer.Append( KMessageContinuesSign );
+                iMessageEnding = EMessageContinues;
+                }
             else
-               {
-               iBuffer.Append( KMessageEndSign );
-               iState = EMessageSent;
-               }
+                {
+                MSRPLOG( "CMSRPMessageHandler::WriteEndLineToBuffer - Appending $" )
+                iBuffer.Append( KMessageEndSign );
+                iMessageEnding = EMessageEnd;
+                iState = EMessageSent;
+                }
             }
         iBuffer.Append( KCRAndLF );        
-        }        
+        }
+        
     iWriteDone = ETrue;
     MSRPLOG( "CMSRPMessageHandler::WriteEndLineToBuffer exit" )
     }
@@ -1252,52 +1327,52 @@ RStringF CMSRPMessageHandler::GetStatusStringL( TUint aStatusCode )
     
     switch( aStatusCode )
         {
-        case CMSRPResponse::EAllOk:
+        case EAllOk:
             {
             statusString = MSRPStrings::StringF( MSRPStrConsts::EAllOk );
             break;
             }
-        case CMSRPResponse::EUnintelligibleRequest:
+        case EUnintelligibleRequest:
             {
             statusString = MSRPStrings::StringF( MSRPStrConsts::EUnintelligibleRequest );
             break;
             }
-        case CMSRPResponse::EActionNotAllowed:
+        case EActionNotAllowed:
             {
             statusString = MSRPStrings::StringF( MSRPStrConsts::EActionNotAllowed );
             break;
             }
-        case CMSRPResponse::ETimeout:
+        case ETimeout:
             {
             statusString = MSRPStrings::StringF( MSRPStrConsts::ETimeout );
             break;
             }
-        case CMSRPResponse::EStopSending:
+        case EStopSending:
             {
             statusString = MSRPStrings::StringF( MSRPStrConsts::EStopSending );
             break;
             }
-        case CMSRPResponse::EMimeNotUnderstood:
+        case EMimeNotUnderstood:
             {
             statusString = MSRPStrings::StringF( MSRPStrConsts::EMimeNotUnderstood );
             break;
             }
-        case CMSRPResponse::EParameterOutOfBounds:
+        case EParameterOutOfBounds:
             {
             statusString = MSRPStrings::StringF( MSRPStrConsts::EParameterOutOfBounds );
             break;
             }
-        case CMSRPResponse::ESessionDoesNotExist:
+        case ESessionDoesNotExist:
             {
             statusString = MSRPStrings::StringF( MSRPStrConsts::ESessionDoesNotExist );
             break;
             }
-        case CMSRPResponse::EUnknownRequestMethod:
+        case EUnknownRequestMethod:
             {
             statusString = MSRPStrings::StringF( MSRPStrConsts::EUnknownRequestMethod );
             break;
             }
-        case CMSRPResponse::ESessionAlreadyBound:
+        case ESessionAlreadyBound:
             {
             statusString = MSRPStrings::StringF( MSRPStrConsts::ESessionAlreadyBound );
             break;
@@ -1322,16 +1397,235 @@ TUint CMSRPMessageHandler::CheckValidityOfMessage( TMSRPMessageType aMessageType
         {
         if(!aMessage->MessageIdHeader())
             {
-            return CMSRPResponse::EUnintelligibleRequest;
+            return EUnintelligibleRequest;
             }
         CMSRPMessage* message = static_cast<CMSRPMessage*>(aMessage);
         if(message->IsContent() && !message->ContentTypeHeader())
             {
-            return CMSRPResponse::EUnintelligibleRequest;
+            return EUnintelligibleRequest;
             }
         }
     
     MSRPLOG( "CMSRPMessageHandler::CheckValidityOfMessage exit" )
-    return CMSRPResponse::EAllOk;
+    return EAllOk;
     }
 
+// -----------------------------------------------------------------------------
+// CMSRPMessageHandler::OpenTemporaryFileL
+// -----------------------------------------------------------------------------
+//
+void CMSRPMessageHandler::OpenTemporaryFileL( const TDesC& aFilename )
+    {
+    MSRPLOG( "CMSRPMessageHandler::OpenTemporaryFileL enter" )
+
+    iTempFile = new ( ELeave ) RFile();
+    // create temporary filename
+    iTempFile->Open( iFs, aFilename, EFileShareExclusive | EFileWrite );
+
+    MSRPLOG2( "CMSRPMessageHandler::OpenTemporaryFileL exit, filename = %S", &iTempFileName )
+    }
+
+// -----------------------------------------------------------------------------
+// CMSRPMessageHandler::CreateTemporaryFileL
+// -----------------------------------------------------------------------------
+//
+void CMSRPMessageHandler::CreateTemporaryFileL( )
+    {
+    MSRPLOG( "CMSRPMessageHandler::CreateTemporaryFileL enter" )
+
+    iTempFile = new ( ELeave ) RFile();
+    // create temporary filename
+    User::LeaveIfError( iTempFile->Temp(
+        iFs, KDefaultTempFilePath, iTempFileName, EFileShareExclusive | EFileWrite ) );
+    iMessage->SetFileName( iTempFileName );
+
+    MSRPLOG2( "CMSRPMessageHandler::CreateTemporaryFileL exit, filename = %S", &iTempFileName )
+    }
+
+// -----------------------------------------------------------------------------
+// CMSRPMessageHandler::WriteMessageToFileL
+// -----------------------------------------------------------------------------
+//
+void CMSRPMessageHandler::WriteMessageToFileL( TDesC8& aBuffer )
+    {
+    MSRPLOG( "CMSRPSocketReader::WriteMessageToFileL enter" )
+
+    if ( !iTempFileName.Length() )
+        {
+        CreateTemporaryFileL();
+        }
+    else
+        {
+        OpenTemporaryFileL( iTempFileName );
+        }
+
+    MSRPLOG2( "CMSRPSocketReader::WriteMessageToFileL writing to file = %S", &iMessage->GetFileName() );
+
+    TInt fileSize;
+    iTempFile->Size( fileSize );
+    if ( iMessage->ByteRangeHeader()->StartPosition() > fileSize )
+        {
+        iTempFile->SetSize(
+            iMessage->ByteRangeHeader()->StartPosition() );
+        }
+    iTempFile->Size( fileSize );
+
+    iTempFile->Write(
+        iMessage->ByteRangeHeader()->StartPosition() - 1, aBuffer );
+    MSRPLOG2( "CMSRPSocketReader::WriteMessageToFileL writing to pos = %d", iMessage->ByteRangeHeader()->StartPosition() - 1 );
+    iTempFile->Size( iCurrentNumberOfBytes );
+    iTempFile->Close();
+    delete iTempFile;
+    iTempFile = NULL;
+                        
+    MSRPLOG( "CMSRPSocketReader::WriteMessageToFileL exit" )
+    }
+
+// -----------------------------------------------------------------------------
+// CMSRPMessageHandler::AppendMessageToFileL
+// -----------------------------------------------------------------------------
+//
+void CMSRPMessageHandler::AppendMessageToFileL( TDesC8& aBuffer )
+    {
+    MSRPLOG( "CMSRPSocketReader::AppendMessageToFileL enter" )
+    OpenTemporaryFileL( iMessage->GetFileName() );
+
+    TInt filePos( 0 );
+    iTempFile->Seek( ESeekEnd, filePos );
+
+TInt fileSize;
+iTempFile->Size( fileSize );
+MSRPLOG2( "CMSRPSocketReader::AppendMessageToFileL writing to pos = %d", fileSize );
+
+    iTempFile->Write( aBuffer );
+    iTempFile->Size( iCurrentNumberOfBytes );
+    iTempFile->Close();
+    delete iTempFile;
+    iTempFile = NULL;
+
+    MSRPLOG( "CMSRPSocketReader::AppendMessageToFileL exit" )
+    }
+
+// -----------------------------------------------------------------------------
+// CMSRPMessageHandler::MessageId
+// -----------------------------------------------------------------------------
+//
+HBufC8* CMSRPMessageHandler::MessageIdLC( )
+    {
+    return iMessage->MessageIdHeader()->ToTextValueLC();
+    }
+
+// -----------------------------------------------------------------------------
+// CMSRPMessageHandler::CurrentReceiveProgress
+// -----------------------------------------------------------------------------
+//
+void CMSRPMessageHandler::CurrentReceiveProgress( TInt& aBytesTransferred, TInt& aTotalBytes )
+    {
+    aBytesTransferred = iCurrentNumberOfBytes;
+    aTotalBytes = iMessage->ByteRangeHeader()->TotalLength(); 
+    }
+
+// -----------------------------------------------------------------------------
+// CMSRPMessageHandler::CurrentSendProgress
+// -----------------------------------------------------------------------------
+//
+void CMSRPMessageHandler::CurrentSendProgress( TInt& aBytesTransferred, TInt& aTotalBytes )
+    {
+    if ( iBufPosInFile )
+        {
+        aBytesTransferred = iBufPosInFile;
+        aTotalBytes = iFileSize; 
+        }
+    else
+        {
+        aBytesTransferred = iMessage->Content().Length() - iContentPtr.Length();
+        aTotalBytes = iMessage->Content().Length(); 
+        }
+    }
+
+// -----------------------------------------------------------------------------
+// CMSRPMessageHandler::CheckMessageChunk
+// -----------------------------------------------------------------------------
+//
+TBool CMSRPMessageHandler::CheckMessageChunkL( CMSRPMessageHandler& aOtherMessage )
+    {
+    MSRPLOG( "-> CMSRPMessageHandler::CheckMessageChunk" )
+    HBufC8* ownToPath = iMessage->ToPathHeader()->ToTextValueLC(); 
+    HBufC8* ownMessageId = iMessage->MessageIdHeader()->ToTextValueLC();
+    HBufC8* otherToPath = aOtherMessage.GetIncomingMessage()->ToPathHeader()->ToTextValueLC();
+    HBufC8* otherMessageId = aOtherMessage.GetIncomingMessage()->MessageIdHeader()->ToTextValueLC();
+    
+    if ( *ownToPath == *otherToPath && *ownMessageId == *otherMessageId )
+        {
+        CleanupStack::PopAndDestroy( 4 ); // above texts
+        MSRPLOG( "CMSRPMessageHandler::CheckMessageChunk MATCH!" )
+        // there is already a message, this chunk belongs to a previous
+        // message 
+        if ( iMessage->ByteRangeHeader() )
+            {
+            CMSRPByteRangeHeader* byteR = CMSRPByteRangeHeader::NewL(
+                    iMessage->ByteRangeHeader()->StartPosition( ),
+                    iMessage->ByteRangeHeader()->EndPosition( ),
+                    iMessage->ByteRangeHeader()->TotalLength( ) );
+            aOtherMessage.GetIncomingMessage()->SetByteRangeHeader( byteR );
+            }
+        aOtherMessage.SetTransactionId( *iSentChunks[ iSentChunks.Count() -1 ] );
+        MSRPLOG( "CMSRPMessageHandler::CheckMessageChunk MATCH2!" )
+        return ETrue;
+        }
+        
+    CleanupStack::PopAndDestroy( 4 ); // above texts
+    MSRPLOG( "<- CMSRPMessageHandler::CheckMessageChunk" )
+    return EFalse;
+    }
+    
+// -----------------------------------------------------------------------------
+// CMSRPMessageHandler::CheckMessageChunk
+// -----------------------------------------------------------------------------
+//
+void CMSRPMessageHandler::SetMessageObserver( MMSRPMessageObserver* aMessageObserver )
+    {
+    iMSRPMessageObserver = aMessageObserver;
+    }
+
+// -----------------------------------------------------------------------------
+// CMSRPMessageHandler::IsSending
+// -----------------------------------------------------------------------------
+//
+TBool CMSRPMessageHandler::IsSending( )
+    {
+    return isSending;
+    }
+
+// -----------------------------------------------------------------------------
+// CMSRPMessageHandler::TemporaryFileName
+// -----------------------------------------------------------------------------
+//
+TFileName& CMSRPMessageHandler::TemporaryFileName( )
+    {
+    return iTempFileName;
+    }
+
+// -----------------------------------------------------------------------------
+// CMSRPMessageHandler::SetTemporaryFileName
+// -----------------------------------------------------------------------------
+//
+void CMSRPMessageHandler::SetTemporaryFileName( TFileName aFileName ) 
+    {
+    iTempFileName = aFileName; 
+    iMessage->SetFileName( iTempFileName );
+    }
+
+// -----------------------------------------------------------------------------
+// CMSRPMessageHandler::ResponseHandled
+// -----------------------------------------------------------------------------
+//
+void CMSRPMessageHandler::ResponseHandled( )
+    {
+    delete iResponse;
+    iResponse = NULL;
+    iActiveMsgType = EMSRPMessage;
+    iBuffer.Zero();
+    }
+
+// End of file

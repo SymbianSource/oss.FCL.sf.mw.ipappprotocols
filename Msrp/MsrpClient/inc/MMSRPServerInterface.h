@@ -33,8 +33,7 @@ class MMSRPServerInterface
     {
 public:
     
-    virtual void GetLocalPathL( TDes8 &aLocalHost,
-                               TDes8 &aSessionID ) = 0;
+    virtual void GetLocalPathL( TDes8 &aLocalHost ) = 0;
     
     virtual void Connect( const TDesC8& aRemoteHost,
                           const TUint aRemotePort,
@@ -55,9 +54,9 @@ public:
         
     virtual TInt SendMessage( TDesC8& aMessageBuffer ) = 0;
     
-    virtual TInt CancelSending( TDesC8& aMessageId ) = 0;
+    virtual TInt CancelSending( const TDesC8& aMessageId ) = 0;
     
-    virtual void CancelReceiving( ) = 0;
+    virtual TInt CancelReceiving( const TDesC8& aMessageId ) = 0;
     virtual void CancelSendResultListening( ) = 0;
         
     virtual const TDesC8& GetMessageIdOfSentMessage() const = 0 ;
@@ -72,7 +71,18 @@ public:
     virtual TBool GetSendProgress() const = 0;
     virtual TInt GetBytesSent() const = 0;
     virtual TInt GetTotalBytes() const = 0;
-        
+    
+    /**
+      * returns message id from incoming message
+      * @return message id
+      */
+    virtual TDesC8& ListenMessageId() = 0;
+    
+    /**
+      * returns message id from sent message
+      * @return message id
+      */
+    virtual TDesC8& SendMessageId() = 0;
     };
 
 #endif /* MMSRPSERVERINTERFACE_H_ */

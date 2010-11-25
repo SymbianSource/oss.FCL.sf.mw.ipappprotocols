@@ -89,19 +89,6 @@ class CMSRPMessage : public CMSRPMessageBase
 		 */
 		IMPORT_C TFileName& GetFileName( );
 		        
-		/* Set File Size */
-		IMPORT_C void SetFileSize( const TInt aFileSize );
-		
-		/* Get File Size */
-		IMPORT_C TInt GetFileSize();
-		
-		/* Set Granularity for file transfer */
-		        
-		IMPORT_C void SetNotifyProgress(TBool aNotify);
-		        
-		/* Get Granularity for file transfer */
-        IMPORT_C TBool GetNotifyProgress();        
-		        		
 		/**
 		* Internalizes the class from given stream
  		* @param aReadStream a stream containing the value of the
@@ -123,6 +110,11 @@ class CMSRPMessage : public CMSRPMessageBase
 		*        externalized object (header name not included).
         */
 	    void DoInternalizeL( RReadStream& aReadStream  );
+	    
+        /**
+        * Converts the buffer to file
+        */
+        void ConvertBufferToFileL( );
         
     private: // Data
 
@@ -131,12 +123,6 @@ class CMSRPMessage : public CMSRPMessageBase
 
 	   // filename
 	   TFileName iFileName;
-	   
-	   //filesize
-	   TInt iFileSize;
-	   
-	   //Granularity of the file
-	   TBool iNotifyProgress;
 	};
 
 #endif // CMSRPMESSAGE_H

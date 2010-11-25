@@ -19,6 +19,9 @@
 
 // INCLUDES
 
+// forwrd declarations
+class CMSRPMessageHandler;
+
 
 // CLASS DECLARATIONS
 
@@ -45,6 +48,7 @@ public:
     
     enum TMsrpMsgEndStatus
         {
+        EMessageNotDefined,
         EMessageEnd, // $
         EMessageContinues, // +
         EMessageTerminated // #
@@ -54,14 +58,21 @@ public:
    
     virtual void AddHeaderL( TMsrpHeaderType aHeaderType, TPtrC8& aHeaderValue, TPtrC8& aHeaderTypeAndValue ) = 0;
     
-    virtual void AddContentL( TPtrC8& aContent ) = 0;
+    virtual void AddContentL( TPtrC8& aContent, TBool aByteRangeFound = EFalse ) = 0;
     
-    virtual void SetTransactionId( TPtrC8& aTransactionId ) = 0;
+    virtual void SetTransactionId( TDesC8& aTransactionId ) = 0;
     
     virtual void SetStatusOfResponseL( TPtrC8& aStatusCode, TPtrC8& aStatusMessage ) = 0;
     
     virtual void EndOfMessageL( TMsrpMsgEndStatus aStatus ) = 0;
     
+    /**
+    * Check if this chunk belongs to one of messages received 
+    * earlier. If so, the messages are combined to one
+    * entity
+    * @return true if given message belongs to already received chunk
+    */
+    virtual TBool CheckMessageChunkL( CMSRPMessageHandler& aOtherMessage ) = 0;
     };
 
 #endif /* MMSRPMESSAGEHANDLER_H_ */

@@ -28,13 +28,37 @@ protected:
 
 public:
     
-    virtual void MessageSendCompleteL( ) = 0;
+    /**
+    * Informs when the whole message has been sent successfully
+    * @param aMessageHandler message handler instance, ownership not transferred
+     */
+    virtual void MessageSendCompleteL( CMSRPMessageHandler* aMessageHandler ) = 0;
     
+    /**
+    * Informs when response has been sent to the incoming message
+    * @param aMessageHandler message handler instance, ownership not transferred
+     */
 	virtual void MessageResponseSendCompleteL( CMSRPMessageHandler& aMsg ) = 0;
+
+    /**
+    * Informs when report has been sent to the incoming message
+    * @param aMessageHandler message handler instance, ownership not transferred
+     */
+    virtual void MessageReportSendCompleteL( CMSRPMessageHandler& aMsg ) = 0;
+
+    /**
+    * Current message send progress reported to connected subsessions
+    * @param aMessageHandler message handler instance, ownership not transferred
+     */
+	virtual void MessageSendProgressL( CMSRPMessageHandler* aMessageHandler ) = 0;
 	
-	virtual void MessageSendProgressL(TInt aBytesSent, TInt aTotalBytes) = 0;
+    /**
+    * Current message receive progress reported to connected subsessions
+    * @param aMessageHandler message handler instance, ownership not transferred
+     */
+	virtual void MessageReceiveProgressL( CMSRPMessageHandler* aMessageHandler ) = 0;
 	
-	virtual void MessageReceiveProgressL(TInt aBytesSent, TInt aTotalBytes) = 0;
+	virtual void MessageCancelledL( ) = 0;
         
     virtual void WriterError( ) = 0;
     

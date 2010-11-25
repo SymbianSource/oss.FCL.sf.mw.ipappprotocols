@@ -29,6 +29,7 @@
 #include "CMsrpByteRangeHeader.h"
 #include "CMsrpFailureReportHeader.h"
 #include "CMsrpSuccessReportHeader.h"
+#include "CMsrpStatusHeader.h"
 
 // -----------------------------------------------------------------------------
 // CMSRPMessageBase::CMSRPMessageBase
@@ -51,6 +52,7 @@ EXPORT_C CMSRPMessageBase::~CMSRPMessageBase()
 	delete iByteRange;
 	delete iFailureReport;
 	delete iSuccessReport;
+    delete iStatusHeader;
 	}
 
 // -----------------------------------------------------------------------------
@@ -244,5 +246,23 @@ EXPORT_C const CMSRPByteRangeHeader* CMSRPMessageBase::ByteRangeHeader() const
         }
     return NULL;
 	}
+
+// -----------------------------------------------------------------------------
+// CMSRPMessageBase::SetStatusHeaderL
+// -----------------------------------------------------------------------------
+//
+EXPORT_C void CMSRPMessageBase::SetStatusHeader( CMSRPStatusHeader* aStatus )
+    {
+    iStatusHeader = aStatus;
+    }
+
+// -----------------------------------------------------------------------------
+// CMSRPMessageBase::StatusHeader
+// -----------------------------------------------------------------------------
+//
+EXPORT_C const CMSRPStatusHeader* CMSRPMessageBase::StatusHeader() const
+    {
+    return iStatusHeader;
+    }
 
 // End of File

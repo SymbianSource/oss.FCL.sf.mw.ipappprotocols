@@ -14,7 +14,9 @@
 *
 */
 
-TARGET			msrpheader.dll
+#include <platform_paths.hrh>
+
+TARGET		    msrpheader.dll
 TARGETTYPE      dll
 UID             0x1000008d 0x2002B59D
 
@@ -23,22 +25,24 @@ VENDORID        0x101FB657
 CAPABILITY      All -Tcb
 
 SOURCEPATH		../src
-SOURCE		CMSRPContentTypeHeader.cpp
-SOURCE		CMSRPFailureReportHeader.cpp
-SOURCE		CMSRPFromPathHeader.cpp
-SOURCE		CMSRPFromToHeaderBase.cpp
-SOURCE		CMSRPHeaderBase.cpp
-SOURCE		CMSRPMessage.cpp
-SOURCE		CMSRPResponse.cpp
-SOURCE		CMSRPSuccessReportHeader.cpp
-SOURCE		CMSRPToPathHeader.cpp
-SOURCE		CMSRPStrings.cpp
-SOURCE      CMSRPMessageIdHeader.cpp
-SOURCE      CMSRPByteRangeHeader.cpp
-SOURCE      MSRPStrings.cpp
-SOURCE      CMSRPTlsPtrs.cpp
-SOURCE      TMSRPHeaderUtil.cpp
-SOURCE      CMSRPMessageBase.cpp
+SOURCE		    CMSRPContentTypeHeader.cpp
+SOURCE		    CMSRPFailureReportHeader.cpp
+SOURCE		    CMSRPFromPathHeader.cpp
+SOURCE		    CMSRPFromToHeaderBase.cpp
+SOURCE		    CMSRPHeaderBase.cpp
+SOURCE		    CMSRPMessage.cpp
+SOURCE		    CMSRPResponse.cpp
+SOURCE		    CMSRPSuccessReportHeader.cpp
+SOURCE		    CMSRPToPathHeader.cpp
+SOURCE		    CMSRPStrings.cpp
+SOURCE          CMSRPMessageIdHeader.cpp
+SOURCE          CMSRPByteRangeHeader.cpp
+SOURCE          MSRPStrings.cpp
+SOURCE          CMSRPTlsPtrs.cpp
+SOURCE          TMSRPHeaderUtil.cpp
+SOURCE          CMSRPMessageBase.cpp
+SOURCE          CMSRPStatusHeader.cpp
+SOURCE          CMSRPReport.cpp
 
 
 START STRINGTABLE ../strings/MSRPStrConsts.st
@@ -48,7 +52,6 @@ END
 USERINCLUDE       ../inc
 USERINCLUDE       ../../inc 
 
-OS_LAYER_SYSTEMINCLUDE
 MW_LAYER_SYSTEMINCLUDE
 
 LIBRARY           inetprotutil.lib
@@ -56,8 +59,5 @@ LIBRARY           apmime.lib
 LIBRARY           estor.lib
 LIBRARY           bafl.lib
 LIBRARY           euser.lib
-LIBRARY 		  efsrv.lib
+LIBRARY		  efsrv.lib
 DEBUGLIBRARY      flogger.lib
-
-EXPORTUNFROZEN
-

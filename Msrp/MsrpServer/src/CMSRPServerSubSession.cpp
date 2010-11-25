@@ -24,6 +24,7 @@
 #include "MMSRPConnection.h"
 #include "CMSRPMessageHandler.h"
 #include "CMSRPResponse.h"
+#include "CMSRPReport.h"
 #include "s32mem.h"
 #include "CMSRPMessage.h"
 #include "TStateFactory.h"
@@ -57,7 +58,11 @@ void CRMessageContainer:: ReadL(TInt aParam,TDes8& aDes,TInt aOffset) const
 void CRMessageContainer::Complete(TInt aReason)
     {
     iStatus = FALSE;
-    iMsg.Complete(aReason);    
+    if ( !iMsg.IsNull() )
+        {
+        MSRPLOG("CRMessageContainer::Complete message completed");
+        iMsg.Complete(aReason);    
+        }
     }
 
 TBool CRMessageContainer::Check()
@@ -80,23 +85,29 @@ TBool CRMessageContainer::set(const RMessage2& aMessage)
         }    
     }
 
-CMSRPServerSubSession* CMSRPServerSubSession::NewL( CMSRPServerSession& aServerSession, CStateFactory& aStateFactory )
+CMSRPServerSubSession* CMSRPServerSubSession::NewL( 
+    CMSRPServerSession& aServerSession, 
+    CStateFactory& aStateFactory,
+    const TDesC8& aSessionId )
     {
     CMSRPServerSubSession* self = 
-        CMSRPServerSubSession::NewLC( aServerSession, aStateFactory );
+        CMSRPServerSubSession::NewLC( aServerSession, aStateFactory, aSessionId );
 
     CleanupStack::Pop(self);
     return self;    
     }    
 
 
-CMSRPServerSubSession* CMSRPServerSubSession::NewLC( CMSRPServerSession& aServerSession,CStateFactory& aStateFactory )
+CMSRPServerSubSession* CMSRPServerSubSession::NewLC( 
+    CMSRPServerSession& aServerSession,
+    CStateFactory& aStateFactory,
+    const TDesC8& aSessionId )
     {
     
     CMSRPServerSubSession* self =
                             new (ELeave) CMSRPServerSubSession( aServerSession, aStateFactory );
     CleanupStack::PushL(self);
-    self->ConstructL();
+    self->ConstructL( aSessionId );
     return self;
     }
 
@@ -114,61 +125,43 @@ CMSRPServerSubSession::~CMSRPServerSubSession()
     
     iState = NULL;         
 
+    QueueLog();
+
     iOutMsgQ.Destroy();
     iInCommingMsgQ.Destroy();
     iPendingSendMsgQ.Destroy();
     iPendingForDeletionQ.Destroy();
-
+    iPendingDataSendCompleteQ.Destroy();
+    iPendingDataIncCompleteQ.Destroy();
+    
     QueueLog();
 
-    if(iCurrentMsgHandler)
-        {
-        delete iCurrentMsgHandler;
-        iCurrentMsgHandler = NULL;
-        }
-    
+    delete iCurrentMsgHandler;
     if(iConnection)
         {
         iConnection->ReleaseConnection(*this);
         iConnection = NULL;
         }
-
-    if(iLocalSessionID)
-        {
-        delete iLocalSessionID;
-        iLocalSessionID = NULL;
-        }
-
-    if( iRemoteSessionID )
-        {
-        delete iRemoteSessionID;
-        iRemoteSessionID = NULL;
-        }
-
-    if( iReceivedResp )
-        {
-        delete iReceivedResp;
-        iReceivedResp = NULL;
-        }
-    if( iReceiveFileMsgHdler )
-        {
-        delete iReceiveFileMsgHdler;
-        iReceiveFileMsgHdler = NULL;
-        }
+    delete iLocalSessionID;
+    delete iRemoteSessionID;
+    delete iReceivedResp;
+    delete iReceiveFileMsgHdler;
 
     MSRPLOG("CMSRPServerSubSession::~CMSRPServerSubSession Exit");
     }
 
 
-void CMSRPServerSubSession::ConstructL( )
+void CMSRPServerSubSession::ConstructL( const TDesC8& aSessionId )
     {
     // Not the place where this should be done!!
     MSRPLOG("CMSRPServerSubSession::ConstructL");  
     iState = iStateFactory.getStateL( EIdle );
-    iLocalSessionID = CreateSubSessionIDL();    
+    iLocalSessionID = HBufC8::NewL( aSessionId.Length() );
+    *iLocalSessionID = aSessionId;    
     }
 
 
+#if 0
 HBufC8* CMSRPServerSubSession::CreateSubSessionIDL( )
     {
     MSRPLOG("CMSRPServerSubSession::CreateSubSessionIDL");
@@ -185,9 +178,10 @@ HBufC8* CMSRPServerSubSession::CreateSubSessionIDL( )
     CleanupStack::Pop(1);// sessID
     return sessID;
     }
+#endif
 
 
-TBool CMSRPServerSubSession::ProcessEventL( TMSRPFSMEvent aEvent)
+void CMSRPServerSubSession::ProcessEventL( TMSRPFSMEvent aEvent)
     {
     // Call the relevant state. Setup Traps for graceful error propagation to the client.
     MSRPLOG("CMSRPServerSubSession::ProcessEventL() Entered");
@@ -197,11 +191,10 @@ TBool CMSRPServerSubSession::ProcessEventL( TMSRPFSMEvent aEvent)
     iState = iState->EventL(aEvent, this); 
     
     MSRPLOG("CMSRPServerSubSession::ProcessEventL() Exit ");
-    return TRUE;
     }
 
 
-TBool CMSRPServerSubSession::ServiceL( const RMessage2& aMessage )
+void CMSRPServerSubSession::ServiceL( const RMessage2& aMessage )
     {
     MSRPLOG("CMSRPServerSubSession::ServiceL()");
 
@@ -210,10 +203,21 @@ TBool CMSRPServerSubSession::ServiceL( const RMessage2& aMessage )
     // Getting rid of the switch for translation.
     TMSRPFSMEvent event = (TMSRPFSMEvent) (aMessage.Function() - 2); 
 
-    // Store the incomming aMessage to form the context of the state machine.
+    // Store the incoming aMessage to form the context of the state machine.
     iClientMessage = &aMessage;        
-        
-    return ProcessEventL(event);    
+
+    // let's handle first the special case of EMSRPProgressReportsEvent
+    // that event belongs to subsession
+    if ( event == EMSRPProgressReportsEvent )
+        {
+        iSendProgressReports = aMessage.Int0();
+        CompleteClient( KErrNone );
+        return;
+        }
+    else
+        {
+        ProcessEventL(event);    
+        }
     }
 
 
@@ -232,16 +236,23 @@ void CMSRPServerSubSession::ConnectionStateL( TInt /*aNewState*/, TInt /*aStatus
 
 TBool CMSRPServerSubSession::MessageReceivedL( CMSRPMessageHandler* aMsg )
     {
-    MSRPLOG("CMSRPServerSubSession::MessageReceivedL - New message received");
-    TBool retVal = FALSE;
-    if(checkMessageForSelfL(aMsg))
-        {           
+    MSRPLOG2("CMSRPServerSubSession::MessageReceivedL - New message received = %d", aMsg);
+    if ( CheckMessageSessionIdL( aMsg ) )
+        {
+        if ( aMsg->IsMessageComplete() )
+            {
+            if ( iCurrentlyReceivingMsgQ.FindElement( aMsg ) )
+                {
+                iCurrentlyReceivingMsgQ.explicitRemove( aMsg );
+                }
+            }
         iReceivedMsg = aMsg;
-        ProcessEventL(EMSRPIncomingMessageReceivedEvent);
-        retVal = TRUE;
+        iReceivedMsg->SetMessageObserver( this );
+        ProcessEventL( EMSRPIncomingMessageReceivedEvent );
+        return ETrue;
         }
-
-    return retVal;    
+        
+    return EFalse;    
     }
 
 
@@ -253,9 +264,24 @@ void CMSRPServerSubSession::UnclaimedMessageL( CMSRPMessageHandler* aMsg )
             aMsg->MessageType() == MMSRPIncomingMessage::EMSRPNotDefined )
             && EFalse == matchSessionIDL(aMsg->GetIncomingMessage()->ToPathHeader()))
         {        
-        TBool sendToClient = aMsg->SendResponseL(this, *iConnection, 
-                CMSRPResponse::ESessionDoesNotExist);          
-        iPendingForDeletionQ.Queue(*aMsg);
+        aMsg->SendResponseL(this, *iConnection, ESessionDoesNotExist );
+        if ( aMsg->IsMessageComplete() )
+            {
+            // no response was needed, must check report also 
+            aMsg->SendReportL( this, *iConnection, ESessionDoesNotExist );        
+            if ( aMsg->IsMessageComplete() )
+                {
+                delete aMsg;
+                }
+            else
+                {
+                iPendingForDeletionQ.Queue(*aMsg);
+                }
+            }
+        else
+            {
+            iPendingForDeletionQ.Queue(*aMsg);
+            }
         }
     else
         {
@@ -263,52 +289,84 @@ void CMSRPServerSubSession::UnclaimedMessageL( CMSRPMessageHandler* aMsg )
         }    
     }
 
-
 // Implementation of interface from MMSRPMsgObserver.
 
-void CMSRPServerSubSession::MessageSendCompleteL()
+void CMSRPServerSubSession::MessageSendCompleteL( CMSRPMessageHandler* aMessageHandler )
     {
     // Called when a message is fully sent out.
-    ProcessEventL(EMSRPDataSendCompleteEvent);
+    iCurrentMsgHandler = aMessageHandler;
+    ProcessEventL( EMSRPDataSendCompleteEvent );
     }
 
 void CMSRPServerSubSession::MessageResponseSendCompleteL(CMSRPMessageHandler& aMsg)
     {
     // Called when a message is fully sent out.
     // Common event handling.
-    iReceivedResp = &aMsg;
-    if(iFileShare)
-        {        
-        ProcessEventL(EMSRPResponseSendCompleteEvent);
+    if ( iPendingForDeletionQ.FindElement( &aMsg ) )
+        {
+        // no need to handle, this message did not belong to this session
+        iPendingForDeletionQ.explicitRemove( &aMsg );
+        delete &aMsg;
+        return;
         }
-        if(iPendingForDeletionQ.explicitRemove(iReceivedResp))
+    iReceivedResp = &aMsg;
+    ProcessEventL( EMSRPResponseSendCompleteEvent );
+    delete iReceivedResp;
+    iReceivedResp = NULL;
+    }
+
+void CMSRPServerSubSession::MessageReportSendCompleteL( CMSRPMessageHandler& aMsg )
+    {
+    if ( iPendingForDeletionQ.FindElement( &aMsg ) )
+        {
+        // no need to handle, this message did not belong to this session
+        iPendingForDeletionQ.explicitRemove( &aMsg );
+        delete &aMsg;
+        return;
+        }
+    iReceivedReport = &aMsg;
+    ProcessEventL( EMSRPReportSendCompleteEvent );
+    delete iReceivedReport;
+    iReceivedReport = NULL;
+    }
+
+void CMSRPServerSubSession::MessageSendProgressL( CMSRPMessageHandler* aMessageHandler )
+    {
+    MSRPLOG2( "CMSRPServerSubSession::MessageSendProgressL, instance = %d", aMessageHandler )
+    if ( iSendProgressReports )
+        {
+        iSendProgressMsg = aMessageHandler;
+        ProcessEventL( EMSRPSendProgressEvent );
+        }
+    }
+
+void CMSRPServerSubSession::MessageReceiveProgressL( CMSRPMessageHandler* aMessageHandler )
+    {
+    MSRPLOG2( "CMSRPServerSubSession::MessageReceiveProgressL, instance = %d", aMessageHandler )
+    if ( iSendProgressReports )
+        {
+        if ( CheckMessageSessionIdL( aMessageHandler ) )
             {
-            delete iReceivedResp;
-            iReceivedResp = NULL;
+            if ( !iCurrentlyReceivingMsgQ.FindElement( aMessageHandler ) )
+                {
+                iCurrentlyReceivingMsgQ.Queue( *aMessageHandler );
+                }
+            iReceiveProgressMsg = aMessageHandler;
+            ProcessEventL( EMSRPReceiveProgressEvent );
             }
-        
+        }
     }
 
-
-void CMSRPServerSubSession::MessageSendProgressL(TInt aBytesSent, TInt aTotalBytes)
+void CMSRPServerSubSession::MessageCancelledL( )
     {
-    iBytesTransferred = aBytesSent;
-    iTotalBytes = aTotalBytes;
-    ProcessEventL(EMSRPSendProgressEvent);    
+    MSRPLOG( "CMSRPServerSubSession::MessageCancelledL enter" )
+    ProcessEventL( EMSRPDataCancelledEvent );
+    MSRPLOG( "CMSRPServerSubSession::MessageCancelledL exit" )
     }
-
-
-void CMSRPServerSubSession::MessageReceiveProgressL(TInt aBytesRecvd, TInt aTotalBytes)
-    {
-    iBytesTransferred = aBytesRecvd;
-    iTotalBytes = aTotalBytes;
-    ProcessEventL(EMSRPReceiveProgressEvent);    
-    }
-
 
 void CMSRPServerSubSession::WriterError()
     {
-    
+    MSRPLOG( "CMSRPServerSubSession::WriterError!!" )
     }
 
 
@@ -347,78 +405,70 @@ TBool CMSRPServerSubSession::QueueClientSendRequestsL()
     }
 
 
-void CMSRPServerSubSession::NotifyFileReceiveResultToClientL(CMSRPMessageHandler */*msgHandler*/)
+void CMSRPServerSubSession::SendProgressToClientL( CMSRPMessageHandler* aMessageHandler )
     {
-    //TODO
-    MSRPLOG("CMSRPServerSubSession::NotifyFileReceiveResultToClientL enter");
-    iSendResultListenMSRPDataPckg().iStatus = 200;
-    iSendResultListenMSRPDataPckg().iIsProgress = FALSE;
-    iResponseListner.Write(0,iSendResultListenMSRPDataPckg);
-    iResponseListner.Complete( KErrNone );
-    MSRPLOG("CMSRPServerSubSession::NotifyFileReceiveResultToClientL exit");
-    }
-
-
-void CMSRPServerSubSession::NotifyFileSendResultToClientL(CMSRPMessageHandler */*msgHandler*/)
-    {
-    //TODO
-    MSRPLOG("CMSRPServerSubSession::NotifyFileSendResultToClientL enter");
-    iSendResultListenMSRPDataPckg().iStatus = 200;
-    iSendResultListenMSRPDataPckg().iIsProgress = FALSE;
-    iResponseListner.Write(0,iSendResultListenMSRPDataPckg);
-    iResponseListner.Complete( KErrNone );
-    MSRPLOG("CMSRPServerSubSession::NotifyFileSendResultToClientL exit");
-    }
-
-
-TBool CMSRPServerSubSession::SendProgressToClientL(CMSRPMessageHandler */*msgHandler*/)
-    {
-    MSRPLOG("CMSRPServerSubSession::SendProgressToClientL enter");
-    iSendResultListenMSRPDataPckg().iStatus    = KErrNone;
+    MSRPLOG2("CMSRPServerSubSession::SendProgressToClientL enter, instance = %d", aMessageHandler );
+    TInt bytesTransferred;
+    TInt totalBytes;
+    aMessageHandler->CurrentSendProgress( bytesTransferred, totalBytes );
+    MSRPLOG2( "CMSRPServerSubSession::SendProgressToClientL, bytesr = %d", bytesTransferred )
+    MSRPLOG2( "CMSRPServerSubSession::SendProgressToClientL, total = %d", totalBytes )
+    HBufC8* messageId = aMessageHandler->MessageIdLC();
+    iSendResultListenMSRPDataPckg().iStatus = EAllOk;
     iSendResultListenMSRPDataPckg().iIsProgress = TRUE;
-    iSendResultListenMSRPDataPckg().iBytesSent = iBytesTransferred;
-    iSendResultListenMSRPDataPckg().iTotalBytes = iTotalBytes;
-    
+    iSendResultListenMSRPDataPckg().iBytesSent = bytesTransferred;
+    iSendResultListenMSRPDataPckg().iTotalBytes = totalBytes;
+    if ( messageId->Length() < KMaxLengthOfSessionId )
+        {
+        iSendResultListenMSRPDataPckg().iMessageId = *messageId;
+        }
+    CleanupStack::PopAndDestroy(); // messageId
     iResponseListner.Write(0,iSendResultListenMSRPDataPckg);
     iResponseListner.Complete( KErrNone );
 
     MSRPLOG("CMSRPServerSubSession::SendProgressToClientL exit");
-    return TRUE;
     }
 
 
-TBool CMSRPServerSubSession::ReceiveProgressToClientL(CMSRPMessageHandler */*msgHandler*/)
+void CMSRPServerSubSession::ReceiveProgressToClientL( CMSRPMessageHandler* aMessageHandler )
     {
-    MSRPLOG("CMSRPServerSubSession::ReceiveProgressToClientL enter");
+    MSRPLOG2("CMSRPServerSubSession::ReceiveProgressToClientL enter, instance = %d", aMessageHandler );
+    TInt bytesReceived;
+    TInt totalBytes;
+    aMessageHandler->CurrentReceiveProgress( bytesReceived, totalBytes );
+    MSRPLOG2( "CMSRPServerSubSession::ReceiveProgressToClientL, bytesr = %d", bytesReceived )
+    MSRPLOG2( "CMSRPServerSubSession::ReceiveProgressToClientL, total = %d", totalBytes )
+    HBufC8* messageId = aMessageHandler->MessageIdLC();
     iListenMSRPdataPckg().iStatus    = KErrNone;
     iListenMSRPdataPckg().iIsProgress = TRUE;
-    iListenMSRPdataPckg().iBytesRecvd = iBytesTransferred;
-    iListenMSRPdataPckg().iTotalBytes = iTotalBytes;
-    
+    iListenMSRPdataPckg().iBytesRecvd = bytesReceived;
+    iListenMSRPdataPckg().iTotalBytes = totalBytes;
+    if ( messageId->Length() < KMaxLengthOfSessionId )
+        {
+        iListenMSRPdataPckg().iMessageId = *messageId;
+        }
+    CleanupStack::PopAndDestroy(); // messageId
     iIncommingMessageListner.Write(0,iListenMSRPdataPckg);
     iIncommingMessageListner.Complete( KErrNone );
     MSRPLOG("CMSRPServerSubSession::ReceiveProgressToClientL exit");
-    return TRUE;
     }
 
 
-TBool CMSRPServerSubSession::sendResultToClientL(CMSRPMessageHandler *msgHandler)
+void CMSRPServerSubSession::sendResultToClientL(CMSRPMessageHandler *msgHandler)
     {
     MSRPLOG("CMSRPServerSubSession::sendResultToClientL");
     HBufC8* messageId = NULL;
-    TUint i=0;
 
     // Allocates memory.
-    TBool error = msgHandler->GetSendResultL( i, messageId );            
+    TUint errorCode = msgHandler->GetSendResultL( messageId );            
 
     iSendResultListenMSRPDataPckg().iIsProgress = FALSE;
     iSendResultListenMSRPDataPckg().iMessageId = *messageId;
-    iSendResultListenMSRPDataPckg().iStatus    = i;
+    iSendResultListenMSRPDataPckg().iStatus = errorCode;
     iResponseListner.Write(0,iSendResultListenMSRPDataPckg);
 
     delete messageId;
     iResponseListner.Complete( KErrNone );
-    return error;
     }
 
 
@@ -429,32 +479,77 @@ TBool CMSRPServerSubSession::sendMsgToClientL(CMSRPMessageHandler *incommingMsgH
     MSRPLOG("CMSRPServerSubSession::sendMsgToClientL");
     CMSRPMessage* inMsg = incommingMsgHandler->GetIncomingMessage();
 
-    CBufSeg* buf1 = CBufSeg::NewL( 256 ); // expandsize 256
-    CleanupStack::PushL( buf1 );
-    RBufWriteStream writeStream( *buf1 );
-    CleanupClosePushL( writeStream );
-
-    inMsg->ExternalizeL( writeStream );
-    writeStream.CommitL();
-
-    iListenMSRPdataPckg().iIsProgress = FALSE;
-    if ( buf1->Size() > KMaxLengthOfIncomingMessageExt )
+    if ( inMsg )
         {
-        // invalid message size
-        iListenMSRPdataPckg().iStatus = KErrArgument;
+        CBufSeg* buf1 = CBufSeg::NewL( 256 ); // expandsize 256
+        CleanupStack::PushL( buf1 );
+        RBufWriteStream writeStream( *buf1 );
+        CleanupClosePushL( writeStream );
+    
+        inMsg->ExternalizeL( writeStream );
+        writeStream.CommitL();
+    
+        iListenMSRPdataPckg().iIsProgress = FALSE;
+        if ( buf1->Size() > KMaxLengthOfIncomingMessageExt )
+            {
+            // invalid message size
+            iListenMSRPdataPckg().iStatus = KErrArgument;
+            }
+        else
+            {
+            buf1->Read( 0, iListenMSRPdataPckg().iExtMessageBuffer, buf1->Size() );
+                iListenMSRPdataPckg().iStatus = KErrNone;            
+            }
+    
+        CleanupStack::PopAndDestroy(2); // buf1, writestream    
+       
+        iIncommingMessageListner.Write(0,iListenMSRPdataPckg);
+        iIncommingMessageListner.Complete(KErrNone);    
+    
+        return ETrue;
         }
-    else
+        
+    return EFalse;
+    }
+
+TBool CMSRPServerSubSession::sendReportToClientL( CMSRPMessageHandler *incommingMsgHandler )
+    {
+    // Use the client send result listner to respond.
+    // Extract the data and complete the iIncommingMessageListner.
+    MSRPLOG("CMSRPServerSubSession::sendReportToClientL");
+    CMSRPReport* inMsg = incommingMsgHandler->GetIncomingReport();
+
+    if ( inMsg )
         {
-        buf1->Read( 0, iListenMSRPdataPckg().iExtMessageBuffer, buf1->Size() );
-            iListenMSRPdataPckg().iStatus = KErrNone;            
+        CBufSeg* buf1 = CBufSeg::NewL( 256 ); // expandsize 256
+        CleanupStack::PushL( buf1 );
+        RBufWriteStream writeStream( *buf1 );
+        CleanupClosePushL( writeStream );
+    
+        inMsg->ExternalizeL( writeStream );
+        writeStream.CommitL();
+    
+        iListenMSRPdataPckg().iIsProgress = FALSE;
+        if ( buf1->Size() > KMaxLengthOfIncomingMessageExt )
+            {
+            // invalid message size
+            iListenMSRPdataPckg().iStatus = KErrArgument;
+            }
+        else
+            {
+            buf1->Read( 0, iListenMSRPdataPckg().iExtMessageBuffer, buf1->Size() );
+                iListenMSRPdataPckg().iStatus = KErrNone;            
+            }
+    
+        CleanupStack::PopAndDestroy(2); // buf1, writestream    
+       
+        iIncommingMessageListner.Write(0,iListenMSRPdataPckg);
+        iIncommingMessageListner.Complete(KErrNone);    
+    
+        return ETrue;
         }
-
-    CleanupStack::PopAndDestroy(2); // buf1, writestream    
-   
-    iIncommingMessageListner.Write(0,iListenMSRPdataPckg);
-    iIncommingMessageListner.Complete(KErrNone);    
-
-    return TRUE;
+        
+    return EFalse;
     }
 
 void CMSRPServerSubSession::ReadSendDataPckgL()
@@ -465,33 +560,66 @@ void CMSRPServerSubSession::ReadSendDataPckgL()
 
 TBool CMSRPServerSubSession::listnerSetupComplete()
     {
-    if(iIncommingMessageListner.Check() && iResponseListner.Check())
-        return TRUE;
+    if( iIncommingMessageListner.Check() && iResponseListner.Check() )
+        {
+        return ETrue;
+        }
     
-    return FALSE;        
+    return EFalse;        
     }
 
 CMSRPServerSubSession::TQueueType CMSRPServerSubSession::getQToProcess()
     {
-    // Check the pending incomming message queue and client request queue and
-    // decides which to process.
-    // The longer queue is given a priority. If queues are equal incomming message queue 
-    // is given priority.
+    // Priority 0, progress reports
+    if ( iPendingSendProgressQ.Length( ) )
+        {
+        return TSendProgressQueue;
+        }
+    if ( iPendingReceiveProgressQ.Length( ) )
+        {
+        return TReceiveProgressQueue;
+        }
+    
+    // priority 1, completed send messages
+    if ( iPendingDataSendCompleteQ.Length() )
+        {
+        return TCompletedSendQueue;
+        }
 
-    if(iPendingSendMsgQ.Length() > iInCommingMsgQ.Length())
+    // priority 2, completed receive message
+    if ( iPendingDataIncCompleteQ.Length() )
+        {
+        return TCompletedIncQueue;
+        }
+
+    // priority 3, incoming messages and client requests
+    if( iPendingSendMsgQ.Length() > iInCommingMsgQ.Length() )
+        {
         return TClientQueue;
+        }
     else
-        return TInCommingMsgQueue;        
+        {
+        return TInCommingMsgQueue;
+        }
     }
 
 
 TBool CMSRPServerSubSession::QueuesEmpty()
     {
     // Returns TRUE if there are no messages to process.
-    if(iPendingSendMsgQ.isEmpty() && iInCommingMsgQ.isEmpty())
-        return TRUE;
+    if( iPendingSendProgressQ.isEmpty() &&
+        iPendingReceiveProgressQ.isEmpty() &&
+        iPendingDataSendCompleteQ.isEmpty() &&
+        iPendingDataIncCompleteQ.isEmpty() &&
+        iPendingSendMsgQ.isEmpty() && 
+        iInCommingMsgQ.isEmpty() )
+        {
+        return ETrue;
+        }
     else
-        return FALSE;
+        {
+        return EFalse;
+        }
     }
 
 TBool CMSRPServerSubSession::informConnectionReadyToClient()
@@ -515,7 +643,9 @@ TBool CMSRPServerSubSession::informConnectionReadyToClient()
 void CMSRPServerSubSession::QueueLog()
     {
     if(iOutMsgQ.Length() || iInCommingMsgQ.Length() || iPendingSendMsgQ.Length()||
-        iPendingForDeletionQ.Length())
+        iPendingForDeletionQ.Length() || iPendingDataSendCompleteQ.Length() ||
+        iPendingDataIncCompleteQ.Length() || iPendingSendProgressQ.Length() || 
+        iPendingReceiveProgressQ.Length() )
         {
         // If any of the Queue is not empty. Log a event.
         MSRPLOG2("CMSRPServerSubSession::ProcessEventL() Queue iOutMsgQ       %d",
@@ -529,6 +659,18 @@ void CMSRPServerSubSession::QueueLog()
 
         MSRPLOG2("CMSRPServerSubSession::ProcessEventL() Queue iPendingForDeletionQ %d",
                     iPendingForDeletionQ.Length());
+
+        MSRPLOG2("CMSRPServerSubSession::ProcessEventL() Queue iPendingDataSendCompleteQ %d",
+                iPendingDataSendCompleteQ.Length());
+
+        MSRPLOG2("CMSRPServerSubSession::ProcessEventL() Queue iPendingDataIncCompleteQ %d",
+                iPendingDataIncCompleteQ.Length());
+
+        MSRPLOG2("CMSRPServerSubSession::ProcessEventL() Queue iPendingSendProgressQ %d",
+                iPendingSendProgressQ.Length() );
+
+        MSRPLOG2("CMSRPServerSubSession::ProcessEventL() Queue iPendingReceiveProgressQ %d",
+                iPendingReceiveProgressQ.Length() );
         }
     else
         {
@@ -537,40 +679,56 @@ void CMSRPServerSubSession::QueueLog()
     }
 
 
-TBool CMSRPServerSubSession::checkMessageForSelfL(CMSRPMessageHandler *aMsgHandler)
+// -----------------------------------------------------------------------------
+// CMSRPServerSubSession::CheckMessageSessionIdL
+// -----------------------------------------------------------------------------
+//
+TBool CMSRPServerSubSession::CheckMessageSessionIdL( CMSRPMessageHandler *aMsgHandler )
     {
-    MSRPLOG("CMSRPServerSubSession::checkMessageForSelfL");
+    MSRPLOG( "-> CMSRPServerSubSession::CheckMessageSessionIdL" );
     CMSRPMessageBase *message = aMsgHandler->GetIncomingResponse();
     if(!message)
         { 
         message = aMsgHandler->GetIncomingMessage();
         }
     
-    if(!message)
-        return FALSE;
+    if( !message )
+        {
+        message = aMsgHandler->GetIncomingReport();
+        }
+  
+    if( !message )
+        {
+        return EFalse; 
+        }
 
     // Check if the sessionID in the 'To' path matches the LocalSessionID.
-    if(FALSE == matchSessionIDL(message->ToPathHeader()))
-        return FALSE;
-
-    // Check if the sessionID in the 'From' path matches the known RemoteSessionID.
-    return matchSessionIDL(message->FromPathHeader(), FALSE);            
+    if( !matchSessionIDL(message->ToPathHeader()) ||
+            !matchSessionIDL(message->FromPathHeader(), EFalse ) )
+        {
+        return EFalse;
+        }
+        
+    return ETrue;
     }
-
-
+    
 TBool CMSRPServerSubSession::matchSessionIDL(const CMSRPHeaderBase *aPathHeader, TBool local)
     {
-    TBool retVal = FALSE;
+    TBool retVal( EFalse );
     
     HBufC8* textValue = aPathHeader->ToTextValueLC();        
     TPtrC8 receivedSessionID = extractSessionID(*textValue);    
     
     if(local && receivedSessionID  == *iLocalSessionID)
-        retVal =  TRUE;
+        {
+        retVal =  ETrue;
+        }
 
     
     if(!local && receivedSessionID == *iRemoteSessionID)
-        retVal =  TRUE;
+        {
+        retVal =  ETrue;
+        }
 
     CleanupStack::PopAndDestroy(textValue);
 

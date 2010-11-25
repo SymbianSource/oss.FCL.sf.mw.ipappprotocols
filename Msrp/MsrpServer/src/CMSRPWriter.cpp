@@ -104,6 +104,16 @@ void CMSRPWriter::DoCancel()
 void CMSRPWriter::RequestSendL(MMSRPWriterObserver& aMsg)
     { 
     MSRPLOG( "CMSRPWriter::RequestSendL enter" )
+    // making sure the msg is not already in queue
+    for ( TInt i = 0; i < iSendQueue.Count(); i++ )
+        {
+        if ( iSendQueue[ i ] == &aMsg )
+            {
+            // already included
+            return;
+            }
+        }
+    
     iSendQueue.AppendL(&aMsg);
     if(!IsActive())
         {
@@ -115,6 +125,26 @@ void CMSRPWriter::RequestSendL(MMSRPWriterObserver& aMsg)
         }
     MSRPLOG( "CMSRPWriter::RequestSendL exit" )
     }
+
+// -----------------------------------------------------------------------------
+// CMSRPWriter::CancelSendingL
+// -----------------------------------------------------------------------------
+//
+void CMSRPWriter::CancelSendingL( const MMSRPWriterObserver* aMsg )
+    {
+    MSRPLOG( "CMSRPWriter::CancelSendingL enter" )
+    if ( iSendQueue.Count() )
+        {
+        if ( iSendQueue[ 0 ] == aMsg )
+            {
+            if( iWriteIssued )
+                {
+                MSRPLOG( "CMSRPWriter::CancelSendingL Write Canceled" )
+                iSocket.CancelWrite();      
+                }
+            }
+        }
+    }   
 
 // -----------------------------------------------------------------------------
 // CMSRPWriter::CancelReceiving
@@ -149,7 +179,8 @@ void CMSRPWriter::RunL()
         MMSRPWriterObserver::TMsgStatus msgState = MMSRPWriterObserver::EComplete;
         msgState = iSendQueue[0]->WriteDoneL(status); 
         
-        if(msgState != MMSRPWriterObserver::EPending)
+        if( msgState != MMSRPWriterObserver::EPending && 
+                msgState != MMSRPWriterObserver::ESendingReport )    
             {
             MMSRPWriterObserver* obs = iSendQueue[0];
             iSendQueue.Remove(0);
@@ -186,16 +217,14 @@ void CMSRPWriter::SendL()
     {
     TBool interruptSend = FALSE;
 
-    //while(iSendQueue.Count())
     if(iSendQueue.Count())        
         {
         MMSRPWriterObserver::TWriteStatus ret = MMSRPWriterObserver::EMsrpSocketWrite;
-        TPtrC8 data(NULL,0);
         
         if(iSendQueue.Count()>1)
             interruptSend = TRUE;
         
-        ret = iSendQueue[0]->GetSendBufferL(data, interruptSend);
+        const TDesC8& writeBuffer = iSendQueue[0]->GetSendBufferL( ret, interruptSend);
         
         Deque();
         CActiveScheduler::Add(this);
@@ -203,7 +232,7 @@ void CMSRPWriter::SendL()
 
         if( ret == MMSRPWriterObserver::EMsrpSocketWrite ) //KErrNone == 0
            {
-           iSocket.Write( data, iStatus );
+           iSocket.Write( writeBuffer, iStatus );
            iWriteIssued = TRUE;           
            }   
         else if (ret == MMSRPWriterObserver::EMsrpAvoidSocketWrite)//EAvoidSocketWrite

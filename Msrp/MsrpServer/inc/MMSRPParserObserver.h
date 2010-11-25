@@ -35,14 +35,31 @@ class CMSRPMessageHandler;
 */
 class MMSRPParserObserver
 	{
+	public: // enums
+        /** Error codes returned to the client */
+        enum TParseStatusResponses
+            {
+            EParseStatusNotDefined,
+            EParseStatusError,
+            EParseStatusMessageUnclaimed,
+            EParseStatusMessageHandled
+            };
+	
 	public:
 
 	    /**
 	     * Message, Report, Response
-	     * MessageReceived
-	     * @return true if consumed 
+	     * @param aMsg received message
+	     * @param aStatus message status
+	     * @return TParseStatusResponses 
 	     */
-        virtual void ParseStatusL (CMSRPMessageHandler* aMsg, TInt aStatus) = 0;
+        virtual TInt ParseStatusL (CMSRPMessageHandler* aMsg, TInt aStatus) = 0;
+	    
+        /**
+         * Report currently received bytes 
+         * @param aMsg message handler instance 
+         */
+        virtual void ReportReceiveprogressL( CMSRPMessageHandler* aMsg ) = 0; 
 	    
 	    /**
 	     * Parse error: Handle similar to connection error now

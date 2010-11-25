@@ -70,15 +70,29 @@ CMSRPConnector::~CMSRPConnector()
 //
 void CMSRPConnector::ConstructL()
     {
+    MSRPLOG( "-> CMSRPConnector::ConstructL" )
     //iState = ENotConnected;
     iTimer = CMSRPTimeOutTimer::NewL( *this );
     //create socket
 
-    iSocket = new (ELeave) RSocket();   
-    User::LeaveIfError( iSocket->Open(
-            iConnMngr.SocketServer(), KAfInet, KSockStream, KProtocolInetTcp, iConnMngr.SocketServerConn()));
-    User::LeaveIfError( iSocket->SetOpt( KSoReuseAddr, KSolInetIp, ETrue ) );
-    iSocket->SetLocalPort(KMsrpPort);
+    iSocket = new (ELeave) RSocket();
+    RSocketServ& socketServ = iConnMngr.SocketServer();
+    RConnection& connection = iConnMngr.SocketServerConn();
+    TInt error = iSocket->Open( socketServ, KAfInet, KSockStream, KProtocolInetTcp, connection );
+    MSRPLOG2( "CMSRPConnector::ConstructL = open error = %d", error )
+    if ( error )
+        {
+        // if open fails, let's try to restart connection
+        MSRPLOG( "CMSRPConnector::ConstructL restarting interface" )
+        iConnMngr.ReStartInterface();
+        error = iSocket->Open( socketServ, KAfInet, KSockStream, KProtocolInetTcp, connection );
+        }
+    User::LeaveIfError( error );
+    error = iSocket->SetOpt( KSoReuseAddr, KSolInetIp, ETrue );
+    MSRPLOG2( "CMSRPConnector::ConstructL = opt error = %d", error )
+    User::LeaveIfError( error );
+    iSocket->SetLocalPort( KMsrpPort );
+    MSRPLOG( "<- CMSRPConnector::ConstructL" )
     }
 
 // -----------------------------------------------------------------------------

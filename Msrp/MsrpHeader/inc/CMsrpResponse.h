@@ -34,29 +34,12 @@
 */
 class CMSRPResponse : public CMSRPMessageBase
 	{
-    public:
-
-		/** Error codes */
-		enum TMSRPErrorCodes
-			{
-			EUnknownCode = 0,
-			EAllOk = 200,
-			EUnintelligibleRequest = 400,
-			EActionNotAllowed = 403,
-			ETimeout = 408,
-			EStopSending = 413,
-			EMimeNotUnderstood = 415,
-			EParameterOutOfBounds = 423,
-			ESessionDoesNotExist = 481,
-			EUnknownRequestMethod = 501,
-			ESessionAlreadyBound = 506
-			};
-
     public:  // Constructors and destructor
 
         /**
         * Constructor.
 	    * @param aStatusCode a known MSRP response status code.
+	    * @param aReasonPhrase status code in textual form
 	    * Cannot be 100.
         */
 		IMPORT_C CMSRPResponse( TUint aStatusCode, RStringF aReasonPhrase );

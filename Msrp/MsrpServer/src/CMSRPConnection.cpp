@@ -321,14 +321,13 @@ void CMSRPConnection::ReadStatusL(RMsrpBuf& aBuf, TInt aStatus)
     MSRPLOG("CMSRPConnection::ReadStatusL() exit")     
     }
 
-void CMSRPConnection::ParseStatusL (CMSRPMessageHandler* aMsg, TInt aStatus)
+TInt CMSRPConnection::ParseStatusL (CMSRPMessageHandler* aMsg, TInt aStatus)
     {
     MSRPLOG("CMSRPConnection::ParseStatus enter")
     if (aStatus != KErrNone)
         {
         NotifyAllL(EError, aStatus );
-        //CloseConnection();
-        return;
+        return MMSRPParserObserver::EParseStatusError;
         }
     
     /*if error, count is zero*/
@@ -336,16 +335,46 @@ void CMSRPConnection::ParseStatusL (CMSRPMessageHandler* aMsg, TInt aStatus)
     TBool consumed = FALSE;
     for ( TInt i = 0; (!consumed) && i < iSubsessions.Count(); i++ )
          {
-         consumed = iSubsessions[ i ]->MessageReceivedL( aMsg );
+         TRAPD( err, consumed = iSubsessions[ i ]->MessageReceivedL( aMsg ) );
+         if ( err )
+             {
+             // invalid message
+             NotifyAllL( EError, err );
+             return MMSRPParserObserver::EParseStatusError;
+             }
          }
     
     //if unclaimed by any subsession, callback to first subsession
     if(!consumed && iSubsessions.Count())
         {
         iSubsessions[0]->UnclaimedMessageL( aMsg );
+        return MMSRPParserObserver::EParseStatusMessageUnclaimed;
         }
           
     MSRPLOG("CMSRPConnection::ParseStatus exit")
+    return MMSRPParserObserver::EParseStatusMessageHandled;
+    }
+
+// -----------------------------------------------------------------------------
+// CMSRPConnection::ReportReceiveprogressL
+// -----------------------------------------------------------------------------
+//
+void CMSRPConnection::ReportReceiveprogressL( CMSRPMessageHandler* aMsg )
+    {
+    MSRPLOG("-> CMSRPConnection::ReportReceiveprogressL")
+    
+    for ( TInt i = 0; i < iSubsessions.Count(); i++ )
+         {
+         TRAPD( err, iSubsessions[ i ]->MessageReceiveProgressL( aMsg ) );
+         if ( err )
+             {
+             // invalid message
+             NotifyAllL( EError, err );
+             return;
+             }
+         }
+          
+    MSRPLOG("<- CMSRPConnection::ReportReceiveprogressL")
     }
 
 // -----------------------------------------------------------------------------
@@ -371,6 +400,34 @@ void CMSRPConnection::SendL(MMSRPWriterObserver& aMsg)
     if(iConnectionState == EConnected)
         iWriter->RequestSendL(aMsg);
     MSRPLOG("CMSRPConnection::SendL() exit") 
+    }
+    
+// -----------------------------------------------------------------------------
+// CMSRPConnection::ContinueSendingL
+// -----------------------------------------------------------------------------
+//
+void CMSRPConnection::ContinueSendingL( MMSRPWriterObserver& aMsg )
+    {
+    MSRPLOG("-> CMSRPConnection::ContinueSendingL")
+    if( iConnectionState == EConnected )
+        {
+        iWriter->RequestSendL( aMsg );
+        }
+    MSRPLOG("<- CMSRPConnection::ContinueSendingL") 
+    }
+
+// -----------------------------------------------------------------------------
+// CMSRPConnection::CancelSendingL
+// -----------------------------------------------------------------------------
+//
+void CMSRPConnection::CancelSendingL( const MMSRPWriterObserver* aMsg )
+    {
+    MSRPLOG("-> CMSRPConnection::CancelSendingL")
+    if( iConnectionState == EConnected )
+        {
+        iWriter->CancelSendingL( aMsg );
+        }
+    MSRPLOG("<- CMSRPConnection::CancelSendingL") 
     }
 
 // -----------------------------------------------------------------------------

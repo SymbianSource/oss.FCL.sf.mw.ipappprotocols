@@ -15,6 +15,7 @@
 */
 
 #include "TStateFactory.h"
+#include "msrpcommon.h"
 
 #define ADD_STATE_TO_ARRAY(state) \
     {\
@@ -25,6 +26,7 @@
 
 CStateFactory* CStateFactory::NewL()
     {
+    MSRPLOG( "-> CStateFactory::NewL")
     CStateFactory* factory = CStateFactory::NewLC();
     CleanupStack::Pop( factory );       
     return factory;
@@ -32,14 +34,17 @@ CStateFactory* CStateFactory::NewL()
 
 CStateFactory* CStateFactory::NewLC()
     {
+    MSRPLOG( "-> CStateFactory::NewLC")
     CStateFactory* factory = new ( ELeave ) CStateFactory;
     CleanupStack::PushL( factory );
     factory->ConstructL();
+    MSRPLOG( "<- CStateFactory::NewLC")
     return factory;       
     }
 
 void CStateFactory::ConstructL( )
     {
+    MSRPLOG( "-> CStateFactory::ConstructL")
     TStateBase *state;
 
     state = new ( ELeave ) TStateIdle;
@@ -54,14 +59,9 @@ void CStateFactory::ConstructL( )
     state = new ( ELeave ) TStateActive;
     ADD_STATE_TO_ARRAY( state );
 
-    state = new ( ELeave ) TStateActiveSend;
-    ADD_STATE_TO_ARRAY( state ); 
-	
-	state = new ( ELeave ) TStateFileShare;
-    ADD_STATE_TO_ARRAY( state ); 
-    
     state = new ( ELeave ) TStateError;
     ADD_STATE_TO_ARRAY( state );  
+    MSRPLOG( "<- CStateFactory::ConstructL")
     }
 
 CStateFactory::CStateFactory()

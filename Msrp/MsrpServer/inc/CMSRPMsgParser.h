@@ -40,58 +40,72 @@
 class CMSRPMsgParser: public CBase
     {
     friend class CMSRPParser;    
-public:
-    enum TParseState 
-        {
-        EIdle = 0,
-        ETitleLine,
-        EToPath,
-        EFromPath,
-        //EMandatoryHeader,
-        EOptionalHeaders,
-        EBody,
-        EExtraCRLF,        
-        EEndofEndLine
-        };
+    public:
+        enum TParseState 
+            {
+            EIdle = 0,
+            ETitleLine,
+            EToPath,
+            EFromPath,
+            //EMandatoryHeader,
+            EOptionalHeaders,
+            EBody,
+            EExtraCRLF,        
+            EEndofEndLine
+            };
+            
+        enum TMatchType
+            {
+            ENoMatch,
+            EFullMatch,        
+            EPartialMatch   
+            };
         
-    enum TMatchType
-        {
-        ENoMatch,
-        EFullMatch,        
-        EPartialMatch   
-        };
-    
-    static CMSRPMsgParser* NewL(MMSRPParserObserver& aConnection);
-    virtual ~CMSRPMsgParser();
-    
-    TBool ParseL();
-
-private:
-    CMSRPMsgParser(MMSRPParserObserver& aConnection);
-    void ConstructL();
-    
-    TBool HandleFullMatchL(TPtrC8& aToken, TInt aMatchPos, TBool aCopyToLocal = FALSE);
-    TBool HandlePartialMatchL(TPtrC8& aToken, TInt aCurBufMatchPos);
-    TBool HandleNoMatchL(TPtrC8& aToken, TInt aCurBufMatchPos);
-    
-    void HandleStateL(const TDesC8& aString, TInt aMatchPos);
-    void HandleTitleLineL(const TDesC8& aString, TInt aMatchPos);
-    void HandleHeaderL(const TDesC8& aString, TInt aMatchPos);
-    void HandleOptionalHeaderL(const TDesC8& aString, TInt aMatchPos);
-    void HandleBodyL(const TDesC8& aString, TInt aMatchPos);
-    void HandleXtraCrlfL(const TDesC8& aString, TInt aMatchPos);
-    void HandleEndofEndLineL(const TDesC8& aString, TInt aMatchPos);
+        static CMSRPMsgParser* NewL(MMSRPParserObserver& aConnection);
+        virtual ~CMSRPMsgParser();
         
-    TMatchType FindToken(const TDesC8& aString, const TDesC8& aToken, TInt& aMatchPos);
+        TBool ParseL();
+    
+    private:
+        CMSRPMsgParser(MMSRPParserObserver& aConnection);
+        void ConstructL();
         
-
-private:
-    MMSRPParserObserver& iConnection;
-    RPointerArray<RMsrpBuf> iParseBuffers;
-    TParseState iState;
-    RMsrpBuf* iLocalBuf;//keep it above pool
-    CMSRPMessageHandler* iMessage;
-    CMSRPBufPool iBufPool;
-    HBufC8* iEndToken;
+        TBool HandleFullMatchL(TPtrC8& aToken, TInt aMatchPos, TBool aCopyToLocal = FALSE);
+        TBool HandlePartialMatchL(TPtrC8& aToken, TInt aCurBufMatchPos);
+        TBool HandleNoMatchL(TPtrC8& aToken, TInt aCurBufMatchPos);
+        
+        void HandleStateL(const TDesC8& aString, TInt aMatchPos);
+        void HandleTitleLineL(const TDesC8& aString, TInt aMatchPos);
+        void HandleHeaderL(const TDesC8& aString, TInt aMatchPos);
+        void HandleOptionalHeaderL(const TDesC8& aString, TInt aMatchPos);
+        void HandleBodyL(const TDesC8& aString, TInt aMatchPos);
+        void HandleXtraCrlfL(const TDesC8& aString, TInt aMatchPos);
+        void HandleEndofEndLineL(const TDesC8& aString, TInt aMatchPos);
+            
+        TMatchType FindToken(const TDesC8& aString, const TDesC8& aToken, TInt& aMatchPos);
+        
+        /**
+        * Check if this chunk belongs to one of messages received 
+        * earlier. If so, the messages are combined to one
+        * entity
+        */
+        void CheckMessageChunkL( );
+    
+    private:
+    
+        MMSRPParserObserver& iConnection;
+        RPointerArray<RMsrpBuf> iParseBuffers;
+        TParseState iState;
+        RMsrpBuf* iLocalBuf;//keep it above pool
+        CMSRPMessageHandler* iMessage;
+        CMSRPBufPool iBufPool;
+        HBufC8* iEndToken;
+        
+        // byte-range header included indicator
+        TBool iByteRangeHeaderFound;
+        
+        // pool of incoming message chunks. This array contains unfinished 
+        // message chunks which are waiting for the next chunk to arrive
+        RPointerArray< CMSRPMessageHandler > iIncomingMessageChunks;
     };
 #endif /* CMSRPMSGPARSER_H_ */

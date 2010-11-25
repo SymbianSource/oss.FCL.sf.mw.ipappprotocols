@@ -20,6 +20,9 @@
 #include "CMSRPMsgParser.h"
 #include "MSRPCommon.h"
 
+#include "CMSRPMessage.h"
+#include "CMSRPToPathHeader.h"
+
 // -----------------------------------------------------------------------------
 // CMSRPMsgParser::NewL
 // Static constructor
@@ -60,6 +63,8 @@ CMSRPMsgParser::~CMSRPMsgParser()
     delete iMessage;
     iParseBuffers.ResetAndDestroy();
     iParseBuffers.Close();    
+    iIncomingMessageChunks.ResetAndDestroy();
+    iIncomingMessageChunks.Close();
     MSRPLOG( "CMSRPMsgParser::~CMSRPMsgParser exit" )
     }
 
@@ -86,6 +91,7 @@ TBool CMSRPMsgParser::ParseL()
     {
     TMatchType match = EFullMatch;
     TBool ret = TRUE;
+    iByteRangeHeaderFound = EFalse;
 
     /*parse until a parse element spans buffers. 
       if parse element completes exactly at buffer boundaries,
@@ -107,7 +113,7 @@ TBool CMSRPMsgParser::ParseL()
             token.Set(iEndToken->Des());                
             }   
         
-        TInt matchPos;
+        TInt matchPos( 0 );
         match = FindToken(iParseBuffers[0]->Ptr(),token,matchPos);    
         if(match == EFullMatch)
             {
@@ -330,6 +336,7 @@ void CMSRPMsgParser::HandleStateL(const TDesC8& aString, TInt aMatchPos)
 void CMSRPMsgParser::HandleTitleLineL(const TDesC8& aString, TInt /*aMatchPos*/)
     {
     MSRPLOG( "CMSRPMsgParser::HandleTitleLineL enter" )
+    
     TPtrC8 msrp(aString.Left(KMSRP().Length()));
     if(msrp.Compare(KMSRP()))
         User::LeaveIfError(KErrCorrupt);
@@ -362,24 +369,32 @@ void CMSRPMsgParser::HandleTitleLineL(const TDesC8& aString, TInt /*aMatchPos*/)
         
         method.Set(method.Left(pos));
                 
+        delete iMessage;
+        iMessage = NULL;
          if (!method.Compare(KMSRPSend()))
              {
              iMessage = CMSRPMessageHandler::NewL(MMSRPIncomingMessage::EMSRPMessage);
+             MSRPLOG2( "CMSRPMsgParser::HandleTitleLineL new message = %d", iMessage )
              }
-         else if (!method.Compare(KMSRPReport()))
+         else if ( !method.Compare( KMSRPReport() ) )
              {
-             iMessage = CMSRPMessageHandler::NewL(MMSRPIncomingMessage::EMSRPReport);
+             iMessage = CMSRPMessageHandler::NewL( MMSRPIncomingMessage::EMSRPReport );
+             MSRPLOG2( "CMSRPMsgParser::HandleTitleLineL new report = %d", iMessage )
              }
          else //extn
              {
              iMessage = CMSRPMessageHandler::NewL(MMSRPIncomingMessage::EMSRPNotDefined);
+             MSRPLOG2( "CMSRPMsgParser::HandleTitleLineL new not defined = %d", iMessage )
              }        
         }
     else //response
         {
         TPtrC8 null;
         method.Set(method.Left(pos));
+        delete iMessage;
+        iMessage = NULL;
         iMessage = CMSRPMessageHandler::NewL(MMSRPIncomingMessage::EMSRPResponse);
+        MSRPLOG2( "CMSRPMsgParser::HandleTitleLineL new response = %d", iMessage )
         iMessage->SetStatusOfResponseL(method, null);
         }    
     iMessage->SetTransactionId(trans_id);
@@ -526,6 +541,7 @@ void CMSRPMsgParser::HandleHeaderL(const TDesC8& aString, TInt /*aMatchPos*/)
             }
         else if(!header_name.Compare(KMSRPByteRange()))
             {
+            iByteRangeHeaderFound = ETrue;
             headerType = MMSRPMessageHandler::EByteRange;
             }
         else if(!header_name.Compare(KMSRPSuccessReport()))
@@ -550,6 +566,13 @@ void CMSRPMsgParser::HandleHeaderL(const TDesC8& aString, TInt /*aMatchPos*/)
     //message->add_header
     TPtrC8 fullHeader(aString);
     iMessage->AddHeaderL(headerType, header_val, fullHeader);
+    if ( headerType == MMSRPMessageHandler::EMessageId )
+        {
+        // let's check if this message chunk belong to one
+        // of the chunks already received. If so, combine
+        // the messages
+        CheckMessageChunkL( );
+        }
     //TODO: //only for to-path from-path add_header error
     //switch iState = EBody, mode = EError //essentially start looking for end token
     //if mode is error don't issue callbacks, on transition from EndofEndLine,
@@ -557,6 +580,26 @@ void CMSRPMsgParser::HandleHeaderL(const TDesC8& aString, TInt /*aMatchPos*/)
     
     MSRPLOG( "CMSRPMsgParser::HandleHeaderL exit" )
         
+    }
+    
+// -----------------------------------------------------------------------------
+// CMSRPMsgParser::HandleOptionalHeaderL
+// -----------------------------------------------------------------------------
+//
+void CMSRPMsgParser::CheckMessageChunkL( )
+    {
+    MSRPLOG( "-> CMSRPMsgParser::HandleHeaderL" )
+    for ( TInt i = 0; i < iIncomingMessageChunks.Count(); i++ )
+        {
+        if ( iMessage->CheckMessageChunkL( *iIncomingMessageChunks[ i ] ) )
+            {
+            delete iMessage;
+            iMessage = iIncomingMessageChunks[ i ];
+            iIncomingMessageChunks.Remove( i );
+            break;
+            }
+        }
+    MSRPLOG( "<- CMSRPMsgParser::HandleHeaderL" )
     }
 
 // -----------------------------------------------------------------------------
@@ -607,12 +650,18 @@ void CMSRPMsgParser::HandleBodyL(const TDesC8& aString, TInt aMatchPos)
     if(aMatchPos!=0)
         {
         TPtrC8 content(aString.Left(aMatchPos));
-        iMessage->AddContentL(content);       
+        if ( !iMessage->IsTransmissionTerminated() )
+            {
+            MSRPLOG2( "CMSRPMsgParser::HandleBodyL instance = %d", iMessage )
+            iMessage->AddContentL( content, iByteRangeHeaderFound ); 
+            iConnection.ReportReceiveprogressL( iMessage );
+            }
         }
 
     //partial or full match
     if(token.Length())
         {   
+        MSRPLOG( "CMSRPMsgParser::HandleBodyL enter partial/token" )
          
         //if(aMatchPos == 0)
             {
@@ -646,7 +695,7 @@ void CMSRPMsgParser::HandleBodyL(const TDesC8& aString, TInt aMatchPos)
 //
 void CMSRPMsgParser::HandleEndofEndLineL(const TDesC8& aString, TInt aMatchPos)
     {
-    MSRPLOG( "CMSRPMsgParser::HandleEndofEndLineL enter" )
+    MSRPLOG2( "CMSRPMsgParser::HandleEndofEndLineL enter, char = %d", aString[0] )
     if(aMatchPos != 1)
         User::LeaveIfError(KErrCorrupt);
     
@@ -660,9 +709,23 @@ void CMSRPMsgParser::HandleEndofEndLineL(const TDesC8& aString, TInt aMatchPos)
     else
         User::LeaveIfError(KErrCorrupt);
     
-    iMessage->EndOfMessageL(endType);
-    iConnection.ParseStatusL( iMessage, KErrNone);
-    iMessage = NULL;
+    if ( !iMessage->IsTransmissionTerminated() )
+        {
+        MSRPLOG2( "CMSRPMsgParser::HandleEndofEndLineL instance = %d", iMessage )
+        iMessage->EndOfMessageL( endType );
+        TInt status = iConnection.ParseStatusL( iMessage, KErrNone );
+        if ( endType == MMSRPMessageHandler::EMessageContinues &&
+            status == MMSRPParserObserver::EParseStatusMessageHandled ) 
+            {
+            iIncomingMessageChunks.AppendL( iMessage );
+            }
+        else if ( status == MMSRPParserObserver::EParseStatusError )
+            {
+            delete iMessage;
+            iMessage = NULL;
+            }
+        iMessage = NULL;
+        }
         
     iState = ETitleLine;
     MSRPLOG( "CMSRPMsgParser::HandleEndofEndLineL exit" )    
@@ -708,7 +771,6 @@ CMSRPMsgParser::TMatchType CMSRPMsgParser::FindToken( const TDesC8& aString, con
     MSRPLOG( "CMSRPMsgParser::FindToken exit" )
     return EFullMatch;    
     }
-
 
 //test cases
 //shyamprasad, prasad, xyz, add, dan, shyamprasad

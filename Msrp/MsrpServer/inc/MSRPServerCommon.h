@@ -71,26 +71,27 @@ enum TMSRPFSMEvent
 	EMSRPListenMessagesEvent,  // 3
 	EMSRPListenSendResultEvent,  // 4 Client Setup event to setup listner for incomming results.
 	EMSRPDataSendMessageEvent,	// 5 Client Event to send data.	
-	EMSRPSendFileEvent,         // 6
-	EMSRPReceiveFileEvent,      // 7
-	EMSRPDataSendMessageCancelEvent, // 8
+	EMSRPDataSendMessageCancelEvent, // 6
 
 	// Should be CancelClientSetup1, 2 and 3 respectively.
-	EMSRPCancelReceivingEvent, 			// 9  Maps to EMSRPCancelReceiving. What is EMSRPCancelReceiving for? !!
-	EMSRPCancelSendRespListeningEvent,  // 10  Maps to EMSRPCancelSendRespListening. What is EMSRPCancelSendRespListening for? !!
+	EMSRPCancelReceivingEvent, 			// 7  Maps to EMSRPCancelReceiving. What is EMSRPCancelReceiving for? !!
+	EMSRPCancelSendRespListeningEvent,  // 8 Maps to EMSRPCancelSendRespListening. What is EMSRPCancelSendRespListening for? !!
+	
+	EMSRPProcessQueuedRequestsEvent,    // 9
+	EMSRPProgressReportsEvent,          // 10
 	
 	// Events generated from the Message Layer.
-	EMSRPDataSendCompleteEvent,         // 11  
+	EMSRPDataSendCompleteEvent,         // 11
 	EMSRPResponseSendCompleteEvent,		// 12
-          
+	EMSRPSendProgressEvent,             // 13
+    EMSRPReceiveProgressEvent,          // 14
+	EMSRPDataCancelledEvent,            // 15
 	
 	// From Connection Layer
-	EMSRPIncomingMessageReceivedEvent, // 13
-	EConnectionStateChangedEvent,	   // 14
-	EUncalimedMessageReceivedEvent,     // 15
-	
-    EMSRPSendProgressEvent,
-    EMSRPReceiveProgressEvent
+	EMSRPIncomingMessageReceivedEvent, // 16
+	EConnectionStateChangedEvent,	   // 17
+	EUncalimedMessageReceivedEvent,    // 18
+    EMSRPReportSendCompleteEvent,     // 19
 };
 #endif      // __MSRPSERVERCOMMON_H
 

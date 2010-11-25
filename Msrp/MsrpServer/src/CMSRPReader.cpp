@@ -115,7 +115,7 @@ void CMSRPReader::StartReceivingL(RMsrpBuf aBuf)
 //
 void CMSRPReader::RunL()
     {   
-    MSRPLOG( "CMSRPReader::RunL enter" )
+    MSRPLOG2( "CMSRPReader::RunL enter, status = %d", iStatus.Int() )
     Deque();
     CActiveScheduler::Add(this);
     iConnection.ReadStatusL(*iBuf, iStatus.Int());

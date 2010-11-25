@@ -107,23 +107,6 @@ EXPORT_C TFileName& CMSRPMessage::GetFileName( )
     }
 
 // -----------------------------------------------------------------------------
-// CMSRPMessage::SetFileSize
-// -----------------------------------------------------------------------------
-//
-EXPORT_C void CMSRPMessage::SetFileSize( const TInt aFileSize )
-    {
-    iFileSize = aFileSize;
-    }
-
-// -----------------------------------------------------------------------------
-// CMSRPMessage::GetFileSize
-// -----------------------------------------------------------------------------
-//
-EXPORT_C TInt CMSRPMessage::GetFileSize( )
-    {
-    return iFileSize;
-    }
-// -----------------------------------------------------------------------------
 // CMSRPMessage::InternalizeL
 // -----------------------------------------------------------------------------
 //
@@ -205,32 +188,7 @@ void CMSRPMessage::DoInternalizeL( RReadStream& aReadStream )
                  aReadStream.ReadL( iFileName, nameLength );
                  break;
                 }
-            case 12: //filesize
-                 {
-                  TUint32 val = aReadStream.ReadUint32L();
-                  if( val > 0 )
-                    {
-                    HBufC8* tempString = HBufC8::NewLC( val );
-                    TPtr8 tempValue( tempString->Des() );
-                    aReadStream.ReadL( tempValue, val );
-                    iFileSize = TMSRPHeaderUtil::ConvertToNumber( tempString->Des() );
-                    CleanupStack::PopAndDestroy( tempString );
-                    }
-                   break;              
-                  }         
-            case 13: //granularity
-                  {
-                 TUint32 val = aReadStream.ReadUint32L();
-                 if( val > 0 )
-                    {
-                     HBufC8* tempString = HBufC8::NewLC( val );
-                     TPtr8 tempValue( tempString->Des() );
-                     aReadStream.ReadL( tempValue, val );
-                     iNotifyProgress = TMSRPHeaderUtil::ConvertToNumber( tempString->Des() );
-                     CleanupStack::PopAndDestroy( tempString );
-                     }
-                 break;              
-                  }                 
+                  
             default:
                 {
                 // nothing to do
@@ -285,35 +243,31 @@ EXPORT_C void CMSRPMessage::ExternalizeL( RWriteStream& aWriteStream )
             aWriteStream.WriteUint8L(7); // more headers in the stream flag
             iSuccessReport->ExternalizeValueL( aWriteStream );
             }
-        if ( IsContent() )
-            {
-            aWriteStream.WriteUint8L( 10 ); 
-            aWriteStream.WriteInt32L( iContentBuffer->Length()  );
-            aWriteStream.WriteL( *iContentBuffer, iContentBuffer->Length() );
-            }
         if ( IsFile() )
             {
             aWriteStream.WriteUint8L( 11 ); // 2 = file ID
             aWriteStream.WriteInt32L( iFileName.Length() );
             aWriteStream.WriteL( iFileName );
             }
-
-        if( iFileSize > 0 )
+        if ( IsContent() )
             {
-            aWriteStream.WriteUint8L( 12 );
-            TBuf8< 50 > val;
-            val.AppendNum( iFileSize );
-            aWriteStream.WriteInt32L( val.Length() );
-            aWriteStream.WriteL( val );
-             }
-        if( iNotifyProgress > 0 )
-            {
-            aWriteStream.WriteUint8L( 13 );
-            TBuf8< 50 > val;
-            val.AppendNum( iNotifyProgress );
-            aWriteStream.WriteInt32L( val.Length() );
-            aWriteStream.WriteL( val );
-             }
+            // let's check if the buffer length is larger than KMaxLengthOfSmallMSRPMessage
+            // if so, we must convert buffer to file
+            if ( iContentBuffer->Length() > KMaxLengthOfSmallMSRPMessage )
+                {
+                ConvertBufferToFileL();
+                aWriteStream.WriteUint8L( 11 );
+                aWriteStream.WriteInt32L( iFileName.Length() );
+                aWriteStream.WriteL( iFileName );
+                }
+            else
+                {
+                aWriteStream.WriteUint8L( 10 ); 
+                aWriteStream.WriteInt32L( iContentBuffer->Length()  );
+                aWriteStream.WriteL( *iContentBuffer, iContentBuffer->Length() );
+                }
+            }
+             
         aWriteStream.WriteUint8L(0); // no more headers in the stream flag
         }
 
@@ -344,14 +298,28 @@ EXPORT_C TBool CMSRPMessage::IsFile()
       
 }
 
+// -----------------------------------------------------------------------------
+// CMSRPMessage::ConvertBufferToFileL
+// -----------------------------------------------------------------------------
+//
+void CMSRPMessage::ConvertBufferToFileL( )
+    {
+    RFs fs;
+    User::LeaveIfError( fs.Connect() );
+    RFile tempFile;
+    TFileName tempFileName;
 
-EXPORT_C void CMSRPMessage::SetNotifyProgress(TBool aNotify)
-      {
-      iNotifyProgress = aNotify;
-      }
-    
-EXPORT_C TBool CMSRPMessage::GetNotifyProgress()
-      {
-      return iNotifyProgress;
-      } 
+    // create temporary filename
+    User::LeaveIfError( tempFile.Temp(
+        fs, KDefaultTempFilePath, tempFileName, EFileShareExclusive | EFileWrite ) );
+
+    SetFileName( tempFileName );
+
+    tempFile.Write( 0, *iContentBuffer );
+    delete iContentBuffer;
+    iContentBuffer = NULL;
+    tempFile.Close();
+    fs.Close();
+    }
+      
 // End of File

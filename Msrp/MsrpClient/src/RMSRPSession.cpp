@@ -33,11 +33,17 @@ RMSRPSession::RMSRPSession() :
     }
 
 
-TInt RMSRPSession::CreateServerSubSession( RMSRP& aRMSRP, const TUint32 aIapId )
+TInt RMSRPSession::CreateServerSubSession( 
+    RMSRP& aRMSRP, 
+    const TUint32 aIapId,
+    const TDesC8& aSessionId )
     {
     MSRPLOG("RMSRP Session.. Create client-server SubSession");
+    TBuf<200 > koe;
+    koe.Copy( aSessionId );
+    MSRPLOG2("RMSRP Session.. Create client-server SubSession, %S", &koe );
     
-    return CreateSubSession( aRMSRP, EMSRPCreateSubSession, TIpcArgs( aIapId ) );
+    return CreateSubSession( aRMSRP, EMSRPCreateSubSession, TIpcArgs( aIapId, &aSessionId ) );
     }
 
 
@@ -48,14 +54,13 @@ void RMSRPSession::CloseServerSubSession( )
     }
 
 
-void RMSRPSession::GetLocalPathL( TDes8 &aLocalHost, TDes8 &aSessionID )
+void RMSRPSession::GetLocalPathL( TDes8 &aLocalHost )
     {
     MSRPLOG("RMSRP Session.. GetLocalPath");
     
     User::LeaveIfError( SendReceive(EMSRPLocalPath, TIpcArgs( &iLocalPathMSRPDataPckg )) );
     
     aLocalHost = iLocalPathMSRPDataPckg().iLocalHost;
-    aSessionID = iLocalPathMSRPDataPckg().iSessionID;    
     }
 
 
@@ -87,7 +92,8 @@ void RMSRPSession::ListenConnections( const TDesC8& aRemoteHost,
     iListenMSRPDataPckg().iRemoteSessionID = aRemoteSessionID;
     iListenMSRPDataPckg().iIsMessage = aIsMessage;
         
-    SendReceive( EMSRPListenConnections, TIpcArgs( &iListenMSRPDataPckg ), aStatus );    
+    SendReceive( EMSRPListenConnections, TIpcArgs( &iListenMSRPDataPckg ), aStatus );   
+    SendReceive( EMSRPProcessQueuedRequests );
     }
 
 
@@ -122,18 +128,17 @@ TInt RMSRPSession::SendMessage( TDesC8& aMessageBuffer )
     }
 
 
-TInt RMSRPSession::CancelSending( TDesC8& aMessageId )
+TInt RMSRPSession::CancelSending( const TDesC8& aMessageId )
     {
     MSRPLOG("RMSRP Session.. CancelSending");
     return SendReceive( EMSRPCancelSending, TIpcArgs( &aMessageId ) );
     }
 
 
-void RMSRPSession::CancelReceiving( )
+TInt RMSRPSession::CancelReceiving( const TDesC8& aMessageId )
     {
     MSRPLOG("RMSRP Session.. CancelReceiving Entered");
-    SendReceive( EMSRPCancelReceiving );
-    MSRPLOG("RMSRP Session.. CancelReceiving Done ");
+    return SendReceive( EMSRPCancelReceiving, TIpcArgs( &aMessageId ) );
     }
     
 
@@ -207,20 +212,33 @@ TInt RMSRPSession::GetTotalBytes() const
     return iSendResultListenMSRPDataPckg().iTotalBytes;
     }
 
-
-TInt RMSRPSession::SendFileL(TDesC8& aFileParamBuffer)
+// -----------------------------------------------------------------------------
+// RMSRPSession::ListenMessageId
+// -----------------------------------------------------------------------------
+//
+TDesC8& RMSRPSession::ListenMessageId()
     {
-    /* Send File Params to the sub-session */
-    MSRPLOG("RMSRP Session.. SendFileParams");
-    iSendMSRPDataPckg().iExtMessageBuffer = aFileParamBuffer;
-    return SendReceive( EMSRPSendFile, TIpcArgs( &iSendMSRPDataPckg ) );
+    return iListenMSRPDataPckg().iMessageId;
     }
 
-TInt RMSRPSession::ReceiveFileL(TDesC8& aFileParamBuffer)
+// -----------------------------------------------------------------------------
+// RMSRPSession::SendMessageId
+// -----------------------------------------------------------------------------
+//
+TDesC8& RMSRPSession::SendMessageId()
     {
-    /* Send File Params to the sub-session */
-    MSRPLOG("RMSRP Session.. SendFileParams");
-    iSendMSRPDataPckg().iExtMessageBuffer = aFileParamBuffer;
-    return SendReceive( EMSRPReceiveFile, TIpcArgs( &iSendMSRPDataPckg ) );
+    return iSendResultListenMSRPDataPckg().iMessageId;
     }
+
+// -----------------------------------------------------------------------------
+// RMSRPSession::SendMessageId
+// -----------------------------------------------------------------------------
+//
+TInt  RMSRPSession::SetProgressReports( TBool aProgress )
+    {
+    return SendReceive( EMSRPProgressReports, TIpcArgs( aProgress ) );
+    }
+
 #endif /* RMSRPSESSION_CPP_ */
+
+// End of file

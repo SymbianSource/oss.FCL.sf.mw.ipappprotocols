@@ -55,13 +55,16 @@ public:
     /**
      * Creates an msrp session for the client
      * @param aObserver a reference to the session observer created by the client.
-     * This client-side observer receives callbacks from the msrp stack, in order to
-     * notify it of varous events
+     *        This client-side observer receives callbacks from the msrp stack, in order to
+     *        notify it of varous events
      * @param aIapId the IAP on which the connection has to start for this session
+     * @param aSessionId session id of this MSRP session. This comes from the
+     *        path SDP attribute where session id is used
      * @return the created session object which can be used by the client
      */
     IMPORT_C CMSRPSession* CreateMSRPSessionL( MMSRPSessionObserver& aObserver, 
-                                               const TUint aIapId );
+                                               const TUint aIapId,
+                                               const TDesC8& aSessionId );
     
     /** 
      * Closes the msrp session that the client had created.

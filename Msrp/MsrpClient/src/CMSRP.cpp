@@ -52,8 +52,10 @@ EXPORT_C CMSRP::~CMSRP()
 		delete iMSRPImpl;
     }
 
-EXPORT_C CMSRPSession* CMSRP::CreateMSRPSessionL( MMSRPSessionObserver& aObserver, 
-                                                 const TUint aIapId )
+EXPORT_C CMSRPSession* CMSRP::CreateMSRPSessionL( 
+    MMSRPSessionObserver& aObserver, 
+    const TUint aIapId,
+    const TDesC8& aSessionId )
 	{
 		// Creates and Returns a MSRP Session. 
 		// No paramers are taken at this stage. Primarily because 
@@ -64,7 +66,7 @@ EXPORT_C CMSRPSession* CMSRP::CreateMSRPSessionL( MMSRPSessionObserver& aObserve
 	
 	MSRPLOG("CMSRP.. Create MSRP session");
 
-	return iMSRPImpl->CreateMSRPSessionL( aObserver, aIapId );
+	return iMSRPImpl->CreateMSRPSessionL( aObserver, aIapId, aSessionId );
 	}
 
 EXPORT_C void CMSRP::CloseMSRPSession( CMSRPSession* aMsrpSession )

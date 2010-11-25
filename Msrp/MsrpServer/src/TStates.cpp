@@ -40,35 +40,6 @@ TStateBase* TStateBase::HandleStateErrorL(CMSRPServerSubSession *aContext)
     return aContext->StateFactory().getStateL(EIdle);
     }  
 
-TStateBase * TStateFileShare::processIncommingMessageL(CMSRPServerSubSession *aContext, 
-                 CMSRPMessageHandler* incommingMsg)
-    {
-    MSRPLOG("TStateFileShare::processIncommingMessage Enter!");
-    TStateBase *state = this;
-    CMSRPMessageHandler *incommingMsgHandler;
-    if(NULL != incommingMsg)
-        {
-        aContext->iInCommingMsgQ.Queue(*incommingMsg);
-        }
-    incommingMsgHandler = aContext->iInCommingMsgQ.DeQueue();         
- 
-    while (incommingMsgHandler && state == this)
-        {
-        if(MMSRPIncomingMessage::EMSRPResponse == incommingMsgHandler->MessageType())
-            {
-            state = handlesResponseL(aContext,incommingMsgHandler);                    
-            }
-        else
-            {
-            state = handleRequestsL(aContext,incommingMsgHandler);
-            }
-        incommingMsgHandler = aContext->iInCommingMsgQ.DeQueue();
-        }
-      
-    MSRPLOG("TStateFileShare::processIncommingMessage Exit!");
-    return state;
-    }
- 
 TStateBase* TStateBase::processIncommingMessageL(CMSRPServerSubSession *aContext, 
                  CMSRPMessageHandler* incommingMsg)
     {
@@ -89,6 +60,10 @@ TStateBase* TStateBase::processIncommingMessageL(CMSRPServerSubSession *aContext
             {
             return handlesResponseL(aContext,incommingMsgHandler);                    
             }
+        if( MMSRPIncomingMessage::EMSRPReport == incommingMsgHandler->MessageType( ) )
+            {
+            return handleRequestsL( aContext,incommingMsgHandler );
+            }
         else
             {
             return handleRequestsL(aContext,incommingMsgHandler);
@@ -105,12 +80,74 @@ TStateBase* TStateBase::processPendingMessageQL(CMSRPServerSubSession *aContext)
      
     msgHandler = aContext->iPendingSendMsgQ.DeQueue();
     msgHandler->SendMessageL(*aContext->iConnection);
+    aContext->iOutMsgQ.Queue( *msgHandler );
+    return aContext->StateFactory().getStateL( EActive );
+    }
     
-    // Shift this to Outgoing Queue.
-    aContext->iCurrentMsgHandler = msgHandler;
-    return aContext->StateFactory().getStateL(EActiveSend);
+TStateBase* TStateBase::processCompletedMessageL( CMSRPServerSubSession *aContext )
+    {
+    MSRPLOG("TStateBase::processCompletedMessageL Entered!");
+    CMSRPMessageHandler* msgHandler = aContext->iPendingDataSendCompleteQ.DeQueue();
+    
+    if ( msgHandler->IsTransmissionTerminated() )
+        {
+        MSRPLOG("TStateBase::processCompletedMessageL transmission terminated");
+        if( aContext->iResponseListner.Check() )
+            {
+            MSRPLOG("TStateBase::processCompletedMessageL complete with KErrCancel");    
+            aContext->iResponseListner.Complete( KErrCancel );
+            }
+        }
+    else
+        {
+        aContext->sendResultToClientL( msgHandler );      
+        }
+
+    delete msgHandler;
+    return aContext->StateFactory().getStateL( EWaitForClient );
+    }
+    
+TStateBase* TStateBase::processCompletedIncomingMessageL( CMSRPServerSubSession *aContext )
+    {
+    MSRPLOG("TStateBase::processCompletedIncomingMessageL Entered!");
+    CMSRPMessageHandler* msgHandler = aContext->iPendingDataIncCompleteQ.DeQueue();
+    
+    if ( msgHandler->IsTransmissionTerminated() )
+        {
+        MSRPLOG("TStateBase::processCompletedIncomingMessageL transmission terminated");
+        if( aContext->iIncommingMessageListner.Check() )
+            {
+            MSRPLOG("TStateBase::processCompletedIncomingMessageL complete with KErrCancel");    
+            aContext->iIncommingMessageListner.Complete( KErrCancel );
+            }
+        }
+    else
+        {
+        aContext->sendMsgToClientL( msgHandler );      
+        delete msgHandler;
+        }
+        
+    return aContext->StateFactory().getStateL( EWaitForClient );
     }
  
+TStateBase* TStateBase::processReceiveReportL( CMSRPServerSubSession *aContext )
+    {
+    MSRPLOG("TStateBase::processReceiveReportL Entered!");
+    CMSRPMessageHandler* msgHandler = aContext->iPendingReceiveProgressQ.DeQueue();
+
+    aContext->ReceiveProgressToClientL( msgHandler );
+    return aContext->StateFactory().getStateL( EWaitForClient );
+    }
+    
+TStateBase* TStateBase::processSendReportL( CMSRPServerSubSession *aContext )
+    {
+    MSRPLOG("TStateBase::processSendReportL Entered!");
+    CMSRPMessageHandler* msgHandler = aContext->iPendingSendProgressQ.DeQueue();
+
+    aContext->SendProgressToClientL( msgHandler );
+    return aContext->StateFactory().getStateL( EWaitForClient );
+    }
+
 TStateBase* TStateBase::handlesResponseL(CMSRPServerSubSession *aContext,
                  CMSRPMessageHandler *incommingMsgHandler)
     {
@@ -130,30 +167,26 @@ TStateBase* TStateBase::handlesResponseL(CMSRPServerSubSession *aContext,
         }
     else
         {
-        TBool error = 0;
-        CleanupStack::PushL(incommingMsgHandler);
-        TBool sendResult = outgoingMsgHandler->ConsumeResponseL(*incommingMsgHandler);
+        CleanupStack::PushL( incommingMsgHandler );
+        TUint responseCode = outgoingMsgHandler->ConsumeResponseL( *incommingMsgHandler );
          
-        if( sendResult )
+        if( outgoingMsgHandler->IsMessageComplete() ||
+            responseCode != EAllOk ||
+            ( outgoingMsgHandler->IsFailureHeaderPartial() &&
+              responseCode != EAllOk ) )
             {
-            error = aContext->sendResultToClientL(outgoingMsgHandler);
-            }        
-         
-        if(outgoingMsgHandler->IsMessageComplete())
-            {
-            aContext->iOutMsgQ.explicitRemove(outgoingMsgHandler);    
+            aContext->iConnection->CancelSendingL( outgoingMsgHandler );
+            aContext->sendResultToClientL( outgoingMsgHandler );
+            aContext->iOutMsgQ.explicitRemove( outgoingMsgHandler );    
             delete outgoingMsgHandler;
-            }
-                 
-        CleanupStack::Pop(incommingMsgHandler); 
-        if( error )
-            {
-            nextState = aContext->StateFactory().getStateL(EError);   
             }
         else
             {
-            nextState = aContext->StateFactory().getStateL(EWaitForClient);     
-            }            
+            aContext->iConnection->ContinueSendingL( *outgoingMsgHandler );
+            }
+                 
+        CleanupStack::Pop(incommingMsgHandler); 
+        nextState = aContext->StateFactory().getStateL(EWaitForClient);     
         }
     
     delete incommingMsgHandler;    
@@ -165,60 +198,99 @@ TStateBase* TStateBase::handlesResponseL(CMSRPServerSubSession *aContext,
 TStateBase* TStateBase::handleRequestsL(CMSRPServerSubSession *aContext,
                  CMSRPMessageHandler *incommingMsgHandler)
     {
+    MSRPLOG("-> TStateBase::handleRequestsL");
     MMSRPIncomingMessage::TMSRPMessageType msgType = incommingMsgHandler->MessageType();
     
     if(MMSRPIncomingMessage::EMSRPMessage == msgType) // SEND request
         {
         MSRPLOG("SEND request received");
-        TBool sendToClient = incommingMsgHandler->SendResponseL(aContext, 
-                *aContext->iConnection, 0);        
-        if(sendToClient)
+        incommingMsgHandler->SendResponseL(aContext, *aContext->iConnection, EAllOk );        
+        incommingMsgHandler->SendReportL(aContext, *aContext->iConnection, EAllOk );        
+        if( incommingMsgHandler->IsMessageComplete() )
             {
+            MSRPLOG("-> TStateBase::handleRequestsL complete");
             aContext->sendMsgToClientL(incommingMsgHandler);
+            delete incommingMsgHandler;
+            //aContext->iPendingForDeletionQ.Queue(*incommingMsgHandler);
+            return aContext->StateFactory().getStateL(EWaitForClient);
             }
-        aContext->iPendingForDeletionQ.Queue(*incommingMsgHandler);
-        return aContext->StateFactory().getStateL(EWaitForClient);
+        return aContext->StateFactory().getStateL( EActive );
         }
     else if(MMSRPIncomingMessage::EMSRPReport == msgType) // Drop Reports
         {
-        MSRPLOG("Reports not supported!!");
+        aContext->sendMsgToClientL( incommingMsgHandler );
         delete incommingMsgHandler;
-        return this;
+        //aContext->iPendingForDeletionQ.Queue(*incommingMsgHandler);
+        return aContext->StateFactory().getStateL( EWaitForClient );
         }
     else // It is an unrecognized request eg. AUTH
         {
         MSRPLOG("Unrecognized request received");
-        TBool sendToClient = incommingMsgHandler->SendResponseL(aContext, 
-                *aContext->iConnection, CMSRPResponse::EUnknownRequestMethod);        
+        incommingMsgHandler->SendResponseL(aContext, *aContext->iConnection, EUnknownRequestMethod );        
         aContext->iPendingForDeletionQ.Queue(*incommingMsgHandler);
         return aContext->StateFactory().getStateL(EWaitForClient);
         }
     } 
- 
-TStateBase* TStateBase::handleClientListnerCancelL(CMSRPServerSubSession * aContext, 
+    
+TStateBase* TStateBase::handleClientListnerCancelL( CMSRPServerSubSession* aContext, 
         TMSRPFSMEvent aEvent)
     {
+    MSRPLOG("-> TStateBase::handleClientListnerCancelL");
     if(aEvent == EMSRPCancelReceivingEvent)
         {
-        // Confirm completion of the Cancel Request.
-        aContext->CompleteClient(KErrNone);
+        // let's find the correct listener first
+        TBuf8< KMaxLengthOfTransactionIdString > messageId;
+        aContext->iClientMessage->ReadL( 0, messageId );
+        // going through all incoming instances
+        CMSRPMessageHandler* owner = aContext->iCurrentlyReceivingMsgQ.FindElement( messageId );
+        if ( owner )
+            {
+            MSRPLOG2("TStateBase::handleClientListnerCancelL terminating %d", owner );
+            owner->TerminateReceiving( aContext, *aContext->iConnection );
+            }
+        else
+            {
+            if( aContext->iIncommingMessageListner.Check() )
+                {
+                aContext->iIncommingMessageListner.Complete( KErrNone );
+                }
+            }
         
-        // Complete the Listner if that is active.
-        if(aContext->iIncommingMessageListner.Check())
-            aContext->iIncommingMessageListner.Complete(KErrNone);
+        // Confirm completion of the Cancel Request.
+        aContext->CompleteClient( KErrNone );
         }    
     
     if(aEvent == EMSRPCancelSendRespListeningEvent)
         {
         // Confirm completion of the Cancel Request.
-        aContext->CompleteClient(KErrNone);
+        aContext->CompleteClient( KErrNone );
         
         // Complete the Listner if that is active.
         if(aContext->iResponseListner.Check())
-            aContext->iResponseListner.Complete(KErrNone);        
+            aContext->iResponseListner.Complete( KErrNone );        
         }
     
     return aContext->StateFactory().getStateL(EWaitForClient);    
+    }
+    
+TStateBase* TStateBase::HandleClientCancelSendingL( CMSRPServerSubSession* aContext )
+    {
+    MSRPLOG("-> TStateBase::HandleClientCancelSendingL");
+    // let's find the correct listener first
+    TBuf8< KMaxLengthOfTransactionIdString > messageId;
+    aContext->iClientMessage->ReadL( 0, messageId );
+    
+    // going through all incoming instances
+    CMSRPMessageHandler* owner = aContext->iOutMsgQ.FindElement( messageId );
+    if ( owner )
+        {
+        MSRPLOG2("TStateBase::HandleClientCancelSendingL terminating %d", owner );
+        owner->TerminateSending( );
+        }
+    
+    // Confirm completion of the Cancel Request.
+    aContext->CompleteClient( KErrNone );
+    return this;
     }
   
 TStateBase* TStateBase::handleConnectionStateChangedL(CMSRPServerSubSession *aContext)
@@ -321,14 +393,83 @@ TStateBase* TStateBase::handleQueuesL(CMSRPServerSubSession *aContext)
         }
     else
         {   
-        if( CMSRPServerSubSession::TInCommingMsgQueue == 
-                           aContext->getQToProcess() )
-            state  =  processIncommingMessageL( aContext );       
+        CMSRPServerSubSession::TQueueType type = aContext->getQToProcess();
+        if ( type == CMSRPServerSubSession::TReceiveProgressQueue )
+            {
+            state  =  processReceiveReportL( aContext );       
+            }
+        else if ( type == CMSRPServerSubSession::TSendProgressQueue )
+            {
+            state  =  processSendReportL( aContext );       
+            }
+        else if ( type == CMSRPServerSubSession::TCompletedSendQueue )
+            {
+            state  =  processCompletedMessageL( aContext );       
+            }
+        else if ( type == CMSRPServerSubSession::TCompletedIncQueue )
+            {
+            state  =  processCompletedIncomingMessageL( aContext );       
+            }
+        else if( type == CMSRPServerSubSession::TInCommingMsgQueue )
+            {
+            state  =  processIncommingMessageL( aContext );
+            }
         else
+            {
             state  =  processPendingMessageQL( aContext );
+            }
         }   
 
     return state;
+    }
+
+TStateBase* TStateBase::handleInCommingMessagesL(CMSRPServerSubSession *aContext)
+     {
+     CMSRPMessageHandler* incommingMsg = aContext->iReceivedMsg;
+     aContext->iReceivedMsg = NULL;
+     
+     return processIncommingMessageL(aContext, incommingMsg);             
+     }
+
+TStateBase* TStateBase::MessageSendCompleteL(CMSRPServerSubSession *aContext)
+    {
+    // Handle send message complete event.
+    if( NULL == aContext->iCurrentMsgHandler)
+        {
+        MSRPLOG( "TStateBase::MessageSendCompleteL :: iCurrentMsgHandler is NULL \n" );                                     
+        return this;
+        }
+        
+    if ( aContext->iCurrentMsgHandler->IsTransmissionTerminated() )
+        {
+        MSRPLOG("TStateBase::processCompletedMessageL transmission terminated");
+        if( aContext->iResponseListner.Check() )
+            {
+            MSRPLOG("TStateBase::processCompletedMessageL complete with KErrCancel");    
+            aContext->iResponseListner.Complete( KErrCancel );
+            }
+        return aContext->StateFactory().getStateL( EWaitForClient );
+        }
+        
+    if( aContext->iCurrentMsgHandler->IsMessageComplete() )
+        {
+        // Messages with Failure Report set to "No" will never get a response.        
+        aContext->sendResultToClientL( aContext->iCurrentMsgHandler );      
+        CMSRPMessageHandler* temp = aContext->iOutMsgQ.getMatch( aContext->iCurrentMsgHandler );
+        if ( temp )
+            {
+            aContext->iOutMsgQ.explicitRemove( aContext->iCurrentMsgHandler );
+            }
+        delete aContext->iCurrentMsgHandler;
+        aContext->iCurrentMsgHandler = NULL;
+        return aContext->StateFactory().getStateL( EWaitForClient );
+        }
+    else
+        {
+        aContext->iCurrentMsgHandler = NULL;
+        // Handle any pending events in Queue.
+        return handleQueuesL(aContext);     
+        }
     }
 
 TStates TStateIdle::identity()
@@ -414,7 +555,6 @@ TStateBase* TStateIdle::handleLocalMSRPPathRequestL( CMSRPServerSubSession *aCon
     localAddr.Output(aContext->iLocalHost);          
     
     aContext->iLocalPathMSRPDataPckg().iLocalHost.Copy( aContext->iLocalHost );
-    aContext->iLocalPathMSRPDataPckg().iSessionID = *(aContext->iLocalSessionID);
     
     TInt reason = aContext->Write(0, aContext->iLocalPathMSRPDataPckg);     
     aContext->CompleteClient(KErrNone);
@@ -535,12 +675,20 @@ TStates TStateConnecting::identity()
 TStateBase* TStateConnecting::EventL(TMSRPFSMEvent aEvent, CMSRPServerSubSession *aContext)
     {
     MSRPLOG2("Entered TStateConnecting Event %d",aEvent);
-    TStateBase *state;
+    TStateBase *state = this;
 
     switch(aEvent)
         {
+        case EMSRPProcessQueuedRequestsEvent:
+        aContext->CompleteClient(KErrNone);              
+        break;
+        
         case EConnectionStateChangedEvent:
         state = handleConnectionStateChangedL(aContext);
+        break;
+        
+        case EMSRPDataSendMessageEvent:
+        aContext->QueueClientSendRequestsL();                         
         break;
                  
         default:                      
@@ -553,80 +701,11 @@ TStateBase* TStateConnecting::EventL(TMSRPFSMEvent aEvent, CMSRPServerSubSession
     return state;    
     }
 
-TStateBase* TStateWaitForClient::fileSendCompleteL(CMSRPServerSubSession *aContext)
-    {
-    CMSRPMessageHandler *outgoingMessageHandler = aContext->iOutMsgQ.getHead();
-    
-    if( outgoingMessageHandler  && outgoingMessageHandler->IsMessageComplete() )
-        {
-            aContext->iOutMsgQ.explicitRemove(outgoingMessageHandler);    
-             delete outgoingMessageHandler;
-             aContext->iSendCompleteNotify = TRUE;
-         }
-    return aContext->StateFactory().getStateL( EWaitForClient );   
-    }   
-
-TStateBase * TStateWaitForClient::handleResponseSentL( CMSRPServerSubSession *aContext)
-    {
-    CMSRPMessageHandler *oriMessageHandler = aContext->iReceiveFileMsgHdler;
-    oriMessageHandler->UpdateResponseStateL(aContext->iReceivedResp);
-    if(oriMessageHandler->FileTransferComplete() )
-        {
-        aContext->iReceiveCompleteNotify = TRUE;              
-        }
-    
-    return aContext->StateFactory().getStateL(EWaitForClient);    
-    }
-
 TStates TStateWaitForClient::identity()
     {
     return EWaitForClient;
     }
  
-TStateBase* TStateBase::handleSendFileL(CMSRPServerSubSession *aContext)
-    {    
-    MSRPLOG("TStateBase::handleSendFileL() enter");
-    aContext->ReadSendDataPckgL(); 
-    CMSRPMessageHandler *aMessageHandler = CMSRPMessageHandler::NewL(aContext,
-            aContext->iSendMSRPdataPckg().iExtMessageBuffer); 
-    
-    aMessageHandler->SendFileL(*aContext->iConnection);                                        
-    
-    aContext->iOutMsgQ.Queue(*aMessageHandler);    
-    aContext->CompleteClient( KErrNone );
-    
-    aContext->iFileShare = TRUE;
-    MSRPLOG("TStateBase::handleSendFileL() exit"); 
-    if(!aContext->listnerSetupComplete())
-        {
-        return aContext->StateFactory().getStateL(EWaitForClient);
-        }
-    
-    return aContext->StateFactory().getStateL(EFileShare);
-    }
- 
-TStateBase* TStateBase::handleReceiveFileL(CMSRPServerSubSession *aContext)
-     {     
-     MSRPLOG("TStateBase::handleReceiveFileL() enter");
-    
-     aContext->ReadSendDataPckgL(); 
-     
-     aContext->iReceiveFileMsgHdler = CMSRPMessageHandler::NewL(aContext,
-                             aContext->iSendMSRPdataPckg().iExtMessageBuffer); 
-      
-     
-     aContext->iReceiveFileMsgHdler->ReceiveFileL();
-     aContext->CompleteClient( KErrNone );
-     aContext->iFileShare = TRUE;
-     MSRPLOG("TStateBase::handleReceiveFileL() exit");
-     if(!aContext->listnerSetupComplete())
-         {
-         return aContext->StateFactory().getStateL(EWaitForClient);
-         }
-     
-     return aContext->StateFactory().getStateL(EFileShare);     
-     }
-   
 TStateBase* TStateWaitForClient::EventL(TMSRPFSMEvent aEvent, CMSRPServerSubSession *aContext)
     {
       // In the TStateWaitForClient stat the server subsession waits for the client to setup 
@@ -638,6 +717,10 @@ TStateBase* TStateWaitForClient::EventL(TMSRPFSMEvent aEvent, CMSRPServerSubSess
       TStateBase *state = NULL;
       switch(aEvent)
           {
+          case EMSRPProcessQueuedRequestsEvent:
+              aContext->CompleteClient(KErrNone);              
+              break;
+          
           case EMSRPListenMessagesEvent:
               if(!aContext->iIncommingMessageListner.set(*(aContext->iClientMessage)))
                   {
@@ -662,26 +745,40 @@ TStateBase* TStateWaitForClient::EventL(TMSRPFSMEvent aEvent, CMSRPServerSubSess
               break;  
               
           case EMSRPDataSendCompleteEvent:
-              // Data Send Complete received in the TWaitForClient state is 
-              // not handeled. At Data Send Complete messae with Failure Report 
-              // header set to "no" need to inform the client about completion.
-              // Currently Queuing of completion events is not supported.
-              if(aContext->iFileShare)
+          case EMSRPDataCancelledEvent:
+              {
+              MSRPLOG("TStateWaitForClient::EventL EMSRPDataCancelledEvent");
+
+              if( aContext->iCurrentMsgHandler->IsMessageComplete() )
                   {
-                  state = fileSendCompleteL(aContext);
-                  break;
+                  MSRPLOG("TStateWaitForClient::EventL moving to pending data");
+                  aContext->iOutMsgQ.explicitRemove( aContext->iCurrentMsgHandler );    
+                  aContext->iPendingDataSendCompleteQ.Queue( *aContext->iCurrentMsgHandler );
                   }
-              MSRPLOG2("TStateWaitForClient::Not supported, Please check %d",aEvent);                     
+              aContext->iCurrentMsgHandler = NULL;
               break;
+              }
               
           case EMSRPResponseSendCompleteEvent:
-              if(aContext->iFileShare)
+              {
+              if( aContext->iReceivedResp->IsMessageComplete() )
                   {
-                  state = handleResponseSentL(aContext);  
-                  break;
+                  aContext->iPendingDataIncCompleteQ.Queue( *aContext->iReceivedResp );
                   }
+              aContext->iReceivedResp = NULL;
               break;
-  
+              }
+
+          case EMSRPReportSendCompleteEvent:
+              {
+              if( aContext->iReceivedReport->IsMessageComplete() )
+                  {
+                  aContext->iPendingDataIncCompleteQ.Queue( *aContext->iReceivedReport );
+                  }
+              aContext->iReceivedReport = NULL;
+              break;
+              }
+
           case EMSRPDataSendMessageEvent:
               aContext->QueueClientSendRequestsL();                         
               break;
@@ -690,31 +787,43 @@ TStateBase* TStateWaitForClient::EventL(TMSRPFSMEvent aEvent, CMSRPServerSubSess
           case EMSRPCancelSendRespListeningEvent:
                handleClientListnerCancelL(aContext, aEvent);
                break;
+               
+          case EMSRPDataSendMessageCancelEvent:
+              {
+              HandleClientCancelSendingL( aContext );
+              break;
+              }
 
           case EConnectionStateChangedEvent:
               state = handleConnectionStateChangedL(aContext);
               break;
               
           case EMSRPSendProgressEvent:
-          case EMSRPReceiveProgressEvent:
-              //ignore event if no listener
-              MSRPLOG("TStateWaitForClient::EventL Ignoring Progress Event")
-              state = aContext->StateFactory().getStateL(EWaitForClient);
+              {
+              state = aContext->StateFactory().getStateL( EWaitForClient );
+              // queue only if this msghandler is not already in the queue
+              if ( aContext->iPendingSendProgressQ.FindElement( aContext->iSendProgressMsg ) == NULL )
+                  {
+                  aContext->iPendingSendProgressQ.Queue( *aContext->iSendProgressMsg );                  
+                  }
               break;
-
-          case EMSRPSendFileEvent:
-               state =  handleSendFileL(aContext);
-               break;
-               
-          case EMSRPReceiveFileEvent :
-               state =  handleReceiveFileL(aContext);
-               break;    
+              }
+          case EMSRPReceiveProgressEvent:
+              {
+              // Queue any thing that comes.
+              state = aContext->StateFactory().getStateL( EWaitForClient );
+              // queue only if this msghandler is not already in the queue
+              if ( aContext->iPendingReceiveProgressQ.FindElement( aContext->iReceiveProgressMsg ) == NULL )
+                  {
+                  aContext->iPendingReceiveProgressQ.Queue( *aContext->iReceiveProgressMsg );                  
+                  }
+              break;
+              }
                   
           default:          
               // Any such error usually a client/server protocol voilation or connection/subsession 
               // protocol voilation. A bug to fix!!
-              
-              MSRPLOG2("TStateWaitForClient::EventL :: Err!! Invalid state to have received %d",aEvent);                     
+              MSRPLOG2("TStateWaitForClient::EventL :: Err!! Invalid state was received %d",aEvent);                     
               state = HandleStateErrorL(aContext);
               break;              
           };
@@ -722,33 +831,18 @@ TStateBase* TStateWaitForClient::EventL(TMSRPFSMEvent aEvent, CMSRPServerSubSess
       if(NULL == state)
         {
           // State not set.
-          if(!aContext->listnerSetupComplete())
+          if( !aContext->listnerSetupComplete() )
               {
               state = this;
               }
-          else if (aContext->iFileShare)
-              {
-                  state = aContext->StateFactory().getStateL(EFileShare);
-                  
-                  if(aContext->iReceiveCompleteNotify)
-                      {
-                      aContext->NotifyFileReceiveResultToClientL(NULL);
-                      state = aContext->StateFactory().getStateL(EWaitForClient);
-                      }
-                  else if (aContext->iSendCompleteNotify)
-                      {
-                      aContext->NotifyFileSendResultToClientL(NULL);
-                      state = aContext->StateFactory().getStateL(EWaitForClient);
-                      }
-                  else if(!aContext->QueuesEmpty())
-                      state = state->handleQueuesL(aContext);                   
-              }
           else
-            state = handleQueuesL(aContext);                  
+              {
+              state = handleQueuesL(aContext);
+              }
         }
         return state;    
     }
-
+    
 TStates TStateActive::identity()
     {
     return EActive;
@@ -772,14 +866,6 @@ TStateBase* TStateActive::EventL(TMSRPFSMEvent aEvent, CMSRPServerSubSession *aC
               state =  handleInCommingMessagesL(aContext);
               break; 
  
-         case EMSRPSendFileEvent:
-              state =  handleSendFileL(aContext);
-              break;
-              
-         case EMSRPReceiveFileEvent :
-              state =  handleReceiveFileL(aContext);
-              break;
-             
          case EConnectionStateChangedEvent:
               state = handleConnectionStateChangedL(aContext);
               break;
@@ -787,8 +873,45 @@ TStateBase* TStateActive::EventL(TMSRPFSMEvent aEvent, CMSRPServerSubSession *aC
          case EMSRPCancelReceivingEvent:          
          case EMSRPCancelSendRespListeningEvent:
               state =  handleClientListnerCancelL(aContext, aEvent);
-              break;             
- 
+              break;   
+         
+         case EMSRPDataSendMessageCancelEvent:
+             {
+             state = HandleClientCancelSendingL( aContext );
+             break;
+             }
+              
+         case EMSRPDataCancelledEvent:
+         case EMSRPDataSendCompleteEvent:
+             state = MessageSendCompleteL(aContext);
+             break;
+             
+         case EMSRPResponseSendCompleteEvent:
+             {
+             state = handleResponseSentL(aContext);  
+             break;
+             }
+
+         case EMSRPReportSendCompleteEvent:
+             {
+             state = handleReportSentL( aContext );  
+             break;
+             }
+
+         case EMSRPReceiveProgressEvent:
+             {
+             aContext->ReceiveProgressToClientL( aContext->iReceiveProgressMsg );
+             state = aContext->StateFactory().getStateL( EWaitForClient );
+             break;
+             }
+
+         case EMSRPSendProgressEvent:
+             {
+             aContext->SendProgressToClientL( aContext->iSendProgressMsg );
+             state = aContext->StateFactory().getStateL( EWaitForClient );
+             break;
+             }
+
          default: 
              // Any such error usually a client/server protocol voilation or connection/subsession 
              // protocol voilation. A bug to fix!!
@@ -811,287 +934,55 @@ TStateBase* TStateActive::handleSendDataL(CMSRPServerSubSession *aContext)
      = CMSRPMessageHandler::NewL(aContext,
          aContext->iSendMSRPdataPckg().iExtMessageBuffer); 
     
-    msgHandler->SendMessageL( *aContext->iConnection );                    
-    aContext->iCurrentMsgHandler = msgHandler;
-    
+    msgHandler->SendMessageL( *aContext->iConnection );   
+    aContext->iOutMsgQ.Queue( *msgHandler );
     aContext->CompleteClient( KErrNone );
     
-    return aContext->StateFactory().getStateL(EActiveSend);
+    return aContext->StateFactory().getStateL( EActive );
     }
    
-TStateBase* TStateBase::handleInCommingMessagesL(CMSRPServerSubSession *aContext)
-     {
-     CMSRPMessageHandler* incommingMsg = aContext->iReceivedMsg;
-     aContext->iReceivedMsg = NULL;
-     
-     return processIncommingMessageL(aContext, incommingMsg);             
-     }
- 
-TStates TStateFileShare::identity()
-     {
-     return EFileShare;
-     } 
- 
-TStateBase* TStateFileShare::EventL(TMSRPFSMEvent aEvent, CMSRPServerSubSession *aContext)
-     {
-     TStateBase *state = NULL;
-     MSRPLOG2("Entered TStateFileShare Event %d",aEvent);
-     switch(aEvent)
-         {
-         case EMSRPDataSendCompleteEvent: // maps to file send complete
-              state = fileSendCompleteL(aContext);
-              break;
-             
-         case EMSRPIncomingMessageReceivedEvent:  // incoming responses to file chunks
-             state =  handleInCommingMessagesL(aContext);
-              break;
-              
-         case EMSRPResponseSendCompleteEvent:
-             state = handleResponseSentL(aContext);  
-              break;
-         
-         case EMSRPSendProgressEvent:
-             state = handleSendProgressL(aContext);
-             break;
-             
-         case EMSRPReceiveProgressEvent:
-             state = handleReceiveProgressL(aContext);             
-             break;
-                  
-         case EConnectionStateChangedEvent :
-             state = handleConnectionStateChangedL(aContext); 
-             break;
-
-              
-         case EMSRPCancelReceivingEvent:
-         case EMSRPCancelSendRespListeningEvent:
-              state =  handleClientListnerCancelL(aContext, aEvent);
-              break;  
-         default:
-               MSRPLOG2("TStateFileShare::EventL :: Err!! Invalid state to have received %d",aEvent);                     
-              // state =  HandleStateErrorL(aContext);      //handle error state       
-               break;
-         
-         }
-         return state;
-     }
- 
-TStateBase * TStateFileShare::handleSendProgressL( CMSRPServerSubSession *aContext)
-     {
-     CMSRPMessageHandler *outgoingMessageHandler = aContext->iOutMsgQ.getHead();
-     aContext->SendProgressToClientL(outgoingMessageHandler);
-     return aContext->StateFactory().getStateL( EWaitForClient ); 
-     }
- 
-TStateBase * TStateFileShare::handleReceiveProgressL( CMSRPServerSubSession *aContext)
-     {
-     CMSRPMessageHandler *oriMessageHandler = aContext->iReceiveFileMsgHdler;     
-     aContext->ReceiveProgressToClientL(oriMessageHandler);
-     return aContext->StateFactory().getStateL( EWaitForClient );
-     }
- 
-TStateBase * TStateFileShare::handleResponseSentL( CMSRPServerSubSession *aContext)
-     {
-     CMSRPMessageHandler *oriMessageHandler = aContext->iReceiveFileMsgHdler;
-     oriMessageHandler->UpdateResponseStateL(aContext->iReceivedResp);
-     
-
-      if(oriMessageHandler->FileTransferComplete() )
-         {
-         //Notify client
-         aContext->NotifyFileReceiveResultToClientL(oriMessageHandler);
-         delete oriMessageHandler;
-         aContext->iReceiveFileMsgHdler = NULL;
-         return aContext->StateFactory().getStateL(EWaitForClient);
-         }
-     
-     if(!aContext->listnerSetupComplete())
-         {
-         return aContext->StateFactory().getStateL(EWaitForClient);
-         }
-     
-     return aContext->StateFactory().getStateL(EFileShare);
-     
-     }
-  
-TStateBase * TStateFileShare::handlesResponseL(CMSRPServerSubSession *aContext,
-                  CMSRPMessageHandler *incommingMsgHandler)
-      {
-      TStateBase *nextState; 
-      MSRPLOG("TStateFileShare::handlesFileResponseL Entered!");
-      
-      // Search the outgoing Queue to find the owner of  this response.
-      CMSRPMessageHandler *outgoingMsgHandler = 
-                         aContext->iOutMsgQ.getMatch(incommingMsgHandler);
-
-      nextState = this;
-      if(NULL != outgoingMsgHandler)
-         {
-         CleanupStack::PushL(incommingMsgHandler);
-         outgoingMsgHandler->ConsumeFileResponseL(*incommingMsgHandler);
-        
-         if(outgoingMsgHandler->FileTransferComplete())    
+TStateBase* TStateActive::handleResponseSentL( CMSRPServerSubSession* aContext )
+    {
+    MSRPLOG("-> TStateActive::handleResponseSentL");
+    if( aContext->iReceivedResp->IsMessageComplete() )
+        {
+        if ( !aContext->iReceivedResp->SendReportL(aContext, *aContext->iConnection, EAllOk ) )
             {
-             //notify client
-            aContext->NotifyFileSendResultToClientL(outgoingMsgHandler);
-            aContext->iOutMsgQ.explicitRemove(outgoingMsgHandler);    
-            delete outgoingMsgHandler;        
-            nextState = aContext->StateFactory().getStateL(EWaitForClient);
-            }    
-        
-         CleanupStack::Pop(incommingMsgHandler);
-         }
-      delete incommingMsgHandler;
-      MSRPLOG("TStateFileShare::handlesResponseL Exit!");
-      if(!aContext->listnerSetupComplete())
-          {
-          return aContext->StateFactory().getStateL(EWaitForClient);
-          }
-      return nextState; 
-      }
-  
-TStateBase * TStateFileShare::handleRequestsL(CMSRPServerSubSession *aContext,
-                 CMSRPMessageHandler *incommingMsgHandler)
-     {     
-     if(MMSRPIncomingMessage::EMSRPMessage == incommingMsgHandler->MessageType())
-         {
-         CMSRPMessageHandler *oriMessageHandler = aContext->iReceiveFileMsgHdler;
-         
-         if(oriMessageHandler->IsInFile())
-             {   
-             oriMessageHandler->WritetoFileL(incommingMsgHandler);
-             incommingMsgHandler->SendResponseL(aContext, *aContext->iConnection,CMSRPResponse::EAllOk);
-             if(!incommingMsgHandler->IfResponseReqL())
-                 {
-                 delete incommingMsgHandler;
-                 if(oriMessageHandler->FileTransferComplete())
-                     {
-                     aContext->NotifyFileReceiveResultToClientL(oriMessageHandler);
-                     delete oriMessageHandler;
-         	         aContext->iReceiveFileMsgHdler = NULL;
-                     return aContext->StateFactory().getStateL(EWaitForClient);   
-                     }
-                 }
-           
-             else
-                 {
-                 aContext->iPendingForDeletionQ.Queue(*incommingMsgHandler);
-                 }              
-              }
-          }
-     else
-         {
-         MSRPLOG("Reports not supported.!!");
-         delete incommingMsgHandler;         
-         }
-     if(!aContext->listnerSetupComplete())
-         {
-         return aContext->StateFactory().getStateL(EWaitForClient);
-         }
-     return this; 
-     }
- 
-TStateBase* TStateFileShare::fileSendCompleteL(CMSRPServerSubSession *aContext)
-     {
-     CMSRPMessageHandler *outgoingMessageHandler = aContext->iOutMsgQ.getHead();
-     
-     if( outgoingMessageHandler  && outgoingMessageHandler->IsMessageComplete() )
-         {
-             //notify client
-              aContext->NotifyFileSendResultToClientL( outgoingMessageHandler );
-              aContext->iOutMsgQ.explicitRemove(outgoingMessageHandler);    
-              delete outgoingMessageHandler;
-              return aContext->StateFactory().getStateL( EWaitForClient ); 
-          }
-         // response needed keep it on the outmsg queue itself
-     return aContext->StateFactory().getStateL( EFileShare );   
-     }   
- 
-TStates TStateActiveSend::identity()
-    {
-    return EActiveSend;
-    }
- 
-TStateBase* TStateActiveSend::EventL(TMSRPFSMEvent aEvent, CMSRPServerSubSession *aContext)
-    {
-     // ActiveSend state. The subsession is busy sending earlier data. Any further requests to 
-     // send data from the client will be queued. Any Message received will be queued till 
-     // EMSRPDataSendCompleteEvent is received. 
-     // After this Message Received Queue will be processed to check for any 
-     // incoming messages/responses.
-     // After that Message send queue will be processed to see if there any pending messages to 
-     // trasmitt.
-     // If both the queues are empty move back to Active State.
-
-     TStateBase *state;
-     MSRPLOG2("Entered TStateActiveSend Event %d",aEvent); 
- 
-     switch(aEvent)
-         {
-         case EMSRPDataSendMessageEvent:
-             aContext->QueueClientSendRequestsL();
-             state = this;          
-             break;
-     
-         case EMSRPDataSendCompleteEvent:
-             state = MessageSendCompleteL(aContext);
-             break;
- 
-         case EMSRPIncomingMessageReceivedEvent:
-             // Queue any thing that comes.
-             aContext->iInCommingMsgQ.Queue(*aContext->iReceivedMsg);
-             state = this;           
-             break;
-
-         case EConnectionStateChangedEvent:
-              state = handleConnectionStateChangedL(aContext);
-              break;
-              
-         case EMSRPCancelReceivingEvent:          
-         case EMSRPCancelSendRespListeningEvent:
-             state =  handleClientListnerCancelL(aContext, aEvent);
-             break;              
- 
-         default: 
-             // Any such error usually a client/server protocol voilation or connection/subsession 
-             // protocol voilation. A bug to fix!!
-             
-             MSRPLOG2("TStateActiveSend::EventL :: Err!! Invalid state to have received %d",aEvent);                     
-             state =  HandleStateErrorL(aContext);            
-             break; 
-         } 
-     return state;
-    }
- 
-TStateBase * TStateActiveSend::MessageSendCompleteL(CMSRPServerSubSession *aContext)
-    {
-    // Handle send message complete event.
-    if( NULL == aContext->iCurrentMsgHandler)
-        {
-        MSRPLOG( "TStateActiveSend::MessageSendCompleteL :: iCurrentMsgHandler is NULL \n" );                                     
-        return this;
-        }
-        
-    if( aContext->iCurrentMsgHandler->IsMessageComplete() )
-        {
-        // Messages with Failure Report set to "No" will never get a response.        
-        TBool error = aContext->sendResultToClientL( aContext->iCurrentMsgHandler );        
-        delete aContext->iCurrentMsgHandler;
-        aContext->iCurrentMsgHandler = NULL;
-        
-        return aContext->StateFactory().getStateL( EWaitForClient );
+            if ( aContext->iReceivedResp->IsTransmissionTerminated() )
+                {
+                if( aContext->iIncommingMessageListner.Check() )
+                    {
+                    aContext->iIncommingMessageListner.Complete( KErrCancel );
+                    }
+                }
+            else
+                {
+                aContext->sendMsgToClientL( aContext->iReceivedResp );
+                }
+            return aContext->StateFactory().getStateL(EWaitForClient);
+            }
+        else
+            {
+            aContext->iReceivedResp = NULL;
+            }
         }
     else
         {
-        // Message expects a response to come. Put this out the OutGoing Queue.
-        aContext->iOutMsgQ.Queue( *(aContext->iCurrentMsgHandler) );
-        aContext->iCurrentMsgHandler = NULL;
-        
-        // Handle any pending events in Queue.
-        return handleQueuesL(aContext);     
+        aContext->iReceivedResp->ResponseHandled();   
+        aContext->iReceivedResp = NULL;
         }
-    } 
+    MSRPLOG("<- TStateBase::handleRequestsL");
+    return aContext->StateFactory().getStateL( EActive );
+    }
 
+TStateBase* TStateActive::handleReportSentL( CMSRPServerSubSession* aContext)
+    {
+    MSRPLOG("-> TStateActive::handleReportSentL");
+    aContext->sendReportToClientL( aContext->iReceivedReport );
+    aContext->iPendingDataIncCompleteQ.Queue( *aContext->iReceivedReport );
+    aContext->iReceivedReport = NULL;
+    return aContext->StateFactory().getStateL( EWaitForClient );
+    }
 
 TStates TStateError::identity()
     {
@@ -1115,7 +1006,7 @@ TStateBase* TStateError::EventL(TMSRPFSMEvent aEvent, CMSRPServerSubSession *aCo
             break;
             
         case EMSRPListenSendResultEvent:
-            aContext->CompleteClient(EInvalidAction); 
+            aContext->CompleteClient( KErrGeneral ); 
             state = this;
             break;
             

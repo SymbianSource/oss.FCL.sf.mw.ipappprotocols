@@ -23,19 +23,32 @@
 // FORWARD DECLARATIONS
 class CMSRPMessage;
 
-
 class MMSRPSessionObserver
     {
     public:
         
         /**
-         * An MSRP SEND request has been received from the network.
+         * An MSRP message has been received from the network.
          * The content of the request is given to the client, along with the 
          * status of receiving the request. Ownership of the content is transferred.
-         * @param aMessageContent the received message content
+         * This method is used to give smaller messages to the clients in buffer
+         * @param aMessageContent the received message content, ownership is transferred
+         * @param aMimeType mimetype of the received data, ownership is transferred
          * @param aStatus KErrNone with complete message, KErrCancel if terminated
          */
-        virtual void IncomingMessage( HBufC8* aMessageContent, TInt aStatus ) = 0;
+        virtual void IncomingMessageInBuffer( HBufC8* aMessageContent, HBufC8* aMimeType, TInt aStatus ) = 0;
+
+        /**
+         * An MSRP message has been received from the network.
+         * The content of the request is given to the client, along with the 
+         * status of receiving the request. 
+         * Note: the file is a temporary file which should be moved/renamed to correct 
+         * location.
+         * @param aFileName file name and path of the received file
+         * @param aMimeType mimetype of the received file, ownership is transferred
+         * @param aStatus KErrNone with complete message, KErrCancel if terminated
+         */
+        virtual void IncomingMessageInFile( TFileName& aFileName, HBufC8* aMimeType, TInt aStatus ) = 0;
 
         /**
          * An MSRP REPORT request has been received from the network.
@@ -53,18 +66,12 @@ class MMSRPSessionObserver
 
         /**
          * Result of the send operation initiated by the client
-         * @param aStatus error code as defined in MsrpCommon::TErrorCode
+         * @param aStatus error code as defined in MsrpCommon.h, TMSRPRequests
+         *        or system-wide error code
          * @param aMessageId message identifier of the sent message that
          * was returned by the SendBuffer call
          */
         virtual void SendResult( TInt aStatus, const TDesC8& aMessageid ) = 0;
-
-        /**
-         * Indicates a failure in connection establishment
-         * or in case of any error in an established connection
-         * @param aStatus a system wide error code
-         */
-        virtual void ListenPortFailure( TInt aStatus ) = 0;
 
         /**
          * Result of the connection attempt made by the client. This callback is
@@ -75,31 +82,22 @@ class MMSRPSessionObserver
          * @param aStatus KErrNone or a system wide error code
          */
         virtual void ConnectStatus( TInt aStatus ) = 0;
-        
+
         /**
-         * Notifies that the entire file has been sent successfully 
-         */
-        virtual void SendFileNotification(TBool aStatus) = 0;
-        
-        /**
-         * Notifies that the entire file has been received successfully 
-         */
-        virtual void ReceiveFileNotification(TBool status) = 0;
-        
-        /**
-        * File data transfer progress. returns the progress of data transfer
+        * Data transfer progress. returns the progress of data transfer
+        * @param aMessageId message identifier of the data to be sent
         * @param aTransferred number of bytes transferred
         * @param aTotal Total amount of bytes to be transferred
         */
-        virtual void FileSendProgress( TInt aTransferred, TInt aTotal ) = 0;
+        virtual void SendProgress( const TDesC8& aMessageid, TInt aTransferred, TInt aTotal ) = 0;
 
         /**
-        * File receive progress, number of bytes received from incoming data
+        * Data receive progress, number of bytes received from incoming data
+        * @param aMessageId message identifier of the data to be received
         * @param aReceived number of bytes received
         * @param aTotal Total amount of bytes to be received
         */
-        virtual void FileReceiveProgress( TInt aReceived, TInt aTotal ) = 0;
-        
+        virtual void ReceiveProgress( const TDesC8& aMessageid, TInt aReceived, TInt aTotal ) = 0;
     };
 
 #endif /* MMSRPSESSIONOBSERVER_H_ */

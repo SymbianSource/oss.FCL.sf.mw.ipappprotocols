@@ -80,6 +80,12 @@ class MMSRPConnectionManager
 	            
 	    virtual RConnection& SocketServerConn() = 0 ;
 	    
+        /**
+         * Try to restart the inferface in case error is encountered 
+         */
+        virtual TInt ReStartInterface() = 0;
+	    
+	    
 	    //virtual TBool MatchIapId(TUint32 aIapID);
 	    
 	};

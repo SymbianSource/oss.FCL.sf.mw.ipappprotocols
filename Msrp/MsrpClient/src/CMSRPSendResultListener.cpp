@@ -85,7 +85,7 @@ void CMSRPSendResultListener::RunL()
         {
         if(iServerInterface.GetSendProgress())
             {
-            iSessionImpl.SendProgress(iServerInterface.GetBytesSent(), iServerInterface.GetTotalBytes());
+            iSessionImpl.SendProgress( iServerInterface.SendMessageId(), iServerInterface.GetBytesSent(), iServerInterface.GetTotalBytes());
             //handle send progress
             //to session observer                           
             }

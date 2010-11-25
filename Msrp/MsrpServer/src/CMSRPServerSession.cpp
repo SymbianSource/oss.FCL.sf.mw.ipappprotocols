@@ -122,8 +122,11 @@ void CMSRPServerSession::CreateSubSessionL( const RMessage2& aMessage )
 	
 	/* First notify the Server so that connections can be started */
 	iMSRPServer.CreatingSubSessionL( aMessage.Int0() );
+    TBuf8< KMaxLengthOfSessionId > messageId;
+    aMessage.ReadL( 1, messageId );
 	
-	CMSRPServerSubSession* subSession = CMSRPServerSubSession::NewL( *this, iMSRPServer.StateFactory());
+	CMSRPServerSubSession* subSession = CMSRPServerSubSession::NewL( 
+	        *this, iMSRPServer.StateFactory(), messageId );
 	CleanupStack::PushL(subSession);
 			
 	//check handle doesnt preexist or add current time to handle
@@ -175,7 +178,6 @@ void CMSRPServerSession::DispatchToSubSessionL( const RMessage2& aMessage )
 		aMessage.Panic(KBadHandle,EBadSubsessionHandle);		
 		}
     pHandleObj->Subsession()->ServiceL(aMessage);
-    
 	}
 
 

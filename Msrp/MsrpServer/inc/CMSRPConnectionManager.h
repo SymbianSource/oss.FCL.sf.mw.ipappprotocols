@@ -18,12 +18,13 @@
 #define CMSRPCONNECTIONMANAGER_H
 
 // INCLUDES
+#include <CommDbConnPref.h>
+
 #include "MMSRPConnectionManager.h"
 #include "MMSRPConnectionManagerObserver.h"
 #include "MMSRPListenerObserver.h"
 #include "MMSRPListener.h"
 #include "MMSRPConnection.h"
-
 
 // FORWARD DECLARATIONS
 class MMSRPConnectionManagerObserver;
@@ -47,33 +48,21 @@ class CMSRPConnectionManager : public CBase, public MMSRPConnectionManager
         virtual ~CMSRPConnectionManager();
 
 
-    /*Functions from base classes*/   
-        /* from MMSRPConnectionManager*/
+    public: // from MMSRPConnectionManager
         
-        virtual void ResolveLocalIPAddressL( TInetAddr& aLocalAddr );
-       
-        virtual MMSRPConnection& getConnectionL( TDesC8& aHost, TUint aPort );
-          
+        void ResolveLocalIPAddressL( TInetAddr& aLocalAddr );
+        MMSRPConnection& getConnectionL( TDesC8& aHost, TUint aPort );
+        void ListenL(MMSRPConnection* aConnection);
+        void ListenCancel(MMSRPConnection* aConnection);
+        void Remove(MMSRPConnection* aConnection);
+        RSocketServ& SocketServer();	            
+        RConnection& SocketServerConn() ;        
+        TInt ReStartInterface();
         
-     //called by conn   
-        virtual void ListenL(MMSRPConnection* aConnection);
-        
-        virtual void ListenCancel(MMSRPConnection* aConnection);
-        
-        virtual void Remove(MMSRPConnection* aConnection);
-	    
-        virtual RSocketServ& SocketServer();	            
-	    
-        virtual RConnection& SocketServerConn() ;        
-        
-        //virtual TBool MatchIapId(TUint32 aIapID);
-        
-        
-        /* from MMSRPListenerObserver  */
+    public: // from MMSRPListenerObserver
+    
         virtual void ListenerStateL( TInt aNewState, RSocket* aDataSocket, TInt aStatus );
                 
-        
-
 	private: 
 	    
     // internal functions
@@ -92,8 +81,7 @@ class CMSRPConnectionManager : public CBase, public MMSRPConnectionManager
 	     */
 	    TInt StartInterface();
 	    
-
-	// constructors
+	private: // constructors
 
 	    CMSRPConnectionManager( const TUint32 aIapID, MMSRPConnectionManagerObserver& aServer );
         
@@ -109,6 +97,9 @@ class CMSRPConnectionManager : public CBase, public MMSRPConnectionManager
 		RHostResolver     iHostResolver;
 		TUint32           iIapID;
 		TInetAddr         iLocalAddr;
+		
+		// connection preferences
+        TCommDbConnPref iConnectionPreferences;
 		
 		MMSRPConnectionManagerObserver& iObserver;
     };

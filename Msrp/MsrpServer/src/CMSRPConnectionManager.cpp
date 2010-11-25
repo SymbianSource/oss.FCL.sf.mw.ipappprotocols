@@ -19,7 +19,7 @@
 #include "MSRPCommon.h"
 #include "CMSRPConnection.h"
 #include "CMSRPConnListener.h"
-#include <CommDbConnPref.h>
+#undef __SERIES60_
 #if defined(__SERIES60_)
 #include <extendedconnpref.h>
 #endif
@@ -30,7 +30,7 @@
 // Constructor
 // -----------------------------------------------------------------------------
 //
-CMSRPConnectionManager::CMSRPConnectionManager( const TUint32 aIapID, MMSRPConnectionManagerObserver& aServer ) 
+CMSRPConnectionManager::CMSRPConnectionManager( const TUint32 aIapID, MMSRPConnectionManagerObserver& aServer )
                                                 : iIapID( aIapID ), iObserver( aServer )
     {
     MSRPLOG( "CMSRPConnectionManager::CMSRPConnectionManager enter" )
@@ -61,22 +61,22 @@ CMSRPConnectionManager::CMSRPConnectionManager( const TUint32 aIapID, MMSRPConne
 //
 void CMSRPConnectionManager::ConstructL( )
 	{
-    MSRPLOG( "CMSRPConnectionManager::ConstructL enter" )    
+    MSRPLOG( "CMSRPConnectionManager::ConstructL enter" )
 
-	TInt status = iSocketServer.Connect();	
+	TInt status = iSocketServer.Connect();
 	if (status != KErrNone)
 	    {
 	    //iObserver->HandleError(ESocketServerStartFailed, status , *this );//need to pass connmngr as server handles many connmngrs
 	    //User::Leave(status);
 	    User::Leave(MMSRPConnectionManagerObserver::ESocketServerStartFailed); //leave code instead of observer call, as in constructl itself
 	    }
-	
-    status = StartInterface();    
+
+    status = StartInterface();
     if (status != KErrNone)
         {
         User::Leave(MMSRPConnectionManagerObserver::EInterfaceStartFailed);
         }
-    
+
     MSRPLOG( "CMSRPConnectionManager::ConstructL exit" )
 	}
 
@@ -84,14 +84,14 @@ void CMSRPConnectionManager::ConstructL( )
 CMSRPConnectionManager::~CMSRPConnectionManager()
 	{
     MSRPLOG( "CMSRPConnectionManager::~CMSRPConnectionManager enter" )
-    
+
 	delete iConnListener;
 	iConnectionArray.ResetAndDestroy();
 	iConnectionArray.Close();
 	iHostResolver.Close();
 	iConnection.Close();
 	iSocketServer.Close();
-	
+
 	MSRPLOG( "CMSRPConnectionManager::~CMSRPConnectionManager exit" )
 	}
 
@@ -112,21 +112,21 @@ MMSRPConnection& CMSRPConnectionManager::getConnectionL( TDesC8& aHost, TUint aP
         User::Leave(MMSRPConnectionManagerObserver::EAddressResolveError);
         }
     hostAddr.SetPort(aPort);
-    
+
 	MMSRPConnection* connection = CheckConnection( hostAddr, FALSE );
-	
+
 	if ( !connection )
 		{
         connection = CMSRPConnection::NewL( hostAddr, *this );
         CleanupDeletePushL(connection);//as M class
         //CleanupStack::PushL( connection );
         iConnectionArray.AppendL( connection );
-        CleanupStack::Pop( );		        
+        CleanupStack::Pop( );
 		}
-			
+
     MSRPLOG( "CMSRPConnectionManager::getConnectionL exit" )
-    
-	return *connection;	
+
+	return *connection;
 	}
 
 
@@ -143,21 +143,21 @@ void CMSRPConnectionManager::ListenL(MMSRPConnection* /*aConnection*/)
         {
         iConnListener = CMSRPConnListener::NewL(*this);
         }
-    
+
     TRAPD(err,iConnListener->ListenL());
 
     if(err != KErrNone)
         {
         //delete iConnListener;
-        //iConnListener = NULL;        
+        //iConnListener = NULL;
         //iObserver->HandleError( MMSRPConnectionManagerObserver::EListenerStartError, err , *this );//communicate to server to trigger cleanup
-        
+
         /*subsession can propagate to server (based on error), which handles error*/
         User::Leave(MMSRPConnectionManagerObserver::EListenerStartError); //listenL leaves to subsession
         }
-    
+
     MSRPLOG( "CMSRPConnectionManager::ListenL exit" )
-        
+
     }
 
 // -----------------------------------------------------------------------------
@@ -169,12 +169,12 @@ void CMSRPConnectionManager::ListenCancel(MMSRPConnection* aConnection)
     {
     MSRPLOG( "CMSRPConnectionManager::ListenCancel enter" )
     if(iConnListener)
-        {                
-        iConnListener->ListenCancel();       
+        {
+        iConnListener->ListenCancel();
         }
     Remove(aConnection);
-    
-    MSRPLOG( "CMSRPConnectionManager::ListenCancel exit" )    
+
+    MSRPLOG( "CMSRPConnectionManager::ListenCancel exit" )
     }
 
 
@@ -186,24 +186,24 @@ void CMSRPConnectionManager::ListenerStateL( TInt aNewState, RSocket* aDataSocke
     {
     MSRPLOG( "CMSRPConnectionManager::ListenerStateL enter" )
     if (aNewState == MMSRPListener::EListenAccepted)
-        {     
-        TInetAddr remoteAddr;        
+        {
+        TInetAddr remoteAddr;
         aDataSocket->RemoteName(remoteAddr);
-        
+
         MMSRPConnection* connection = CheckConnection( remoteAddr, TRUE );
-        
+
         if ( !connection )
             {
-            iConnListener->ListenCompletedL(FALSE);            
+            iConnListener->ListenCompletedL(FALSE);
             }
         else
             {
-            iConnListener->ListenCompletedL(TRUE);            
+            iConnListener->ListenCompletedL(TRUE);
             TRAPD(err, connection->ConnectionEstablishedL(MMSRPConnection::EConnected, aDataSocket, aStatus ));
             if(err!=KErrNone)
                 //non leaving on error, introduce separate fn later
                 connection->ConnectionEstablishedL(MMSRPConnection::EError, aDataSocket, err );
-            }                
+            }
         }
     else if (aNewState == MMSRPListener::ETimedOut || aNewState == MMSRPListener::ETerminate)
         {
@@ -216,7 +216,7 @@ void CMSRPConnectionManager::ListenerStateL( TInt aNewState, RSocket* aDataSocke
         delete iConnListener;
         iConnListener = NULL;
         User::Leave(MMSRPConnectionManagerObserver::EListenPortFailed);
-        //leave here, propagate upto msrpscheduler, in scheduler error intimate server to handle the error 
+        //leave here, propagate upto msrpscheduler, in scheduler error intimate server to handle the error
         //instead could intimate observer (server) directly
         //iObserver->HandleError( MMSRPConnectionManagerObserver::EListenPortFailed, aStatus , *this );
         }
@@ -239,7 +239,7 @@ MMSRPConnection* CMSRPConnectionManager::CheckConnection( TInetAddr& aHostAddres
 			}
 		}
 	MSRPLOG( "CMSRPConnectionManager::CheckConnection exit" )
-	return NULL;	
+	return NULL;
 	}
 
 
@@ -250,9 +250,9 @@ MMSRPConnection* CMSRPConnectionManager::CheckConnection( TInetAddr& aHostAddres
 //
 TInt CMSRPConnectionManager::StartInterface()
     {
-    
+
     MSRPLOG( "CMSRPConnectionManager::StartInterface enter" )
-    
+
     TInt status = KErrNone;
     //if( !iConnection.SubSessionHandle() )
         {
@@ -264,7 +264,7 @@ TInt CMSRPConnectionManager::StartInterface()
     {
         TConnPrefList  prefList;
         TExtendedConnPref extPrefs;
-        
+
         extPrefs.SetIapId( iIapID );
         TRAP(status, prefList.AppendL(&extPrefs));
         if (status == KErrNone)
@@ -275,18 +275,34 @@ TInt CMSRPConnectionManager::StartInterface()
 #else
     if (status == KErrNone)
         {
-        TCommDbConnPref prefs;
-        prefs.SetDialogPreference( ECommDbDialogPrefDoNotPrompt );
-        prefs.SetDirection( ECommDbConnectionDirectionUnknown );
-        prefs.SetIapId( iIapID );
-    
-        status = iConnection.Start( prefs );
-        }    
-#endif        
-               
+        iConnectionPreferences.SetDialogPreference( ECommDbDialogPrefDoNotPrompt );
+        iConnectionPreferences.SetDirection( ECommDbConnectionDirectionUnknown );
+        iConnectionPreferences.SetIapId( iIapID );
+
+        status = iConnection.Start( iConnectionPreferences );
+        }
+#endif
+
     MSRPLOG( "CMSRPConnectionManager::StartInterface exit" )
     return status;
-         
+
+    }
+
+// -----------------------------------------------------------------------------
+// CMSRPConnectionManager::ReStartInterface
+// -----------------------------------------------------------------------------
+//
+TInt CMSRPConnectionManager::ReStartInterface()
+    {
+    iConnection.Close();
+    iSocketServer.Close();
+    
+    TInt error = iSocketServer.Connect();
+    if ( !error )
+        {
+        error = StartInterface();
+        }
+    return error;
     }
 
 // -----------------------------------------------------------------------------
@@ -301,7 +317,7 @@ void CMSRPConnectionManager::ResolveIPAddressL(
     //RHostResolver hostResolver;
     TNameEntry entry;
     TBuf< KMaxLengthOfUrl > hostAddr;
-    
+
     if( !iHostResolver.SubSessionHandle() )
         {
         User::LeaveIfError( iHostResolver.Open( iSocketServer, KAfInet,
@@ -309,7 +325,7 @@ void CMSRPConnectionManager::ResolveIPAddressL(
         }
 
     //CleanupClosePushL( hostResolver );
-    
+
     hostAddr.Copy( aHost );
     User::LeaveIfError( iHostResolver.GetByName( hostAddr, entry ) );
     if ( !TInetAddr::Cast( entry().iAddr ).IsWildAddr() )
@@ -336,7 +352,7 @@ void CMSRPConnectionManager::ResolveLocalIPAddressL(TInetAddr& aLocalAddr)
     /* Open an RSocket and find its address */
     RSocket socket;
     User::LeaveIfError(socket.Open(iSocketServer, KAfInet, KSockDatagram, KProtocolInetUdp,iConnection));
-    
+
     CleanupClosePushL(socket);
 
     TSoInetInterfaceInfo networkInfo;
@@ -345,7 +361,7 @@ void CMSRPConnectionManager::ResolveLocalIPAddressL(TInetAddr& aLocalAddr)
     TSoInetIfQuery query;
     TPckg<TSoInetIfQuery> queryBuf(query);
     TInt res = KErrNone;
-    do 
+    do
     {
         res = socket.GetOpt(KSoInetNextInterface, KSolInetIfCtrl, opt);
         if (!res && opt().iState == EIfUp)
@@ -371,30 +387,30 @@ void CMSRPConnectionManager::Remove(MMSRPConnection* aConn)
     {
     MSRPLOG( "CMSRPConnectionManager::Remove connection enter" )
     TInt index = iConnectionArray.Find(aConn);
-    
+
     delete iConnectionArray[index];
-    iConnectionArray.Remove(index);       
+    iConnectionArray.Remove(index);
     MSRPLOG( "CMSRPConnectionManager::Remove connection exit" )
     }
 
 
-RSocketServ& CMSRPConnectionManager::SocketServer() 
+RSocketServ& CMSRPConnectionManager::SocketServer()
     {
     MSRPLOG( "CMSRPConnectionManager::SocketServer fetch enter" )
     MSRPLOG( "CMSRPConnectionManager::SocketServer fetch exit" )
     return iSocketServer;
-   
+
     }
-       
+
 RConnection& CMSRPConnectionManager::SocketServerConn()
     {
     MSRPLOG( "CMSRPConnectionManager::SocketServerConn fetch enter" )
     MSRPLOG( "CMSRPConnectionManager::SocketServerConn fetch exit" )
-    return iConnection;    
+    return iConnection;
     }
-       
+
 /*
-TBool CMSRPConnectionManager::MatchIapId(TUint32 aIapID) 
+TBool CMSRPConnectionManager::MatchIapId(TUint32 aIapID)
     {
     return (aIapID == iIapID);
     }

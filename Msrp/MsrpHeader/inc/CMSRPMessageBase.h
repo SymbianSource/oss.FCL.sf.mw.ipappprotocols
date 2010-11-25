@@ -29,6 +29,7 @@ class CMSRPByteRangeHeader;
 class CMSRPContentTypeHeader;
 class CMSRPFailureReportHeader;
 class CMSRPSuccessReportHeader;
+class CMSRPStatusHeader;
 
 // CONSTANTS
 const TInt KMaxLengthOfShortMessage = 4096;
@@ -146,6 +147,19 @@ class CMSRPMessageBase : public CBase
 		*/
 		IMPORT_C const CMSRPByteRangeHeader* ByteRangeHeader() const;
 
+        /**
+        * Sets/resets the Status header
+        * @param aStatus status header to be set, the ownership is transferred
+        */
+        IMPORT_C void SetStatusHeader( CMSRPStatusHeader* aStatus );
+
+        /**
+        * returns Status header
+        * @return status header, NULL if not present. Ownership is not
+        *         transferred.
+        */
+        IMPORT_C const CMSRPStatusHeader* StatusHeader( ) const;
+
 		/**
 		* Writes the object to a RWriteStream
 		* @param aWriteStream a stream where the object is to be externalized
@@ -176,7 +190,8 @@ class CMSRPMessageBase : public CBase
         CMSRPFailureReportHeader* iFailureReport;
         // For setting and getting MSRP "Success-Report" header field
         CMSRPSuccessReportHeader* iSuccessReport;
-        
+        // For setting and getting MSRP "Status" header field
+        CMSRPStatusHeader* iStatusHeader;        
 	};
 
 #endif // CMSRPMESSAGEBASE_H
