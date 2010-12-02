@@ -241,7 +241,7 @@ void CMSRPSessionImplementation::ConnectionEstablishedL( TInt aStatus )
 void CMSRPSessionImplementation::HandleIncomingMessageL(
     const TDesC8& aIncomingMessage, TInt aStatus )
     {
-    MSRPLOG( "CMSRPSessionImplementation::HandleIncomingMessageL enter" )
+    MSRPLOG2( "CMSRPSessionImplementation::HandleIncomingMessageL enter, length %d", aIncomingMessage.Length() )
 
     // the incoming buffer must be internalized
     RDesReadStream readStream( aIncomingMessage );
@@ -249,7 +249,9 @@ void CMSRPSessionImplementation::HandleIncomingMessageL(
     if ( CMSRPMessage::IsMessage( aIncomingMessage ) )
         {
         CMSRPMessage* message = NULL;
-        message = CMSRPMessage::InternalizeL( readStream );
+        TRAPD( err, message = CMSRPMessage::InternalizeL( readStream ) );
+        MSRPLOG2( "CMSRPSessionImplementation::HandleIncomingMessageL enter internalize err = %d", err )
+        User::LeaveIfError( err );
         CleanupStack::PushL(message);
         MSRPLOG2( "CMSRPSessionImplementation::HandleIncomingMessageL, content = %d", message->IsContent()  )
         MSRPLOG2( "CMSRPSessionImplementation::HandleIncomingMessageL, FN = %S", &message->GetFileName()  )
@@ -293,7 +295,10 @@ void CMSRPSessionImplementation::HandleIncomingMessageL(
         }
     else if ( CMSRPReport::IsReport( aIncomingMessage ) )
         {
-        CMSRPReport* report = CMSRPReport::InternalizeL( readStream );
+        CMSRPReport* report = NULL;
+        TRAPD( err, report = CMSRPReport::InternalizeL( readStream ) );
+        MSRPLOG2( "CMSRPSessionImplementation::HandleIncomingMessageL enter internalize err = %d", err )
+        User::LeaveIfError( err );
         MSRPLOG2( "CMSRPSessionImplementation::HandleIncomingMessageL, status = %d", report->StatusHeader()->StatusCode() )
         MSRPLOG2( "CMSRPSessionImplementation::HandleIncomingMessageL, startpos = %d", report->ByteRangeHeader()->StartPosition() )
         MSRPLOG2( "CMSRPSessionImplementation::HandleIncomingMessageL, endpos = %d", report->ByteRangeHeader()->EndPosition() )
@@ -308,6 +313,7 @@ void CMSRPSessionImplementation::HandleIncomingMessageL(
         }
     else
         {
+        MSRPLOG( "CMSRPSessionImplementation::HandleIncomingMessageL enter INVALID MESSAGE RECEIVED!" )
         User::Leave( KErrArgument );
         }
     

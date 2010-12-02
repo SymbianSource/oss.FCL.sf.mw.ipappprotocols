@@ -179,6 +179,7 @@ void CMSRPWriter::RunL()
         MMSRPWriterObserver::TMsgStatus msgState = MMSRPWriterObserver::EComplete;
         msgState = iSendQueue[0]->WriteDoneL(status); 
         
+        MSRPLOG2( "CMSRPWriter::RunL enter, state = %d", msgState )    
         if( msgState != MMSRPWriterObserver::EPending && 
                 msgState != MMSRPWriterObserver::ESendingReport )    
             {
@@ -215,10 +216,13 @@ TInt CMSRPWriter::RunError(TInt aError)
 //
 void CMSRPWriter::SendL()
     {
+    MSRPLOG( "->CMSRPWriter::SendL" )    
     TBool interruptSend = FALSE;
 
+    MSRPLOG2( "-> CMSRPWriter::SendL, count = %d", iSendQueue.Count() );    
     if(iSendQueue.Count())        
         {
+        MSRPLOG2( "-> CMSRPWriter::SendL, sending instance = %d", iSendQueue[0] );    
         MMSRPWriterObserver::TWriteStatus ret = MMSRPWriterObserver::EMsrpSocketWrite;
         
         if(iSendQueue.Count()>1)

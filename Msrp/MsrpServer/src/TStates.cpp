@@ -250,6 +250,7 @@ TStateBase* TStateBase::handleClientListnerCancelL( CMSRPServerSubSession* aCont
             }
         else
             {
+            MSRPLOG("TStateBase::handleClientListnerCancelL completing incoming listener"  );
             if( aContext->iIncommingMessageListner.Check() )
                 {
                 aContext->iIncommingMessageListner.Complete( KErrNone );
@@ -302,9 +303,14 @@ TStateBase* TStateBase::handleConnectionStateChangedL(CMSRPServerSubSession *aCo
     
     switch(iConnectionEvent)
         {
-        case -1: // Error Scenario         
+        case -1: // Error Scenario    
+            {
+            // empty queue
+            MSRPLOG("TStateBase::handleConnectionStateChangedL, emptying queue " ); 
+            while ( aContext->iCurrentlyReceivingMsgQ.DeQueue() );
             state = handleConnectionErrorsL(aContext);
             break;
+            }
         
         case 1:
         case 2:

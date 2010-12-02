@@ -332,6 +332,7 @@ void CMSRPConnectionManager::ResolveIPAddressL(
          {
          aAddress = TInetAddr::Cast( entry().iAddr );
          }
+    iHostResolver.Close();
     //CleanupStack::PopAndDestroy( );
     MSRPLOG( "CMSRPConnectionManager::ResolveIPAddressL exit" )
     }

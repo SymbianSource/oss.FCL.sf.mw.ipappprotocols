@@ -100,7 +100,8 @@ TBool CMSRPMsgParser::ParseL()
     while (match == EFullMatch) 
     //while (ret == TRUE)/*parse all parseable data*/
         {    
-        MSRPLOG( "CMSRPMsgParser::ParseL enter" )    
+        MSRPLOG2( "CMSRPMsgParser::ParseL enter,count= %d", iParseBuffers.Count() )    
+        MSRPLOG2( "CMSRPMsgParser::ParseL enter,state = %d", iState )    
         if(!iParseBuffers.Count())
 		{
 			MSRPLOG( "CMSRPMsgParser::ParseL exit" ) 
@@ -114,6 +115,13 @@ TBool CMSRPMsgParser::ParseL()
             }   
         
         TInt matchPos( 0 );
+        #ifdef _DEBUG
+        TBuf<100> koe;
+        koe.Copy( iParseBuffers[0]->Ptr().Left( 100 ) );
+        MSRPLOG2( "ST=%S", &koe )    
+        koe.Copy( iParseBuffers[0]->Ptr().Right( 100 ) );
+        MSRPLOG2( "ST=%S", &koe )
+        #endif
         match = FindToken(iParseBuffers[0]->Ptr(),token,matchPos);    
         if(match == EFullMatch)
             {

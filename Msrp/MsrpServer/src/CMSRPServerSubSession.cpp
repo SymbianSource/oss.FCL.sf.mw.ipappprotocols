@@ -478,6 +478,11 @@ TBool CMSRPServerSubSession::sendMsgToClientL(CMSRPMessageHandler *incommingMsgH
     // Extract the data and complete the iIncommingMessageListner.
     MSRPLOG("CMSRPServerSubSession::sendMsgToClientL");
     CMSRPMessage* inMsg = incommingMsgHandler->GetIncomingMessage();
+    
+    if ( iCurrentlyReceivingMsgQ.FindElement( incommingMsgHandler ) )
+        {
+        iCurrentlyReceivingMsgQ.explicitRemove( incommingMsgHandler );
+        }
 
     if ( inMsg )
         {

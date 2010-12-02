@@ -320,7 +320,21 @@ void CMSRPMessageHandler::AddContentL( TPtrC8& aContent, TBool aByteRangeFound )
             }
         else
             {
-            AppendMessageToFileL( aContent );
+            if( iBuffer.Length() )
+                {
+                HBufC8* combined = HBufC8::NewLC( iBuffer.Length() + aContent.Length() );
+                TPtr8 ptr = combined->Des();
+                ptr = iBuffer;
+                ptr.Append( aContent );
+                // must write to file
+                WriteMessageToFileL( ptr );
+                CleanupStack::PopAndDestroy( ); // combined
+                iBuffer.Zero();
+                }
+            else
+                {
+                AppendMessageToFileL( aContent );
+                }
             }
         }    
     MSRPLOG( "CMSRPMessageHandler::AddContentL exit" )
@@ -465,7 +479,7 @@ TBool CMSRPMessageHandler::SendReportL(
     if ( iActiveMsgType == EMSRPResponse )
         {
         // currently sending a response
-        MSRPLOG( "CMSRPMessageHandler::SendReportL sendin a response..." )
+        MSRPLOG( "CMSRPMessageHandler::SendReportL response sending in progress, do nothing" )
         return sendReport;
         }
     iMSRPMessageObserver = aMessageObserver;
